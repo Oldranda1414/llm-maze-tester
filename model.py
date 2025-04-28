@@ -1,8 +1,10 @@
 """ wrapper for LLM models using litellm """
 import json
+import subprocess
 from typing import List, Dict
 
 import litellm
+import requests
 
 class Model:
     """
@@ -21,14 +23,60 @@ class Model:
         """
         self.model_name = model_name
         self.chat_history: List[Dict[str, str]] = []
+        self.base_url = "http://localhost:11434/api"
 
         # If using an Ollama model but the prefix isn't provided, add it
         if not model_name.startswith("ollama/") and not "/" in model_name:
             self.model_name = f"ollama/{model_name}"
             print(f"Using model: {self.model_name}")
 
+        # Get base model name (without provider prefix)
+        self.base_model = self.model_name.split('/')[-1] if '/' in self.model_name else self.model_name
+
+        # Check if Ollama is running and the model exists
+        if self.model_name.startswith("ollama/"):
+            self._check_ollama_model()
+
         # Ensure litellm is properly configured
         self._configure_litellm()
+
+    def _check_ollama_model(self):
+        """Check if Ollama is running and the specified model exists."""
+        try:
+            # Check if Ollama is running
+            try:
+                response = requests.get(f"{self.base_url}/tags", timeout=5)
+            except requests.exceptions.ConnectionError as exc:
+                print("ERROR: Ollama is not running. Please start it with 'ollama serve'")
+                raise RuntimeError("Ollama server is not running") from exc
+
+            # Check if model exists
+            if response.status_code == 200:
+                models_data = response.json()
+                models = models_data.get("models", [])
+                available_models = [model["name"] for model in models]
+
+                if self.base_model not in available_models:
+                    print(f"Model '{self.base_model}' not found locally. Available models: {', '.join(available_models)}")
+
+                    # Ask if user wants to pull the model
+                    user_input = input(f"Do you want to pull the '{self.base_model}' model? (Y/n): ")
+                    if user_input.lower() == 'y' or user_input == '':
+                        print(f"Pulling model '{self.base_model}'...")
+                        subprocess.run(
+                            ["ollama", "pull", self.base_model],
+                            check=True
+                        )
+                        print(f"Model '{self.base_model}' pulled successfully.")
+                    else:
+                        print("Model not pulled. Please use one of the available models.")
+                        raise ValueError(f"Model '{self.base_model}' not available")
+                else:
+                    print(f"Model '{self.base_model}' is available.")
+        except Exception as e:
+            if not isinstance(e, RuntimeError) and not isinstance(e, ValueError):
+                print(f"Error checking Ollama model: {str(e)}")
+            raise
 
     def _configure_litellm(self):
         """Configure litellm settings if needed."""
@@ -53,8 +101,13 @@ class Model:
             str: The model's response
         """
         try:
-            # Convert previous chat history to litellm format if it exists
+            # Build messages array that includes chat history
             messages = []
+
+            # Add previous history for context
+            for entry in self.chat_history:
+                messages.append({"role": "user", "content": entry["prompt"]})
+                messages.append({"role": "assistant", "content": entry["response"]})
 
             # Add new user prompt
             messages.append({"role": "user", "content": prompt})
@@ -79,7 +132,7 @@ class Model:
 
             return response_content
 
-        except (litellm.LitellmError, ValueError, TypeError) as e:
+        except AttributeError as e:
             error_msg = f"Error querying model: {str(e)}"
             print(error_msg)
             return error_msg

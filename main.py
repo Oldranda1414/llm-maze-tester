@@ -8,7 +8,7 @@ def main():
 
     # Create a model instance with a lightweight model for testing
     # Using llama2 as it's commonly available, but you can change to any model you prefer
-    model_name = "phi"
+    model_name = "llama3:latest"
     print(f"Initializing model: {model_name}")
 
     model = Model(model_name)
