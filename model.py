@@ -6,7 +6,7 @@ import atexit
 
 import requests
 
-TIMEOUT_TIME = 10  # seconds
+TIMEOUT_TIME = 30  # seconds
 
 class Model:
     """
