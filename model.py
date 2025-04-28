@@ -1,120 +1,48 @@
-""" wrapper for Ollama models """
-import subprocess
+""" wrapper for LLM models using litellm """
 import json
-import time
-import atexit
+from typing import List, Dict
 
-import requests
-
-TIMEOUT_TIME = 30  # seconds
+import litellm
 
 class Model:
     """
-    Wrapper for Ollama models to handle interactions and manage the server.
-    This class ensures that the Ollama server is running and the specified model
-    is loaded before making any requests.
-    It also provides methods to send prompts to the model and retrieve responses,
-    as well as to save the chat history.
+    Wrapper for LLM models using litellm.
+    This class provides a unified interface to interact with various LLM models
+    through the litellm library, which supports multiple providers including OpenAI,
+    Anthropic, Ollama, Hugging Face, etc.
     """
-    def __init__(self, model_name):
+    def __init__(self, model_name: str):
         """
-        Initialize with the Ollama model name and load if not available locally.
-        Automatically starts ollama if not running.
+        Initialize the model wrapper.
         
         Args:
-            model_name (str): Name of the Ollama model to use
+            model_name (str): Name of the model to use. For Ollama models, 
+                prefix with "ollama/" (e.g., "ollama/llama2").
         """
         self.model_name = model_name
-        self.chat_history = []
-        self.base_url = "http://localhost:11434/api"
-        self.ollama_process = None
+        self.chat_history: List[Dict[str, str]] = []
 
-        # Start Ollama if not running
-        self._ensure_ollama_running()
+        # If using an Ollama model but the prefix isn't provided, add it
+        if not model_name.startswith("ollama/") and not "/" in model_name:
+            self.model_name = f"ollama/{model_name}"
+            print(f"Using model: {self.model_name}")
 
-        # Check if model is available locally
-        self._ensure_model_loaded()
+        # Ensure litellm is properly configured
+        self._configure_litellm()
 
-    def _ensure_ollama_running(self):
-        """Check if Ollama server is running, start it if not."""
-        try:
-            # Try to connect to Ollama API
-            response = requests.get(f"{self.base_url}/version", timeout=TIMEOUT_TIME)
-            print("Ollama is already running.")
-            return
-        except requests.exceptions.RequestException:
-            print("Ollama is not running. Starting Ollama server...")
+    def _configure_litellm(self):
+        """Configure litellm settings if needed."""
+        # Set default timeout
+        litellm.request_timeout = 120
 
-            # Start the Ollama server as a subprocess
-            try:
-                self.ollama_process = subprocess.Popen(
-                    ["ollama", "serve"],
-                    stdout=subprocess.PIPE,
-                    stderr=subprocess.PIPE,
-                    text=True
-                )
+        # You can add any additional litellm configuration here
+        # For example, setting API keys if using commercial services:
+        # os.environ["OPENAI_API_KEY"] = "your-key"
 
-                # Register cleanup function to terminate Ollama when the script exits
-                atexit.register(self._cleanup_ollama)
+        # Log litellm being ready
+        print(f"litellm configured for model: {self.model_name}")
 
-                # Wait for Ollama to start (check every second for up to 30 seconds)
-                for _ in range(30):
-                    try:
-                        response = requests.get(f"{self.base_url}/version", timeout=2)
-                        if response.status_code == 200:
-                            print("Ollama server started successfully.")
-                            return
-                    except requests.exceptions.RequestException:
-                        pass
-                    time.sleep(1)
-
-                raise RuntimeError("Timed out waiting for Ollama server to start") from None
-            except (IOError, OSError) as e:
-                raise RuntimeError(f"Failed to start Ollama server: {str(e)}") from e
-
-    def _cleanup_ollama(self):
-        """Terminate the Ollama process when the script exits."""
-        if self.ollama_process is not None:
-            print("Shutting down Ollama server...")
-            try:
-                self.ollama_process.terminate()
-                self.ollama_process.wait(timeout=5)
-            except subprocess.TimeoutExpired:
-                self.ollama_process.kill()
-            print("Ollama server shut down.")
-
-    def _ensure_model_loaded(self):
-        """Check if the model is loaded and load it if necessary."""
-        try:
-            # Check if model exists locally
-            response = requests.get(f"{self.base_url}/tags", timeout=2)
-            if response.status_code != 200:
-                raise RuntimeError(f"Failed to get model list. Status code: {response.status_code}")
-
-            try:
-                models_data = response.json()
-                models = models_data.get("models", [])
-
-                model_exists = any(model["name"] == self.model_name for model in models)
-
-                if not model_exists:
-                    print(f"Model {self.model_name} not found locally. Pulling from Ollama...")
-                    # Run the command without capturing output to show it in real-time
-                    result = subprocess.run(
-                        ["ollama", "pull", self.model_name],
-                        check=True
-                    )
-                    if result.returncode != 0:
-                        raise RuntimeError(f"Failed to pull model: return code {result.returncode}")
-                    print(f"Model {self.model_name} pulled successfully.")
-                else:
-                    print(f"Model {self.model_name} is already available locally.")
-            except json.JSONDecodeError as e:
-                raise RuntimeError(f"Invalid JSON response from Ollama API: {e}. Response content: {response.text[:100]}") from e
-        except Exception as e:
-            raise RuntimeError(f"Error ensuring model is loaded: {str(e)}") from e
-
-    def ask(self, prompt):
+    def ask(self, prompt: str) -> str:
         """
         Send a prompt to the model and get its response.
         
@@ -124,44 +52,39 @@ class Model:
         Returns:
             str: The model's response
         """
-        # Prepare the request payload
-        payload = {
-            "model": self.model_name,
-            "prompt": prompt,
-            "stream": False
-        }
-
         try:
-            # Send request to Ollama API
-            response = requests.post(f"{self.base_url}/generate", json=payload, timeout=TIMEOUT_TIME)
+            # Convert previous chat history to litellm format if it exists
+            messages = []
 
-            if response.status_code != 200:
-                return f"Error: API returned status code {response.status_code}"
+            # Add new user prompt
+            messages.append({"role": "user", "content": prompt})
 
-            try:
-                response_data = response.json()
-                response_content = response_data.get("response", "")
+            # Call the model via litellm
+            response = litellm.completion(
+                model=self.model_name,
+                messages=messages,
+            )
 
-                # Add the interaction to chat history
-                self.chat_history.append({
-                    "prompt": prompt,
-                    "response": response_content
-                })
+            # Extract response content
+            if response and hasattr(response, 'choices') and response.choices:
+                response_content = response.choices[0].message.content
+            else:
+                response_content = "Error: Received empty response from model"
 
-                return response_content
-            except json.JSONDecodeError:
-                return "Error: Could not parse API response as JSON"
+            # Add the interaction to chat history
+            self.chat_history.append({
+                "prompt": prompt,
+                "response": response_content
+            })
 
-        except requests.exceptions.RequestException as e:
-            error_msg = f"Request error querying model: {str(e)}"
+            return response_content
+
+        except (litellm.LitellmError, ValueError, TypeError) as e:
+            error_msg = f"Error querying model: {str(e)}"
             print(error_msg)
             return error_msg
-        except json.JSONDecodeError as e:
-            error_msg = f"JSON decode error querying model: {str(e)}"
-            print(error_msg)
-            return error_msg
 
-    def history(self):
+    def history(self) -> List[Dict[str, str]]:
         """
         Get the chat history with this model.
         
@@ -170,12 +93,15 @@ class Model:
         """
         return self.chat_history
 
-    def save(self, filepath):
+    def save(self, filepath: str) -> bool:
         """
         Save the chat history to a file.
         
         Args:
             filepath (str): Path to save the chat history file
+        
+        Returns:
+            bool: True if saving was successful, False otherwise
         """
         try:
             with open(filepath, 'w', encoding='utf-8') as f:
