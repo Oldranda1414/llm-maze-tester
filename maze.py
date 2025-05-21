@@ -13,9 +13,10 @@ DIRECTIONS = {
 }
 
 class Maze:
-    def __init__(self, width=6, height=6):
+    def __init__(self, width=6, height=6, plot=True):
         self.width = width
         self.height = height
+        self.plot = plot
         lattice_maze = LatticeMazeGenerators.gen_dfs(
             np.array([height, width])
         )
@@ -76,6 +77,10 @@ class Maze:
         self.maze = SolvedMaze.from_targeted_lattice_maze(self.maze)
 
     def print(self):
-        MazePlot(self.maze).add_predicted_path(self.path_).plot()
-        plt.show()
+        if self.plot:
+            MazePlot(self.maze).add_predicted_path(self.path_).plot()
+            plt.show()
+        else:
+            ascii_maze = MazePlot(self.maze).add_predicted_path(self.path_).to_ascii()
+            print(ascii_maze)
 
