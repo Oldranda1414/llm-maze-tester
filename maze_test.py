@@ -13,4 +13,5 @@ if __name__ == "__main__":
     m.move("R")
     print("New position:", m.position())
     print("Solved?", m.solved())
+    m.print()
 

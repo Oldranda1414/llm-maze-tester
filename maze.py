@@ -1,7 +1,9 @@
 import random
+import matplotlib.pyplot as plt
+import numpy as np
 from maze_dataset.generation import LatticeMazeGenerators
 from maze_dataset.plotting import MazePlot
-import matplotlib.pyplot as plt
+from maze_dataset.maze import TargetedLatticeMaze, SolvedMaze
 
 DIRECTIONS = {
     'U': (-1, 0),
@@ -14,17 +16,19 @@ class Maze:
     def __init__(self, width=6, height=6):
         self.width = width
         self.height = height
-        self.maze = LatticeMazeGenerators.gen_dfs(
-            grid_shape=(height, width),
-            lattice_dim=2,
-            accessible_cells=None,
-            max_tree_depth=None,
-            start_coord=None,
+        lattice_maze = LatticeMazeGenerators.gen_dfs(
+            np.array([height, width])
         )
-        self.start, self.end = self._random_border_points()
+        self.start, self.end = self._random_border_points(lattice_maze)
+        self.maze = TargetedLatticeMaze.from_lattice_maze(
+            lattice_maze,
+            self.start,
+            self.end
+        )
+        self.path_ = [self.start]
         self.position_ = self.start
 
-    def _random_border_points(self):
+    def _random_border_points(self, maze):
         def border_cells():
             return [
                 (r, c)
@@ -33,7 +37,7 @@ class Maze:
                 if r == 0 or r == self.height - 1 or c == 0 or c == self.width - 1
             ]
 
-        accessible = set(map(tuple, self.maze.get_nodes()))
+        accessible = set(map(tuple, maze.get_nodes()))
         borders = [cell for cell in border_cells() if cell in accessible]
         start = random.choice(borders)
         end = random.choice([b for b in borders if b != start])
@@ -49,6 +53,7 @@ class Maze:
         neighbors = set(map(tuple, self.maze.get_coord_neighbors(self.position_)))
         if new_pos in neighbors:
             self.position_ = new_pos
+            self.path_.append(new_pos)
         else:
             print("Move blocked by wall.")
 
@@ -67,7 +72,10 @@ class Maze:
     def solved(self):
         return self.position_ == self.end
 
+    def solve(self):
+        self.maze = SolvedMaze.from_targeted_lattice_maze(self.maze)
+
     def print(self):
-        MazePlot(self.maze).plot()
+        MazePlot(self.maze).add_predicted_path(self.path_).plot()
         plt.show()
 
