@@ -19,3 +19,7 @@ Python dependencies are listed in the `pyproject.toml` file.
 ### Ollama
 
 This project uses Ollama to run the models locally. You can find more information about it [here](https://ollama.com/).
+
+### maze-dataset
+
+[maze-dataset](https://github.com/understanding-search/maze-dataset) library is used to generate and print the maze
