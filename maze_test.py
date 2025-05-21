@@ -1,7 +1,8 @@
 from maze import Maze
 
 if __name__ == "__main__":
-    m = Maze(plot=False)
+    # m = Maze(plot=False)
+    m = Maze()
 
     print("Start:", m.start)
     print("End:", m.end)
