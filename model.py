@@ -13,7 +13,7 @@ class Model:
     through the litellm library, which supports multiple providers including OpenAI,
     Anthropic, Ollama, Hugging Face, etc.
     """
-    def __init__(self, model_name: str):
+    def __init__(self, model_name: str, timeout: int = 120):
         """
         Initialize the model wrapper.
         
@@ -22,6 +22,7 @@ class Model:
                 prefix with "ollama/" (e.g., "ollama/llama2").
         """
         self.model_name = model_name
+        self.timeout = timeout
         self.chat_history: List[Dict[str, str]] = []
         self.base_url = "http://localhost:11434/api"
 
@@ -80,9 +81,6 @@ class Model:
 
     def _configure_litellm(self):
         """Configure litellm settings if needed."""
-        # Set default timeout
-        litellm.request_timeout = 120
-
         # You can add any additional litellm configuration here
         # For example, setting API keys if using commercial services:
         # os.environ["OPENAI_API_KEY"] = "your-key"
@@ -102,7 +100,7 @@ class Model:
         """
         try:
             # Build messages array that includes chat history
-            messages = []
+            messages: List[Dict[str, str]] = []
 
             # Add previous history for context
             for entry in self.chat_history:
@@ -112,15 +110,21 @@ class Model:
             # Add new user prompt
             messages.append({"role": "user", "content": prompt})
 
-            # Call the model via litellm
-            response = litellm.completion(
+            # Call the model via litellm with a timeout
+            response: litellm.ModelResponse = litellm.completion( # type: ignore
                 model=self.model_name,
                 messages=messages,
+                timeout=self.timeout,
             )
 
             # Extract response content
             if response and hasattr(response, 'choices') and response.choices:
-                response_content = response.choices[0].message.content
+                choice = response.choices[0]
+                content = getattr(choice, "message", None)
+                if content is not None and hasattr(content, "content"):
+                    response_content = content.content if content.content is not None else ""
+                else:
+                    response_content = "Error: Could not extract response content"
             else:
                 response_content = "Error: Received empty response from model"
 
