@@ -54,7 +54,6 @@ classDiagram
         +get_directions()
         +position()
         +solved()
-        +solve()
         +print()
     }
     
