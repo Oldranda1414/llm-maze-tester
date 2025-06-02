@@ -104,6 +104,8 @@ class MazeSolver:
         Returns:
             tuple: (pattern_detected, pattern_description)
         """
+        warning_message = "You are moving in a repetitive pattern. Please try to change your strategy. Use the move history to better orient yourself."
+
         if len(self.moves_history) < 4:
             return False, ""
 
@@ -123,7 +125,7 @@ class MazeSolver:
         if len(self.position_history) >= 4:
             recent_positions = self.position_history[-4:]
             if recent_positions[0] == recent_positions[2] and recent_positions[1] == recent_positions[3]:
-                return True, "moving back and forth between the same positions"
+                return True, warning_message
 
         return False, ""
 
