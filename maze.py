@@ -31,6 +31,12 @@ class Maze:
     """
     A class representing a maze with a start and end point.
     The maze is generated using a depth-first search algorithm.
+
+    args:
+        width (int): Width of the maze
+        height (int): Height of the maze
+        plot (bool): Whether to plot the maze using matplotlib
+        block_on_plot (bool): Whether to block execution until the plot is closed
     """
     def __init__(self, width: int = 6, height:int = 6, plot: bool = True, block_on_plot: bool = True):
         self.width = width
