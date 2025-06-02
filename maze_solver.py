@@ -38,6 +38,8 @@ class MazeSolver:
         Goal position: {end_pos}
         Available moves: {available_moves}
         {pattern_warning}
+        
+        Your move history: {move_history}
 
         Choose your next move (respond with only a single letter: {move_options}):
     """
@@ -162,12 +164,15 @@ class MazeSolver:
             print(f"Warning: Detected pattern - {pattern_desc}")
 
         # Construct the prompt for this step
+        move_history = ", ".join(self.moves_history) if self.moves_history else "None (first move)"
+        
         prompt = self.STEP_PROMPT.format(
             current_pos=self.maze.position(),
             end_pos=self.maze.end,
             available_moves=", ".join(available_directions),
             move_options=", ".join(available_directions),
-            pattern_warning=pattern_warning
+            pattern_warning=pattern_warning,
+            move_history=move_history
         )
 
         # Ask the model for the next move
