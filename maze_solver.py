@@ -49,7 +49,7 @@ class MazeSolver:
     """
 
     def __init__(self, model_name: str, maze_width: int = 6, maze_height: int = 6,
-                 plot: bool = True, block_on_plot: bool = True, pattern_check_length: int = 6):
+                 plot: bool = True, block_on_plot: bool = False, pattern_check_length: int = 6):
         """
         Initialize the maze solver with a model and maze.
         
