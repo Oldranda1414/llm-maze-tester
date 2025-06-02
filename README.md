@@ -35,7 +35,7 @@ classDiagram
         +List~Dict~ chat_history
         +String base_url
         +String base_model
-        +\_\_init__(model_name: str)
+        +__init__(model_name: str)
         +ask(prompt: str) str
         +history() List~Dict~
         +save(filepath: str) bool
@@ -49,12 +49,27 @@ classDiagram
         +TargetedLatticeMaze maze
         +Tuple start
         +Tuple end
-        +\_\_init__(width, height, plot, block_on_plot)
+        +__init__(width, height, plot, block_on_plot)
         +move(direction)
         +get_directions()
         +position()
         +solved()
         +print()
+    }
+    
+    class MazeSolver {
+        +Model model
+        +Maze maze
+        +int steps_taken
+        +List~str~ moves_history
+        +bool is_solved
+        +String INITIAL_PROMPT
+        +String STEP_PROMPT
+        +__init__(model_name: str, maze_width: int, maze_height: int, plot: bool, block_on_plot: bool)
+        -_send_initial_prompt()
+        +step() Dict~str, Any~
+        +get_statistics() Dict~str, Any~
+        +solved() bool
     }
     
     class litellm {
@@ -82,4 +97,6 @@ classDiagram
     Maze --> maze_dataset : generation
     Maze --> matplotlib : visualization
     Maze --> numpy : data handling
+    MazeSolver --> Model : has
+    MazeSolver --> Maze : has
 ```
