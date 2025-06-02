@@ -12,12 +12,16 @@ def main():
     model_name = "llama3:latest"
     print(f"Initializing model: {model_name}")
 
-    maze_solver = MazeSolver(model_name=model_name, block_on_plot=True)
+    maze_solver = MazeSolver(model_name=model_name)
     print("Maze solver initialized. Starting to solve the maze...")
 
+    step = 0
     while maze_solver.solved() is False:
         maze_solver.step()
-        maze_solver.get_statistics()
+        step += 1
+        if step % 20 == 0:
+            print(maze_solver.get_statistics())
+            maze_solver.maze.print()
 
     print("Maze solved!")
 

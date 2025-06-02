@@ -71,10 +71,12 @@ class Maze:
         end = random.choice([b for b in borders if b != start])
         return start, end
 
-    def move(self, direction: str):
+    def move(self, direction: str) -> bool:
         """Move the current position in the specified direction.
         Args:
             direction (str): The direction to move (U, D, L, R)
+        Returns:
+            bool: True if the move was successful, False if blocked by a wall
         """
         direction = direction.upper()
         if direction not in DIRECTIONS:
@@ -86,8 +88,10 @@ class Maze:
         if new_pos in neighbors:
             self._position = new_pos
             self._path.append(new_pos)
+            return True
         else:
             print("Move blocked by wall.")
+            return False
 
     def get_directions(self) -> list[str]:
         """Get the possible directions to move from the current position.

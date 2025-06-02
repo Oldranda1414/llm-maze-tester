@@ -79,12 +79,14 @@ class MazeSolver:
         self.is_solved = False
         self.pattern_check_length = pattern_check_length
         self.position_history: List[Tuple[int, int]] = []
+        self.plot = plot
 
         # Initial briefing to the model
         self._send_initial_prompt()
 
         # Show the initial maze state
-        self.maze.print()
+        if self.plot:
+            self.maze.print()
 
     def _send_initial_prompt(self) -> None:
         """Send the initial prompt to the model explaining its task."""
@@ -99,37 +101,37 @@ class MazeSolver:
         response = self.model.ask(initial_prompt)
         print(f"Model initialized for maze solving. Initial response: {response}")
 
-    def _detect_pattern(self) -> tuple[bool, str]:
-        """
-        Detect repetitive patterns in recent moves.
+    # def _detect_pattern(self) -> tuple[bool, str]:
+    #     """
+    #     Detect repetitive patterns in recent moves.
         
-        Returns:
-            tuple: (pattern_detected, pattern_description)
-        """
-        warning_message = "You are moving in a repetitive pattern. Please try to change your strategy. Use the move history to better orient yourself."
+    #     Returns:
+    #         tuple: (pattern_detected, pattern_description)
+    #     """
+    #     warning_message = "You are moving in a repetitive pattern. Please try to change your strategy. Use the move history to better orient yourself."
 
-        if len(self.moves_history) < 4:
-            return False, ""
+    #     if len(self.moves_history) < 4:
+    #         return False, ""
 
-        # Check for simple alternating patterns (e.g., "UDUD" or "LRLR")
-        recent_moves = ''.join(self.moves_history[-self.pattern_check_length:])
+    #     # Check for simple alternating patterns (e.g., "UDUD" or "LRLR")
+    #     recent_moves = ''.join(self.moves_history[-self.pattern_check_length:])
 
-        # Check for 2-move pattern (e.g., "UDUD")
-        for pattern_len in [2, 3, 4]:
-            if len(recent_moves) >= pattern_len * 2:
-                pattern = recent_moves[-pattern_len:]
-                prev_pattern = recent_moves[-(2*pattern_len):-pattern_len]
+    #     # Check for 2-move pattern (e.g., "UDUD")
+    #     for pattern_len in [2, 3, 4]:
+    #         if len(recent_moves) >= pattern_len * 2:
+    #             pattern = recent_moves[-pattern_len:]
+    #             prev_pattern = recent_moves[-(2*pattern_len):-pattern_len]
 
-                if pattern == prev_pattern:
-                    return True, f"'{pattern}' repeating"
+    #             if pattern == prev_pattern:
+    #                 return True, f"'{pattern}' repeating"
 
-        # Check for oscillating between two positions
-        if len(self.position_history) >= 4:
-            recent_positions = self.position_history[-4:]
-            if recent_positions[0] == recent_positions[2] and recent_positions[1] == recent_positions[3]:
-                return True, warning_message
+    #     # Check for oscillating between two positions
+    #     if len(self.position_history) >= 4:
+    #         recent_positions = self.position_history[-4:]
+    #         if recent_positions[0] == recent_positions[2] and recent_positions[1] == recent_positions[3]:
+    #             return True, warning_message
 
-        return False, ""
+    #     return False, ""
 
     def step(self) -> Dict[str, Any]:
         """
@@ -143,7 +145,6 @@ class MazeSolver:
             - solved: Whether the maze is solved after this step
             - error: Error message if step failed
         """
-        # If already solved, just return
         if self.is_solved:
             return {
                 "success": False,
@@ -153,19 +154,14 @@ class MazeSolver:
                 "error": "Maze already solved"
             }
 
-        # Get available directions
         available_directions = self.maze.get_directions()
-
-        # Check for patterns in moves
-        pattern_detected, pattern_desc = self._detect_pattern()
+        # pattern_detected, pattern_desc = self._detect_pattern()
         pattern_warning = ""
-        if pattern_detected:
-            pattern_warning = self.PATTERN_WARNING.format(pattern=pattern_desc)
-            print(f"Warning: Detected pattern - {pattern_desc}")
+        # if pattern_detected:
+        #     pattern_warning = self.PATTERN_WARNING.format(pattern=pattern_desc)
+        #     print(f"Warning: Detected pattern - {pattern_desc}")
 
-        # Construct the prompt for this step
         move_history = ", ".join(self.moves_history) if self.moves_history else "None (first move)"
-        
         prompt = self.STEP_PROMPT.format(
             current_pos=self.maze.position(),
             end_pos=self.maze.end,
@@ -175,18 +171,15 @@ class MazeSolver:
             move_history=move_history
         )
 
-        # Ask the model for the next move
         response = self.model.ask(prompt)
         print(f"Model response: {response}")
 
-        # Parse the response (extract first valid direction)
         move = None
         for char in response:
             if char.upper() in ["U", "D", "L", "R"] and char.upper() in available_directions:
                 move = char.upper()
                 break
 
-        # Handle invalid response
         if move is None:
             return {
                 "success": False,
@@ -196,39 +189,43 @@ class MazeSolver:
                 "error": f"Invalid model response: '{response}'. Expected one of: {available_directions}"
             }
 
-        # Save current position before moving
         current_position = self.maze.position()
         self.position_history.append(current_position)
 
-        # Execute the move
+        # Try to make the move and only record if valid
         try:
-            self.maze.move(move)
-            self.steps_taken += 1
-            self.moves_history.append(move)
+            valid_move = self.maze.move(move)
+            if valid_move:
+                self.steps_taken += 1
+                self.moves_history.append(move)
+                new_position = self.maze.position()
+                self.position_history.append(new_position)
+                self.visited_positions.add(new_position)
 
-            # Update tracking information
-            new_position = self.maze.position()
-            self.position_history.append(new_position)
-            self.visited_positions.add(new_position)
+                is_solved = self.maze.solved()
+                if is_solved:
+                    print(f"🎉 Maze solved in {self.steps_taken} steps!")
+                    self.is_solved = True
+                if self.plot:
+                    self.maze.print()
 
-            # Check if maze is solved
-            is_solved = self.maze.solved()
-
-            if is_solved:
-                print(f"🎉 Maze solved in {self.steps_taken} steps!")
-                self.is_solved = True
-
-            # Display the updated maze
-            self.maze.print()
-
-            return {
-                "success": True,
-                "move": move,
-                "position": new_position,
-                "solved": is_solved,
-                "steps_taken": self.steps_taken,
-                "pattern_detected": pattern_detected
-            }
+                return {
+                    "success": True,
+                    "move": move,
+                    "position": new_position,
+                    "solved": is_solved,
+                    "steps_taken": self.steps_taken,
+                    # "pattern_detected": pattern_detected
+                }
+            else:
+                # Invalid move: do not record move or position
+                return {
+                    "success": False,
+                    "move": move,
+                    "position": self.maze.position(),
+                    "solved": False,
+                    "error": f"Invalid move '{move}': hit a wall."
+                }
 
         except ValueError as e:
             return {

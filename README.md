@@ -39,6 +39,7 @@ classDiagram
         +ask(prompt: str) str
         +history() List~Dict~
         +save(filepath: str) bool
+        +reset_chat() void
     }
     
     class Maze {
@@ -50,7 +51,7 @@ classDiagram
         +Tuple start
         +Tuple end
         +__init__(width, height, plot, block_on_plot)
-        +move(direction)
+        +move(direction) bool
         +get_directions()
         +position()
         +solved()

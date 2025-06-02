@@ -168,3 +168,9 @@ class Model:
         except (IOError, OSError) as e:
             print(f"Error saving chat history: {str(e)}")
             return False
+
+    def reset_chat(self):
+        """
+        Reset the chat history/context for the model.
+        """
+        self.chat_history = []
