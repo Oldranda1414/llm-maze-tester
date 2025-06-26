@@ -2,7 +2,7 @@ from maze import Maze
 
 if __name__ == "__main__":
     # m = Maze(plot=False)
-    m = Maze(block_on_plot=False)
+    m = Maze(block_on_plot=False, plot=False)
 
     print("Start:", m.start)
     print("End:", m.end)

@@ -85,8 +85,7 @@ class MazeSolver:
         self._send_initial_prompt()
 
         # Show the initial maze state
-        if self.plot:
-            self.maze.print()
+        self.maze.print()
 
     def _send_initial_prompt(self) -> None:
         """Send the initial prompt to the model explaining its task."""
@@ -206,8 +205,7 @@ class MazeSolver:
                 if is_solved:
                     print(f"🎉 Maze solved in {self.steps_taken} steps!")
                     self.is_solved = True
-                if self.plot:
-                    self.maze.print()
+                self.maze.print()
 
                 return {
                     "success": True,

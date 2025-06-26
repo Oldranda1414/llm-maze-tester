@@ -12,7 +12,7 @@ def main():
     model_name = "llama3:latest"
     print(f"Initializing model: {model_name}")
 
-    maze_solver = MazeSolver(model_name=model_name)
+    maze_solver = MazeSolver(model_name=model_name, block_on_plot=True)
     print("Maze solver initialized. Starting to solve the maze...")
 
     step = 0
