@@ -35,7 +35,7 @@ classDiagram
         +List~Dict~ chat_history
         +String base_url
         +String base_model
-        +__init__(model_name: str)
+        +__init__(model_name: str, timeout: int)
         +ask(prompt: str) str
         +history() List~Dict~
         +save(filepath: str) bool
@@ -50,7 +50,7 @@ classDiagram
         +TargetedLatticeMaze maze
         +Tuple start
         +Tuple end
-        +__init__(width, height, plot, block_on_plot)
+        +__init__(width: int, height: int, plot: bool, block_on_plot: bool)
         +move(direction) bool
         +get_directions()
         +position()
@@ -66,7 +66,7 @@ classDiagram
         +bool is_solved
         +String INITIAL_PROMPT
         +String STEP_PROMPT
-        +__init__(model_name: str, maze_width: int, maze_height: int, plot: bool, block_on_plot: bool)
+        +__init__(model_name: str, maze_width: int, maze_height: int, plot: bool, block_on_plot: bool, patter_check_length: int)
         -_send_initial_prompt()
         +step() Dict~str, Any~
         +get_statistics() Dict~str, Any~

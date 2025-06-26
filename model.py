@@ -20,6 +20,7 @@ class Model:
         Args:
             model_name (str): Name of the model to use. For Ollama models, 
                 prefix with "ollama/" (e.g., "ollama/llama2").
+            timeout (int): Timeout for model answer.
         """
         self.model_name = model_name
         self.timeout = timeout
