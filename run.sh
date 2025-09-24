@@ -8,5 +8,5 @@ pid=$!
 # Ensure ollama is killed on exit or Ctrl-C
 trap 'kill "$pid" 2>/dev/null || true' EXIT
 
-# Run your python code with all passed arguments
-uv --project src run src/main.py "$@"
+# Run provided command
+"$@"
