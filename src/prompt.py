@@ -12,8 +12,6 @@ def generate_prompt(maze: Maze) -> str:
             maze.move(direction)
         paths[direction] = counter
         maze.set_position(initial_position)
-    print(original_path)
     maze.set_path(original_path)
-    print(paths)
 
-    return "hello"
+    return str(paths)
