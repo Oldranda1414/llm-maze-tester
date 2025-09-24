@@ -1,4 +1,4 @@
-from maze import Maze
+from maze import Maze, Direction
 from prompt import generate_prompt
 
 def main():
@@ -21,7 +21,7 @@ def main():
         if move == "C":
             break
 
-        maze.move(move)
+        maze.move(Direction.from_coordinate(move))
         print("New position:", maze.position())
         print("Solved?", maze.solved())
 

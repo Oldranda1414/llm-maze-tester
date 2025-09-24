@@ -23,3 +23,8 @@ withOllama *args:
 add *args:
   uv --project src add {{args}}
 
+# Add package to project dependencies
+[no-exit-message]
+remove *args:
+  uv --project src remove {{args}}
+
