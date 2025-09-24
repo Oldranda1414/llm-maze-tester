@@ -2,13 +2,29 @@
 
 ## Introduction
 
-This project aims to test the ability of various foundational models to navigate and solve a maze
+This project aims to test the ability of various foundational models to navigate and solve a maze.
 
-To run the project:
+This project uses Nix for dev env automation. To install the project dependencies and enter development shell run:
 
-`uv run main.py`
+```sh
+nix develop
+```
+
+To see available commands run:
+
+```sh
+just
+```
 
 ## Tech
+
+### Nix
+
+Nix is used for development environment automation
+
+### Just
+
+The project uses just to simplify cli commands
 
 ### UV
 
