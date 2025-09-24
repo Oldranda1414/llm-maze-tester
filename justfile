@@ -7,12 +7,16 @@ default:
 # Run the project
 [no-exit-message]
 run *args:
-  ./run.sh uv --project src run src/main.py {{args}}
+  just withOllama uv --project src run src/main.py {{args}}
 
 # Run the prompt generation test
 [no-exit-message]
 prompt *args:
-  ./run.sh uv --project src run src/prompt_test.py {{args}}
+  just withOllama uv --project src run src/prompt_test.py {{args}}
+
+[no-exit-message]
+withOllama *args:
+  ./withOllama.sh {{args}}
 
 # Add package to project dependencies
 [no-exit-message]
