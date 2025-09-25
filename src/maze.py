@@ -163,6 +163,27 @@ class Maze:
         """
         return deepcopy(self._path)
 
+    def decisions(self) -> list[Direction]:
+        if len(self._path) == 0:
+            return []
+        directions: list[Direction] = []
+        for (x1, y1), (x2, y2) in zip(self._path, self._path[1:]):
+            dx = x2 - x1
+            dy = y2 - y1
+            
+            if dx == 0 and dy == 1:
+                directions.append(Direction.EAST)
+            elif dx == 0 and dy == -1:
+                directions.append(Direction.WEST)
+            elif dx == 1 and dy == 0:
+                directions.append(Direction.SOUTH)
+            elif dx == -1 and dy == 0:
+                directions.append(Direction.NORTH)
+            else:
+                raise ValueError(f"Invalid move from {(x1, y1)} to {(x2, y2)}")
+        
+        return directions
+
     def solved(self):
         """Check if the maze is solved.
         Returns:

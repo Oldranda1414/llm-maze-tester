@@ -1,16 +1,16 @@
 from maze import Maze, Direction
-from prompt import generate_step_prompt
+from prompt import generate_step_prompt, get_preamble
 
 def main():
-    maze = Maze(block_on_plot=False, plot=False)
+    maze = Maze(3, 3, block_on_plot=False, plot=False)
+    print(get_preamble(maze))
 
     while not maze.solved():
 
-        maze.print()
-
-        print("Available directions:", [direction.to_coordinate() for direction in maze.get_directions()])
-        print("generated prompt:")
+        # print("Available directions:", [direction.to_coordinate() for direction in maze.get_directions()])
+        # print("generated prompt:")
         print(generate_step_prompt(maze))
+        maze.print()
 
         move = input("give me a move (C to close): ")
         move = move.strip(" ").upper()
