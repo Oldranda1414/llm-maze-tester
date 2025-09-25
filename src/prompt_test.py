@@ -1,5 +1,5 @@
 from maze import Maze, Direction
-from prompt import generate_prompt
+from prompt import generate_step_prompt
 
 def main():
     maze = Maze(block_on_plot=False, plot=False)
@@ -8,15 +8,16 @@ def main():
 
         maze.print()
 
-        print("Available directions:", maze.get_directions())
+        print("Available directions:", [direction.to_coordinate() for direction in maze.get_directions()])
         print("generated prompt:")
-        print(generate_prompt(maze))
+        print(generate_step_prompt(maze))
 
         move = input("give me a move (C to close): ")
         move = move.strip(" ").upper()
-        while move not in ["U","D","L","R", "C"]:
+        while move not in ["N", "E", "S", "W", "C"]:
             print("invalid move try again")
             move = input("give me a move (C to close): ")
+            move = move.strip(" ").upper()
 
         if move == "C":
             break

@@ -26,39 +26,49 @@ from rich.text import Text
 Coordinate: TypeAlias = tuple[int, int]
 
 class Direction(Enum):
-    UP = "up"
-    DOWN = "down"
-    LEFT = "left"
-    RIGHT = "right"
+    NORTH = "north"
+    EAST = "east"
+    SOUTH = "south"
+    WEST = "west"
 
     def __str__(self):
         conversion: dict[Direction, str] = {
-                Direction.UP: "U",
-                Direction.DOWN: "D",
-                Direction.LEFT: "L",
-                Direction.RIGHT: "R"
+                Direction.NORTH: "North",
+                Direction.EAST: "East",
+                Direction.SOUTH: "South",
+                Direction.WEST: "West"
         }
         return conversion[self]
 
     def __repr__(self):
         return str(self)
+
+    def to_coordinate(self) -> str:
+        conversion: dict["Direction", str] = {
+                Direction.NORTH: "N",
+                Direction.EAST: "E",
+                Direction.SOUTH: "S",
+                Direction.WEST: "W"
+        }
+        return conversion[self]
+
     @classmethod
     def from_coordinate(cls, coord: str) -> "Direction":
         conversion: dict[str, "Direction"] = {
-                "U": cls.UP,
-                "D": cls.DOWN,
-                "L": cls.LEFT,
-                "R": cls.RIGHT
+                "N": cls.NORTH,
+                "E": cls.EAST,
+                "S": cls.SOUTH,
+                "W": cls.WEST
         }
         if coord not in conversion.keys():
-            raise ValueError("provided string is not a valid coordinate (U,D,L,R)")
+            raise ValueError("provided string is not a valid coordinate (N,E,S,W)")
         return conversion[coord]
 
 DIRECTIONS: dict[Direction, Coordinate] = {
-    Direction.UP: (-1, 0),
-    Direction.DOWN: (1, 0),
-    Direction.LEFT: (0, -1),
-    Direction.RIGHT: (0, 1)
+    Direction.NORTH: (-1, 0),
+    Direction.EAST: (0, 1),
+    Direction.SOUTH: (1, 0),
+    Direction.WEST: (0, -1)
 }
 
 class Maze:
