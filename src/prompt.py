@@ -12,6 +12,7 @@ The possible directions are N for north, E for east, S for south, W for west.
 As an example if you want to step towards north you would answer: N
 Remember to provide only the cardinal direction initial in you answer.
 """
+PROD_PATH_PREAMBLE = "The last productive moves you have made (aka excluding consecutive opposite moves) are: "
  
 def get_preamble(maze: Maze):
     return PREAMBLE + f"\nThe maze is a {maze.width} x {maze.height} grid, with every square in the grid being one square meter big.\n"
@@ -24,10 +25,10 @@ def generate_step_prompt(maze: Maze) -> str:
     for direction in directions:
         step_prompt += _get_path_prompt(direction, maze, initial_position) + "\n"
     maze.set_path(original_path)
-    string_decisions = ", ".join([decision.to_coordinate() for decision in maze.decisions()])
-    if len(string_decisions) != 0:
-        step_prompt += f"Here is a list of your last moves: {string_decisions}"
-    print(_productive_path(maze))
+    # string_decisions = ", ".join([decision.to_coordinate() for decision in maze.decisions()])
+    # if len(string_decisions) != 0:
+    #     step_prompt += f"Here is a list of your last moves: {string_decisions}\n"
+    #     step_prompt += _prod_path_prompt(maze)
 
     return step_prompt
 
@@ -46,13 +47,24 @@ def _get_path_length(direction: Direction, maze: Maze, initial_position: Coordin
         maze.move(direction)
     maze.set_position(initial_position)
     return counter
+
+def _prod_path_prompt(maze: Maze):
+    return PROD_PATH_PREAMBLE + ", ".join([decision.to_coordinate() for decision in _productive_path(maze)])
     
 def _productive_path(maze: Maze) -> list[Direction]:
     path = maze.decisions().copy()
     productive_path: list[Direction] = []
-    for i in range(len(path) - 2):
-        if path[i] == path[i+2]:
-            i += 1
+    opposites = {
+            Direction.NORTH: Direction.SOUTH,
+            Direction.SOUTH: Direction.NORTH,
+            Direction.EAST: Direction.WEST,
+            Direction.WEST: Direction.EAST
+        }
+    i = 0
+    while i < len(path):
+        if i + 1 < len(path) and path[i + 1] == opposites[path[i]]:
+            i += 2
         else:
             productive_path.append(path[i])
+            i += 1
     return productive_path
