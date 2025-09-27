@@ -37,8 +37,8 @@ def _get_path_prompt(direction: Direction, maze: Maze, initial_position: Coordin
     prompt = f"Due {str(direction)} there is "
     if path_lenght == 0:
         return prompt + "a wall. Seems you can't step in that direction."
-    path_lenght_word = num2words(path_lenght)
-    return prompt + f"a corridor that goes on for {path_lenght_word} meters before encountering a wall."
+    path_lenght_str = _lenght_to_string(path_lenght)
+    return prompt + f"a corridor that goes on for {path_lenght_str} meters before encountering a wall."
 
 def _get_path_length(direction: Direction, maze: Maze, initial_position: Coordinate) -> int:
     counter = 0
@@ -68,3 +68,7 @@ def _productive_path(maze: Maze) -> list[Direction]:
             productive_path.append(path[i])
             i += 1
     return productive_path
+
+def _lenght_to_string(lenght: int) -> str:
+    unit = "meter" if lenght == 1 else "meters"
+    return f"{num2words(lenght)} {unit}"
