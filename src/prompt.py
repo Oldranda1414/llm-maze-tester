@@ -4,6 +4,7 @@ from maze import Coordinate, Direction, Maze
 
 PREAMBLE = """
 You are inside a maze. You have a compass with you so you. The maze is well lit so you can see in all directions how long the corridors are.
+Both the starting cell and the exit cell are on the border of the grid.
 Your goal is to find the maze exit.
 
 Tell me which direction you would like to go to. Provide your answer in the form of the initial of the cardinal direction you wish to take a step forwards to.
@@ -11,6 +12,8 @@ The possible directions are N for north, E for east, S for south, W for west.
 
 As an example if you want to step towards north you would answer: N
 Remember to provide only the cardinal direction initial in you answer.
+
+You get as many turns as you want, so it's normal that at the start you have not enough information to know on what cell the exit is, so consider exploring to gather information at the start.
 """
 PROD_PATH_PREAMBLE = "The last productive moves you have made (aka excluding consecutive opposite moves) are: "
  
