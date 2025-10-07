@@ -31,7 +31,7 @@ class Direction(Enum):
     SOUTH = "south"
     WEST = "west"
 
-    def __str__(self):
+    def __str__(self) -> str:
         conversion: dict[Direction, str] = {
                 Direction.NORTH: "North",
                 Direction.EAST: "East",

@@ -5,7 +5,8 @@ A class that uses an LLM model to solve a maze.
 from typing import Dict, Any, List, Set, Tuple
 
 from model import Model
-from maze import Maze
+from maze import Direction, Maze
+from prompt import generate_step_prompt, get_preamble
 
 class MazeSolver:
     """
@@ -14,44 +15,8 @@ class MazeSolver:
     to make decisions about which direction to move at each step.
     """
 
-    # Template for the initial prompt to the model
-    INITIAL_PROMPT = """
-        You are a maze-solving AI.
-        Your task is to navigate through a {width}x{height} maze from the starting point to the endpoint.
-
-        You are currently at position {start_pos}.
-        The end goal is at position {end_pos}.
-
-        For each step, I will tell you your current position, the goal position, and which moves are available.
-        You must respond with ONLY a single letter representing your chosen direction:
-        - U (up)
-        - D (down)
-        - L (left)
-        - R (right)
-
-        Do not provide any explanation, just respond with a single letter U, D, L, or R.
-    """
-
-    # Template for each step's prompt
-    STEP_PROMPT = """
-        Current position: {current_pos}
-        Goal position: {end_pos}
-        Available moves: {available_moves}
-        {pattern_warning}
-        
-        Your move history: {move_history}
-
-        Choose your next move (respond with only a single letter: {move_options}):
-    """
-
-    # Template for pattern warning
-    PATTERN_WARNING = """
-        WARNING: You appear to be stuck in a repetitive pattern: {pattern}
-        Try to choose a different strategy to reach the goal.
-    """
-
     def __init__(self, model_name: str, maze_width: int = 6, maze_height: int = 6,
-                 plot: bool = True, block_on_plot: bool = False, pattern_check_length: int = 6):
+                 plot: bool = False):
         """
         Initialize the maze solver with a model and maze.
         
@@ -70,67 +35,18 @@ class MazeSolver:
         # Initialize the maze
         print(f"Creating {maze_width}x{maze_height} maze...")
         self.maze = Maze(width=maze_width, height=maze_height,
-                        plot=plot, block_on_plot=block_on_plot)
+                        plot=plot)
 
         # Statistics and tracking
         self.steps_taken = 0
         self.moves_history: List[str] = []
         self.visited_positions: Set[Tuple[int, int]] = set()
         self.is_solved = False
-        self.pattern_check_length = pattern_check_length
         self.position_history: List[Tuple[int, int]] = []
         self.plot = plot
 
-        # Initial briefing to the model
-        self._send_initial_prompt()
-
         # Show the initial maze state
         self.maze.print()
-
-    def _send_initial_prompt(self) -> None:
-        """Send the initial prompt to the model explaining its task."""
-        initial_prompt = self.INITIAL_PROMPT.format(
-            width=self.maze.width,
-            height=self.maze.height,
-            start_pos=self.maze.position(),
-            end_pos=self.maze.end
-        )
-
-        # Send the initial prompt to the model
-        response = self.model.ask(initial_prompt)
-        print(f"Model initialized for maze solving. Initial response: {response}")
-
-    # def _detect_pattern(self) -> tuple[bool, str]:
-    #     """
-    #     Detect repetitive patterns in recent moves.
-        
-    #     Returns:
-    #         tuple: (pattern_detected, pattern_description)
-    #     """
-    #     warning_message = "You are moving in a repetitive pattern. Please try to change your strategy. Use the move history to better orient yourself."
-
-    #     if len(self.moves_history) < 4:
-    #         return False, ""
-
-    #     # Check for simple alternating patterns (e.g., "UDUD" or "LRLR")
-    #     recent_moves = ''.join(self.moves_history[-self.pattern_check_length:])
-
-    #     # Check for 2-move pattern (e.g., "UDUD")
-    #     for pattern_len in [2, 3, 4]:
-    #         if len(recent_moves) >= pattern_len * 2:
-    #             pattern = recent_moves[-pattern_len:]
-    #             prev_pattern = recent_moves[-(2*pattern_len):-pattern_len]
-
-    #             if pattern == prev_pattern:
-    #                 return True, f"'{pattern}' repeating"
-
-    #     # Check for oscillating between two positions
-    #     if len(self.position_history) >= 4:
-    #         recent_positions = self.position_history[-4:]
-    #         if recent_positions[0] == recent_positions[2] and recent_positions[1] == recent_positions[3]:
-    #             return True, warning_message
-
-    #     return False, ""
 
     def step(self) -> Dict[str, Any]:
         """
@@ -154,28 +70,24 @@ class MazeSolver:
             }
 
         available_directions = self.maze.get_directions()
-        # pattern_detected, pattern_desc = self._detect_pattern()
-        pattern_warning = ""
-        # if pattern_detected:
-        #     pattern_warning = self.PATTERN_WARNING.format(pattern=pattern_desc)
-        #     print(f"Warning: Detected pattern - {pattern_desc}")
 
-        move_history = ", ".join(self.moves_history) if self.moves_history else "None (first move)"
-        prompt = self.STEP_PROMPT.format(
-            current_pos=self.maze.position(),
-            end_pos=self.maze.end,
-            available_moves=", ".join(available_directions),
-            move_options=", ".join(available_directions),
-            pattern_warning=pattern_warning,
-            move_history=move_history
-        )
+        prompt = ""
+
+        if self.steps_taken == 0:
+            prompt += get_preamble(self.maze)
+
+        prompt += generate_step_prompt(self.maze)
 
         response = self.model.ask(prompt)
         print(f"Model response: {response}")
+        print(f"available_directions: {available_directions}")
 
         move = None
+        # TODO remove for, should only check if the provided move is a char, otherwise notify that the response is not valid
         for char in response:
-            if char.upper() in ["U", "D", "L", "R"] and char.upper() in available_directions:
+            print(f"char in reponse: {char}")
+            if char.upper() in ["N", "S", "W", "E"] and char.upper() in [direction.to_coordinate() for direction in available_directions]:
+                print("setting move")
                 move = char.upper()
                 break
 
@@ -193,7 +105,10 @@ class MazeSolver:
 
         # Try to make the move and only record if valid
         try:
-            valid_move = self.maze.move(move)
+            print(move)
+            print(Direction.from_coordinate(move))
+            valid_move = self.maze.move(Direction.from_coordinate(move))
+            print(f"move accepted: {valid_move}")
             if valid_move:
                 self.steps_taken += 1
                 self.moves_history.append(move)
