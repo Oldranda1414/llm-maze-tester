@@ -15,9 +15,10 @@ Remember to provide only the cardinal direction initial in you answer.
 
 You get as many turns as you want, so it's normal that at the start you have not enough information to know on what cell the exit is, so consider exploring to gather information at the start.
 """
+
 PROD_PATH_PREAMBLE = "The last productive moves you have made (aka excluding consecutive opposite moves) are: "
  
-def get_preamble(maze: Maze):
+def get_preamble(maze: Maze) -> str:
     return PREAMBLE + f"\nThe maze is a {maze.width} x {maze.height} grid, with every square in the grid being one square meter big.\n"
 
 def generate_step_prompt(maze: Maze) -> str: 
@@ -28,10 +29,6 @@ def generate_step_prompt(maze: Maze) -> str:
     for direction in directions:
         step_prompt += _get_path_prompt(direction, maze, initial_position) + "\n"
     maze.set_path(original_path)
-    # string_decisions = ", ".join([decision.to_coordinate() for decision in maze.decisions()])
-    # if len(string_decisions) != 0:
-    #     step_prompt += f"Here is a list of your last moves: {string_decisions}\n"
-    #     step_prompt += _prod_path_prompt(maze)
 
     return step_prompt
 
@@ -51,7 +48,7 @@ def _get_path_length(direction: Direction, maze: Maze, initial_position: Coordin
     maze.set_position(initial_position)
     return counter
 
-def _prod_path_prompt(maze: Maze):
+def _prod_path_prompt(maze: Maze) -> str:
     return PROD_PATH_PREAMBLE + ", ".join([decision.to_coordinate() for decision in _productive_path(maze)])
     
 def _productive_path(maze: Maze) -> list[Direction]:
