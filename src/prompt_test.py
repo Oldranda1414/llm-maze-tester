@@ -1,9 +1,9 @@
 from maze import Maze, Direction
-from prompt import generate_step_prompt, get_preamble
+from prompt import generate_step_prompt, preamble
 
 def main():
     maze = Maze(3, 3, block_on_plot=False, plot=False)
-    print(get_preamble(maze))
+    print(preamble(maze))
 
     while not maze.solved():
 

@@ -6,7 +6,7 @@ from typing import Dict, Any, List, Set, Tuple
 
 from model import Model
 from maze import Direction, Maze
-from prompt import generate_step_prompt, get_preamble
+from prompt import generate_step_prompt, illegal_answer_warning, illegal_direction_warning, preamble
 
 class MazeSolver:
     """
@@ -36,6 +36,10 @@ class MazeSolver:
         print(f"Creating {maze_width}x{maze_height} maze...")
         self.maze = Maze(width=maze_width, height=maze_height,
                         plot=plot)
+        
+        # Track last step errors
+        self.invalid_answer_provided = False
+        self.invalid_direction_provided = False
 
         # Statistics and tracking
         self.steps_taken = 0
@@ -74,22 +78,29 @@ class MazeSolver:
         prompt = ""
 
         if self.steps_taken == 0:
-            prompt += get_preamble(self.maze)
+            prompt += preamble(self.maze)
+        if self.invalid_answer_provided:
+            prompt += illegal_answer_warning(self.maze)
+            self.invalid_answer_provided = False
+        elif self.invalid_direction_provided:
+            prompt += illegal_direction_warning(self.maze)
+            self.invalid_direction_provided = False
 
         prompt += generate_step_prompt(self.maze)
 
         response = self.model.ask(prompt)
-        print(f"Model response: {response}")
         print(f"available_directions: {available_directions}")
 
         move = None
-        # TODO remove for, should only check if the provided move is a char, otherwise notify that the response is not valid
-        for char in response:
-            print(f"char in reponse: {char}")
-            if char.upper() in ["N", "S", "W", "E"] and char.upper() in [direction.to_coordinate() for direction in available_directions]:
-                print("setting move")
-                move = char.upper()
-                break
+        decision = response[-1]
+        if decision.upper() in ["N", "S", "W", "E"]:
+            if decision.upper() in [direction.to_coordinate() for direction in available_directions]:
+                move = decision.upper()
+            else:
+                print(f"model provided an illegal direction: {decision}")
+                self.invalid_direction_provided = True
+        else:
+            self.invalid_answer_provided = True
 
         if move is None:
             return {
@@ -105,10 +116,7 @@ class MazeSolver:
 
         # Try to make the move and only record if valid
         try:
-            print(move)
-            print(Direction.from_coordinate(move))
             valid_move = self.maze.move(Direction.from_coordinate(move))
-            print(f"move accepted: {valid_move}")
             if valid_move:
                 self.steps_taken += 1
                 self.moves_history.append(move)
@@ -128,7 +136,6 @@ class MazeSolver:
                     "position": new_position,
                     "solved": is_solved,
                     "steps_taken": self.steps_taken,
-                    # "pattern_detected": pattern_detected
                 }
             else:
                 # Invalid move: do not record move or position
