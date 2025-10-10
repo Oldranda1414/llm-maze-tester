@@ -11,6 +11,7 @@ def main():
     maze_height = 3
 
     solved = False
+    max_steps = 20
     while not solved:
         maze_solver = MazeSolver(model_name=model_name, maze_width=maze_width, maze_height=maze_height)
         step = 0
