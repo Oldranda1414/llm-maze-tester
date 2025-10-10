@@ -2,7 +2,7 @@
 maze_solver.py
 A class that uses an LLM model to solve a maze.
 """
-from typing import Dict, Any, List, Set, Tuple
+from typing import Any
 
 from model import Model
 from maze import Direction, Maze
@@ -43,16 +43,16 @@ class MazeSolver:
 
         # Statistics and tracking
         self.steps_taken = 0
-        self.moves_history: List[str] = []
-        self.visited_positions: Set[Tuple[int, int]] = set()
+        self.moves_history: list[str] = []
+        self.visited_positions: set[tuple[int, int]] = set()
         self.is_solved = False
-        self.position_history: List[Tuple[int, int]] = []
+        self.position_history: list[tuple[int, int]] = []
         self.plot = plot
 
         # Show the initial maze state
         self.maze.print()
 
-    def step(self) -> Dict[str, Any]:
+    def step(self) -> dict[str, Any]:
         """
         Execute a single step in the maze solving process.
         
@@ -128,6 +128,7 @@ class MazeSolver:
                 if is_solved:
                     print(f"🎉 Maze solved in {self.steps_taken} steps!")
                     self.is_solved = True
+                    self.maze.save()
                 self.maze.print()
 
                 return {
@@ -156,7 +157,7 @@ class MazeSolver:
                 "error": f"Error executing move: {str(e)}"
             }
 
-    def get_statistics(self) -> Dict[str, Any]:
+    def get_statistics(self) -> dict[str, Any]:
         """
         Get statistics about the maze solving progress.
         
@@ -182,3 +183,4 @@ class MazeSolver:
             bool: True if the maze is solved, False otherwise
         """
         return self.is_solved
+
