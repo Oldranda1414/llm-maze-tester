@@ -16,7 +16,11 @@ def main():
         maze_solver = MazeSolver(model_name=model_name, maze_width=maze_width, maze_height=maze_height)
         step = 0
         while maze_solver.solved() is False and step < max_steps:
-            maze_solver.step()
+            try:
+                maze_solver.step()
+            except:
+                print("exception occurred, restarting...")
+                break
             step += 1
         if maze_solver.solved():
             print("maze solved!")
