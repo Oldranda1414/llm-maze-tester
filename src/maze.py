@@ -83,6 +83,8 @@ class Maze:
         block_on_plot (bool): Whether to block execution until the plot is closed
     """
     def __init__(self, width: int = 6, height:int = 6, save_path: str = "maze.png", plot: bool = True, block_on_plot: bool = True):
+        if width < 2 or height < 2:
+            raise ValueError("maze width and height must be >= 2")
         self.width = width
         self.height = height
         self.save_path = save_path
@@ -224,18 +226,19 @@ class Maze:
 
     def save(self, save_path: str | None = None):
         pixels = self._add_path(self.maze.as_pixels())
-        if self.plot:
-            plt.close('all')
-            plt.figure(figsize=(5, 5))
-        
-            plt.imshow(pixels, cmap='gray')
-            plt.title(f"Maze {self.width}x{self.height}")
-            plt.axis('off')
-            
-            if not save_path:
-                save_path = self.save_path
 
-            plt.savefig(save_path, dpi=300, bbox_inches='tight')
+        plt.close('all')
+        plt.figure(figsize=(5, 5))
+    
+        plt.imshow(pixels, cmap='gray')
+        plt.title(f"Maze {self.width}x{self.height}")
+        plt.axis('off')
+        
+        if not save_path:
+            print(self.save_path)
+            save_path = self.save_path
+
+        plt.savefig(save_path, dpi=300, bbox_inches='tight')
 
     def reset(self):
         self._path = [self.start]

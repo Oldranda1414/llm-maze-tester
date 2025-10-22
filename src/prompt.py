@@ -3,7 +3,7 @@ from num2words import num2words
 from maze import Coordinate, Direction, Maze
 
 PREAMBLE = """
-You are inside a maze. You have a compass with you so you. The maze is well lit so you can see in all directions how long the corridors are.
+You are inside a maze. You have a compass with you. The maze is well lit so you can see in all directions how long the corridors are.
 Both the starting cell and the exit cell are on the border of the grid.
 Your goal is to find the maze exit.
 
