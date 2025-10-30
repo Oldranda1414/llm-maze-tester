@@ -2,7 +2,7 @@
 """
 import json
 
-from maze_solver import MazeSolver
+from solver import MazeSolver
 
 def main():
     """placeholder for real stuff
@@ -21,7 +21,7 @@ def main():
         while maze_solver.solved() is False and step < max_steps:
             try:
                 step_history = maze_solver.step()
-                history.append()
+                history.append(step_history)
             except:
                 print("exception occurred, restarting...")
                 break

@@ -1,4 +1,5 @@
-from maze import Maze, Direction
+from maze import Maze
+from move import Direction
 from prompt import generate_step_prompt, preamble
 
 def main():

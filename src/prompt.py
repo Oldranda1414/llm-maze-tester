@@ -1,6 +1,7 @@
 from num2words import num2words
 
-from maze import Coordinate, Direction, Maze
+from maze import Maze
+from move import Coordinate, Direction
 
 PREAMBLE = """
 You are inside a maze. You have a compass with you. The maze is well lit so you can see in all directions how long the corridors are.

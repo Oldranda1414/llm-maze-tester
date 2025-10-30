@@ -10,16 +10,14 @@ The maze is displayed using matplotlib, and the player can see their current pos
 from copy import deepcopy
 
 import random
-import matplotlib.pyplot as plt
 import numpy as np
 
 from maze_dataset import LatticeMaze
 from maze_dataset.generation import LatticeMazeGenerators
 from maze_dataset.maze import TargetedLatticeMaze
 
-from coordinate import Coordinate
-from direction import Direction, DIRECTIONS
-from maze_output import save_maze, print_maze
+from move import Coordinate, Direction, DIRECTIONS
+from maze.output import save_maze, print_maze
 
 class Maze:
     """

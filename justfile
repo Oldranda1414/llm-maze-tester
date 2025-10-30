@@ -17,7 +17,7 @@ prompt *args:
 # Run the maze-prompt example
 [no-exit-message]
 example *args:
-  just withOllama uv --project src run src/maze_prompt_example.py {{args}}
+  just withOllama uv --project src run src/prompt_example.py {{args}}
 
 # Run the maze test
 [no-exit-message]

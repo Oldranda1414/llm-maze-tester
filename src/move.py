@@ -1,6 +1,7 @@
 from enum import Enum
+from typing import TypeAlias
 
-from coordinate import Coordinate
+Coordinate: TypeAlias = tuple[int, int]
 
 class Direction(Enum):
     NORTH = "north"

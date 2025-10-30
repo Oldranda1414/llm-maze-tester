@@ -7,7 +7,7 @@ from maze_dataset.maze import TargetedLatticeMaze
 from rich.console import Console
 from rich.text import Text
 
-from coordinate import Coordinate
+from move import Coordinate
 
 def save_maze(maze: TargetedLatticeMaze, path: list[Coordinate], save_path: str):
     pixels = _add_path(maze.as_pixels(), path)
