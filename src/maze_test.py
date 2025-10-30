@@ -1,31 +1,35 @@
 from maze import Maze
+from maze import Direction
 
 if __name__ == "__main__":
-    # m = Maze(plot=False)
-    m = Maze(block_on_plot=False, plot=False)
+    maze = Maze()
 
-    print("Start:", m.start)
-    print("End:", m.end)
-    print("Initial position:", m.position())
+    print("Start:", maze.start)
+    print("End:", maze.end)
+    print("Initial position:", maze.position())
 
-    while not m.solved():
+    while not maze.solved():
+        maze.print()
 
-        m.print()
+        print("Available directions:", maze.get_directions())
 
-        print("Available directions:", m.get_directions())
-
-        move = input("give me a move (C to close): ")
+        prompt = "give me a move (C to close, S to save): "
+        move = input(prompt)
         move = move.strip(" ").upper()
-        while move not in ["U","D","L","R", "C"]:
+        coordinates = ["N", "E", "S", "W"]
+        actions = ["C", "S"]
+        while move not in coordinates + actions:
             print("invalid move try again")
-            move = input("give me a move (C to close): ")
+            move = input(prompt)
 
         if move == "C":
             break
+        if move == "S":
+            maze.save('./maze_test.png')
 
-        m.move(move)
-        print("New position:", m.position())
-        print("Solved?", m.solved())
+        maze.move(Direction.from_coordinate(move))
+        print("New position:", maze.position())
+        print("Solved?", maze.solved())
 
     input("press any button to exit")
 

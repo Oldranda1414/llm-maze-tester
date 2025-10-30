@@ -7,69 +7,19 @@ The maze is represented as a grid of cells, where walls are present between cell
 The player starts at a random position on the border of the maze and must reach the end point.
 The maze is displayed using matplotlib, and the player can see their current position and the path taken.
 """
-from typing import TypeAlias
 from copy import deepcopy
-from enum import Enum
 
 import random
 import matplotlib.pyplot as plt
 import numpy as np
-from jaxtyping import Int
 
 from maze_dataset import LatticeMaze
 from maze_dataset.generation import LatticeMazeGenerators
 from maze_dataset.maze import TargetedLatticeMaze
 
-from rich.console import Console
-from rich.text import Text
-
-Coordinate: TypeAlias = tuple[int, int]
-
-class Direction(Enum):
-    NORTH = "north"
-    EAST = "east"
-    SOUTH = "south"
-    WEST = "west"
-
-    def __str__(self) -> str:
-        conversion: dict[Direction, str] = {
-                Direction.NORTH: "North",
-                Direction.EAST: "East",
-                Direction.SOUTH: "South",
-                Direction.WEST: "West"
-        }
-        return conversion[self]
-
-    def __repr__(self):
-        return str(self)
-
-    def to_coordinate(self) -> str:
-        conversion: dict["Direction", str] = {
-                Direction.NORTH: "N",
-                Direction.EAST: "E",
-                Direction.SOUTH: "S",
-                Direction.WEST: "W"
-        }
-        return conversion[self]
-
-    @classmethod
-    def from_coordinate(cls, coord: str) -> "Direction":
-        conversion: dict[str, "Direction"] = {
-                "N": cls.NORTH,
-                "E": cls.EAST,
-                "S": cls.SOUTH,
-                "W": cls.WEST
-        }
-        if coord not in conversion.keys():
-            raise ValueError("provided string is not a valid coordinate (N,E,S,W)")
-        return conversion[coord]
-
-DIRECTIONS: dict[Direction, Coordinate] = {
-    Direction.NORTH: (-1, 0),
-    Direction.EAST: (0, 1),
-    Direction.SOUTH: (1, 0),
-    Direction.WEST: (0, -1)
-}
+from coordinate import Coordinate
+from direction import Direction, DIRECTIONS
+from maze_output import save_maze, print_maze
 
 class Maze:
     """
@@ -82,14 +32,12 @@ class Maze:
         plot (bool): Whether to plot the maze using matplotlib
         block_on_plot (bool): Whether to block execution until the plot is closed
     """
-    def __init__(self, width: int = 6, height:int = 6, save_path: str = "maze.png", plot: bool = True, block_on_plot: bool = True):
+    def __init__(self, width: int = 6, height:int = 6, save_path: str = "maze.png"):
         if width < 2 or height < 2:
             raise ValueError("maze width and height must be >= 2")
         self.width = width
         self.height = height
         self.save_path = save_path
-        self.plot = plot
-        self.block_on_plot = block_on_plot
         lattice_maze: LatticeMaze = LatticeMazeGenerators.gen_dfs(
             np.array([height, width])
         )
@@ -200,64 +148,12 @@ class Maze:
         self._path = new_path
 
     def print(self):
-        """Print the maze with the current path.
-        """
-        pixels = self._add_path(self.maze.as_pixels())
-        if self.plot:
-            plt.close('all')
-            plt.figure(figsize=(5, 5))
-        
-            plt.imshow(pixels, cmap='gray')
-            plt.title(f"Maze {self.width}x{self.height}")
-            plt.axis('off')
-            
-            if self.save_path:
-                plt.savefig(self.save_path, dpi=300, bbox_inches='tight')
-            else:
-                plt.show(block=self.block_on_plot)
-        else:
-            console = Console()
-            for row in pixels:
-                text_line = Text()
-                for pixel in row:
-                    r, g, b = pixel[:3]
-                    text_line.append("  ", style=f"on rgb({r},{g},{b})")  # Two spaces for block
-                console.print(text_line)
+        print_maze(self.maze, self._path)
 
     def save(self, save_path: str | None = None):
-        pixels = self._add_path(self.maze.as_pixels())
-
-        plt.close('all')
-        plt.figure(figsize=(5, 5))
-    
-        plt.imshow(pixels, cmap='gray')
-        plt.title(f"Maze {self.width}x{self.height}")
-        plt.axis('off')
-        
-        if not save_path:
-            print(self.save_path)
-            save_path = self.save_path
-
-        plt.savefig(save_path, dpi=300, bbox_inches='tight')
+        save_maze(self.maze, self._path, save_path if save_path else self.save_path)
 
     def reset(self):
         self._path = [self.start]
         self._position = self.start
 
-    def _add_path(self, pixel_maze: Int[np.ndarray, 'x y rgb']) -> Int[np.ndarray, 'x y rgb']:
-        PATH_COLOR = np.array([255, 255, 0], dtype=np.uint8)
-        CURRENT_COLOR = np.array([255, 165, 0], dtype=np.uint8)
-        result = pixel_maze.copy()
-        scaling_factor = 2
-        
-        for index, coord in enumerate(self._path):
-            row, col = coord
-            center_row = row * scaling_factor + 1
-            center_col = col * scaling_factor + 1
-            
-            if (0 <= center_row < result.shape[0] and 
-                0 <= center_col < result.shape[1]):
-                result[center_row, center_col] = PATH_COLOR if (index != len(self._path) - 1) else CURRENT_COLOR
-    
-        return result
-        

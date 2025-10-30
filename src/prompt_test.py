@@ -2,7 +2,7 @@ from maze import Maze, Direction
 from prompt import generate_step_prompt, preamble
 
 def main():
-    maze = Maze(3, 3, block_on_plot=False, plot=False)
+    maze = Maze(3, 3)
     print(preamble(maze))
 
     while not maze.solved():

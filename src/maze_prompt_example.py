@@ -18,58 +18,12 @@ def main() -> None:
     os.makedirs(output_path, exist_ok=True)
     for i in range(2, 7):
         save_path = get_save_path(i)
-        m = Maze(i, i, save_path, False, False)
+        m = Maze(i, i, save_path)
         m.save()
         prompt = generate_step_prompt(m)
         mazes.append((save_path, prompt))
 
-    ## LLM generated code
-
-    # from PIL import Image, ImageDraw, ImageFont
-    #
-    # # Set font
-    # font = ImageFont.load_default()
-    #
-    # # Parameters
-    # padding = 20
-    # text_width = 400  # Width reserved for the text
-    # background_color = "white"
-    # text_color = "black"
-    #
-    # # Load all images
-    # rows = []
-    # for img_path, text in mazes:
-    #     img = Image.open(img_path)
-    #     # Create a blank white image to place the maze + text
-    #     row_height = max(img.height, 150)
-    #     row_img = Image.new("RGB", (img.width + text_width + padding * 3, row_height), background_color)
-    #
-    #     # Paste maze
-    #     row_img.paste(img, (padding, (row_height - img.height) // 2))
-    #
-    #     # Draw text next to it
-    #     draw = ImageDraw.Draw(row_img)
-    #     text_x = img.width + padding * 2
-    #     text_y = padding
-    #     draw.multiline_text((text_x, text_y), text, fill=text_color, font=font, spacing=4)
-    #
-    #     rows.append(row_img)
-    #
-    # # Combine all rows vertically
-    # total_height = sum(r.height for r in rows) + padding * (len(rows) + 1)
-    # max_width = max(r.width for r in rows)
-    # output = Image.new("RGB", (max_width, total_height), background_color)
-    #
-    # y = padding
-    # for r in rows:
-    #     output.paste(r, (padding, y))
-    #     y += r.height + padding
-    #
-    # # Save result
-    # output.save(f"{output_path}/maze_summary.png")
-    # print("✅ Saved maze_summary.png")
-    # Prepare figure
-        fig, axes = plt.subplots(len(mazes), 2, figsize=(8, len(mazes)*4))
+        _, axes = plt.subplots(len(mazes), 2, figsize=(8, len(mazes)*4))
         if len(mazes) == 1:
             axes = [axes]  # Ensure it's iterable even for 1 row
 

@@ -34,8 +34,7 @@ class MazeSolver:
 
         # Initialize the maze
         print(f"Creating {maze_width}x{maze_height} maze...")
-        self.maze = Maze(width=maze_width, height=maze_height,
-                        plot=plot)
+        self.maze = Maze(width=maze_width, height=maze_height)
         
         # Track last step errors
         self.invalid_answer_provided = False
