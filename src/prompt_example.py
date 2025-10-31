@@ -5,7 +5,7 @@ import os
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
-from maze import Maze
+from maze.factory import create_maze
 from prompt import generate_step_prompt
 
 output_path = "./maze_prompt_examples"
@@ -18,7 +18,7 @@ def main() -> None:
     os.makedirs(output_path, exist_ok=True)
     for i in range(2, 7):
         save_path = get_save_path(i)
-        m = Maze(i, i, save_path)
+        m = create_maze(i, save_path)
         m.save()
         prompt = generate_step_prompt(m)
         mazes.append((save_path, prompt))
