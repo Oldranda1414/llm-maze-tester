@@ -4,7 +4,7 @@ A class that uses an LLM model to solve a maze.
 """
 from typing import Any
 
-from model import Model
+from llm.model import Model
 from maze import Maze
 from move import Direction
 from prompt import generate_step_prompt, illegal_answer_warning, illegal_direction_warning, preamble

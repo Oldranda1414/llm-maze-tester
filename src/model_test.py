@@ -1,6 +1,6 @@
 """ llm-maze-tester entry point """
 
-from model import Model
+from llm.model import Model
 
 def main():
     """Main function to run the llm-maze-tester."""
@@ -8,7 +8,7 @@ def main():
 
     # Create a model instance with a lightweight model for testing
     # Using llama2 as it's commonly available, but you can change to any model you prefer
-    model_name = "llama3:latest"
+    model_name = "llama3"
     print(f"Initializing model: {model_name}")
 
     model = Model(model_name)
@@ -31,15 +31,16 @@ def main():
     # Display history
     print("\n--- Chat History ---")
     history = model.history()
+    print(history)
     for i, interaction in enumerate(history):
         print(f"Interaction {i+1}:")
-        print(f"  Prompt: {interaction['prompt']}")
-        print(f"  Response: {interaction['response'][:100]}..." if len(interaction['response']) > 100 else f"  Response: {interaction['response']}")
+        print(f"  Author: {interaction['role']}")
+        print(f"  Content: {interaction['content'][:100]}..." if len(interaction['content']) > 100 else f"  Response: {interaction['content']}")
 
     # Save history to file
     save_path = "chat_history.json"
     print(f"\nSaving chat history to {save_path}")
-    success = model.save(save_path)
+    success = model.save_history(save_path)
     if success:
         print("History saved successfully!")
     else:

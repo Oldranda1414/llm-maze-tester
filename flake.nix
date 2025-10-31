@@ -16,12 +16,6 @@
       packages = with pkgs; [
         # modern command runner
         just
-
-        # # cli to turn mmd files into mermaid graph pngs
-        # mermaid-cli
-        # # universal document converter
-        # pandoc
-
         # modern python package manager
         uv
         # local llm server

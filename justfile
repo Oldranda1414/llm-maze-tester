@@ -7,26 +7,27 @@ default:
 # Run the project
 [no-exit-message]
 run *args:
-  just withOllama uv --project src run src/main.py {{args}}
+  uv --project src run src/main.py {{args}}
 
 # Run the prompt generation test
 [no-exit-message]
 prompt *args:
-  just withOllama uv --project src run src/prompt_test.py {{args}}
+  uv --project src run src/prompt_test.py {{args}}
 
 # Run the maze-prompt example
 [no-exit-message]
 example *args:
-  just withOllama uv --project src run src/prompt_example.py {{args}}
+  uv --project src run src/prompt_example.py {{args}}
 
 # Run the maze test
 [no-exit-message]
 maze *args:
-  just withOllama uv --project src run src/maze_test.py {{args}}
+  uv --project src run src/maze_test.py {{args}}
 
+# Run the model test
 [no-exit-message]
-withOllama *args:
-  ./withOllama.sh {{args}}
+model *args:
+  uv --project src run src/model_test.py {{args}}
 
 # Add package to project dependencies
 [no-exit-message]
