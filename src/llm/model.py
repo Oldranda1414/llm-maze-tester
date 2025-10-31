@@ -17,6 +17,7 @@ class Model:
         if not _is_valid_name(model_name):
             raise ModelNameError(model_name)
         if not is_model_installed(model_name):
+            # TODO install model here if not installed
             raise ModelNotInstalledError(model_name)
 
         self.model_name = model_name
