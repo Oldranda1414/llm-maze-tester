@@ -5,7 +5,7 @@ if __name__ == "__main__":
     maze = Maze()
 
     print("Start:", maze.start)
-    print("End:", maze.end)
+    print("End:", maze.target)
     print("Initial position:", maze.position())
 
     while not maze.solved():

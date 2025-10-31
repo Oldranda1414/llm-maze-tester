@@ -169,7 +169,7 @@ class MazeSolver:
             "moves_history": self.moves_history,
             "is_solved": self.is_solved,
             "start_position": self.maze.start,
-            "end_position": self.maze.end,
+            "end_position": self.maze.target,
             "current_position": self.maze.position(),
             "maze_dimensions": (self.maze.width, self.maze.height),
             "unique_positions_visited": len(self.visited_positions)

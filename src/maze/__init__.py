@@ -39,11 +39,11 @@ class Maze:
         lattice_maze: LatticeMaze = LatticeMazeGenerators.gen_dfs(
             np.array([height, width])
         )
-        self.start, self.end = self._random_border_points(lattice_maze)
+        self.start, self.target = self._random_border_points(lattice_maze)
         self.maze = TargetedLatticeMaze.from_lattice_maze(
             lattice_maze,
             self.start,
-            self.end
+            self.target
         )
         self._path = [self.start]
         self._position = self.start
@@ -137,7 +137,7 @@ class Maze:
         Returns:
             bool: True if the maze is solved, False otherwise
         """
-        return self._position == self.end
+        return self._position == self.target
 
     def set_position(self, new_position: Coordinate):
         self._position = new_position
