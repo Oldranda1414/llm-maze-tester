@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 
 from maze_dataset.maze import TargetedLatticeMaze
+from maze import Maze
 
 from rich.console import Console
 from rich.text import Text
@@ -16,11 +17,11 @@ def _plot_coords(i: int, j: int, grid_size: int) -> tuple[float, float]:
 
 # === Plotting Version ===
 
-def save_maze(maze: TargetedLatticeMaze, path: list[Coordinate], save_path: str):
+def save_maze(maze: Maze, save_path: str):
     plt.close('all')
     _, ax = plt.subplots(figsize=(5, 5))
 
-    grid_size = maze.grid_shape[0]
+    grid_size = maze.size
     WALL_WIDTH = 3
     cell_size = 1.0
 
@@ -41,18 +42,18 @@ def save_maze(maze: TargetedLatticeMaze, path: list[Coordinate], save_path: str)
             ax.add_patch(rect)
 
             # Right wall
-            if j < grid_size - 1 and not maze.connection_list[1, i, j]:
+            if j < grid_size - 1 and not maze.connection_list()[1, i, j]:
                 ax.plot([j + 1, j + 1], [y_plot, y_plot + 1], 'k-', linewidth=WALL_WIDTH)
             # Bottom wall
-            if i < grid_size - 1 and not maze.connection_list[0, i, j]:
+            if i < grid_size - 1 and not maze.connection_list()[0, i, j]:
                 ax.plot([j, j + 1], [y_plot, y_plot], 'k-', linewidth=WALL_WIDTH)
 
-    _draw_path(ax, path, grid_size)
+    _draw_path(ax, maze.path(), grid_size)
 
     # Start / target markers
     for pos, color, marker, label in [
-        (getattr(maze, "start_pos", None), "green", "o", "Start"),
-        (getattr(maze, "end_pos", None), "red", "s", "Target")
+        (maze.start, "green", "o", "Start"),
+        (maze.target, "red", "s", "Target")
     ]:
         if pos:
             x, y = _plot_coords(*pos, grid_size)
@@ -91,22 +92,23 @@ def _draw_path(ax, path: list[Coordinate], grid_size: int):
 
 # === ASCII Version ===
 
-def print_maze(maze: TargetedLatticeMaze, path: list[Coordinate]):
+def print_maze(maze: Maze):
     """ASCII/terminal maze printer consistent with the plotting logic."""
     console = Console()
-    grid_size = maze.grid_shape[0]
+    grid_size = maze.size
+    path = maze.path()
 
     path_set = set(path)
     current_pos = path[-1] if path else None
-    start_pos = getattr(maze, "start_pos", None)
-    target_pos = getattr(maze, "end_pos", None)
+    start_pos = maze.start
+    target_pos = maze.target
 
     for i in range(grid_size):
         # Top wall row
         top_line = Text()
         for j in range(grid_size):
             top_line.append("+")
-            if i == 0 or not maze.connection_list[0, i - 1, j]:
+            if i == 0 or not maze.connection_list()[0, i - 1, j]:
                 top_line.append("---")
             else:
                 top_line.append("   ")
@@ -116,7 +118,7 @@ def print_maze(maze: TargetedLatticeMaze, path: list[Coordinate]):
         # Cell row
         mid_line = Text()
         for j in range(grid_size):
-            if j == 0 or not maze.connection_list[1, i, j - 1]:
+            if j == 0 or not maze.connection_list()[1, i, j - 1]:
                 mid_line.append("|")
             else:
                 mid_line.append(" ")

@@ -33,7 +33,7 @@ You walk directly into a wall, hitting your nose. Place more attention on the di
 """
  
 def preamble(maze: Maze) -> str:
-    return PREAMBLE + f"\nThe maze is a {maze.width} x {maze.height} grid, with every square in the grid being one square meter big.\n"
+    return PREAMBLE + f"\nThe maze is a {maze.size} x {maze.size} grid, with every square in the grid being one square meter big.\n"
 
 def illegal_answer_warning(_: Maze) -> str:
     return ILLEGAL_ANSWER_WARNING

@@ -1,8 +1,8 @@
-from maze import Maze
+from maze.factory import create_maze
 from move import Direction
 
 if __name__ == "__main__":
-    maze = Maze()
+    maze = create_maze()
 
     print("Start:", maze.start)
     print("End:", maze.target)

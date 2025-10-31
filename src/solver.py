@@ -16,26 +16,21 @@ class MazeSolver:
     to make decisions about which direction to move at each step.
     """
 
-    def __init__(self, model_name: str, maze_width: int = 6, maze_height: int = 6,
-                 plot: bool = False):
+    def __init__(self, model_name: str, maze_size: int = 6):
         """
         Initialize the maze solver with a model and maze.
         
         Args:
             model_name: Name of the LLM model to use
-            maze_width: Width of the maze
-            maze_height: Height of the maze
-            plot: Whether to display the maze graphically
-            block_on_plot: Whether to block execution when showing plots
-            pattern_check_length: Number of recent moves to check for patterns
+            maze_size: Width and height of the maze
         """
         # Initialize the model
         print(f"Initializing model '{model_name}'...")
         self.model = Model(model_name)
 
         # Initialize the maze
-        print(f"Creating {maze_width}x{maze_height} maze...")
-        self.maze = Maze(width=maze_width, height=maze_height)
+        print(f"Creating {maze_size}x{maze_size} maze...")
+        self.maze = Maze(maze_size)
         
         # Track last step errors
         self.invalid_answer_provided = False
@@ -47,7 +42,6 @@ class MazeSolver:
         self.visited_positions: set[tuple[int, int]] = set()
         self.is_solved = False
         self.position_history: list[tuple[int, int]] = []
-        self.plot = plot
 
         # Show the initial maze state
         self.maze.print()
