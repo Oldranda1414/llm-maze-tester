@@ -5,7 +5,7 @@ A class that uses an LLM model to solve a maze.
 from typing import Any
 
 from llm.model import Model
-from maze import Maze
+from maze.factory import create_maze
 from move import Direction
 from prompt import generate_step_prompt, illegal_answer_warning, illegal_direction_warning, preamble
 
@@ -30,7 +30,7 @@ class MazeSolver:
 
         # Initialize the maze
         print(f"Creating {maze_size}x{maze_size} maze...")
-        self.maze = Maze(maze_size)
+        self.maze = create_maze(maze_size)
         
         # Track last step errors
         self.invalid_answer_provided = False
@@ -165,7 +165,7 @@ class MazeSolver:
             "start_position": self.maze.start,
             "end_position": self.maze.target,
             "current_position": self.maze.position(),
-            "maze_dimensions": (self.maze.width, self.maze.height),
+            "maze_dimension": self.maze.size,
             "unique_positions_visited": len(self.visited_positions)
         }
 
