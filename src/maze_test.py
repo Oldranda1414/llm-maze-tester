@@ -31,5 +31,3 @@ if __name__ == "__main__":
         print("New position:", maze.position())
         print("Solved?", maze.solved())
 
-    input("press any button to exit")
-
