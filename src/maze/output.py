@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 
-from maze_dataset.maze import TargetedLatticeMaze
 from maze import Maze
 
 from rich.console import Console

@@ -1,5 +1,5 @@
-from maze.factory import create_maze
 from move import Direction
+from maze.factory import create_maze
 
 if __name__ == "__main__":
     maze = create_maze()

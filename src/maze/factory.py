@@ -1,5 +1,9 @@
 from maze import Maze
-from maze.lattice_maze import LatticeMaze
+from maze.dataset import MazeDataset
 
-def create_maze(size: int = 6, save_path: str = "maze.png") -> Maze:
-    return LatticeMaze(size, save_path)
+def create_dataset(n_mazes: int = 1, maze_size: int = 5, seed: int = 42) -> MazeDataset:
+    return MazeDataset("dataset", n_mazes, maze_size, seed)
+
+def create_maze(size: int = 6, seed: int = 42) -> Maze:
+    return create_dataset(1, size, seed).mazes[0]
+

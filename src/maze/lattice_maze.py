@@ -1,11 +1,7 @@
 from copy import deepcopy
 import random
 
-import numpy as np
-
 from maze_dataset import LatticeMaze as DatasetLatticeMaze
-from maze_dataset.generation import LatticeMazeGenerators
-from maze_dataset.maze import TargetedLatticeMaze
 
 from move import Coordinate, Direction, DIRECTIONS
 from maze.output import save_maze, print_maze
@@ -19,22 +15,19 @@ class LatticeMaze:
         height (int): Height of the maze
         save_path (str): Path to save maze png to
     """
-    def __init__(self, size: int, save_path: str):
-        self.size = size
+    def __init__(self, maze: DatasetLatticeMaze, save_path: str, seed: int = 42):
+        random.seed(seed)
+    
+        self.maze = maze
+        self.size = maze.grid_n
         self.save_path = save_path
-        lattice_maze: DatasetLatticeMaze = LatticeMazeGenerators.gen_dfs(
-            np.array([size, size])
-        )
-        self.start, self.target = self._random_border_points(lattice_maze)
-        self.maze = TargetedLatticeMaze.from_lattice_maze(
-            lattice_maze,
-            self.start,
-            self.target
-        )
+        self.target = self._random_border_point(maze)
+        start_candidates = [(i,j) for i in range(self.size) for j in range(self.size) if (i,j) != self.target]
+        self.start = random.choice(start_candidates)
         self._path = [self.start]
         self._position = self.start
 
-    def _random_border_points(self, maze: DatasetLatticeMaze) -> tuple[Coordinate, Coordinate]:
+    def _random_border_point(self, maze: DatasetLatticeMaze) -> Coordinate:
         def border_cells():
             return [
                 (r, c)
@@ -46,9 +39,8 @@ class LatticeMaze:
         nodes_array = maze.get_nodes()
         accessible: set[tuple[int, int]] = set(map(tuple, nodes_array.tolist())) # type: ignore
         borders = [cell for cell in border_cells() if cell in accessible]
-        start = random.choice(borders)
-        end = random.choice([b for b in borders if b != start])
-        return start, end
+        border_point = random.choice(borders)
+        return border_point
 
     def move(self, direction: Direction) -> bool:
         """Move the current position in the specified direction.
