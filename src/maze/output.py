@@ -7,15 +7,6 @@ from rich.text import Text
 
 from move import Coordinate
 
-# === Utility ===
-
-def _plot_coords(i: int, j: int, grid_size: int) -> tuple[float, float]:
-    """Convert maze indices (i,j) to plotting coordinates (x,y)."""
-    return j + 0.5, grid_size - i - 1 + 0.5
-
-
-# === Plotting Version ===
-
 def save_maze(maze: Maze, save_path: str):
     plt.close('all')
     _, ax = plt.subplots(figsize=(5, 5))
@@ -140,3 +131,8 @@ def print_maze(maze: Maze):
     # Bottom border
     bottom = Text("".join(["+---" * grid_size + "+"]))
     console.print(bottom)
+
+def _plot_coords(i: int, j: int, grid_size: int) -> tuple[float, float]:
+    """Convert maze indices (i,j) to plotting coordinates (x,y)."""
+    return j + 0.5, grid_size - i - 1 + 0.5
+

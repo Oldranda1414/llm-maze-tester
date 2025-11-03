@@ -1,3 +1,5 @@
+import random
+
 from maze_dataset import MazeDataset as DatasetMazeDataset
 from maze_dataset import MazeDatasetConfig
 from maze_dataset.generation import LatticeMazeGenerators
@@ -8,7 +10,7 @@ from maze import Maze
 class MazeDataset():
     
     def __init__(self, name: str, n_mazes: int, maze_size: int, seed: int):
-
+        random.seed(seed)
         config: MazeDatasetConfig = MazeDatasetConfig(
             name="dataset",
             grid_n=maze_size,

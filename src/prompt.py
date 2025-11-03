@@ -3,6 +3,8 @@ from num2words import num2words
 from maze import Maze
 from move import Coordinate, Direction
 
+#TODO make dead end more correct
+
 PREAMBLE = """
 You are inside a maze. You have a compass with you. The maze is well lit so you can see in all directions how long the corridors are.
 Both the starting cell and the exit cell are on the border of the grid.
@@ -71,6 +73,8 @@ def _path_length(direction: Direction, maze: Maze, initial_position: Coordinate)
 
 def _wall_state(direction: Direction, maze: Maze, initial_position: Coordinate) -> str:
     path_lenght = _path_length(direction, maze, initial_position)
+    if _is_exit_direction(direction, initial_position, maze.target, path_lenght):
+        return "You can see a natural ligth shining in that direction, it is probably the exit!"
     for _ in range(path_lenght):
         maze.move(direction)
     available_directions = maze.get_directions()
@@ -78,6 +82,26 @@ def _wall_state(direction: Direction, maze: Maze, initial_position: Coordinate) 
     if len(available_directions) == 1:
         return "It seems to be a dead end."
     return "The path changes direction from there. You should be able to see where the corridor goes if you go up to the wall."
+
+def _is_exit_direction(direction: Direction, initial_position: Coordinate, target: Coordinate, path_lenght: int) -> bool:
+    ip_x, ip_y = initial_position
+    t_x, t_y = target
+
+    if ip_y == t_y:
+        if direction == Direction.SOUTH:
+            return t_x > ip_x and abs(t_x - ip_x) <= path_lenght
+        
+        if direction == Direction.NORTH:
+            return t_x < ip_x and abs(t_x - ip_x) <= path_lenght
+    
+    if ip_x == t_x:
+        if direction == Direction.EAST:
+            return t_y > ip_y and abs(t_y - ip_y) <= path_lenght
+        
+        if direction == Direction.WEST:
+            return t_y < ip_y and abs(t_y - ip_y) <= path_lenght
+    
+    return False
 
 def _lenght_to_string(lenght: int) -> str:
     unit = "meter" if lenght == 1 else "meters"

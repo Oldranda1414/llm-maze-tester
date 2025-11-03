@@ -15,9 +15,7 @@ class LatticeMaze:
         height (int): Height of the maze
         save_path (str): Path to save maze png to
     """
-    def __init__(self, maze: DatasetLatticeMaze, save_path: str, seed: int = 42):
-        random.seed(seed)
-    
+    def __init__(self, maze: DatasetLatticeMaze, save_path: str):
         self.maze = maze
         self.size = maze.grid_n
         self.save_path = save_path
@@ -45,14 +43,10 @@ class LatticeMaze:
     def move(self, direction: Direction) -> bool:
         """Move the current position in the specified direction.
         Args:
-            direction (str): The direction to move (U, D, L, R)
+            direction (Direction): The direction of the move to execute
         Returns:
             bool: True if the move was successful, False if blocked by a wall
         """
-        direction = direction
-        if direction not in DIRECTIONS:
-            raise ValueError("Invalid direction. Use U, D, L, or R.")
-
         dr, dc = DIRECTIONS[direction]
         new_pos = (self._position[0] + dr, self._position[1] + dc)
         neighbors: set[Coordinate] = set(map(tuple, self.maze.get_coord_neighbors(self._position))) # type: ignore
@@ -61,7 +55,6 @@ class LatticeMaze:
             self._path.append(new_pos)
             return True
         else:
-            print("Move blocked by wall.")
             return False
 
     def get_directions(self) -> list[Direction]:
