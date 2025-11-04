@@ -44,9 +44,9 @@ def save_maze(maze: Maze, save_path: str):
                                  facecolor='white', edgecolor='lightgray', linewidth=0.5)
             ax.add_patch(rect)
 
-            if j < grid_size - 1 and not maze.connection_list()[1, i, j]:
+            if j < grid_size - 1 and not maze.connection_list().horizontal[i][j]:
                 ax.plot([j + 1, j + 1], [y_plot, y_plot + 1], 'k-', linewidth=WALL_WIDTH)
-            if i < grid_size - 1 and not maze.connection_list()[0, i, j]:
+            if i < grid_size - 1 and not maze.connection_list().vertical[i][j]:
                 ax.plot([j, j + 1], [y_plot, y_plot], 'k-', linewidth=WALL_WIDTH)
 
     _draw_path(ax, maze.path(), grid_size)
@@ -90,7 +90,7 @@ def print_maze(maze: Maze):
             top_line.append("+")
             if (i == 0 and exit_top and j == t_j):
                 top_line.append("   ")
-            elif i == 0 or not maze.connection_list()[0, i - 1, j]:
+            elif i == 0 or not maze.connection_list().vertical[i - 1][j]:
                 top_line.append("---")
             else:
                 top_line.append("   ")
@@ -101,7 +101,7 @@ def print_maze(maze: Maze):
         for j in range(grid_size):
             if (j == 0 and exit_left and i == grid_size - t_i - 1):
                 mid_line.append(" ")
-            elif j == 0 or not maze.connection_list()[1, i, j - 1]:
+            elif j == 0 or not maze.connection_list().horizontal[i][j - 1]:
                 mid_line.append("|")
             else:
                 mid_line.append(" ")

@@ -5,6 +5,7 @@ from maze_dataset import LatticeMaze as DatasetLatticeMaze
 
 from move import Coordinate, Direction, DIRECTIONS
 from maze.output import save_maze, print_maze
+from navigation import ConnectionList
 
 class LatticeMaze:
     """
@@ -16,59 +17,45 @@ class LatticeMaze:
         save_path (str): Path to save maze png to
     """
     def __init__(self, maze: DatasetLatticeMaze, save_path: str):
-        self.maze = maze
+        self._connection_list = ConnectionList(maze.connection_list[0], maze.connection_list[1])
         self.size = maze.grid_n
         self.save_path = save_path
-        self.target = self._random_border_point(maze)
-        start_candidates = [(i,j) for i in range(self.size) for j in range(self.size) if (i,j) != self.target]
-        self.start = random.choice(start_candidates)
+        self.target = self._generate_target()
+        self.start = self._generate_start() 
         self._path = [self.start]
         self._position = self.start
 
-    def _random_border_point(self, maze: DatasetLatticeMaze) -> Coordinate:
-        def border_cells():
-            return [
+    def _generate_target(self) -> Coordinate:
+        border_cells = [
                 (r, c)
                 for r in range(self.size)
                 for c in range(self.size)
                 if r == 0 or r == self.size - 1 or c == 0 or c == self.size - 1
             ]
-
-        nodes_array = maze.get_nodes()
-        accessible: set[tuple[int, int]] = set(map(tuple, nodes_array.tolist())) # type: ignore
-        borders = [cell for cell in border_cells() if cell in accessible]
+        borders = [cell for cell in border_cells]
         border_point = random.choice(borders)
         return border_point
 
+    def _generate_start(self) -> Coordinate:
+        start_candidates = [(i,j) for i in range(self.size) for j in range(self.size) if (i,j) != self.target]
+        return random.choice(start_candidates)
+
     def move(self, direction: Direction) -> bool:
-        """Move the current position in the specified direction.
-        Args:
-            direction (Direction): The direction of the move to execute
-        Returns:
-            bool: True if the move was successful, False if blocked by a wall
-        """
         dr, dc = DIRECTIONS[direction]
         new_pos = (self._position[0] + dr, self._position[1] + dc)
-        neighbors: set[Coordinate] = set(map(tuple, self.maze.get_coord_neighbors(self._position))) # type: ignore
-        if new_pos in neighbors:
+        if self._connection_list.connected(self._position, new_pos):
             self._position = new_pos
             self._path.append(new_pos)
             return True
-        else:
-            return False
+        return False
 
     def get_directions(self) -> list[Direction]:
-        """Get the possible directions to move from the current position.
-        Returns:
-            list: A list of possible directions (U, D, L, R)
-        """
-        neighbors: set[Coordinate] = set(map(tuple, self.maze.get_coord_neighbors(self._position))) # type: ignore
-        allowed: list[Direction] = []
-        for d, (dr, dc) in DIRECTIONS.items():
-            new_pos = (self._position[0] + dr, self._position[1] + dc)
-            if new_pos in neighbors:
-                allowed.append(d)
-        return allowed
+        r, c = self._position
+        return [
+            d
+            for d, (dr, dc) in DIRECTIONS.items()
+            if self._connection_list.connected((r, c), (r + dr, c + dc))
+        ]
 
     def position(self):
         """Get the current position in the maze.
@@ -126,5 +113,6 @@ class LatticeMaze:
         self._path = [self.start]
         self._position = self.start
 
-    def connection_list(self):
-        return self.maze.connection_list
+    def connection_list(self) -> ConnectionList:
+        return deepcopy(self._connection_list)
+

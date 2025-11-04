@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
 from maze.factory import create_maze
-from prompt import generate_step_prompt
+from prompt import step_prompt
 
 output_path = "./maze_prompt_examples"
 
@@ -20,7 +20,7 @@ def main() -> None:
         save_path = get_save_path(i)
         m = create_maze(i)
         m.save(save_path)
-        prompt = generate_step_prompt(m)
+        prompt = step_prompt(m, 3)
         mazes.append((save_path, prompt))
 
         _, axes = plt.subplots(len(mazes), 2, figsize=(8, len(mazes)*4))

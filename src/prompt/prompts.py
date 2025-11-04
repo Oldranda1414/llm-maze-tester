@@ -21,7 +21,7 @@ The maze is a ${size} x ${size} grid, with every square in the grid being one sq
 
 direction = Template("Due ${direction} there is ")
 
-corridor = Template("a corridor that goes on for ${path_lenght} before encountering a wall.")
+corridor = Template("a corridor that goes on for ${path_length} before encountering a wall.")
 
 wall = "a wall. Seems you can't step in that direction."
 
@@ -29,3 +29,4 @@ exit_prompt = "You can see a natural ligth shining in that direction, it is prob
 
 dead_end = "It seems to be a dead end."
 
+out_of_sight = "The corridor streatches further than you can see, so you are unable to predict what lies ahead."

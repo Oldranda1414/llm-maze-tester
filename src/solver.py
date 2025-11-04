@@ -1,5 +1,4 @@
 """
-maze_solver.py
 A class that uses an LLM model to solve a maze.
 """
 from typing import Any
@@ -7,7 +6,7 @@ from typing import Any
 from llm.model import Model
 from maze.factory import create_maze
 from move import Direction
-from prompt import generate_step_prompt, illegal_answer_warning, illegal_direction_warning, preamble
+from prompt import step_prompt, illegal_answer_warning, illegal_direction_warning, get_preamble
 
 class MazeSolver:
     """
@@ -16,7 +15,7 @@ class MazeSolver:
     to make decisions about which direction to move at each step.
     """
 
-    def __init__(self, model_name: str, maze_size: int = 6):
+    def __init__(self, model_name: str, maze_size: int = 6, sight_depth: int = 3):
         """
         Initialize the maze solver with a model and maze.
         
@@ -31,6 +30,7 @@ class MazeSolver:
         # Initialize the maze
         print(f"Creating {maze_size}x{maze_size} maze...")
         self.maze = create_maze(maze_size)
+        self.sight_depth = sight_depth
         
         # Track last step errors
         self.invalid_answer_provided = False
@@ -72,7 +72,7 @@ class MazeSolver:
         prompt = ""
 
         if self.steps_taken == 0:
-            prompt += preamble(self.maze)
+            prompt += get_preamble(self.maze)
         if self.invalid_answer_provided:
             prompt += illegal_answer_warning(self.maze)
             self.invalid_answer_provided = False
@@ -80,7 +80,7 @@ class MazeSolver:
             prompt += illegal_direction_warning(self.maze)
             self.invalid_direction_provided = False
 
-        prompt += generate_step_prompt(self.maze)
+        prompt += step_prompt(self.maze, self.sight_depth)
 
         response = self.model.ask(prompt)
         print(f"available_directions: {available_directions}")

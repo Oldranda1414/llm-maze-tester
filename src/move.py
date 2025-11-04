@@ -42,6 +42,11 @@ class Direction(Enum):
             raise ValueError("provided string is not a valid coordinate (N,E,S,W)")
         return conversion[coord]
 
+def neighbor(cell: Coordinate, direction: Direction) -> Coordinate:
+    dr, dc = DIRECTIONS[direction]
+    r, c = cell
+    return (r + dr, c + dc)
+
 DIRECTIONS: dict[Direction, Coordinate] = {
     Direction.NORTH: (-1, 0),
     Direction.EAST: (0, 1),

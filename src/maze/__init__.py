@@ -1,15 +1,14 @@
 from typing import Protocol
 
-from jaxtyping import Bool
-from numpy import ndarray
-
 from move import Coordinate, Direction
+from navigation import ConnectionList
 
 class Maze(Protocol):
     """
     A protocol representing a maze with a start and end point.
     """
 
+    # TODO make these into getter
     size: int
     save_path: str
     start: Coordinate
@@ -41,7 +40,7 @@ class Maze(Protocol):
 
     def decisions(self) -> list[Direction]: ...
 
-    def connection_list(self) -> Bool[ndarray, 'lattice_dim=2 row col']: ...
+    def connection_list(self) -> ConnectionList: ...
 
     def solved(self) -> bool: ...
     """Check if the maze is solved.
