@@ -3,8 +3,6 @@ from num2words import num2words
 from maze import Maze
 from move import Coordinate, Direction
 
-#TODO make dead end more correct
-
 PREAMBLE = """
 You are inside a maze. You have a compass with you. The maze is well lit so you can see in all directions how long the corridors are.
 Both the starting cell and the exit cell are on the border of the grid.
