@@ -19,7 +19,7 @@ def main() -> None:
     for i in range(2, 7):
         save_path = get_save_path(i)
         m = create_maze(i)
-        m.save()
+        m.save(save_path)
         prompt = generate_step_prompt(m)
         mazes.append((save_path, prompt))
 
