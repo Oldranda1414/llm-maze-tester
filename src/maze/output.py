@@ -17,13 +17,26 @@ def save_maze(maze: Maze, save_path: str):
 
     ax.set_facecolor('white')
 
-    # Outer border
-    ax.plot([0, grid_size], [0, 0], 'k-', linewidth=WALL_WIDTH)
-    ax.plot([0, grid_size], [grid_size, grid_size], 'k-', linewidth=WALL_WIDTH)
-    ax.plot([0, 0], [0, grid_size], 'k-', linewidth=WALL_WIDTH)
-    ax.plot([grid_size, grid_size], [0, grid_size], 'k-', linewidth=WALL_WIDTH)
+    t_i, t_j = maze.target
+    exit_top = (t_i == 0)
+    exit_bottom = (t_i == grid_size - 1)
+    exit_left = (t_j == 0)
+    exit_right = (t_j == grid_size - 1)
+    if exit_top or exit_bottom:
+        exit_left = False
+        exit_right = False
 
-    # Internal walls
+    for j in range(grid_size):
+        if not (exit_bottom and j == t_j):
+            ax.plot([j, j + 1], [0, 0], 'k-', linewidth=WALL_WIDTH)
+        if not (exit_top and j == t_j):
+            ax.plot([j, j + 1], [grid_size, grid_size], 'k-', linewidth=WALL_WIDTH)
+    for i in range(grid_size):
+        if not (exit_left and i == grid_size - t_i - 1):
+            ax.plot([0, 0], [i, i + 1], 'k-', linewidth=WALL_WIDTH)
+        if not (exit_right and i == grid_size - t_i - 1):
+            ax.plot([grid_size, grid_size], [i, i + 1], 'k-', linewidth=WALL_WIDTH)
+
     for i in range(grid_size):
         for j in range(grid_size):
             y_plot = grid_size - i - 1
@@ -31,19 +44,15 @@ def save_maze(maze: Maze, save_path: str):
                                  facecolor='white', edgecolor='lightgray', linewidth=0.5)
             ax.add_patch(rect)
 
-            # Right wall
             if j < grid_size - 1 and not maze.connection_list()[1, i, j]:
                 ax.plot([j + 1, j + 1], [y_plot, y_plot + 1], 'k-', linewidth=WALL_WIDTH)
-            # Bottom wall
             if i < grid_size - 1 and not maze.connection_list()[0, i, j]:
                 ax.plot([j, j + 1], [y_plot, y_plot], 'k-', linewidth=WALL_WIDTH)
 
     _draw_path(ax, maze.path(), grid_size)
 
-    # Start / target markers
     for pos, color, marker, label in [
         (maze.start, "green", "o", "Start"),
-        (maze.target, "red", "s", "Target")
     ]:
         if pos:
             x, y = _plot_coords(*pos, grid_size)
@@ -56,6 +65,72 @@ def save_maze(maze: Maze, save_path: str):
     ax.set_title(f"Maze {grid_size}x{grid_size}")
     plt.savefig(save_path, dpi=300, bbox_inches='tight', facecolor='white')
 
+def print_maze(maze: Maze):
+    console = Console()
+    grid_size = maze.size
+    path = maze.path()
+
+    path_set = set(path)
+    current_pos = path[-1] if path else None
+    start_pos = maze.start
+    target_pos = maze.target
+
+    t_i, t_j = target_pos
+    exit_top = (t_i == 0)
+    exit_bottom = (t_i == grid_size - 1)
+    exit_left = (t_j == 0)
+    exit_right = (t_j == grid_size - 1)
+    if exit_top or exit_bottom:
+        exit_left = False
+        exit_right = False
+
+    for i in range(grid_size):
+        top_line = Text()
+        for j in range(grid_size):
+            top_line.append("+")
+            if (i == 0 and exit_top and j == t_j):
+                top_line.append("   ")
+            elif i == 0 or not maze.connection_list()[0, i - 1, j]:
+                top_line.append("---")
+            else:
+                top_line.append("   ")
+        top_line.append("+")
+        console.print(top_line)
+
+        mid_line = Text()
+        for j in range(grid_size):
+            if (j == 0 and exit_left and i == grid_size - t_i - 1):
+                mid_line.append(" ")
+            elif j == 0 or not maze.connection_list()[1, i, j - 1]:
+                mid_line.append("|")
+            else:
+                mid_line.append(" ")
+
+            coord = (i, j)
+            if coord == current_pos:
+                mid_line.append(" C ", style="bold red")
+            elif coord == start_pos:
+                mid_line.append(" S ", style="green")
+            elif coord in path_set:
+                mid_line.append(" · ", style="yellow")
+            else:
+                mid_line.append("   ")
+
+        if exit_right and i == grid_size - t_i - 1:
+            mid_line.append(" ")
+        else:
+            mid_line.append("|")
+        console.print(mid_line)
+
+    bottom = Text()
+    for j in range(grid_size):
+        bottom.append("+")
+        if exit_bottom and j == t_j:
+            bottom.append("   ")
+        else:
+            bottom.append("---")
+    bottom.append("+")
+    console.print(bottom)
 
 def _draw_path(ax, path: list[Coordinate], grid_size: int):
     if not path:
@@ -79,58 +154,6 @@ def _draw_path(ax, path: list[Coordinate], grid_size: int):
             ax.plot(x, y, 'o', color=PATH_COLOR, markersize=6,
                     alpha=PATH_ALPHA, markeredgecolor='goldenrod', markeredgewidth=1)
 
-
-# === ASCII Version ===
-
-def print_maze(maze: Maze):
-    """ASCII/terminal maze printer consistent with the plotting logic."""
-    console = Console()
-    grid_size = maze.size
-    path = maze.path()
-
-    path_set = set(path)
-    current_pos = path[-1] if path else None
-    start_pos = maze.start
-    target_pos = maze.target
-
-    for i in range(grid_size):
-        # Top wall row
-        top_line = Text()
-        for j in range(grid_size):
-            top_line.append("+")
-            if i == 0 or not maze.connection_list()[0, i - 1, j]:
-                top_line.append("---")
-            else:
-                top_line.append("   ")
-        top_line.append("+")
-        console.print(top_line)
-
-        # Cell row
-        mid_line = Text()
-        for j in range(grid_size):
-            if j == 0 or not maze.connection_list()[1, i, j - 1]:
-                mid_line.append("|")
-            else:
-                mid_line.append(" ")
-
-            coord = (i, j)
-            if coord == current_pos:
-                mid_line.append(" C ", style="bold red")
-            elif coord == start_pos:
-                mid_line.append(" S ", style="green")
-            elif coord == target_pos:
-                mid_line.append(" T ", style="bold magenta")
-            elif coord in path_set:
-                mid_line.append(" · ", style="yellow")
-            else:
-                mid_line.append("   ")
-
-        mid_line.append("|")
-        console.print(mid_line)
-
-    # Bottom border
-    bottom = Text("".join(["+---" * grid_size + "+"]))
-    console.print(bottom)
 
 def _plot_coords(i: int, j: int, grid_size: int) -> tuple[float, float]:
     """Convert maze indices (i,j) to plotting coordinates (x,y)."""
