@@ -25,7 +25,7 @@ corridor = Template("there is a corridor that goes on for ${path_length} before 
 
 wall = "there is a wall. Seems you can't step in that direction."
 
-exit_prompt = "you can see a natural ligth shining in that direction, it is probably the exit!"
+exit_prompt = "you can see a natural light shining in that direction, it is probably the exit!"
 
 dead_end = " It seems to be a dead end."
 
