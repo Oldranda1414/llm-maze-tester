@@ -8,11 +8,31 @@ class Maze(Protocol):
     A protocol representing a maze with a start and end point.
     """
 
-    # TODO make these into getter
-    size: int
-    save_path: str
-    start: Coordinate
-    target: Coordinate
+    def size(self) -> int: ...
+
+    def start(self) -> Coordinate: ...
+
+    def target(self) -> Coordinate: ...
+
+    def connection_list(self) -> ConnectionList: ...
+
+    def save_path(self) -> str: ...
+
+    def position(self) -> Coordinate: ...
+    """Get the current position in the maze.
+    Returns:
+        Coordinate: The current position (row, column)
+    """
+
+    def set_position(self, new_position: Coordinate) -> None: ...
+
+    def path(self) -> list[Coordinate]: ...
+    """Get the current path
+    """
+
+    def set_path(self, new_path: list[Coordinate]) -> None: ...
+
+    def decisions(self) -> list[Direction]: ...
 
     def move(self, direction: Direction) -> bool: ...
     """Move the current position in the specified direction.
@@ -28,29 +48,11 @@ class Maze(Protocol):
         list: A list of possible directions (U, D, L, R)
     """
 
-    def position(self) -> Coordinate: ...
-    """Get the current position in the maze.
-    Returns:
-        Coordinate: The current position (row, column)
-    """
-
-    def path(self) -> list[Coordinate]: ...
-    """Get the current path
-    """
-
-    def decisions(self) -> list[Direction]: ...
-
-    def connection_list(self) -> ConnectionList: ...
-
     def solved(self) -> bool: ...
     """Check if the maze is solved.
     Returns:
         bool: True if the maze is solved, False otherwise
     """
-
-    def set_position(self, new_position: Coordinate) -> None: ...
-
-    def set_path(self, new_path: list[Coordinate]) -> None: ...
 
     def print(self) -> None: ...
 

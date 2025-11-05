@@ -5,8 +5,8 @@ if __name__ == "__main__":
     maze = create_maze()
     print(maze.connection_list())
 
-    print("Start:", maze.start)
-    print("End:", maze.target)
+    print("Start:", maze.start())
+    print("End:", maze.target())
     print("Initial position:", maze.position())
 
     while not maze.solved():

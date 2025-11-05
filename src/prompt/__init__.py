@@ -19,7 +19,7 @@ from prompt.prompts import (
 from prompt.warning import illegal_answer_warning_text, illegal_direction_warning_text
  
 def get_preamble(maze: Maze) -> str:
-    return preamble_template.substitute(size=maze.size)
+    return preamble_template.substitute(size=maze.size())
 
 def illegal_answer_warning(_: Maze) -> str:
     return illegal_answer_warning_text
@@ -56,7 +56,7 @@ def _wall_state(direction: Direction, maze: Maze) -> str:
 
 def exit_distance(maze) -> int:
     p_x, p_y = maze.position()
-    t_x, t_y = maze.target
+    t_x, t_y = maze.target()
     if p_x == t_x:
         return abs(p_y - t_y)
     if p_y == t_y:

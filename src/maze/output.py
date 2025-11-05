@@ -11,13 +11,13 @@ def save_maze(maze: Maze, save_path: str):
     plt.close('all')
     _, ax = plt.subplots(figsize=(5, 5))
 
-    grid_size = maze.size
+    grid_size = maze.size()
     WALL_WIDTH = 3
     cell_size = 1.0
 
     ax.set_facecolor('white')
 
-    t_i, t_j = maze.target
+    t_i, t_j = maze.target()
     exit_top = (t_i == 0)
     exit_bottom = (t_i == grid_size - 1)
     exit_left = (t_j == 0)
@@ -52,7 +52,7 @@ def save_maze(maze: Maze, save_path: str):
     _draw_path(ax, maze.path(), grid_size)
 
     for pos, color, marker, label in [
-        (maze.start, "green", "o", "Start"),
+        (maze.start(), "green", "o", "Start"),
     ]:
         if pos:
             x, y = _plot_coords(*pos, grid_size)
@@ -67,13 +67,13 @@ def save_maze(maze: Maze, save_path: str):
 
 def print_maze(maze: Maze):
     console = Console()
-    grid_size = maze.size
+    grid_size = maze.size()
     path = maze.path()
 
     path_set = set(path)
     current_pos = path[-1] if path else None
-    start_pos = maze.start
-    target_pos = maze.target
+    start_pos = maze.start()
+    target_pos = maze.target()
 
     t_i, t_j = target_pos
     exit_top = (t_i == 0)

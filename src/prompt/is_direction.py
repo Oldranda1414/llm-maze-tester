@@ -4,7 +4,7 @@ from prompt.util import path_length
 
 def is_exit_direction(direction: Direction, maze: Maze) -> bool:
     ip_x, ip_y = maze.position()
-    t_x, t_y = maze.target
+    t_x, t_y = maze.target()
     pl = path_length(direction, maze)
 
     if ip_y == t_y:
