@@ -41,6 +41,3 @@ def is_wall(direction: Direction, maze: Maze) -> bool:
     cl = maze.connection_list()
     return not cl.connected(position, neighbor(position, direction))
 
-def is_out_of_sight(direction: Direction, maze: Maze, sight_depth: int) -> bool:
-    return path_length(direction, maze) > sight_depth
-

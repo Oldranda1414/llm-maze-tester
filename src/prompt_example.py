@@ -20,7 +20,8 @@ def main() -> None:
         save_path = get_save_path(i)
         m = create_maze(i)
         m.save(save_path)
-        prompt = step_prompt(m, 3)
+        sight_depth = 2
+        prompt = step_prompt(m, sight_depth)
         mazes.append((save_path, prompt))
 
         _, axes = plt.subplots(len(mazes), 2, figsize=(8, len(mazes)*4))

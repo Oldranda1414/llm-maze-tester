@@ -1,12 +1,11 @@
 from maze import Maze
 from move import Direction
 
-from prompt.util import path_length_str
+from prompt.util import path_length_str, path_length
 from prompt.is_direction import (
         is_exit_direction,
         is_dead_end,
         is_wall,
-        is_out_of_sight
     )
 from prompt.prompts import (
         preamble as preamble_template,
@@ -41,17 +40,26 @@ def _path_prompt(direction: Direction, maze: Maze, sight_depth: int) -> str:
     prompt = direction_template.substitute(direction=str(direction))
     if is_wall(direction, maze):
         return prompt + wall_prompt
-    path_length = path_length_str(direction, maze)
-    prompt += corridor_template.substitute(path_length=path_length)
-    prompt += " " + _wall_state(direction, maze, sight_depth)
+    if is_exit_direction(direction, maze) and exit_distance(maze) <= sight_depth:
+        return prompt + exit_prompt
+    p_length = path_length_str(direction, maze)
+    if path_length(direction, maze) > sight_depth:
+        return prompt + out_of_sight_prompt
+    prompt += corridor_template.substitute(path_length=p_length)
+    prompt += " " + _wall_state(direction, maze)
     return prompt
 
-def _wall_state(direction: Direction, maze: Maze, sight_depth: int) -> str:
-    if is_out_of_sight(direction, maze, sight_depth):
-        return out_of_sight_prompt
-    if is_exit_direction(direction, maze):
-        return exit_prompt
+def _wall_state(direction: Direction, maze: Maze) -> str:
     if is_dead_end(direction, maze):
         return dead_end_prompt
     return ""
+
+def exit_distance(maze) -> int:
+    p_x, p_y = maze.position()
+    t_x, t_y = maze.target
+    if p_x == t_x:
+        return abs(p_y - t_y)
+    if p_y == t_y:
+        return abs(p_x - t_x)
+    raise ValueError("maze current position and target are not aligned on one axis, so distance is non trivial")
 
