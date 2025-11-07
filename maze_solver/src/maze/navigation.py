@@ -9,8 +9,6 @@ class ConnectionList:
     def __init__(self, vertical: list[list[bool]], horizontal: list[list[bool]]):
         self.vertical = vertical
         self.horizontal = horizontal
-        print(self.vertical)
-        print(self.horizontal)
 
     def connected(self, a: Coordinate, b: Coordinate) -> bool:
         """Return True if a and b are adiacent and connected."""
@@ -55,3 +53,6 @@ def direction(start: Coordinate, target: Coordinate) -> Direction | None:
         return Direction.EAST
     if dc < 0:
         return Direction.WEST
+
+    return None
+
