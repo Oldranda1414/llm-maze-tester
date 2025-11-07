@@ -9,8 +9,15 @@ from rich.text import Text
 from move import Coordinate, neighbor
 
 def save_maze(maze: Maze, save_path: str):
-    plt.close('all')
-    _, ax = plt.subplots(figsize=(5, 5))
+    fig, _ = draw_maze(maze)
+    fig.savefig(save_path, dpi=300, bbox_inches="tight")
+
+def draw_maze(maze, ax=None, show_path=True):
+    if ax is None:
+        plt.close('all')
+        fig, ax = plt.subplots(figsize=(5, 5))
+    else:
+        fig = ax.figure  # reuse existing figure
 
     grid_size = maze.size()
     WALL_WIDTH = 3
@@ -27,6 +34,7 @@ def save_maze(maze: Maze, save_path: str):
         exit_left = False
         exit_right = False
 
+    # Borders
     for j in range(grid_size):
         if not (exit_bottom and j == t_j):
             ax.plot([j, j + 1], [0, 0], 'k-', linewidth=WALL_WIDTH)
@@ -38,34 +46,40 @@ def save_maze(maze: Maze, save_path: str):
         if not (exit_right and i == grid_size - t_i - 1):
             ax.plot([grid_size, grid_size], [i, i + 1], 'k-', linewidth=WALL_WIDTH)
 
+    # Cells
+    cl = maze.connection_list()
     for i in range(grid_size):
         for j in range(grid_size):
             y_plot = grid_size - i - 1
-            facecolor = "yellow" if _is_seen((i,j), maze) else "white"
+            facecolor = "yellow" if _is_seen((i, j), maze) else "white"
             rect = plt.Rectangle((j, y_plot), cell_size, cell_size,
                                  facecolor=facecolor, edgecolor='lightgray', linewidth=0.5)
             ax.add_patch(rect)
 
-            if j < grid_size - 1 and not maze.connection_list().horizontal[i][j]:
+            if j < grid_size - 1 and not cl.horizontal[i][j]:
                 ax.plot([j + 1, j + 1], [y_plot, y_plot + 1], 'k-', linewidth=WALL_WIDTH)
-            if i < grid_size - 1 and not maze.connection_list().vertical[i][j]:
+            if i < grid_size - 1 and not cl.vertical[i][j]:
                 ax.plot([j, j + 1], [y_plot, y_plot], 'k-', linewidth=WALL_WIDTH)
 
-    _draw_path(ax, maze.path(), grid_size)
+    if show_path:
+        _draw_path(ax, maze.path(), grid_size)
 
+    # Start marker
     for pos, color, marker, label in [
         (maze.start(), "green", "o", "Start"),
     ]:
         if pos:
             x, y = _plot_coords(*pos, grid_size)
-            ax.plot(x, y, marker, markersize=12, markeredgecolor=color, label=label, color=color)
+            ax.plot(x, y, marker, markersize=12, markeredgecolor=color,
+                    label=label, color=color)
 
     ax.set_xlim(-0.1, grid_size + 0.1)
     ax.set_ylim(-0.1, grid_size + 0.1)
     ax.set_aspect('equal')
     ax.axis('off')
     ax.set_title(f"Maze {grid_size}x{grid_size}")
-    plt.savefig(save_path, dpi=300, bbox_inches='tight', facecolor='white')
+
+    return fig, ax
 
 def print_maze(maze: Maze):
     console = Console()

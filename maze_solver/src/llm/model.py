@@ -9,7 +9,10 @@ from error.generation import ModelTimeoutError
 from llm.server import get_api_base, get_server_model_name, is_model_installed 
 from llm.server import start as start_server
 
+from chat_history import ChatHistory
+
 REQUEST_TIMEOUT = 3600
+SYSTEM_PROMPT = "You are a helpful assistant."
 
 class Model:
     
@@ -21,13 +24,11 @@ class Model:
             raise ModelNotInstalledError(model_name)
 
         self.model_name = model_name
-        self.chat_history: list[dict[str, str]] = [
-            {"role": "system", "content": "You are a helpful assistant."}
-        ]
+        self.chat_history: ChatHistory = ChatHistory("You are a helpful assistant.")
 
-    def ask(self, message: str) -> str:
+    def ask(self, prompt: str) -> str:
         start_server()
-        self.chat_history.append({ "content": message,"role": "user"})
+        self.chat_history.add_user_message(prompt)
         try:
             response = completion(
                         model = get_server_model_name(self.model_name),
@@ -35,16 +36,16 @@ class Model:
                         api_base = get_api_base(),
                         request_timeout = REQUEST_TIMEOUT
             )
-            self.chat_history.append({ "content": response.choices[0].message.content,"role": "assistant"})
+            self.chat_history.add_assistant_message(response.choices[0])
             return response.choices[0].message.content
         except APIConnectionError:
             raise ModelTimeoutError(self.model_name, REQUEST_TIMEOUT)
 
-    def history(self) -> list[dict[str, str]]:
+    def history(self) -> ChatHistory:
         return self.chat_history
 
     def reset_history(self):
-        self.chat_history = []
+        self.chat_history = ChatHistory(SYSTEM_PROMPT)
 
     def save_history(self, filepath: str) -> bool:
         try:

@@ -4,9 +4,13 @@ A class that uses an LLM model to solve a maze.
 from typing import Any
 
 from llm.model import Model
+
 from maze.factory import create_maze
 from move import Direction
+
 from prompt import step_prompt, illegal_answer_warning, illegal_direction_warning, get_preamble
+
+from save_run import save_run
 
 class MazeSolver:
     """
@@ -15,7 +19,7 @@ class MazeSolver:
     to make decisions about which direction to move at each step.
     """
 
-    def __init__(self, model_name: str, maze_size: int = 6, sight_depth: int = 3):
+    def __init__(self, model_name: str, maze_size: int = 6, sight_depth: int = 3, debug: bool = False):
         """
         Initialize the maze solver with a model and maze.
         
@@ -85,10 +89,10 @@ class MazeSolver:
         print(f"available_directions: {available_directions}")
 
         move = None
-        decision = response[-1]
-        if decision.upper() in ["N", "S", "W", "E"]:
-            if decision.upper() in [direction.to_coordinate() for direction in available_directions]:
-                move = decision.upper()
+        decision = response[-1].upper()
+        if decision in ["N", "S", "W", "E"]:
+            if decision in [direction.to_coordinate() for direction in available_directions]:
+                move = decision
             else:
                 print(f"model provided an illegal direction: {decision}")
                 self.invalid_direction_provided = True
@@ -176,4 +180,7 @@ class MazeSolver:
             bool: True if the maze is solved, False otherwise
         """
         return self.is_solved
+
+    def save(self) -> None:
+        save_run(self.maze, self.model.chat_history)
 
