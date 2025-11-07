@@ -40,8 +40,9 @@ def save_maze(maze: Maze, save_path: str):
     for i in range(grid_size):
         for j in range(grid_size):
             y_plot = grid_size - i - 1
+            facecolor = "yellow" if _is_seen((i,j), maze) else "white"
             rect = plt.Rectangle((j, y_plot), cell_size, cell_size,
-                                 facecolor='white', edgecolor='lightgray', linewidth=0.5)
+                                 facecolor=facecolor, edgecolor='lightgray', linewidth=0.5)
             ax.add_patch(rect)
 
             if j < grid_size - 1 and not maze.connection_list().horizontal[i][j]:
@@ -159,3 +160,5 @@ def _plot_coords(i: int, j: int, grid_size: int) -> tuple[float, float]:
     """Convert maze indices (i,j) to plotting coordinates (x,y)."""
     return j + 0.5, grid_size - i - 1 + 0.5
 
+def _is_seen(cell: Coordinate, maze: Maze) -> bool:
+    return False

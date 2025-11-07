@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from move import Coordinate
+from move import Coordinate, Direction
 
 @dataclass
 class ConnectionList:
@@ -18,6 +18,7 @@ class ConnectionList:
         if abs(dr) + abs(dc) != 1:
             return False
 
+        # TODO refactor this to use direction()
         if dr == 1:
             return self.vertical[r1][c1]
         if dr == -1:
@@ -45,3 +46,22 @@ class ConnectionList:
 
     def num_neighbors(self, cell: Coordinate) -> int:
         return len(self.neighbors_of(cell))
+
+def direction(start: Coordinate, target: Coordinate) -> Direction | None:
+    """
+    Returns the direction from start to target if one exists, None otherwise
+    """
+    (r1, c1), (r2, c2) = start, target
+    dr, dc = r2 - r1, c2 - c1
+
+    if dr != 0 and dc != 0:
+        return None
+
+    if dr > 0:
+        return Direction.SOUTH
+    if dr < 0:
+        return Direction.NORTH
+    if dc > 0:
+        return Direction.EAST
+    if dc < 0:
+        return Direction.WEST

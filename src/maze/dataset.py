@@ -9,7 +9,7 @@ from maze import Maze
 
 class MazeDataset():
     
-    def __init__(self, name: str, n_mazes: int, maze_size: int, seed: int):
+    def __init__(self, name: str, n_mazes: int, maze_size: int, sight_depth: int, seed: int):
         random.seed(seed)
         config: MazeDatasetConfig = MazeDatasetConfig(
             name="dataset",
@@ -22,4 +22,4 @@ class MazeDataset():
         dataset: MazeDataset = DatasetMazeDataset.from_config(config)
 
         save_path = f"{name}/maze"
-        self.mazes: list[Maze] = [LatticeMaze(d_maze, f"{save_path}_{i}.png") for i, d_maze in enumerate(dataset.mazes)]
+        self.mazes: list[Maze] = [LatticeMaze(d_maze, sight_depth, f"{save_path}_{i}.png") for i, d_maze in enumerate(dataset.mazes)]

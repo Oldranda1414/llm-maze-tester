@@ -2,8 +2,7 @@ from move import Direction
 from maze.factory import create_maze
 
 if __name__ == "__main__":
-    maze = create_maze()
-    print(maze.connection_list())
+    maze = create_maze(seed=39)
 
     print("Start:", maze.start())
     print("End:", maze.target())

@@ -27,23 +27,23 @@ def illegal_answer_warning(_: Maze) -> str:
 def illegal_direction_warning(_: Maze) -> str:
     return illegal_direction_warning_text
 
-def step_prompt(maze: Maze, sight_depth: int) -> str: 
+def step_prompt(maze: Maze) -> str: 
     directions = [Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST]
     original_path = maze.path()
     step_prompt = ""
     for direction in directions:
-        step_prompt += _path_prompt(direction, maze, sight_depth) + "\n"
+        step_prompt += _path_prompt(direction, maze) + "\n"
     maze.set_path(original_path)
     return step_prompt
 
-def _path_prompt(direction: Direction, maze: Maze, sight_depth: int) -> str:
+def _path_prompt(direction: Direction, maze: Maze) -> str:
     prompt = direction_template.substitute(direction=str(direction))
     if is_wall(direction, maze):
         return prompt + wall_prompt
-    if is_exit_direction(direction, maze) and exit_distance(maze) <= sight_depth:
+    if is_exit_direction(direction, maze) and exit_distance(maze) <= maze.sight_depth():
         return prompt + exit_prompt
     p_length = path_length_str(direction, maze)
-    if path_length(direction, maze) > sight_depth:
+    if path_length(direction, maze) > maze.sight_depth():
         return prompt + out_of_sight_prompt
     prompt += corridor_template.substitute(path_length=p_length)
     prompt += " " + _wall_state(direction, maze)

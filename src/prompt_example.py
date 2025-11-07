@@ -18,10 +18,10 @@ def main() -> None:
     os.makedirs(output_path, exist_ok=True)
     for i in range(2, 7):
         save_path = get_save_path(i)
-        m = create_maze(i)
-        m.save(save_path)
         sight_depth = 2
-        prompt = step_prompt(m, sight_depth)
+        m = create_maze(i, sight_depth)
+        m.save(save_path)
+        prompt = step_prompt(m)
         mazes.append((save_path, prompt))
 
         _, axes = plt.subplots(len(mazes), 2, figsize=(8, len(mazes)*4))

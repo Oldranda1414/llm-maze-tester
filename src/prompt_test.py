@@ -3,13 +3,13 @@ from prompt import step_prompt, get_preamble
 from maze.factory import create_maze, create_dataset
 
 def main():
-    maze = create_maze(3)
     sight_depth = 3
+    maze = create_maze(3, sight_depth)
     print(get_preamble(maze))
 
     while not maze.solved():
 
-        print(step_prompt(maze, sight_depth))
+        print(step_prompt(maze))
         maze.print()
 
         move = input("give me a move (C to close): ")
@@ -27,14 +27,14 @@ def main():
         print("Solved?", maze.solved())
 
 def many_maze():
-    mazes = create_dataset(10,3).mazes
     sight_depth = 3
+    mazes = create_dataset(10,3, sight_depth).mazes
     for maze in mazes:
         print(get_preamble(maze))
 
         while not maze.solved():
 
-            print(step_prompt(maze, sight_depth))
+            print(step_prompt(maze))
             maze.print()
 
             move = input("give me a move (C to close): ")
@@ -53,3 +53,4 @@ def many_maze():
 
 if __name__ == "__main__":
     main()
+

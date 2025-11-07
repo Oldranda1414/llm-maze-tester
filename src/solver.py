@@ -29,8 +29,7 @@ class MazeSolver:
 
         # Initialize the maze
         print(f"Creating {maze_size}x{maze_size} maze...")
-        self.maze = create_maze(maze_size)
-        self.sight_depth = sight_depth
+        self.maze = create_maze(maze_size, sight_depth)
         
         # Track last step errors
         self.invalid_answer_provided = False
@@ -80,7 +79,7 @@ class MazeSolver:
             prompt += illegal_direction_warning(self.maze)
             self.invalid_direction_provided = False
 
-        prompt += step_prompt(self.maze, self.sight_depth)
+        prompt += step_prompt(self.maze)
 
         response = self.model.ask(prompt)
         print(f"available_directions: {available_directions}")

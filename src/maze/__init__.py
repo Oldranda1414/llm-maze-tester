@@ -1,7 +1,7 @@
 from typing import Protocol
 
 from move import Coordinate, Direction
-from navigation import ConnectionList
+from maze.navigation import ConnectionList
 
 class Maze(Protocol):
     """
@@ -13,6 +13,8 @@ class Maze(Protocol):
     def start(self) -> Coordinate: ...
 
     def target(self) -> Coordinate: ...
+
+    def sight_depth(self) -> int: ...
 
     def connection_list(self) -> ConnectionList: ...
 

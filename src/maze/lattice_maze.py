@@ -5,7 +5,7 @@ from maze_dataset import LatticeMaze as DatasetLatticeMaze
 
 from move import Coordinate, Direction, DIRECTIONS
 from maze.output import save_maze, print_maze
-from navigation import ConnectionList
+from maze.navigation import ConnectionList
 
 class LatticeMaze:
     """
@@ -16,10 +16,11 @@ class LatticeMaze:
         height (int): Height of the maze
         save_path (str): Path to save maze png to
     """
-    def __init__(self, maze: DatasetLatticeMaze, save_path: str):
+    def __init__(self, maze: DatasetLatticeMaze, sight_depth: int, save_path: str):
+        self._save_path = save_path
+        self._sight_depth = sight_depth
         self._connection_list = ConnectionList(maze.connection_list[0], maze.connection_list[1])
         self._size = maze.grid_n
-        self._save_path = save_path
         self._target = self._generate_target()
         self._start = self._generate_start() 
         self._path = [self._start]
@@ -30,6 +31,8 @@ class LatticeMaze:
     def start(self) -> Coordinate: return self._start
 
     def target(self) -> Coordinate: return self._target
+
+    def sight_depth(self) -> int: return self._sight_depth
 
     def save_path(self) -> str: ...
 
