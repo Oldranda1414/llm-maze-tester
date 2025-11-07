@@ -29,6 +29,11 @@ maze *args:
 model *args:
   uv --project maze_solver run maze_solver/src/model_test.py {{args}}
 
+# Run the model test
+[no-exit-message]
+run_test *args:
+  uv --project maze_solver run maze_solver/src/run_test.py {{args}}
+
 # Add package to project dependencies
 [no-exit-message]
 add_solver *args:

@@ -17,7 +17,7 @@ def draw_maze(maze, ax=None, show_path=True):
         plt.close('all')
         fig, ax = plt.subplots(figsize=(5, 5))
     else:
-        fig = ax.figure  # reuse existing figure
+        fig = ax.figure
 
     grid_size = maze.size()
     WALL_WIDTH = 3

@@ -28,6 +28,4 @@ if __name__ == "__main__":
             maze.save('./maze_test.png')
         else:
             maze.move(Direction.from_coordinate(move))
-            print("New position:", maze.position())
-            print("Solved?", maze.solved())
 

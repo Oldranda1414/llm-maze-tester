@@ -1,4 +1,6 @@
 import random
+from maze import generate_start, generate_target
+from maze.navigation import ConnectionList
 
 from maze_dataset import MazeDataset as DatasetMazeDataset
 from maze_dataset import MazeDatasetConfig
@@ -12,7 +14,7 @@ class MazeDataset():
     def __init__(self, name: str, n_mazes: int, maze_size: int, sight_depth: int, seed: int):
         random.seed(seed)
         config: MazeDatasetConfig = MazeDatasetConfig(
-            name="dataset",
+            name=name,
             grid_n=maze_size,
             n_mazes=n_mazes,
             maze_ctor=LatticeMazeGenerators.gen_dfs,
@@ -21,5 +23,14 @@ class MazeDataset():
 
         dataset: MazeDataset = DatasetMazeDataset.from_config(config)
 
-        save_path = f"{name}/maze"
-        self.mazes: list[Maze] = [LatticeMaze(d_maze, sight_depth, f"{save_path}_{i}.png") for i, d_maze in enumerate(dataset.mazes)]
+        target = generate_target(maze_size)
+        start = generate_start(maze_size, target)
+        self.mazes: list[Maze] = [
+                LatticeMaze(
+                    ConnectionList(d_maze.connection_list[0].tolist(), d_maze.connection_list[1].tolist()),
+                    maze_size,
+                    start,
+                    target,
+                    sight_depth)
+                for d_maze in dataset.mazes
+            ]

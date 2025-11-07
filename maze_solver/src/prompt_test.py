@@ -4,7 +4,7 @@ from maze.factory import create_maze, create_dataset
 
 def main():
     sight_depth = 3
-    maze = create_maze(3, sight_depth)
+    maze = create_maze(size=3, sight_depth=sight_depth)
     print(get_preamble(maze))
 
     while not maze.solved():

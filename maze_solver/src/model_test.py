@@ -32,10 +32,6 @@ def main():
     print("\n--- Chat History ---")
     history = model.history()
     print(history)
-    for i, interaction in enumerate(history):
-        print(f"Interaction {i+1}:")
-        print(f"  Author: {interaction['role']}")
-        print(f"  Content: {interaction['content'][:100]}..." if len(interaction['content']) > 100 else f"  Response: {interaction['content']}")
 
     # Save history to file
     save_path = "chat_history.json"

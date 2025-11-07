@@ -1,4 +1,4 @@
-import json
+import yaml
 
 from litellm import completion
 from litellm.exceptions import APIConnectionError
@@ -50,7 +50,7 @@ class Model:
     def save_history(self, filepath: str) -> bool:
         try:
             with open(filepath, 'w', encoding='utf-8') as f:
-                json.dump(self.chat_history, f, indent=2)
+                yaml.safe_dump(self.chat_history.to_yaml(), f, sort_keys=False)
             print(f"Chat history saved to {filepath}")
             return True
         except (IOError, OSError) as e:

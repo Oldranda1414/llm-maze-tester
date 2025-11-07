@@ -1,4 +1,5 @@
 from typing import Protocol
+import random
 
 from move import Coordinate, Direction
 from maze.navigation import ConnectionList
@@ -17,8 +18,6 @@ class Maze(Protocol):
     def sight_depth(self) -> int: ...
 
     def connection_list(self) -> ConnectionList: ...
-
-    def save_path(self) -> str: ...
 
     def position(self) -> Coordinate: ...
     """Get the current position in the maze.
@@ -58,7 +57,26 @@ class Maze(Protocol):
 
     def print(self) -> None: ...
 
-    def save(self, save_path: str | None = None) -> None: ...
+    def save(self, save_path: str) -> None: ...
 
     def reset(self) -> None: ...
 
+    def to_yaml(self) -> str: ...
+
+    @classmethod
+    def from_yaml(cls, yaml_str: str) -> "Maze": ...
+
+def generate_target(maze_size) -> Coordinate:
+    border_cells = [
+            (r, c)
+            for r in range(maze_size)
+            for c in range(maze_size)
+            if r == 0 or r == maze_size - 1 or c == 0 or c == maze_size - 1
+        ]
+    borders = [cell for cell in border_cells]
+    border_point = random.choice(borders)
+    return border_point
+
+def generate_start(maze_size: int, maze_target: Coordinate) -> Coordinate:
+    start_candidates = [(i,j) for i in range(maze_size) for j in range(maze_size) if (i,j) != maze_target]
+    return random.choice(start_candidates)

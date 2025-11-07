@@ -2,15 +2,16 @@
 A class that uses an LLM model to solve a maze.
 """
 from typing import Any
+import sys
 
 from llm.model import Model
+from llm.phony_model import Model as PhonyModel
 
 from maze.factory import create_maze
 from move import Direction
 
 from prompt import step_prompt, illegal_answer_warning, illegal_direction_warning, get_preamble
-
-from save_run import save_run
+from run import Run
 
 class MazeSolver:
     """
@@ -27,13 +28,12 @@ class MazeSolver:
             model_name: Name of the LLM model to use
             maze_size: Width and height of the maze
         """
-        # Initialize the model
-        print(f"Initializing model '{model_name}'...")
-        self.model = Model(model_name)
-
-        # Initialize the maze
-        print(f"Creating {maze_size}x{maze_size} maze...")
-        self.maze = create_maze(maze_size, sight_depth)
+        if debug:
+            self.model = PhonyModel(model_name)
+        else:
+            self.model = Model(model_name)
+        self.maze = create_maze(size=maze_size, sight_depth=sight_depth)
+        self.debug = debug
         
         # Track last step errors
         self.invalid_answer_provided = False
@@ -125,7 +125,7 @@ class MazeSolver:
                 if is_solved:
                     print(f"🎉 Maze solved in {self.steps_taken} steps!")
                     self.is_solved = True
-                    self.maze.save()
+                    self.maze.save("solved_maze.png")
                 self.maze.print()
 
                 return {
@@ -181,6 +181,6 @@ class MazeSolver:
         """
         return self.is_solved
 
-    def save(self) -> None:
-        save_run(self.maze, self.model.chat_history)
+    def save_run(self, path: str) -> None:
+        Run(self.maze, self.model.chat_history).save(path)
 

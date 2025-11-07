@@ -13,7 +13,7 @@ def main() -> None:
     mazes: list[tuple[Maze, str]] = []
     for i in range(2, 7):
         sight_depth = 2
-        m = create_maze(i, sight_depth)
+        m = create_maze(size=i, sight_depth=sight_depth)
         prompt = step_prompt(m)
         mazes.append((m, prompt))
 

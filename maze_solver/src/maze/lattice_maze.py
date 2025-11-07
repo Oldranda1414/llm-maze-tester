@@ -1,8 +1,6 @@
 from copy import deepcopy
-import random
 
-from maze_dataset import LatticeMaze as DatasetLatticeMaze
-
+import yaml
 from move import Coordinate, Direction, DIRECTIONS
 from maze.output import save_maze, print_maze
 from maze.navigation import ConnectionList, direction
@@ -16,13 +14,12 @@ class LatticeMaze:
         height (int): Height of the maze
         save_path (str): Path to save maze png to
     """
-    def __init__(self, maze: DatasetLatticeMaze, sight_depth: int, save_path: str):
-        self._save_path = save_path
+    def __init__(self, cl: ConnectionList, size: int, start: Coordinate, target: Coordinate, sight_depth: int):
         self._sight_depth = sight_depth
-        self._connection_list = ConnectionList(maze.connection_list[0], maze.connection_list[1])
-        self._size = maze.grid_n
-        self._target = self._generate_target()
-        self._start = self._generate_start() 
+        self._connection_list = cl
+        self._size = size
+        self._start = start
+        self._target = target
         self._path = [self._start]
         self._position = self._start
 
@@ -33,8 +30,6 @@ class LatticeMaze:
     def target(self) -> Coordinate: return self._target
 
     def sight_depth(self) -> int: return self._sight_depth
-
-    def save_path(self) -> str: ...
 
     def connection_list(self) -> ConnectionList:
         return deepcopy(self._connection_list)
@@ -56,21 +51,7 @@ class LatticeMaze:
 
     def set_path(self, new_path: list[Coordinate]):
         self._path = new_path
-
-    def _generate_target(self) -> Coordinate:
-        border_cells = [
-                (r, c)
-                for r in range(self._size)
-                for c in range(self._size)
-                if r == 0 or r == self._size - 1 or c == 0 or c == self._size - 1
-            ]
-        borders = [cell for cell in border_cells]
-        border_point = random.choice(borders)
-        return border_point
-
-    def _generate_start(self) -> Coordinate:
-        start_candidates = [(i,j) for i in range(self._size) for j in range(self._size) if (i,j) != self._target]
-        return random.choice(start_candidates)
+        self._position = new_path[-1]
 
     def move(self, direction: Direction) -> bool:
         dr, dc = DIRECTIONS[direction]
@@ -116,10 +97,43 @@ class LatticeMaze:
     def print(self):
         print_maze(self)
 
-    def save(self, save_path: str | None = None):
-        save_maze(self, save_path if save_path else self._save_path)
+    def save(self, save_path: str):
+        save_maze(self, save_path)
 
     def reset(self):
         self._path = [self._start]
         self._position = self._start
 
+    def to_yaml(self) -> str:
+        """Return the maze serialized as a YAML string."""
+        data = {
+            "horizontal": self._connection_list.horizontal,
+            "vertical": self._connection_list.vertical,
+            "start": list(self._start),
+            "target": list(self._target),
+            "path": [list(p) for p in self._path],
+            "sight_depth": self._sight_depth,
+            "size": self._size,
+        }
+        return yaml.safe_dump(data, sort_keys=False)
+
+    @classmethod
+    def from_yaml(cls, yaml_str: str) -> "LatticeMaze":
+        """Reconstruct a Maze from a YAML string."""
+        data = yaml.safe_load(yaml_str)
+
+        connection_list = ConnectionList(
+            horizontal=[list(row) for row in data["horizontal"]],
+            vertical=[list(row) for row in data["vertical"]],
+        )
+
+        start = Coordinate(data["start"])
+        target = Coordinate(data["target"])
+        path = [Coordinate(p) for p in data.get("path", [])]
+        sight_depth = data.get("sight_depth", 0)
+        size = data.get("size", 0)
+
+        maze = cls(connection_list, size, start, target, sight_depth)
+        maze.set_path(path)
+
+        return maze
