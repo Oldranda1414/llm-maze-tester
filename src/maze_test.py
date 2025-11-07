@@ -24,10 +24,10 @@ if __name__ == "__main__":
 
         if move == "C":
             break
-        if move == "Q":
+        elif move == "Q":
             maze.save('./maze_test.png')
-
-        maze.move(Direction.from_coordinate(move))
-        print("New position:", maze.position())
-        print("Solved?", maze.solved())
+        else:
+            maze.move(Direction.from_coordinate(move))
+            print("New position:", maze.position())
+            print("Solved?", maze.solved())
 

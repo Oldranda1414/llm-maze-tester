@@ -1,11 +1,12 @@
 import matplotlib.pyplot as plt
 
 from maze import Maze
+from maze.navigation import direction
 
 from rich.console import Console
 from rich.text import Text
 
-from move import Coordinate
+from move import Coordinate, neighbor
 
 def save_maze(maze: Maze, save_path: str):
     plt.close('all')
@@ -137,7 +138,7 @@ def _draw_path(ax, path: list[Coordinate], grid_size: int):
     if not path:
         return
 
-    PATH_COLOR = 'gold'
+    PATH_COLOR = 'orange'
     CURRENT_COLOR = 'darkorange'
     PATH_ALPHA = 0.8
 
@@ -161,4 +162,20 @@ def _plot_coords(i: int, j: int, grid_size: int) -> tuple[float, float]:
     return j + 0.5, grid_size - i - 1 + 0.5
 
 def _is_seen(cell: Coordinate, maze: Maze) -> bool:
+    if maze.position() == cell:
+        return True
+
+    cl = maze.connection_list()
+    position = maze.position()
+    d = direction(position, cell)
+    distance = 0
+    while d is not None and distance < maze.sight_depth():
+        n = neighbor(position, d)
+        if cl.connected(position, n):
+            if n == cell: return True
+            position = n
+            distance += 1
+
+        else: break
+
     return False
