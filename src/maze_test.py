@@ -13,18 +13,18 @@ if __name__ == "__main__":
 
         print("Available directions:", maze.get_directions())
 
-        prompt = "give me a move (C to close, S to save): "
+        prompt = "give me a move (C to close, Q to save): "
         move = input(prompt)
         move = move.strip(" ").upper()
         coordinates = ["N", "E", "S", "W"]
-        actions = ["C", "S"]
+        actions = ["C", "Q"]
         while move not in coordinates + actions:
             print("invalid move try again")
             move = input(prompt)
 
         if move == "C":
             break
-        if move == "S":
+        if move == "Q":
             maze.save('./maze_test.png')
 
         maze.move(Direction.from_coordinate(move))
