@@ -5,7 +5,7 @@ from maze_dataset import LatticeMaze as DatasetLatticeMaze
 
 from move import Coordinate, Direction, DIRECTIONS
 from maze.output import save_maze, print_maze
-from maze.navigation import ConnectionList
+from maze.navigation import ConnectionList, direction
 
 class LatticeMaze:
     """
@@ -82,12 +82,8 @@ class LatticeMaze:
         return False
 
     def get_directions(self) -> list[Direction]:
-        r, c = self._position
-        return [
-            d
-            for d, (dr, dc) in DIRECTIONS.items()
-            if self._connection_list.connected((r, c), (r + dr, c + dc))
-        ]
+        neighbors = self._connection_list.neighbors_of(self._position)
+        return [direction(self._position, n) for n in neighbors]
 
     def decisions(self) -> list[Direction]:
         if len(self._path) == 0:
