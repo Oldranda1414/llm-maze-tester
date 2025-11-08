@@ -1,9 +1,12 @@
 import html
 import matplotlib.pyplot as plt
-from ipywidgets import interact, IntSlider, VBox, HTML
+from chat_history import Exchange
+from ipywidgets import interact, IntSlider, HTML
 from IPython.display import display, clear_output
 
+from maze import Maze
 from maze.output import draw_maze
+from move import Direction
 from run import Run
 
 def format_text(text: str) -> str:
@@ -17,13 +20,8 @@ def visualize_run(run: "Run"):
 
     maze = run.maze
     chat = run.chat_history.chat
-    path = maze.path()
-    num_steps = len(path)
+    num_steps = len(chat)
 
-    # System prompt text (displayed once)
-    prompt_html = HTML(f"<h4>System prompt</h4><p>{format_text(run.chat_history.system_prompt)}</p>")
-
-    # Chat message output (changes per step)
     message_html = HTML()
 
     def draw_step(step_idx: int):
@@ -32,23 +30,34 @@ def visualize_run(run: "Run"):
 
         # Draw maze with partial path up to this step
         partial_maze = maze
-        partial_maze.set_path(path[: step_idx + 1])
+        partial_maze = set_path(partial_maze, step_idx, chat)
 
         draw_maze(partial_maze, show_path=True)
         plt.show()
 
         # Update displayed messages
-        msg = chat[step_idx]
-        test_response = msg.response + '\nsome\nlines\n\nsome more'
-        message_html.value = (
-            f"<h4>Prompt</h4><p>{format_text(msg.prompt)}</p>"
-            f"<h4>Response</h4><p>{format_text(test_response)}</p>"
-        )
+        if step_idx < len(chat):
+            msg = chat[step_idx]
+            message_html.value = (
+                f"<h4>Prompt</h4><p>{format_text(msg.prompt)}</p>"
+                f"<h4>Response</h4><p>{format_text(msg.response)}</p>"
+            )
+        else:
+            message_html.value = ("<h4>Run finished</h4>")
 
         # Re-display UI (important for notebook interactivity)
-        display(VBox([prompt_html, message_html]))
+        display(message_html)
 
     interact(
         draw_step,
-        step_idx=IntSlider(min=0, max=max(num_steps - 1, 0), step=1, value=0),
+        step_idx=IntSlider(min=0, max=max(num_steps, 0), step=1, value=0),
     )
+
+def set_path(maze: Maze, step_idx: int, chat: list[Exchange]) -> Maze:
+    maze.reset()
+    for i in range(step_idx):
+        response = chat[i].response
+        next_move = Direction.from_coordinate(response.upper())
+        maze.move(next_move)
+    return maze
+
