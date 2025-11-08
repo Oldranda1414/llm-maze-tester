@@ -1,6 +1,7 @@
 import yaml
 from chat_history import ChatHistory
 from maze import Maze
+from maze.factory import maze_from_yaml
 
 class Run:
     def __init__(self, maze: Maze, chat_history: ChatHistory):
@@ -25,7 +26,7 @@ class Run:
         maze_data = yaml.safe_dump(data["maze"])
         chat_data = yaml.safe_dump(data["chat_history"])
 
-        maze = Maze.from_yaml(maze_data)
+        maze = maze_from_yaml(maze_data)
         chat_history = ChatHistory.from_yaml(chat_data)
 
         return cls(maze, chat_history)

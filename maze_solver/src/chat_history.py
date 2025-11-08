@@ -1,5 +1,5 @@
 from enum import Enum
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass
 import yaml
 
 class Role(Enum):
@@ -29,12 +29,20 @@ class ChatHistory:
     def add_assistant_message(self, content: str):
         self.chat.append(Exchange(Role.ASSISTANT, content))
 
-    def __str__(self):
-        result = ""
+    def to_string(self) -> str:
+        result = f"System prompt: {self.system_prompt}\n"
         for i, exchange in enumerate(self.chat):
-            result = f"Interaction {i+1}:\n"
-            result = f"  Author: {exchange.role}\n"
-            result = f"  Content: {exchange.content[:100]}...\n" if len(exchange.content) > 100 else f"  Response: {exchange.content}\n"
+            result += f"Interaction {i+1}:\n"
+            result += f"  Author: {exchange.role}\n"
+            result += f"  Content: {exchange.content}\n"
+        return result
+
+    def __str__(self):
+        result = f"System prompt: {self.system_prompt}\n"
+        for i, exchange in enumerate(self.chat):
+            result += f"Interaction {i+1}:\n"
+            result += f"  Author: {exchange.role}\n"
+            result += f"  Content: {exchange.content[:100]}...\n" if len(exchange.content) > 100 else f"  Content: {exchange.content}\n"
         return result
 
     def to_dict(self):

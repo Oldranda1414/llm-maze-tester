@@ -15,3 +15,5 @@ def create_maze(size: int = 6, start: Coordinate | None = None, target: Coordina
         start = generate_start(size, target)
     return LatticeMaze(random_maze.connection_list(), size, start, target, sight_depth)
 
+def maze_from_yaml(yaml_str: str) -> Maze:
+    return LatticeMaze.from_yaml(yaml_str)
