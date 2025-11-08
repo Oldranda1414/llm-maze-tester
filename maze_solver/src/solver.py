@@ -2,7 +2,6 @@
 A class that uses an LLM model to solve a maze.
 """
 from typing import Any
-import sys
 
 from llm.model import Model
 from llm.phony_model import Model as PhonyModel

@@ -11,7 +11,6 @@ class Model():
         self.chat_history = ChatHistory(debug_system_prompt)
 
     def ask(self, prompt: str) -> str:
-
         prompt = "give me a move (C to close, Q to save): "
         move = input(prompt)
         move = move.strip(" ").upper()
