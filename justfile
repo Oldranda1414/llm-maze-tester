@@ -52,4 +52,6 @@ remove *args:
 # Open visualizer
 [no-exit-message]
 visualize:
-    uv --project maze_solver run python -m jupyterlab maze_solver/src/visualizer_test.ipynb
+  uv --project maze_solver run python -m jupyterlab maze_solver/src/visualizer_test.ipynb
+  git resore maze_solver/src/visualizer_test.ipynb
+
