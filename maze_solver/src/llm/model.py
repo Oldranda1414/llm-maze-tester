@@ -9,7 +9,7 @@ from error.generation import ModelTimeoutError
 from llm.server import get_api_base, get_server_model_name, is_model_installed 
 from llm.server import start as start_server
 
-from chat_history import ChatHistory
+from chat_history import ChatHistory, Exchange
 
 REQUEST_TIMEOUT = 3600
 SYSTEM_PROMPT = "You are a helpful assistant."
@@ -28,7 +28,6 @@ class Model:
 
     def ask(self, prompt: str) -> str:
         start_server()
-        self.chat_history.add_user_message(prompt)
         try:
             response = completion(
                         model = get_server_model_name(self.model_name),
@@ -36,7 +35,7 @@ class Model:
                         api_base = get_api_base(),
                         request_timeout = REQUEST_TIMEOUT
             )
-            self.chat_history.add_assistant_message(response.choices[0])
+            self.chat_history.add_exchange(Exchange(prompt, response.choices[0]))
             return response.choices[0].message.content
         except APIConnectionError:
             raise ModelTimeoutError(self.model_name, REQUEST_TIMEOUT)

@@ -11,8 +11,8 @@ class Role(Enum):
 
 @dataclass
 class Exchange:
-    role: Role
-    content: str
+    prompt: str
+    response: str
 
 @dataclass
 class ChatHistory:
@@ -23,33 +23,30 @@ class ChatHistory:
         self.system_prompt = system_prompt
         self.chat = chat
 
-    def add_user_message(self, content: str):
-        self.chat.append(Exchange(Role.USER, content))
-
-    def add_assistant_message(self, content: str):
-        self.chat.append(Exchange(Role.ASSISTANT, content))
+    def add_exchange(self, exchange: Exchange):
+        self.chat.append(exchange)
 
     def to_string(self) -> str:
         result = f"System prompt: {self.system_prompt}\n"
         for i, exchange in enumerate(self.chat):
             result += f"Interaction {i+1}:\n"
-            result += f"  Author: {exchange.role}\n"
-            result += f"  Content: {exchange.content}\n"
+            result += f"  Prompt: {exchange.prompt}\n"
+            result += f"  Response: {exchange.response}\n"
         return result
 
     def __str__(self):
         result = f"System prompt: {self.system_prompt}\n"
         for i, exchange in enumerate(self.chat):
             result += f"Interaction {i+1}:\n"
-            result += f"  Author: {exchange.role}\n"
-            result += f"  Content: {exchange.content[:100]}...\n" if len(exchange.content) > 100 else f"  Content: {exchange.content}\n"
+            result += f"  Prompt: {exchange.prompt[:100]}...\n" if len(exchange.response) > 100 else f"  Prompt: {exchange.prompt}\n"
+            result += f"  Content: {exchange.response[:100]}...\n" if len(exchange.response) > 100 else f"  Content: {exchange.response}\n"
         return result
 
     def to_dict(self):
         return {
             "system_prompt": self.system_prompt,
             "chat": [
-                {"role": e.role.value, "content": e.content}
+                {"prompt": e.prompt, "response": e.response}
                 for e in self.chat
             ],
         }
@@ -63,7 +60,7 @@ class ChatHistory:
         """Create a ChatHistory from a YAML string."""
         data = yaml.safe_load(yaml_str)
         chat = [
-            Exchange(role=Role(e["role"]), content=e["content"])
+            Exchange(prompt=e["prompt"], response=e["response"])
             for e in data.get("chat", [])
         ]
         return cls(system_prompt=data["system_prompt"], chat=chat)

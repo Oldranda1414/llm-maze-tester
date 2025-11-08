@@ -1,7 +1,7 @@
 import sys
 import yaml
 
-from chat_history import ChatHistory
+from chat_history import ChatHistory, Exchange
 
 debug_system_prompt = "debug system prompt"
 
@@ -11,7 +11,6 @@ class Model():
         self.chat_history = ChatHistory(debug_system_prompt)
 
     def ask(self, prompt: str) -> str:
-        self.chat_history.add_user_message(prompt)
 
         prompt = "give me a move (C to close, Q to save): "
         move = input(prompt)
@@ -25,7 +24,7 @@ class Model():
         if move == "C":
             sys.exit()
 
-        self.chat_history.add_assistant_message(move)
+        self.chat_history.add_exchange(Exchange(prompt, move))
         return move
 
     def history(self) -> ChatHistory:

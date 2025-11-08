@@ -29,18 +29,27 @@ maze *args:
 model *args:
   uv --project maze_solver run maze_solver/src/model_test.py {{args}}
 
-# Run the model test
+# Run the run test
 [no-exit-message]
 run_test *args:
   uv --project maze_solver run maze_solver/src/run_test.py {{args}}
 
+# Run the visualizer test
+[no-exit-message]
+vis *args:
+  uv --project maze_solver run maze_solver/src/visualizer_test.py {{args}}
+
 # Add package to project dependencies
 [no-exit-message]
-add_solver *args:
+add *args:
   uv --project maze_solver add {{args}}
 
 # Add package to project dependencies
 [no-exit-message]
-remove_solver *args:
+remove *args:
   uv --project maze_solver remove {{args}}
 
+# Open visualizer
+[no-exit-message]
+visualize:
+    uv --project maze_solver run python -m jupyterlab maze_solver/src/visualizer_test.ipynb

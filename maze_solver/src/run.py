@@ -5,6 +5,9 @@ from maze.factory import maze_from_yaml
 
 class Run:
     def __init__(self, maze: Maze, chat_history: ChatHistory):
+        if len(maze.path()) != len(chat_history.chat):
+            raise ValueError("Chat history and maze path lenghts are not compatibile")
+
         self.maze = maze
         self.chat_history = chat_history
 

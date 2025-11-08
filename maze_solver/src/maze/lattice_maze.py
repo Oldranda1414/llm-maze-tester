@@ -60,7 +60,9 @@ class LatticeMaze:
             self._position = new_pos
             self._path.append(new_pos)
             return True
-        return False
+        else:
+            self._path.append(self._position)
+            return False
 
     def get_directions(self) -> list[Direction]:
         neighbors = self._connection_list.neighbors_of(self._position)
