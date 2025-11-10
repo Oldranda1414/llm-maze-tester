@@ -50,27 +50,10 @@ class MazeSolver:
         # Show the initial maze state
         self._print_maze()
 
-    def step(self) -> dict[str, Any]:
+    def step(self) -> None:
         """
         Execute a single step in the maze solving process.
-        
-        Returns:
-            A dictionary containing step results:
-            - success: Whether the step was successful
-            - move: The chosen move (if any)
-            - position: The current position after the move
-            - solved: Whether the maze is solved after this step
-            - error: Error message if step failed
         """
-        if self.is_solved:
-            return {
-                "success": False,
-                "move": None,
-                "position": self.maze.position(),
-                "solved": True,
-                "error": "Maze already solved"
-            }
-
         available_directions = self.maze.get_directions()
 
         prompt = ""
@@ -102,60 +85,26 @@ class MazeSolver:
             self.invalid_answer_provided = True
 
         if move is None:
-            return {
-                "success": False,
-                "move": None,
-                "position": self.maze.position(),
-                "solved": False,
-                "error": f"Invalid model response: '{response}'. Expected one of: {available_directions}"
-            }
+            return
 
         current_position = self.maze.position()
         self.position_history.append(current_position)
 
         # Try to make the move and only record if valid
-        try:
-            valid_move = self.maze.move(Direction.from_coordinate(move))
-            if valid_move:
-                self.steps_taken += 1
-                self.moves_history.append(move)
-                new_position = self.maze.position()
-                self.position_history.append(new_position)
-                self.visited_positions.add(new_position)
+        valid_move = self.maze.move(Direction.from_coordinate(move))
+        if valid_move:
+            self.steps_taken += 1
+            self.moves_history.append(move)
+            new_position = self.maze.position()
+            self.position_history.append(new_position)
+            self.visited_positions.add(new_position)
 
-                is_solved = self.maze.solved()
-                if is_solved:
-                    self._print_message(f"🎉 Maze solved in {self.steps_taken} steps!")
-                    self.is_solved = True
-                    self.maze.save("solved_maze.png")
-                self._print_maze()
-
-
-                return {
-                    "success": True,
-                    "move": move,
-                    "position": new_position,
-                    "solved": is_solved,
-                    "steps_taken": self.steps_taken,
-                }
-            else:
-                # Invalid move: do not record move or position
-                return {
-                    "success": False,
-                    "move": move,
-                    "position": self.maze.position(),
-                    "solved": False,
-                    "error": f"Invalid move '{move}': hit a wall."
-                }
-
-        except ValueError as e:
-            return {
-                "success": False,
-                "move": move,
-                "position": self.maze.position(),
-                "solved": False,
-                "error": f"Error executing move: {str(e)}"
-            }
+            is_solved = self.maze.solved()
+            if is_solved:
+                self._print_message(f"🎉 Maze solved in {self.steps_taken} steps!")
+                self.is_solved = True
+                self.maze.save("solved_maze.png")
+            self._print_maze()
 
     def get_statistics(self) -> dict[str, Any]:
         """
