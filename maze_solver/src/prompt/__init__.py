@@ -1,4 +1,5 @@
 from maze import Maze
+from maze.navigation import exit_direction
 from move import Direction
 
 from prompt.util import path_length_str, path_length
@@ -39,13 +40,12 @@ def step_prompt(maze: Maze) -> str:
 
 def _path_prompt(direction: Direction, maze: Maze) -> str:
     prompt = direction_template.substitute(direction=str(direction))
+    if maze.position() == maze.target() and direction == exit_direction(maze.target(), maze.size()):
+        return prompt + exit_found_prompt
     if is_wall(direction, maze):
         return prompt + wall_prompt
-    if is_exit_direction(direction, maze):
-        if exit_distance(maze) == 0:
-            return prompt + exit_found_prompt
-        if exit_distance(maze) <= maze.sight_depth():
-            return prompt + exit_prompt
+    if is_exit_direction(direction, maze) and exit_distance(maze) <= maze.sight_depth():
+        return prompt + exit_prompt
     p_length = path_length_str(direction, maze)
     if path_length(direction, maze) > maze.sight_depth():
         return prompt + out_of_sight_prompt
