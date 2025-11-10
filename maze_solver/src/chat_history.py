@@ -11,9 +11,9 @@ class ChatHistory:
     system_prompt: str
     chat: list[Exchange]
 
-    def __init__(self, system_prompt: str, chat: list[Exchange] = []):
+    def __init__(self, system_prompt: str, chat: list[Exchange] | None = None):
         self.system_prompt = system_prompt
-        self.chat = chat
+        self.chat = chat if chat is not None else []
 
     def add_exchange(self, exchange: Exchange):
         self.chat.append(exchange)
@@ -30,7 +30,7 @@ class ChatHistory:
         result = f"System prompt: {self.system_prompt}\n"
         for i, exchange in enumerate(self.chat):
             result += f"Interaction {i+1}:\n"
-            result += f"  Prompt: {exchange.prompt[:100]}...\n" if len(exchange.response) > 100 else f"  Prompt: {exchange.prompt}\n"
+            result += f"  Prompt: {exchange.prompt[:100]}...\n" if len(exchange.prompt) > 100 else f"  Prompt: {exchange.prompt}\n"
             result += f"  Content: {exchange.response[:100]}...\n" if len(exchange.response) > 100 else f"  Content: {exchange.response}\n"
         return result
 
