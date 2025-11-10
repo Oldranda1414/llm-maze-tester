@@ -58,7 +58,7 @@ def set_path(maze: Maze, step_idx: int, chat: list[Exchange]) -> Maze:
     maze.reset()
     for i in range(step_idx):
         response = chat[i].response
-        next_move = Direction.from_coordinate(response.upper())
+        next_move = Direction.from_coordinate(response[-1].upper())
         maze.move(next_move)
     return maze
 
