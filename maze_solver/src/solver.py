@@ -36,6 +36,7 @@ class MazeSolver:
         self._quiet = quiet
         
         # Track last step errors
+        self.first_step = False
         self.invalid_answer_provided = False
         self.invalid_direction_provided = False
 
@@ -74,7 +75,8 @@ class MazeSolver:
 
         prompt = ""
 
-        if self.steps_taken == 0:
+        if self.first_step:
+            self.first_step = False
             prompt += get_preamble(self.maze)
         if self.invalid_answer_provided:
             prompt += illegal_answer_warning(self.maze)
