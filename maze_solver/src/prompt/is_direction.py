@@ -25,15 +25,17 @@ def is_exit_direction(direction: Direction, maze: Maze) -> bool:
 
 def is_dead_end(direction: Direction, maze: Maze) -> bool:
     """
-    Checks if a corridor from the current position in the given direction is a dead end.
-    A dead end is a corridor with no other branches along the way.
+    Checks if moving from the current position in the given direction leads into a dead end.
+    A dead end is defined as a straight corridor that ends in a cell with exactly one connection.
     """
     position = maze.position()
     cl = maze.connection_list()
     while cl.connected(position, position := neighbor(position, direction)):
-        if cl.num_neighbors(position) > 1:
+        if cl.num_neighbors(position) == 1:
+            return True
+        if cl.num_neighbors(position) > 2:
             return False
-    return True
+    return False
 
 def is_wall(direction: Direction, maze: Maze) -> bool:
     """Check if there is a wall in the given direction from the current position."""
