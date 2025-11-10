@@ -1,13 +1,5 @@
-from enum import Enum
 from dataclasses import dataclass
 import yaml
-
-class Role(Enum):
-    USER = "user"
-    ASSISTANT = "assistant"
-
-    def __str__(self):
-        return self.value
 
 @dataclass
 class Exchange:
