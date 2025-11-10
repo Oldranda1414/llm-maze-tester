@@ -42,6 +42,13 @@ class ChatHistory:
             result += f"  Content: {exchange.response[:100]}...\n" if len(exchange.response) > 100 else f"  Content: {exchange.response}\n"
         return result
 
+    def to_list(self) -> list[dict[str, str]]:
+        l = [{"role": "system", "content": self.system_prompt}]
+        for exchange in self.chat:
+            l.append({"role": "user", "content": exchange.prompt})
+            l.append({"role": "assistant", "content": exchange.response})
+        return l
+
     def to_dict(self):
         return {
             "system_prompt": self.system_prompt,
@@ -64,4 +71,5 @@ class ChatHistory:
             for e in data.get("chat", [])
         ]
         return cls(system_prompt=data["system_prompt"], chat=chat)
+
 

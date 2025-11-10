@@ -31,7 +31,7 @@ class Model:
         try:
             response = completion(
                         model = get_server_model_name(self.model_name),
-                        messages = self.chat_history,
+                        messages = self.chat_history.to_list(),
                         api_base = get_api_base(),
                         request_timeout = REQUEST_TIMEOUT
             )

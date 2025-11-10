@@ -23,6 +23,7 @@ def main():
                     except Exception as e:
                         print("exception occurred...")
                         print(e)
+                        raise e
                         break
                 if maze_solver.solved():
                     print("maze solved!")
