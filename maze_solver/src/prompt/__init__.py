@@ -13,6 +13,7 @@ from prompt.prompts import (
         corridor as corridor_template,
         wall as wall_prompt,
         exit_prompt,
+        exit_found as exit_found_prompt,
         dead_end as dead_end_prompt,
         out_of_sight as out_of_sight_prompt
     )
@@ -40,19 +41,18 @@ def _path_prompt(direction: Direction, maze: Maze) -> str:
     prompt = direction_template.substitute(direction=str(direction))
     if is_wall(direction, maze):
         return prompt + wall_prompt
-    if is_exit_direction(direction, maze) and exit_distance(maze) <= maze.sight_depth():
-        return prompt + exit_prompt
+    if is_exit_direction(direction, maze):
+        if exit_distance(maze) == 0:
+            return prompt + exit_found_prompt
+        if exit_distance(maze) <= maze.sight_depth():
+            return prompt + exit_prompt
     p_length = path_length_str(direction, maze)
     if path_length(direction, maze) > maze.sight_depth():
         return prompt + out_of_sight_prompt
     prompt += corridor_template.substitute(path_length=p_length)
-    prompt += " " + _wall_state(direction, maze)
-    return prompt
-
-def _wall_state(direction: Direction, maze: Maze) -> str:
     if is_dead_end(direction, maze):
-        return dead_end_prompt
-    return ""
+        prompt += " " + dead_end_prompt
+    return prompt
 
 def exit_distance(maze) -> int:
     p_x, p_y = maze.position()

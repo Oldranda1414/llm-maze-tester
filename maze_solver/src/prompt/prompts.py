@@ -27,6 +27,8 @@ wall = "there is a wall. Seems you can't step in that direction."
 
 exit_prompt = "you can see a natural light shining in that direction, it is probably the exit!"
 
+exit_found = "you can see the exit in that direction! One last step and you are out of the maze!"
+
 dead_end = " It seems to be a dead end."
 
 out_of_sight = "the corridor streatches further than you can see, so you are unable to predict what lies ahead."
