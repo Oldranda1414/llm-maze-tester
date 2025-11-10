@@ -37,7 +37,7 @@ class Model:
                         api_base = get_api_base(),
                         request_timeout = REQUEST_TIMEOUT
             )
-            self.chat_history.add_exchange(Exchange(prompt, response.choices[0].message))
+            self.chat_history.add_exchange(Exchange(prompt, response.choices[0].message.content))
             return response.choices[0].message.content
         except APIConnectionError:
             raise ModelTimeoutError(self.model_name, REQUEST_TIMEOUT)
