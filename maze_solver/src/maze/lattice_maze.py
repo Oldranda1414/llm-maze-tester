@@ -56,20 +56,23 @@ class LatticeMaze:
 
     def move(self, direction: Direction) -> bool:
         legal_directions = self.get_directions()
+        if self._target == self._position and direction == exit_direction(self._target, self._size):
+            self._solved = True
+            return True
         if direction in legal_directions:
             dr, dc = DIRECTIONS[direction]
             new_pos = (self._position[0] + dr, self._position[1] + dc)
             self._position = new_pos
             self._path.append(new_pos)
             return True
-        if self._target == self._position and direction == exit_direction(self._target, self._size):
-            self._solved = True
-            return True
         return False
 
     def get_directions(self) -> list[Direction]:
         neighbors = self._connection_list.neighbors_of(self._position)
-        return [direction_strict(self._position, n) for n in neighbors]
+        d = [direction_strict(self._position, n) for n in neighbors]
+        if self._target == self._position:
+            d.append(exit_direction(self._target, self._size))
+        return d
 
     def decisions(self) -> list[Direction]:
         if len(self._path) == 0:

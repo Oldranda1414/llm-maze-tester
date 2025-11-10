@@ -1,3 +1,4 @@
+from copy import deepcopy
 import html
 import matplotlib.pyplot as plt
 from chat_history import Exchange
@@ -29,7 +30,7 @@ def visualize_run(run: "Run"):
         clear_output(wait=True)
 
         # Draw maze with partial path up to this step
-        partial_maze = maze
+        partial_maze = deepcopy(maze)
         partial_maze = set_path(partial_maze, step_idx, chat)
 
         draw_maze(partial_maze, show_path=True)

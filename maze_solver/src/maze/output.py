@@ -55,9 +55,6 @@ def draw_maze(maze, ax=None, show_path=True):
             if i < grid_size - 1 and not cl.vertical[i][j]:
                 ax.plot([j, j + 1], [y_plot, y_plot], 'k-', linewidth=WALL_WIDTH)
 
-    if show_path:
-        _draw_path(ax, maze.path(), grid_size)
-
     # Start marker
     for pos, color, marker, label in [
         (maze.start(), "darkorange", "o", "Start"),
@@ -66,6 +63,9 @@ def draw_maze(maze, ax=None, show_path=True):
             x, y = _plot_coords(*pos, grid_size)
             ax.plot(x, y, marker, markersize=12, markeredgecolor=color,
                     label=label, color=color)
+
+    if show_path:
+        _draw_path(ax, maze)
 
     ax.set_xlim(-0.1, grid_size + 0.1)
     ax.set_ylim(-0.1, grid_size + 0.1)
@@ -112,9 +112,9 @@ def print_maze(maze: Maze):
 
             coord = (i, j)
             if coord == current_pos:
-                mid_line.append(" C ", style="bold red")
+                mid_line.append(" C ", style="bold green")
             elif coord == start_pos:
-                mid_line.append(" S ", style="darkorange")
+                mid_line.append(" S ", style="red")
             elif coord in path_set:
                 mid_line.append(" · ", style="yellow")
             else:
@@ -136,7 +136,9 @@ def print_maze(maze: Maze):
     bottom.append("+")
     console.print(bottom)
 
-def _draw_path(ax, path: list[Coordinate], grid_size: int):
+def _draw_path(ax, maze: Maze):
+    path = maze.path()
+    maze_size = maze.size()
     if not path:
         return
 
@@ -146,12 +148,12 @@ def _draw_path(ax, path: list[Coordinate], grid_size: int):
 
     # Draw path segments and points
     for i in range(len(path)):
-        x, y = _plot_coords(*path[i], grid_size)
+        x, y = _plot_coords(*path[i], maze_size)
         if i > 0:
-            px, py = _plot_coords(*path[i - 1], grid_size)
+            px, py = _plot_coords(*path[i - 1], maze_size)
             ax.plot([px, x], [py, y], color=PATH_COLOR, linewidth=8, alpha=PATH_ALPHA, solid_capstyle='round')
 
-        if i == len(path) - 1:
+        if i == len(path) - 1 and not maze.solved():
             ax.plot(x, y, 'o', color=CURRENT_COLOR, markersize=10,
                     alpha=PATH_ALPHA, markeredgecolor='darkgreen', markeredgewidth=2)
         else:
