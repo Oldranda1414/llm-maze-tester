@@ -23,6 +23,8 @@ direction = Template("Due ${direction} ")
 
 corridor = Template("there is a corridor that goes on for ${path_length} before encountering a wall.")
 
+last_move = Template("You move one meter ${direction}\n")
+
 wall = "there is a wall. Seems you can't step in that direction."
 
 exit_prompt = "you can see a natural light shining in that direction, it is probably the exit!"

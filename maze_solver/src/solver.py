@@ -9,7 +9,7 @@ from llm.phony_model import Model as PhonyModel
 from maze.factory import create_maze
 from move import Direction
 
-from prompt import step_prompt, illegal_answer_warning, illegal_direction_warning, get_preamble
+from prompt import last_move_info, step_prompt, illegal_answer_warning, illegal_direction_warning, get_preamble
 from run import Run
 
 class MazeSolver:
@@ -39,6 +39,7 @@ class MazeSolver:
         self.first_step = True
         self.invalid_answer_provided = False
         self.invalid_direction_provided = False
+        self.valid_last_move = False
 
         # Statistics and tracking
         self.steps_taken = 0
@@ -61,12 +62,14 @@ class MazeSolver:
         if self.first_step:
             self.first_step = False
             prompt += get_preamble(self.maze)
-        if self.invalid_answer_provided:
+        elif self.invalid_answer_provided:
             prompt += illegal_answer_warning(self.maze)
             self.invalid_answer_provided = False
         elif self.invalid_direction_provided:
             prompt += illegal_direction_warning(self.maze)
             self.invalid_direction_provided = False
+        elif self.valid_last_move:
+            prompt += last_move_info(self.maze)
 
         prompt += step_prompt(self.maze)
 
@@ -90,9 +93,8 @@ class MazeSolver:
         current_position = self.maze.position()
         self.position_history.append(current_position)
 
-        # Try to make the move and only record if valid
-        valid_move = self.maze.move(Direction.from_coordinate(move))
-        if valid_move:
+        self.valid_last_move = self.maze.move(Direction.from_coordinate(move))
+        if self.valid_last_move:
             self.steps_taken += 1
             self.moves_history.append(move)
             new_position = self.maze.position()

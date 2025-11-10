@@ -12,6 +12,7 @@ from prompt.prompts import (
         preamble as preamble_template,
         direction as direction_template,
         corridor as corridor_template,
+        last_move as last_move_template,
         wall as wall_prompt,
         exit_prompt,
         exit_found as exit_found_prompt,
@@ -28,6 +29,9 @@ def illegal_answer_warning(_: Maze) -> str:
 
 def illegal_direction_warning(_: Maze) -> str:
     return illegal_direction_warning_text
+
+def last_move_info(maze: Maze) -> str:
+    return last_move_template.substitute(direction=maze.decisions()[-1])
 
 def step_prompt(maze: Maze) -> str: 
     directions = [Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST]
