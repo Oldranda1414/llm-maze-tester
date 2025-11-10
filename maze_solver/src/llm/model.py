@@ -3,7 +3,7 @@ import yaml
 from litellm import completion
 from litellm.exceptions import APIConnectionError
 
-from error.model import ModelNameError, ModelNotInstalledError
+from error.model import ModelNameError
 from error.generation import ModelTimeoutError
 
 from llm.server import get_api_base, get_server_model_name, is_model_installed, install_model
