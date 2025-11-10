@@ -21,7 +21,6 @@ class Model:
             raise ModelNameError(model_name)
         if not is_model_installed(model_name):
             install_model(model_name)
-            raise ModelNotInstalledError(model_name)
 
         self.model_name = model_name
         self.chat_history: ChatHistory = ChatHistory("You are a helpful assistant.")
