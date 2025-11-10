@@ -9,13 +9,6 @@ from maze_dataset.generation import LatticeMazeGenerators
 from maze.lattice_maze import LatticeMaze
 from maze import Maze
 
-# try to silence global seed override warning
-import warnings
-warnings.filterwarnings(
-    "ignore",
-    message="in GPTDatasetConfig .* is trying to override GLOBAL_SEED",
-)
-
 class MazeDataset():
     
     def __init__(self, name: str, n_mazes: int, maze_size: int, sight_depth: int, seed: int):
