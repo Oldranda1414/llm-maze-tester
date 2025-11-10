@@ -31,12 +31,12 @@ def start():
             )
         except FileNotFoundError:
             raise OllamaNotInstalledError()
-        atexit.register(_stop_server)
+        atexit.register(stop)
 
         while not _is_running():
             sleep(0.5)
 
-def _stop_server():
+def stop():
     global ollama_process
     if ollama_process and ollama_process.poll() is None:
         ollama_process.terminate()

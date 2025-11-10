@@ -7,7 +7,7 @@ from error.model import ModelNameError
 from error.generation import ModelTimeoutError
 
 from llm.server import get_api_base, get_server_model_name, is_model_installed, install_model
-from llm.server import start as start_server
+from llm.server import start as start_server, stop as stop_server
 
 from chat_history import ChatHistory, Exchange
 
@@ -36,10 +36,12 @@ class Model:
                         api_base = get_api_base(),
                         request_timeout = REQUEST_TIMEOUT,
                         extra_body={"keep_alive": 0},
-            )
-            self.chat_history.add_exchange(Exchange(prompt, response.choices[0].message.content))
-            return response.choices[0].message.content
+            ).choices[0].message.content
+            self.chat_history.add_exchange(Exchange(prompt, response))
+            stop_server()
+            return response
         except APIConnectionError:
+            stop_server()
             raise ModelTimeoutError(self.model_name, REQUEST_TIMEOUT)
 
     def history(self) -> ChatHistory:
