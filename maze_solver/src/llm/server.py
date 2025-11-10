@@ -63,6 +63,7 @@ def is_model_installed(model_name: str) -> bool:
 
 def install_model(model_name: str):
     start()
+    print(f"installing model {model_name}...")
     if is_model_installed(model_name):
         raise ModelAlreadyInstalledError(model_name) 
     run(
@@ -70,6 +71,7 @@ def install_model(model_name: str):
         stdout=DEVNULL,
         stderr=DEVNULL
     )
+    print(f"installed model {model_name}")
 
 def uninstall_model(model_name: str):
     start()
