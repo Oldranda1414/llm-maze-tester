@@ -5,8 +5,6 @@ import time
 
 def main():
     for model_name in model_names:
-        results_path = f"results/{model_name}"
-        os.makedirs(results_path, exist_ok=True)
         start_model = time.time()
         for maze_size in [3,4,5,6]:
             start_size = time.time()
@@ -29,7 +27,9 @@ def main():
                     print("maze not solved...")
                 #print(maze_solver.get_statistics())
                 print_time(3, f"maze {i}", start_maze)
-                maze_solver.save_run(f"{results_path}/{maze_size}x{maze_size}/{i}.yaml")
+                results_dir = f"results/{model_name}/{maze_size}x{maze_size}"
+                os.makedirs(results_dir, exist_ok=True)
+                maze_solver.save_run(f"{results_dir}/{i}.yaml")
             print_time(2, f"maze size {maze_size}", start_size)
         print_time(1, f"model {model_name}", start_model)
 
