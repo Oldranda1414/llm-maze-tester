@@ -20,10 +20,10 @@ def main():
             while not maze_solver.solved() and step < max_steps:
                 try:
                     maze_solver.step()
-                    step += 1
                 except Exception as e:
                     print("exception occurred...")
                     #raise e
+                step += 1
             if maze_solver.solved():
                 print("maze solved!")
             else:
