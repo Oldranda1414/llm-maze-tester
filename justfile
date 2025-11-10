@@ -58,5 +58,6 @@ visualize:
   pkill -f jupyter-lab; 
 
 # Copy results folder from server
+[no-exit-message]
 copy:
-  rsync -avz -e ssh lrandacio@137.204.72.12:/home/lrandacio/llm-maze-tester/results ~/Downloads/
+  rsync -avz -e ssh lrandacio@137.204.72.12:/home/lrandacio/llm-maze-tester/results .
