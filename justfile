@@ -52,7 +52,11 @@ remove *args:
 # Open visualizer
 [no-exit-message]
 visualize:
-    uv --project maze_solver run python -m jupyterlab maze_solver/src/visualizer_test.ipynb > /dev/null 2>&1 & \
-    read -p "Press ENTER to stop Jupyter... " _; \
-    git restore maze_solver/src/visualizer_test.ipynb; \
-    pkill -f jupyter-lab; 
+  uv --project maze_solver run python -m jupyterlab maze_solver/src/visualizer_test.ipynb > /dev/null 2>&1 & \
+  read -p "Press ENTER to stop Jupyter... " _; \
+  git restore maze_solver/src/visualizer_test.ipynb; \
+  pkill -f jupyter-lab; 
+
+# Copy results folder from server
+copy:
+  rsync -avz -e ssh lrandacio@137.204.72.12:/home/lrandacio/llm-maze-tester/results ~/Downloads/
