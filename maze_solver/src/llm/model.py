@@ -6,7 +6,7 @@ from litellm.exceptions import APIConnectionError
 from error.model import ModelNameError, ModelNotInstalledError
 from error.generation import ModelTimeoutError
 
-from llm.server import get_api_base, get_server_model_name, is_model_installed 
+from llm.server import get_api_base, get_server_model_name, is_model_installed, install_model
 from llm.server import start as start_server
 
 from chat_history import ChatHistory, Exchange
@@ -20,7 +20,7 @@ class Model:
         if not _is_valid_name(model_name):
             raise ModelNameError(model_name)
         if not is_model_installed(model_name):
-            # TODO install model here if not installed
+            install_model(model_name)
             raise ModelNotInstalledError(model_name)
 
         self.model_name = model_name
@@ -61,9 +61,9 @@ def _is_valid_name(model_name) -> bool:
 
 model_names = [
             "llama3",
-            #"qwen3",
-            #"smollm2",
-            #"phi4-mini",
-            #"deepseek-r1",
-            #"mistral"
+            "qwen3",
+            "smollm2",
+            "phi4-mini",
+            "deepseek-r1",
+            "mistral"
         ]

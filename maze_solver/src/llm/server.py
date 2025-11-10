@@ -4,7 +4,7 @@ from subprocess import Popen, run
 from subprocess import DEVNULL, TimeoutExpired
 import atexit
 
-from error.model import ModelNotInstalledError
+from error.model import ModelAlreadyInstalledError, ModelNotInstalledError
 from error.depencency import OllamaNotInstalledError
 
 API_BASE = "http://localhost:11434"
@@ -63,6 +63,8 @@ def is_model_installed(model_name: str) -> bool:
 
 def install_model(model_name: str):
     start()
+    if is_model_installed(model_name):
+        raise ModelAlreadyInstalledError(model_name) 
     run(
         ["ollama", "pull", model_name],
         stdout=DEVNULL,
