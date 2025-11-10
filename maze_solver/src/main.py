@@ -20,8 +20,9 @@ def main():
                     try:
                         maze_solver.step()
                         step += 1
-                    except:
+                    except Exception as e:
                         print("exception occurred...")
+                        print(e)
                         break
                 if maze_solver.solved():
                     print("maze solved!")
