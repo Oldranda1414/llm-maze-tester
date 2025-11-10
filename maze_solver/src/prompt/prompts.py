@@ -27,7 +27,7 @@ last_move = Template("You move one meter ${direction}\n")
 
 wall = "there is a wall. Seems you can't step in that direction."
 
-exit_prompt = "you can see a natural light shining in that direction, it is probably the exit!"
+exit_prompt = "you can see a natural light shining in that direction, it is probably the direction of the exit!"
 
 exit_found = "you can see the exit in that direction! One last step and you are out of the maze!"
 
