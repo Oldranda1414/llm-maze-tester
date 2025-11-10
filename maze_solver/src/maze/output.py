@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 
-from maze import Maze
-from maze.navigation import direction
+from maze import Maze, Direction
+from maze.navigation import direction, exit_direction
 
 from rich.console import Console
 from rich.text import Text
@@ -26,24 +26,18 @@ def draw_maze(maze, ax=None, show_path=True):
     ax.set_facecolor('white')
 
     t_i, t_j = maze.target()
-    exit_top = (t_i == 0)
-    exit_bottom = (t_i == grid_size - 1)
-    exit_left = (t_j == 0)
-    exit_right = (t_j == grid_size - 1)
-    if exit_top or exit_bottom:
-        exit_left = False
-        exit_right = False
+    e_direction = exit_direction(maze.target(), maze.size())
 
     # Borders
     for j in range(grid_size):
-        if not (exit_bottom and j == t_j):
+        if not (e_direction == Direction.SOUTH and j == t_j):
             ax.plot([j, j + 1], [0, 0], 'k-', linewidth=WALL_WIDTH)
-        if not (exit_top and j == t_j):
+        if not (e_direction == Direction.NORTH and j == t_j):
             ax.plot([j, j + 1], [grid_size, grid_size], 'k-', linewidth=WALL_WIDTH)
     for i in range(grid_size):
-        if not (exit_left and i == grid_size - t_i - 1):
+        if not (e_direction == Direction.WEST and i == grid_size - t_i - 1):
             ax.plot([0, 0], [i, i + 1], 'k-', linewidth=WALL_WIDTH)
-        if not (exit_right and i == grid_size - t_i - 1):
+        if not (e_direction == Direction.EAST and i == grid_size - t_i - 1):
             ax.plot([grid_size, grid_size], [i, i + 1], 'k-', linewidth=WALL_WIDTH)
 
     # Cells
@@ -92,19 +86,13 @@ def print_maze(maze: Maze):
     target_pos = maze.target()
 
     t_i, t_j = target_pos
-    exit_top = (t_i == 0)
-    exit_bottom = (t_i == grid_size - 1)
-    exit_left = (t_j == 0)
-    exit_right = (t_j == grid_size - 1)
-    if exit_top or exit_bottom:
-        exit_left = False
-        exit_right = False
+    e_direction = exit_direction(maze.target(), maze.size())
 
     for i in range(grid_size):
         top_line = Text()
         for j in range(grid_size):
             top_line.append("+")
-            if (i == 0 and exit_top and j == t_j):
+            if (i == 0 and e_direction == Direction.NORTH and j == t_j):
                 top_line.append("   ")
             elif i == 0 or not maze.connection_list().vertical[i - 1][j]:
                 top_line.append("---")
@@ -115,7 +103,7 @@ def print_maze(maze: Maze):
 
         mid_line = Text()
         for j in range(grid_size):
-            if (j == 0 and exit_left and i == grid_size - t_i - 1):
+            if (j == 0 and e_direction == Direction.WEST and i == grid_size - t_i - 1):
                 mid_line.append(" ")
             elif j == 0 or not maze.connection_list().horizontal[i][j - 1]:
                 mid_line.append("|")
@@ -132,7 +120,7 @@ def print_maze(maze: Maze):
             else:
                 mid_line.append("   ")
 
-        if exit_right and i == grid_size - t_i - 1:
+        if e_direction == Direction.EAST and i == grid_size - t_i - 1:
             mid_line.append(" ")
         else:
             mid_line.append("|")
@@ -141,7 +129,7 @@ def print_maze(maze: Maze):
     bottom = Text()
     for j in range(grid_size):
         bottom.append("+")
-        if exit_bottom and j == t_j:
+        if e_direction == Direction.SOUTH and j == t_j:
             bottom.append("   ")
         else:
             bottom.append("---")

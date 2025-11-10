@@ -56,3 +56,26 @@ def direction(start: Coordinate, target: Coordinate) -> Direction | None:
 
     return None
 
+def direction_strict(start: Coordinate, target: Coordinate) -> Direction:
+    """
+    Returns the direction from start to target if one exists, raises exception otherwise
+    """
+    d = direction(start, target)
+    if d is None:
+        raise ValueError(f"{target} is not adiacent to {start}. Use direction() if adiacency is not guarantied")
+    return d
+
+def exit_direction(exit_cord: Coordinate, size: int) -> Direction:
+    """Return the direction where the maze exit is located, based on the target position."""
+    t_i, t_j = exit_cord
+
+    if (t_i == 0):
+        return Direction.NORTH
+    if (t_i == size - 1):
+        return Direction.SOUTH
+    if (t_j == 0):
+        return Direction.WEST
+    if (t_j == size - 1):
+        return Direction.EAST
+    raise ValueError("Target is not on the maze border — no exit direction found.")
+

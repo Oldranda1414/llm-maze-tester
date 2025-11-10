@@ -3,7 +3,7 @@ from copy import deepcopy
 import yaml
 from move import Coordinate, Direction, DIRECTIONS
 from maze.output import save_maze, print_maze
-from maze.navigation import ConnectionList, direction
+from maze.navigation import ConnectionList, direction, direction_strict, exit_direction
 
 class LatticeMaze:
     """
@@ -22,6 +22,7 @@ class LatticeMaze:
         self._target = target
         self._path = [self._start]
         self._position = self._start
+        self._solved = False
 
     def size(self) -> int: return self._size
 
@@ -54,17 +55,21 @@ class LatticeMaze:
         self._position = new_path[-1]
 
     def move(self, direction: Direction) -> bool:
-        dr, dc = DIRECTIONS[direction]
-        new_pos = (self._position[0] + dr, self._position[1] + dc)
-        if self._connection_list.connected(self._position, new_pos):
+        legal_directions = self.get_directions()
+        if direction in legal_directions:
+            dr, dc = DIRECTIONS[direction]
+            new_pos = (self._position[0] + dr, self._position[1] + dc)
             self._position = new_pos
             self._path.append(new_pos)
+            return True
+        if self._target == self._position and direction == exit_direction(self._target, self._size):
+            self._solved = True
             return True
         return False
 
     def get_directions(self) -> list[Direction]:
         neighbors = self._connection_list.neighbors_of(self._position)
-        return [direction(self._position, n) for n in neighbors]
+        return [direction_strict(self._position, n) for n in neighbors]
 
     def decisions(self) -> list[Direction]:
         if len(self._path) == 0:
@@ -92,7 +97,7 @@ class LatticeMaze:
         Returns:
             bool: True if the maze is solved, False otherwise
         """
-        return self._position == self._target
+        return self._solved
 
     def print(self):
         print_maze(self)
@@ -137,3 +142,4 @@ class LatticeMaze:
         maze.set_path(path)
 
         return maze
+
