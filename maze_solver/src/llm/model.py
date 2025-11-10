@@ -34,7 +34,8 @@ class Model:
                         model = get_server_model_name(self.model_name),
                         messages = messages,
                         api_base = get_api_base(),
-                        request_timeout = REQUEST_TIMEOUT
+                        request_timeout = REQUEST_TIMEOUT,
+                        extra_body={"keep_alive": 0},
             )
             self.chat_history.add_exchange(Exchange(prompt, response.choices[0].message.content))
             return response.choices[0].message.content
