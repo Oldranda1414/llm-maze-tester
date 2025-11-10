@@ -11,6 +11,7 @@ def main():
         results_path = f"results/{model_name}"
         os.makedirs(results_path, exist_ok=True)
         for maze_size in [2,3,4,5]:
+            print(f"solving {maze_size} maze with model {model_name}")
             max_steps = maze_size * maze_size
             maze_solver = MazeSolver(model_name=model_name, maze_size=maze_size, quiet=True)
             step = 0
