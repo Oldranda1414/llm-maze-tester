@@ -3,7 +3,7 @@ from copy import deepcopy
 import yaml
 from move import Coordinate, Direction, DIRECTIONS
 from maze.output import save_maze, print_maze
-from maze.navigation import ConnectionList, direction, direction_strict, exit_direction
+from maze.navigation import ConnectionList, direction_strict, exit_direction
 
 class LatticeMaze:
     """
