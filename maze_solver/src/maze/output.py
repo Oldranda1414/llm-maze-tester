@@ -66,7 +66,7 @@ def draw_maze(maze, ax=None, show_path=True):
 
     # Start marker
     for pos, color, marker, label in [
-        (maze.start(), "green", "o", "Start"),
+        (maze.start(), "darkorange", "o", "Start"),
     ]:
         if pos:
             x, y = _plot_coords(*pos, grid_size)
@@ -126,7 +126,7 @@ def print_maze(maze: Maze):
             if coord == current_pos:
                 mid_line.append(" C ", style="bold red")
             elif coord == start_pos:
-                mid_line.append(" S ", style="green")
+                mid_line.append(" S ", style="darkorange")
             elif coord in path_set:
                 mid_line.append(" · ", style="yellow")
             else:
@@ -153,7 +153,7 @@ def _draw_path(ax, path: list[Coordinate], grid_size: int):
         return
 
     PATH_COLOR = 'orange'
-    CURRENT_COLOR = 'darkorange'
+    CURRENT_COLOR = 'green'
     PATH_ALPHA = 0.8
 
     # Draw path segments and points
@@ -165,7 +165,7 @@ def _draw_path(ax, path: list[Coordinate], grid_size: int):
 
         if i == len(path) - 1:
             ax.plot(x, y, 'o', color=CURRENT_COLOR, markersize=10,
-                    alpha=PATH_ALPHA, markeredgecolor='darkorange', markeredgewidth=2)
+                    alpha=PATH_ALPHA, markeredgecolor='darkgreen', markeredgewidth=2)
         else:
             ax.plot(x, y, 'o', color=PATH_COLOR, markersize=6,
                     alpha=PATH_ALPHA, markeredgecolor='goldenrod', markeredgewidth=1)
