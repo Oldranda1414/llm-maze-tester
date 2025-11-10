@@ -36,7 +36,7 @@ class MazeSolver:
         self._quiet = quiet
         
         # Track last step errors
-        self.first_step = False
+        self.first_step = True
         self.invalid_answer_provided = False
         self.invalid_direction_provided = False
 
