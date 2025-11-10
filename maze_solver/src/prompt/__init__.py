@@ -17,7 +17,8 @@ from prompt.prompts import (
         exit_prompt,
         exit_found as exit_found_prompt,
         dead_end as dead_end_prompt,
-        out_of_sight as out_of_sight_prompt
+        out_of_sight as out_of_sight_prompt,
+        options as options_prompt
     )
 from prompt.warning import illegal_answer_warning_text, illegal_direction_warning_text
  
@@ -55,8 +56,8 @@ def _path_prompt(direction: Direction, maze: Maze) -> str:
         return prompt + out_of_sight_prompt
     prompt += corridor_template.substitute(path_length=p_length)
     if is_dead_end(direction, maze):
-        prompt += " " + dead_end_prompt
-    return prompt
+        return prompt + dead_end_prompt
+    return prompt + options_prompt
 
 def exit_distance(maze) -> int:
     p_x, p_y = maze.position()
