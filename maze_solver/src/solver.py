@@ -19,7 +19,7 @@ class MazeSolver:
     to make decisions about which direction to move at each step.
     """
 
-    def __init__(self, model_name: str, maze_size: int = 6, sight_depth: int = 3, debug: bool = False):
+    def __init__(self, model_name: str, maze_size: int = 6, sight_depth: int = 3, debug: bool = False, quiet: bool = False):
         """
         Initialize the maze solver with a model and maze.
         
@@ -33,6 +33,7 @@ class MazeSolver:
             self.model = Model(model_name)
         self.maze = create_maze(size=maze_size, sight_depth=sight_depth)
         self.debug = debug
+        self._quiet = quiet
         
         # Track last step errors
         self.invalid_answer_provided = False
@@ -46,7 +47,7 @@ class MazeSolver:
         self.position_history: list[tuple[int, int]] = []
 
         # Show the initial maze state
-        self.maze.print()
+        self._print_maze()
 
     def step(self) -> dict[str, Any]:
         """
@@ -85,7 +86,7 @@ class MazeSolver:
         prompt += step_prompt(self.maze)
 
         response = self.model.ask(prompt)
-        print(f"available_directions: {available_directions}")
+        self._print_message(f"available_directions: {available_directions}")
 
         move = None
         decision = response[-1].upper()
@@ -93,7 +94,7 @@ class MazeSolver:
             if decision in [direction.to_coordinate() for direction in available_directions]:
                 move = decision
             else:
-                print(f"model provided an illegal direction: {decision}")
+                self._print_message(f"model provided an illegal direction: {decision}")
                 self.invalid_direction_provided = True
         else:
             self.invalid_answer_provided = True
@@ -122,10 +123,11 @@ class MazeSolver:
 
                 is_solved = self.maze.solved()
                 if is_solved:
-                    print(f"🎉 Maze solved in {self.steps_taken} steps!")
+                    self._print_message(f"🎉 Maze solved in {self.steps_taken} steps!")
                     self.is_solved = True
                     self.maze.save("solved_maze.png")
-                self.maze.print()
+                self._print_maze()
+
 
                 return {
                     "success": True,
@@ -183,3 +185,10 @@ class MazeSolver:
     def save_run(self, path: str) -> None:
         Run(self.maze, self.model.chat_history).save(path)
 
+    def _print_maze(self):
+        if not self._quiet:
+            self.maze.print()
+
+    def _print_message(self, message: str) -> None:
+        if not self._quiet:
+            print(message)
