@@ -19,7 +19,7 @@ class MazeSolver:
     to make decisions about which direction to move at each step.
     """
 
-    def __init__(self, model_name: str, maze_size: int = 6, sight_depth: int = 3, debug: bool = False, quiet: bool = False):
+    def __init__(self, model_name: str, maze_size: int = 6, sight_depth: int = 3, seed: int =42, debug: bool = False, quiet: bool = False):
         """
         Initialize the maze solver with a model and maze.
         
@@ -31,7 +31,7 @@ class MazeSolver:
             self.model = PhonyModel(model_name)
         else:
             self.model = Model(model_name)
-        self.maze = create_maze(size=maze_size, sight_depth=sight_depth)
+        self.maze = create_maze(size=maze_size, sight_depth=sight_depth, seed=seed)
         self.debug = debug
         self._quiet = quiet
         
