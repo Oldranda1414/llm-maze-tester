@@ -9,6 +9,31 @@ default:
 run *args:
   uv --project maze_solver run maze_solver/src/main.py {{args}}
 
+# Add package to project dependencies
+[no-exit-message]
+add *args:
+  uv --project maze_solver add {{args}}
+
+# Add package to project dependencies
+[no-exit-message]
+remove *args:
+  uv --project maze_solver remove {{args}}
+
+# Open visualizer
+[no-exit-message]
+visualize:
+  uv --project maze_solver run python -m jupyterlab maze_solver/src/visualizer_test.ipynb > /dev/null 2>&1 & \
+  read -p "Press ENTER to stop Jupyter... " _; \
+  git restore maze_solver/src/visualizer_test.ipynb; \
+  pkill -f jupyter-lab; 
+
+# Copy results folder from server
+[no-exit-message]
+copy:
+  rsync -avz -e ssh lrandacio@137.204.72.12:/home/lrandacio/llm-maze-tester/results .
+
+## TESTS
+
 # Run the prompt generation test
 [no-exit-message]
 prompt *args:
@@ -39,25 +64,8 @@ run_test *args:
 vis *args:
   uv --project maze_solver run maze_solver/src/visualizer_test.py {{args}}
 
-# Add package to project dependencies
+# Run the ollama leakeage test
 [no-exit-message]
-add *args:
-  uv --project maze_solver add {{args}}
+leak *args:
+  uv --project maze_solver run maze_solver/src/ollama_leakege_test.py {{args}}
 
-# Add package to project dependencies
-[no-exit-message]
-remove *args:
-  uv --project maze_solver remove {{args}}
-
-# Open visualizer
-[no-exit-message]
-visualize:
-  uv --project maze_solver run python -m jupyterlab maze_solver/src/visualizer_test.ipynb > /dev/null 2>&1 & \
-  read -p "Press ENTER to stop Jupyter... " _; \
-  git restore maze_solver/src/visualizer_test.ipynb; \
-  pkill -f jupyter-lab; 
-
-# Copy results folder from server
-[no-exit-message]
-copy:
-  rsync -avz -e ssh lrandacio@137.204.72.12:/home/lrandacio/llm-maze-tester/results .
