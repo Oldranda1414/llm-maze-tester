@@ -10,8 +10,9 @@
     - when seed is 39
         - solve warning reset global seed
         - solve maze exit output wrong, only cli
+    - have path consider the last move also. As of now no maze loaded can be solved.
 
-log simulazioni, history condensata, controllare input massimo
+history condensata, controllare input massimo
 
 ### New concept
 Have a short version of the prompt generation (step_prompt() != step_prompt_short()).
