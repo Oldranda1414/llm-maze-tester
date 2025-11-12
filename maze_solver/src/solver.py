@@ -19,7 +19,7 @@ class MazeSolver:
     to make decisions about which direction to move at each step.
     """
 
-    def __init__(self, model_name: str, maze_size: int = 6, sight_depth: int = 3, seed: int =42, debug: bool = False, quiet: bool = False):
+    def __init__(self, model_name: str, maze_size: int = 6, sight_depth: int = 3, seed: int = 42, debug: bool = False, quiet: bool = False):
         """
         Initialize the maze solver with a model and maze.
         
@@ -130,7 +130,7 @@ class MazeSolver:
         return self.maze.solved()
 
     def save_run(self, path: str) -> None:
-        Run(self.maze, self.model.chat_history).save(path)
+        Run(self.maze, self.model.chat_history, self.illegal_directions, self.illegal_responses).save(path)
 
     def _print_maze(self):
         if not self._quiet:

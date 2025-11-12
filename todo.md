@@ -10,3 +10,10 @@
     - when seed is 39
         - solve warning reset global seed
         - solve maze exit output wrong, only cli
+
+log simulazioni, history condensata, controllare input massimo
+
+### New concept
+Have a short version of the prompt generation (step_prompt() != step_prompt_short()).
+Use it to condense the history except the last prompt.
+Also consider removing erroneus prompts.

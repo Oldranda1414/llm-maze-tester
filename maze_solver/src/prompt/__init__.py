@@ -14,6 +14,7 @@ from prompt.prompts import (
         corridor as corridor_template,
         last_move as last_move_template,
         step_epilogue as step_epilogue_template,
+        steps_summary as steps_summary_template,
         wall as wall_prompt,
         exit_prompt,
         exit_found as exit_found_prompt,
@@ -42,7 +43,11 @@ def step_prompt(maze: Maze) -> str:
         step_prompt += _path_prompt(direction, maze) + "\n"
     possible_directions = ", ".join([d.to_coordinate() for d in maze.get_directions()])
     step_epilogue = step_epilogue_template.substitute(directions=possible_directions)
-    return step_prompt + step_epilogue
+    return step_prompt + steps_summary(maze) + step_epilogue
+
+def steps_summary(maze: Maze) -> str:
+    decisions = ", ".join([d.to_coordinate() for d in maze.decisions()])
+    return steps_summary_template.substitute(decisions=decisions)
 
 def _path_prompt(direction: Direction, maze: Maze) -> str:
     prompt = direction_template.substitute(direction=str(direction))

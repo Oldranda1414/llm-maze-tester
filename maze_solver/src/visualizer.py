@@ -23,11 +23,56 @@ def visualize_run(run: "Run"):
     chat = run.chat_history.chat
     num_steps = len(chat)
 
+   # Create statistics HTML that will never change
+    stats_html = HTML()
+    
+    # Calculate and format statistics
+    stats_text = f"""
+    <div style="padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+        <h3>Run Statistics</h3>
+        <table style="width: 100%;">
+            <tr>
+                <td><strong>Maze Dimension:</strong></td>
+                <td>{run.maze_dimension()}x{run.maze_dimension()}</td>
+                <td><strong>Start Position:</strong></td>
+                <td>{run.start_position()}</td>
+            </tr>
+            <tr>
+                <td><strong>Target Position:</strong></td>
+                <td>{run.target_position()}</td>
+                <td><strong>Current Position:</strong></td>
+                <td>{run.current_position()}</td>
+            </tr>
+            <tr>
+                <td><strong>Solved:</strong></td>
+                <td>{'Yes' if run.is_solved() else 'No'}</td>
+                <td><strong>Unique Positions Visited:</strong></td>
+                <td>{run.unique_positions_visited()}</td>
+            </tr>
+            <tr>
+                <td><strong>Illegal Directions:</strong></td>
+                <td>{run.illegal_directions()}</td>
+                <td><strong>Illegal Responses:</strong></td>
+                <td>{run.illegal_responses()}</td>
+            </tr>
+            <tr>
+                <td><strong>Total Steps:</strong></td>
+                <td>{num_steps}</td>
+                <td><strong>Path Length:</strong></td>
+                <td>{len(maze.path())}</td>
+            </tr>
+        </table>
+    </div>
+    """
+    stats_html.value = stats_text
+
     message_html = HTML()
 
     def draw_step(step_idx: int):
         """Render maze and update text for the given step index."""
         clear_output(wait=True)
+
+        display(stats_html)
 
         # Draw maze with partial path up to this step
         partial_maze = deepcopy(maze)

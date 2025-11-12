@@ -26,6 +26,8 @@ corridor = Template("there is a corridor that goes on for ${path_length} before 
 
 last_move = Template("You move one meter ${direction}\n")
 
+steps_summary = Template("\nThe moves you have made till now are: ${decisions}\n")
+
 step_epilogue = Template("Your possible moves are: ${directions}.\nAfter thinking it through, provide your next move.")
 
 wall = "there is a wall. You can't step in that direction."
