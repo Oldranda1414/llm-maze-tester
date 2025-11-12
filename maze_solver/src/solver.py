@@ -53,7 +53,7 @@ class MazeSolver:
         """
         Execute a single step in the maze solving process.
         """
-        available_directions = self.maze.get_directions()
+        available_directions = self.maze.available_directions()
 
         prompt = ""
 

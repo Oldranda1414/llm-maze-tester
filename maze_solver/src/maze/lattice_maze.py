@@ -21,6 +21,7 @@ class LatticeMaze:
         self._start = start
         self._target = target
         self._path = [self._start]
+        self._decisions = []
         self._position = self._start
         self._solved = False
 
@@ -55,7 +56,8 @@ class LatticeMaze:
         self._position = new_path[-1]
 
     def move(self, direction: Direction) -> bool:
-        legal_directions = self.get_directions()
+        legal_directions = self.available_directions()
+        self._decisions.append(direction)
         if self._target == self._position and direction == exit_direction(self._target, self._size):
             self._solved = True
             return True
@@ -67,7 +69,7 @@ class LatticeMaze:
             return True
         return False
 
-    def get_directions(self) -> list[Direction]:
+    def available_directions(self) -> list[Direction]:
         neighbors = self._connection_list.neighbors_of(self._position)
         d = [direction_strict(self._position, n) for n in neighbors]
         if self._target == self._position:
@@ -75,25 +77,7 @@ class LatticeMaze:
         return d
 
     def decisions(self) -> list[Direction]:
-        if len(self._path) == 0:
-            return []
-        directions: list[Direction] = []
-        for (x1, y1), (x2, y2) in zip(self._path, self._path[1:]):
-            dx = x2 - x1
-            dy = y2 - y1
-            
-            if dx == 0 and dy == 1:
-                directions.append(Direction.EAST)
-            elif dx == 0 and dy == -1:
-                directions.append(Direction.WEST)
-            elif dx == 1 and dy == 0:
-                directions.append(Direction.SOUTH)
-            elif dx == -1 and dy == 0:
-                directions.append(Direction.NORTH)
-            else:
-                raise ValueError(f"Invalid move from {(x1, y1)} to {(x2, y2)}")
-        
-        return directions
+        return self._decisions
 
     def solved(self):
         """Check if the maze is solved.

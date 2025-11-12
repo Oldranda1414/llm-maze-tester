@@ -11,7 +11,7 @@ if __name__ == "__main__":
     while not maze.solved():
         maze.print()
 
-        print("Available directions:", maze.get_directions())
+        print("Available directions:", maze.available_directions())
 
         prompt = "give me a move (C to close, Q to save): "
         move = input(prompt)

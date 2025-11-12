@@ -43,7 +43,7 @@ class Maze(Protocol):
         bool: True if the move was successful, False if blocked by a wall
     """
 
-    def get_directions(self) -> list[Direction]: ...
+    def available_directions(self) -> list[Direction]: ...
     """Get the possible directions to move from the current position.
     Returns:
         list: A list of possible directions (U, D, L, R)

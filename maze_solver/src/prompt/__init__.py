@@ -41,7 +41,7 @@ def step_prompt(maze: Maze) -> str:
     step_prompt = ""
     for direction in directions:
         step_prompt += _path_prompt(direction, maze) + "\n"
-    possible_directions = ", ".join([d.to_coordinate() for d in maze.get_directions()])
+    possible_directions = ", ".join([d.to_coordinate() for d in maze.available_directions()])
     step_epilogue = step_epilogue_template.substitute(directions=possible_directions)
     return step_prompt + steps_summary(maze) + step_epilogue
 
