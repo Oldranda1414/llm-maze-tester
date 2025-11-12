@@ -9,6 +9,7 @@ from maze import Maze
 from maze.output import draw_maze
 from move import Direction
 from run import Run
+from util import seconds_to_padded_time
 
 def format_text(text: str) -> str:
     return html.escape(text).replace("\n", "<br>")
@@ -60,6 +61,10 @@ def visualize_run(run: "Run"):
                 <td>{num_steps}</td>
                 <td><strong>Path Length:</strong></td>
                 <td>{len(maze.path())}</td>
+            </tr>
+            <tr>
+                <td><strong>Execution Time</strong></td>
+                <td>{seconds_to_padded_time(run.execution_time())}</td>
             </tr>
         </table>
     </div>

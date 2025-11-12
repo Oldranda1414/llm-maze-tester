@@ -129,8 +129,8 @@ class MazeSolver:
         """
         return self.maze.solved()
 
-    def save_run(self, path: str) -> None:
-        Run(self.maze, self.model.chat_history, self.illegal_directions, self.illegal_responses).save(path)
+    def save_run(self, path: str, execution_time: float) -> None:
+        Run(self.maze, self.model.chat_history, self.illegal_directions, self.illegal_responses, execution_time).save(path)
 
     def _print_maze(self):
         if not self._quiet:
