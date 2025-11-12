@@ -37,11 +37,9 @@ def last_move_info(maze: Maze) -> str:
 
 def step_prompt(maze: Maze) -> str: 
     directions = [Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST]
-    original_path = maze.path()
     step_prompt = ""
     for direction in directions:
         step_prompt += _path_prompt(direction, maze) + "\n"
-    maze.set_path(original_path) # todo check if this is necessary
     possible_directions = ", ".join([d.to_coordinate() for d in maze.get_directions()])
     step_epilogue = step_epilogue_template.substitute(directions=possible_directions)
     return step_prompt + step_epilogue
