@@ -1,6 +1,7 @@
 import os
 import logging
 import time
+from datetime import datetime
 
 from solver import MazeSolver
 from log import log
@@ -13,12 +14,14 @@ class Experiment:
         self.model_names = model_names
         self.maze_sizes = maze_sizes
         self.iterations = iterations
+        self.timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 
     def run(self):
         for model_name in self.model_names:
             start_model = time.time()
             for maze_size in self.maze_sizes:
                 start_size = time.time()
+                results_dir = f"results/{self.timestamp}/{model_name}/{maze_size}x{maze_size}"
                 for i in range(self.iterations):
                     solved_mazes = 0
                     log(f"solving {maze_size}x{maze_size} maze with model {model_name} for {i} time")
@@ -39,7 +42,6 @@ class Experiment:
                         log((tab * 3) + "maze not solved...")
                     log(str(maze_solver.get_statistics()))
                     log_time(3, f"maze {i}", start_maze)
-                    results_dir = f"results/{model_name}/{maze_size}x{maze_size}"
                     os.makedirs(results_dir, exist_ok=True)
                     maze_solver.save_run(f"{results_dir}/{i}.yaml", delta_t(start_maze))
                 log_time(2, f"maze size {maze_size}", start_size)
