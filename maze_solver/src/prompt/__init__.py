@@ -13,6 +13,7 @@ from prompt.prompts import (
         direction as direction_template,
         corridor as corridor_template,
         last_move as last_move_template,
+        step_epilogue as step_epilogue_template,
         wall as wall_prompt,
         exit_prompt,
         exit_found as exit_found_prompt,
@@ -40,8 +41,10 @@ def step_prompt(maze: Maze) -> str:
     step_prompt = ""
     for direction in directions:
         step_prompt += _path_prompt(direction, maze) + "\n"
-    maze.set_path(original_path)
-    return step_prompt
+    maze.set_path(original_path) # todo check if this is necessary
+    possible_directions = ", ".join([d.to_coordinate() for d in maze.get_directions()])
+    step_epilogue = step_epilogue_template.substitute(directions=possible_directions)
+    return step_prompt + step_epilogue
 
 def _path_prompt(direction: Direction, maze: Maze) -> str:
     prompt = direction_template.substitute(direction=str(direction))

@@ -26,14 +26,17 @@ corridor = Template("there is a corridor that goes on for ${path_length} before 
 
 last_move = Template("You move one meter ${direction}\n")
 
-wall = "there is a wall. Seems you can't step in that direction."
+step_epilogue = Template("Your possible moves are: ${directions}.\nAfter thinking it through, provide your next move.")
+
+wall = "there is a wall. You can't step in that direction."
 
 exit_prompt = "you can see a natural light shining in that direction, it is probably the direction of the exit!"
 
 exit_found = "you can see the exit in that direction! One last step and you are out of the maze!"
 
-dead_end = " It seems to be a dead end."
+dead_end = " It is a dead end."
 
 out_of_sight = "the corridor streatches further than you can see, so you are unable to predict what lies ahead."
 
 options = " Althogh the corridor ends with a wall, you notice that some of the lateral paths along the way are open so it isn't a dead end."
+
