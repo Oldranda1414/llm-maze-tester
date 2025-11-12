@@ -38,15 +38,13 @@ class MazeSolver:
         # Track last step errors
         self.first_step = True
         self.invalid_answer_provided = False
+        self.illegal_responses = 0
         self.invalid_direction_provided = False
+        self.illegal_directions = 0
         self.valid_last_move = False
 
         # Statistics and tracking
         self.steps_taken = 0
-        self.moves_history: list[str] = []
-        self.visited_positions: set[tuple[int, int]] = set()
-        self.is_solved = False
-        self.position_history: list[tuple[int, int]] = []
 
         # Show the initial maze state
         self._print_maze()
@@ -84,27 +82,21 @@ class MazeSolver:
             else:
                 self._print_message(f"model provided an illegal direction: {decision}")
                 self.invalid_direction_provided = True
+                self.illegal_directions += 1
         else:
             self.invalid_answer_provided = True
+            self.illegal_responses += 1
 
         if move is None:
             return
 
-        current_position = self.maze.position()
-        self.position_history.append(current_position)
-
         self.valid_last_move = self.maze.move(Direction.from_coordinate(move))
         if self.valid_last_move:
             self.steps_taken += 1
-            self.moves_history.append(move)
-            new_position = self.maze.position()
-            self.position_history.append(new_position)
-            self.visited_positions.add(new_position)
 
             is_solved = self.maze.solved()
             if is_solved:
                 self._print_message(f"🎉 Maze solved in {self.steps_taken} steps!")
-                self.is_solved = True
                 self.maze.save("solved_maze.png")
             self._print_maze()
 
@@ -113,27 +105,29 @@ class MazeSolver:
         Get statistics about the maze solving progress.
         
         Returns:
-            Dict with solving statistics
+            Dict with statistics
         """
         return {
             "steps_taken": self.steps_taken,
-            "moves_history": self.moves_history,
-            "is_solved": self.is_solved,
+            "moves_history": self.maze.decisions(),
+            "is_solved": self.is_solved(),
             "start_position": self.maze.start(),
             "end_position": self.maze.target(),
             "current_position": self.maze.position(),
             "maze_dimension": self.maze.size(),
-            "unique_positions_visited": len(self.visited_positions)
+            "unique_positions_visited": len(set(self.maze.path())),
+            "illegal_directions": self.illegal_directions,
+            "illegal_responses": self.illegal_responses,
         }
 
-    def solved(self) -> bool:
+    def is_solved(self) -> bool:
         """
         Check if the maze is solved.
         
         Returns:
             bool: True if the maze is solved, False otherwise
         """
-        return self.is_solved
+        return self.maze.solved()
 
     def save_run(self, path: str) -> None:
         Run(self.maze, self.model.chat_history).save(path)
