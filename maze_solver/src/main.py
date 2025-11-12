@@ -17,6 +17,7 @@ def main():
         for maze_size in maze_sizes:
             start_size = time.time()
             for i in range(iterations):
+                solved_mazes = 0
                 log(f"solving {maze_size}x{maze_size} maze with model {model_name} for {i} time")
                 start_maze = time.time()
                 max_steps = maze_size * maze_size * 10
@@ -30,6 +31,7 @@ def main():
                     step += 1
                 if maze_solver.is_solved():
                     log((tab * 3) + "maze solved!")
+                    solved_mazes += 1
                 else:
                     log((tab * 3) + "maze not solved...")
                 log(str(maze_solver.get_statistics()))
@@ -37,6 +39,7 @@ def main():
                 results_dir = f"results/{model_name}/{maze_size}x{maze_size}"
                 os.makedirs(results_dir, exist_ok=True)
                 maze_solver.save_run(f"{results_dir}/{i}.yaml")
+            log("solved mazes / attempted mazes: {solved_mazes}/{iterations}")
             log_time(2, f"maze size {maze_size}", start_size)
         log_time(1, f"model {model_name}", start_model)
 

@@ -3,7 +3,6 @@
 - move
     - refactor Coordinate to Cell
 - prompt
-    - provide available moves
     - history max length
 - run
     - for [3,4,5,6,7] run 10 simulations with different maze and analyse hit rate
