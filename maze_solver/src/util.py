@@ -3,4 +3,4 @@ def seconds_to_padded_time(seconds: float) -> str:
     minutes = (seconds % 3600) // 60
     remaining_seconds = seconds % 60
     
-    return f"{hours:02d}:{minutes:02d}:{remaining_seconds:02d}"
+    return f"{hours:02d}:{minutes:02d}:{remaining_seconds:05.2f}"
