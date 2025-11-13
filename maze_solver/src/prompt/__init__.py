@@ -46,7 +46,7 @@ def step_prompt(maze: Maze) -> str:
     return step_prompt + steps_summary(maze) + step_epilogue
 
 def steps_summary(maze: Maze) -> str:
-    decisions = ", ".join([d.to_coordinate() for d in maze.decisions()])
+    decisions = ", ".join([str(d) for d in maze.decisions()])
     return steps_summary_template.substitute(decisions=decisions)
 
 def _path_prompt(direction: Direction, maze: Maze) -> str:
