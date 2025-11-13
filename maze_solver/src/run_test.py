@@ -8,7 +8,7 @@ def main() -> None:
     solver = MazeSolver("llama3", debug=True)
     while not solver.maze.solved():
         solver.step()
-    solver.save_run(run_path)
+    solver.save_run(run_path, 60)
     run = Run.load(run_path)
     print(run.chat_history)
     run.maze.print()

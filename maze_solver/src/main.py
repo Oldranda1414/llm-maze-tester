@@ -1,11 +1,10 @@
-from experiment import Experiment
+from experiment import run_experiment
 
 def main():
     model_names = ["llama3"]
     maze_sizes = [3,4,5,6]
     iterations = 10
-    experiment = Experiment(model_names, maze_sizes, iterations)
-    experiment.run()
+    run_experiment(model_names, maze_sizes, iterations)
 
 if __name__ == "__main__":
     main()

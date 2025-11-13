@@ -3,12 +3,14 @@ import yaml
 from chat_history import ChatHistory
 from maze import Maze
 from maze.factory import maze_from_yaml
-from move import Coordinate
+from move import Coordinate, Direction
+from chat_history import Exchange
 
 class Run:
     def __init__(self, maze: Maze, chat_history: ChatHistory, illegal_directions: int, illegal_responses: int, execution_time: float):
         self.maze = maze
         self.chat_history = chat_history
+        set_path(self.maze, chat_history.chat)
         self._illegal_directions = illegal_directions
         self._illegal_responses = illegal_responses
         self._execution_time = execution_time
@@ -68,3 +70,13 @@ class Run:
         chat_history = ChatHistory.from_yaml(chat_data)
 
         return cls(maze, chat_history, i_d, i_r, execution_time)
+
+def set_path(maze: Maze, chat: list[Exchange]) -> Maze:
+    maze.reset()
+    for e in chat:
+        response = e.response[-1].upper()
+        if response in ["W","N","E","S"]:
+            next_move = Direction.from_coordinate(response)
+            maze.move(next_move)
+    return maze
+

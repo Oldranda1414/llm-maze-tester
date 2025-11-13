@@ -32,6 +32,11 @@ visualize:
 copy:
   rsync -avz -e ssh lrandacio@137.204.72.12:/home/lrandacio/llm-maze-tester/results .
 
+# Print stats for a given experiment
+[no-exit-message]
+stats *args:
+  uv --project maze_solver run maze_solver/src/stats.py {{args}}
+
 ## TESTS
 
 # Run the prompt generation test
