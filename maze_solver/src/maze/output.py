@@ -19,14 +19,14 @@ def draw_maze(maze, ax=None, show_path=True):
     else:
         fig = ax.figure
 
-    grid_size = maze.size()
+    grid_size = maze.size
     WALL_WIDTH = 3
     cell_size = 1.0
 
     ax.set_facecolor('white')
 
-    t_i, t_j = maze.target()
-    e_direction = exit_direction(maze.target(), maze.size())
+    t_i, t_j = maze.target
+    e_direction = exit_direction(maze.target, maze.size)
 
     # Borders
     for j in range(grid_size):
@@ -41,7 +41,7 @@ def draw_maze(maze, ax=None, show_path=True):
             ax.plot([grid_size, grid_size], [i, i + 1], 'k-', linewidth=WALL_WIDTH)
 
     # Cells
-    cl = maze.connection_list()
+    cl = maze.connection_list
     for i in range(grid_size):
         for j in range(grid_size):
             y_plot = grid_size - i - 1
@@ -57,7 +57,7 @@ def draw_maze(maze, ax=None, show_path=True):
 
     # Start marker
     for pos, color, marker, label in [
-        (maze.start(), "darkorange", "o", "Start"),
+        (maze.start, "darkorange", "o", "Start"),
     ]:
         if pos:
             x, y = _plot_coords(*pos, grid_size)
@@ -77,16 +77,16 @@ def draw_maze(maze, ax=None, show_path=True):
 
 def print_maze(maze: Maze):
     console = Console()
-    grid_size = maze.size()
-    path = maze.path()
+    grid_size = maze.size
+    path = maze.path
 
     path_set = set(path)
     current_pos = path[-1] if path else None
-    start_pos = maze.start()
-    target_pos = maze.target()
+    start_pos = maze.start
+    target_pos = maze.target
 
     t_i, t_j = target_pos
-    e_direction = exit_direction(maze.target(), maze.size())
+    e_direction = exit_direction(maze.target, maze.size)
 
     for i in range(grid_size):
         top_line = Text()
@@ -94,7 +94,7 @@ def print_maze(maze: Maze):
             top_line.append("+")
             if (i == 0 and e_direction == Direction.NORTH and j == t_j):
                 top_line.append("   ")
-            elif i == 0 or not maze.connection_list().vertical_passages[i - 1][j]:
+            elif i == 0 or not maze.connection_list.vertical_passages[i - 1][j]:
                 top_line.append("---")
             else:
                 top_line.append("   ")
@@ -105,7 +105,7 @@ def print_maze(maze: Maze):
         for j in range(grid_size):
             if (j == 0 and e_direction == Direction.WEST and i == grid_size - t_i - 1):
                 mid_line.append(" ")
-            elif j == 0 or not maze.connection_list().horizontal_passages[i][j - 1]:
+            elif j == 0 or not maze.connection_list.horizontal_passages[i][j - 1]:
                 mid_line.append("|")
             else:
                 mid_line.append(" ")
@@ -137,8 +137,8 @@ def print_maze(maze: Maze):
     console.print(bottom)
 
 def _draw_path(ax, maze: Maze):
-    path = maze.path()
-    maze_size = maze.size()
+    path = maze.path
+    maze_size = maze.size
     if not path:
         return
 
@@ -153,7 +153,7 @@ def _draw_path(ax, maze: Maze):
             px, py = _plot_coords(*path[i - 1], maze_size)
             ax.plot([px, x], [py, y], color=PATH_COLOR, linewidth=8, alpha=PATH_ALPHA, solid_capstyle='round')
 
-        if i == len(path) - 1 and not maze.solved():
+        if i == len(path) - 1 and not maze.solved:
             ax.plot(x, y, 'o', color=CURRENT_COLOR, markersize=10,
                     alpha=PATH_ALPHA, markeredgecolor='darkgreen', markeredgewidth=2)
         else:
@@ -166,14 +166,14 @@ def _plot_coords(i: int, j: int, grid_size: int) -> tuple[float, float]:
     return j + 0.5, grid_size - i - 1 + 0.5
 
 def _is_seen(cell: Coordinate, maze: Maze) -> bool:
-    if maze.position() == cell:
+    if maze.position == cell:
         return True
 
-    cl = maze.connection_list()
-    position = maze.position()
+    cl = maze.connection_list
+    position = maze.position
     d = direction(position, cell)
     distance = 0
-    while d is not None and distance < maze.sight_depth():
+    while d is not None and distance < maze.sight_depth:
         n = neighbor(position, d)
         if cl.connected(position, n):
             if n == cell: return True

@@ -97,7 +97,7 @@ class MazeSolver:
         if self.valid_last_move:
             self.steps_taken += 1
 
-            is_solved = self.maze.solved()
+            is_solved = self.maze.solved
             if is_solved:
                 self._print_message(f"🎉 Maze solved in {self.steps_taken} steps!")
                 self.maze.save("solved_maze.png")
@@ -112,13 +112,13 @@ class MazeSolver:
         """
         return {
             "steps_taken": self.steps_taken,
-            "moves_history": self.maze.decisions(),
+            "moves_history": self.maze.decisions,
             "is_solved": self.is_solved(),
-            "start_position": self.maze.start(),
-            "end_position": self.maze.target(),
-            "current_position": self.maze.position(),
-            "maze_dimension": self.maze.size(),
-            "unique_positions_visited": len(set(self.maze.path())),
+            "start_position": self.maze.start,
+            "end_position": self.maze.target,
+            "current_position": self.maze.position,
+            "maze_dimension": self.maze.size,
+            "unique_positions_visited": len(set(self.maze.path)),
             "illegal_directions": self.illegal_directions,
             "illegal_responses": self.illegal_responses,
         }
@@ -130,7 +130,7 @@ class MazeSolver:
         Returns:
             bool: True if the maze is solved, False otherwise
         """
-        return self.maze.solved()
+        return self.maze.solved
 
     def save_run(self, path: str, execution_time: float) -> None:
         Run(self.maze, self.model.chat_history, self.illegal_directions, self.illegal_responses, execution_time).save(path)

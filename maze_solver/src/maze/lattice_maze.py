@@ -27,17 +27,35 @@ class LatticeMaze:
         self._position = self._start
         self._solved = False
 
+    @property
     def size(self) -> int: return self._size
 
+    @property
     def start(self) -> Coordinate: return self._start
 
+    @property
     def target(self) -> Coordinate: return self._target
 
+    @property
     def sight_depth(self) -> int: return self._sight_depth
 
+    @property
     def connection_list(self) -> ConnectionList:
         return deepcopy(self._connection_list)
 
+    @property
+    def decisions(self) -> list[Direction]:
+        return self._decisions
+
+    @property
+    def solved(self):
+        """Check if the maze is solved.
+        Returns:
+            bool: True if the maze is solved, False otherwise
+        """
+        return self._solved
+
+    @property
     def position(self):
         """Get the current position in the maze.
         Returns:
@@ -48,6 +66,7 @@ class LatticeMaze:
     def set_position(self, new_position: Coordinate):
         self._position = new_position
 
+    @property
     def path(self):
         """Get the current path
         """
@@ -77,16 +96,6 @@ class LatticeMaze:
         if self._target == self._position:
             d.append(exit_direction(self._target, self._size))
         return d
-
-    def decisions(self) -> list[Direction]:
-        return self._decisions
-
-    def solved(self):
-        """Check if the maze is solved.
-        Returns:
-            bool: True if the maze is solved, False otherwise
-        """
-        return self._solved
 
     def print(self):
         print_maze(self)

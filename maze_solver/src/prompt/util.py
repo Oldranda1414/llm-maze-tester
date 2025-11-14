@@ -12,8 +12,8 @@ def _length_to_string(lenght: int) -> str:
     return f"{num2words(lenght)} {unit}"
 
 def path_length(direction: Direction, maze: Maze) -> int:
-    position = maze.position()
-    cl = maze.connection_list()
+    position = maze.position
+    cl = maze.connection_list
     length = 0
     while cl.connected(position, n := neighbor(position, direction)):
         length += 1

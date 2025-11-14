@@ -26,22 +26,22 @@ class Run:
         return self._execution_time
 
     def is_solved(self) -> bool:
-        return self.maze.solved()
+        return self.maze.solved
 
     def start_position(self) -> Coordinate:
-        return self.maze.start()
+        return self.maze.start
 
     def target_position(self) -> Coordinate:
-        return self.maze.target()
+        return self.maze.target
 
     def current_position(self) -> Coordinate:
-        return self.maze.position()
+        return self.maze.position
 
     def maze_dimension(self) -> int:
-        return self.maze.size()
+        return self.maze.size
 
     def unique_positions_visited(self) -> int:
-        return len(set(self.maze.path()))
+        return len(set(self.maze.path))
 
     def save(self, path: str):
         """Save the run to a YAML file."""

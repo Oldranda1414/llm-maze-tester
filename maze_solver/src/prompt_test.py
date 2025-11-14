@@ -7,7 +7,7 @@ def main():
     maze = create_maze(size=3, sight_depth=sight_depth)
     print(get_preamble(maze))
 
-    while not maze.solved():
+    while not maze.solved:
 
         print(step_prompt(maze))
         maze.print()
@@ -23,8 +23,8 @@ def main():
             break
 
         maze.move(Direction.from_coordinate(move))
-        print("New position:", maze.position())
-        print("Solved?", maze.solved())
+        print("New position:", maze.position)
+        print("Solved?", maze.solved)
 
 def many_maze():
     sight_depth = 3
@@ -32,7 +32,7 @@ def many_maze():
     for maze in mazes:
         print(get_preamble(maze))
 
-        while not maze.solved():
+        while not maze.solved:
 
             print(step_prompt(maze))
             maze.print()
@@ -48,8 +48,8 @@ def many_maze():
                 break
 
             maze.move(Direction.from_coordinate(move))
-            print("New position:", maze.position())
-            print("Solved?", maze.solved())
+            print("New position:", maze.position)
+            print("Solved?", maze.solved)
 
 if __name__ == "__main__":
     main()

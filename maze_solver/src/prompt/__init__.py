@@ -25,7 +25,7 @@ from prompt.prompts import (
 from prompt.warning import illegal_answer_warning_text, illegal_direction_warning_text
  
 def get_preamble(maze: Maze) -> str:
-    return preamble_template.substitute(size=maze.size())
+    return preamble_template.substitute(size=maze.size)
 
 def illegal_answer_warning(_: Maze) -> str:
     return illegal_answer_warning_text
@@ -34,7 +34,7 @@ def illegal_direction_warning(_: Maze) -> str:
     return illegal_direction_warning_text
 
 def last_move_info(maze: Maze) -> str:
-    return last_move_template.substitute(direction=maze.decisions()[-1])
+    return last_move_template.substitute(direction=maze.decisions[-1])
 
 def step_prompt(maze: Maze) -> str: 
     directions = [Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST]
@@ -46,19 +46,19 @@ def step_prompt(maze: Maze) -> str:
     return step_prompt + steps_summary(maze) + step_epilogue
 
 def steps_summary(maze: Maze) -> str:
-    decisions = ", ".join([str(d) for d in maze.decisions()])
+    decisions = ", ".join([str(d) for d in maze.decisions])
     return steps_summary_template.substitute(decisions=decisions)
 
 def _path_prompt(direction: Direction, maze: Maze) -> str:
     prompt = direction_template.substitute(direction=str(direction))
-    if maze.position() == maze.target() and direction == exit_direction(maze.target(), maze.size()):
+    if maze.position == maze.target and direction == exit_direction(maze.target, maze.size):
         return prompt + exit_found_prompt
     if is_wall(direction, maze):
         return prompt + wall_prompt
-    if is_exit_direction(direction, maze) and exit_distance(maze) <= maze.sight_depth():
+    if is_exit_direction(direction, maze) and exit_distance(maze) <= maze.sight_depth:
         return prompt + exit_prompt
     p_length = path_length_str(direction, maze)
-    if path_length(direction, maze) > maze.sight_depth():
+    if path_length(direction, maze) > maze.sight_depth:
         return prompt + out_of_sight_prompt
     prompt += corridor_template.substitute(path_length=p_length)
     if is_dead_end(direction, maze):
@@ -66,8 +66,8 @@ def _path_prompt(direction: Direction, maze: Maze) -> str:
     return prompt + options_prompt
 
 def exit_distance(maze) -> int:
-    p_x, p_y = maze.position()
-    t_x, t_y = maze.target()
+    p_x, p_y = maze.position
+    t_x, t_y = maze.target
     if p_x == t_x:
         return abs(p_y - t_y)
     if p_y == t_y:

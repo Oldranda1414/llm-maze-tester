@@ -56,7 +56,7 @@ def visualize_run(run: Run):
                 <td><strong>Total Steps:</strong></td>
                 <td>{num_steps}</td>
                 <td><strong>Path Length:</strong></td>
-                <td>{len(maze.path())}</td>
+                <td>{len(maze.path)}</td>
             </tr>
             <tr>
                 <td><strong>Execution Time</strong></td>

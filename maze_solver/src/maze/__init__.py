@@ -10,16 +10,29 @@ class Maze(Protocol):
     A protocol representing a maze with a start and end point.
     """
 
+    @property
     def size(self) -> int: ...
 
+    @property
     def start(self) -> Coordinate: ...
 
+    @property
     def target(self) -> Coordinate: ...
 
+    @property
     def sight_depth(self) -> int: ...
 
+    @property
     def connection_list(self) -> ConnectionList: ...
 
+    @property
+    def solved(self) -> bool: ...
+    """Check if the maze is solved.
+    Returns:
+        bool: True if the maze is solved, False otherwise
+    """
+
+    @property
     def position(self) -> Coordinate: ...
     """Get the current position in the maze.
     Returns:
@@ -28,12 +41,14 @@ class Maze(Protocol):
 
     def set_position(self, new_position: Coordinate) -> None: ...
 
+    @property
     def path(self) -> list[Coordinate]: ...
     """Get the current path
     """
 
     def set_path(self, new_path: list[Coordinate]) -> None: ...
 
+    @property
     def decisions(self) -> list[Direction]: ...
 
     def move(self, direction: Direction) -> bool: ...
@@ -48,12 +63,6 @@ class Maze(Protocol):
     """Get the possible directions to move from the current position.
     Returns:
         list: A list of possible directions (U, D, L, R)
-    """
-
-    def solved(self) -> bool: ...
-    """Check if the maze is solved.
-    Returns:
-        bool: True if the maze is solved, False otherwise
     """
 
     def print(self) -> None: ...

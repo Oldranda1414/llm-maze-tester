@@ -4,8 +4,8 @@ from maze import Maze
 from prompt.util import path_length
 
 def is_exit_direction(direction: Direction, maze: Maze) -> bool:
-    ip_x, ip_y = maze.position()
-    t_x, t_y = maze.target()
+    ip_x, ip_y = maze.position
+    t_x, t_y = maze.target
     pl = path_length(direction, maze)
 
     if ip_y == t_y:
@@ -29,8 +29,8 @@ def is_dead_end(direction: Direction, maze: Maze) -> bool:
     Checks if moving from the current position in the given direction leads into a dead end.
     A dead end is defined as a straight corridor that ends in a cell with exactly one connection.
     """
-    position = maze.position()
-    cl = maze.connection_list()
+    position = maze.position
+    cl = maze.connection_list
     while cl.connected(position, position := neighbor(position, direction)):
         if cl.num_neighbors(position) == 1:
             return True
@@ -40,7 +40,7 @@ def is_dead_end(direction: Direction, maze: Maze) -> bool:
 
 def is_wall(direction: Direction, maze: Maze) -> bool:
     """Check if there is a wall in the given direction from the current position."""
-    position = maze.position()
-    cl = maze.connection_list()
+    position = maze.position
+    cl = maze.connection_list
     return not cl.connected(position, neighbor(position, direction))
 
