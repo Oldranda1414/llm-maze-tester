@@ -1,7 +1,5 @@
-
 from solver import MazeSolver
 from run import Run
-
 
 def main() -> None:
     run_path = 'test_run.yaml'

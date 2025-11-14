@@ -7,7 +7,7 @@ from IPython.display import display, clear_output
 
 from maze import Maze
 from maze.output import draw_maze
-from move import Direction
+from maze.core.direction import Direction
 from run import Run
 from util import seconds_to_padded_time
 

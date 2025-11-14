@@ -1,7 +1,8 @@
 from num2words import num2words
 
 from maze import Maze
-from move import Direction, neighbor
+from maze.core.direction import Direction
+from maze.core.navigation import neighbor
 
 def path_length_str(direction: Direction, maze: Maze) -> str:
     return _length_to_string(path_length(direction, maze))

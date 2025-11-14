@@ -1,13 +1,11 @@
 import random
-from maze import generate_start, generate_target
-from maze.navigation import ConnectionList
 
-from maze_dataset import MazeDataset as DatasetMazeDataset
-from maze_dataset import MazeDatasetConfig
+from maze_dataset import MazeDataset as DatasetMazeDataset, MazeDatasetConfig
 from maze_dataset.generation import LatticeMazeGenerators
 
+from maze import Maze, generate_start, generate_target
+from maze.core.connection_list import ConnectionList
 from maze.lattice_maze import LatticeMaze
-from maze import Maze
 
 class MazeDataset():
     
@@ -21,7 +19,7 @@ class MazeDataset():
             seed=seed
         )
 
-        dataset: MazeDataset = DatasetMazeDataset.from_config(config)
+        dataset: DatasetMazeDataset = DatasetMazeDataset.from_config(config)
 
         target = generate_target(maze_size)
         start = generate_start(maze_size, target)

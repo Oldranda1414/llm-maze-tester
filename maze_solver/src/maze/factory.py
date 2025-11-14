@@ -2,7 +2,7 @@
 from maze import Maze, generate_start, generate_target
 from maze.dataset import MazeDataset
 from maze.lattice_maze import LatticeMaze
-from move import Coordinate
+from maze.core.coordinate import Coordinate
 
 def create_dataset(n_mazes: int = 1, maze_size: int = 5, sight_depth: int = 2, seed: int = 42) -> MazeDataset:
     return MazeDataset("dataset", n_mazes, maze_size, sight_depth, seed)

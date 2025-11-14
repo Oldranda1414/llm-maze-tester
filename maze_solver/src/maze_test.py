@@ -1,4 +1,4 @@
-from move import Direction
+from maze.core.direction import Direction
 from maze.factory import create_maze
 
 if __name__ == "__main__":

@@ -7,7 +7,7 @@ from llm.model import Model
 from llm.phony_model import Model as PhonyModel
 
 from maze.factory import create_maze
-from move import Direction
+from maze.core.direction import Direction
 
 from prompt import last_move_info, step_prompt, illegal_answer_warning, illegal_direction_warning, get_preamble
 from run import Run

@@ -1,7 +1,6 @@
 from experiment import Experiment
 import sys
 
-
 def main() -> None:
     if len(sys.argv) < 2:
         raise ValueError("No argument provided. Please provide the date of the experiment.")

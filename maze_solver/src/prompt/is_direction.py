@@ -1,4 +1,5 @@
-from move import Direction, neighbor
+from maze.core.direction import Direction
+from maze.core.navigation import neighbor
 from maze import Maze
 from prompt.util import path_length
 

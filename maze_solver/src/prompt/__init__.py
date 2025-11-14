@@ -1,6 +1,6 @@
 from maze import Maze
-from maze.navigation import exit_direction
-from move import Direction
+from maze.core.navigation import exit_direction
+from maze.core.direction import Direction
 
 from prompt.util import path_length_str, path_length
 from prompt.is_direction import (

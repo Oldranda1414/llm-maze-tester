@@ -3,7 +3,8 @@ import yaml
 from chat_history import ChatHistory
 from maze import Maze
 from maze.factory import maze_from_yaml
-from move import Coordinate, Direction
+from maze.core.coordinate import Coordinate
+from maze.core.direction import Direction
 from chat_history import Exchange
 
 class Run:

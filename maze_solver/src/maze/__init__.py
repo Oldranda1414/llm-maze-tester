@@ -1,8 +1,9 @@
 from typing import Protocol
 import random
 
-from move import Coordinate, Direction
-from maze.navigation import ConnectionList
+from maze.core.direction import Direction
+from maze.core.coordinate import Coordinate
+from maze.core.connection_list import ConnectionList
 
 class Maze(Protocol):
     """

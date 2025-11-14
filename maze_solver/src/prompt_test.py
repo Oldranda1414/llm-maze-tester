@@ -1,6 +1,6 @@
-from move import Direction
-from prompt import step_prompt, get_preamble
+from maze.core.direction import Direction
 from maze.factory import create_maze, create_dataset
+from prompt import step_prompt, get_preamble
 
 def main():
     sight_depth = 3

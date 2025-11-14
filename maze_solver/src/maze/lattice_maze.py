@@ -1,9 +1,11 @@
 from copy import deepcopy
 
 import yaml
-from move import Coordinate, Direction, DIRECTIONS
+from maze.core.coordinate import Coordinate
+from maze.core.direction import Direction, get_offsets
+from maze.core.navigation import direction_strict, exit_direction
+from maze.core.connection_list import ConnectionList
 from maze.output import save_maze, print_maze
-from maze.navigation import ConnectionList, direction_strict, exit_direction
 
 class LatticeMaze:
     """
@@ -62,7 +64,7 @@ class LatticeMaze:
             self._solved = True
             return True
         if direction in legal_directions:
-            dr, dc = DIRECTIONS[direction]
+            dr, dc = get_offsets(direction)
             new_pos = (self._position[0] + dr, self._position[1] + dc)
             self._position = new_pos
             self._path.append(new_pos)
@@ -70,7 +72,7 @@ class LatticeMaze:
         return False
 
     def available_directions(self) -> list[Direction]:
-        neighbors = self._connection_list.neighbors_of(self._position)
+        neighbors = self._connection_list.connected_neighbors(self._position)
         d = [direction_strict(self._position, n) for n in neighbors]
         if self._target == self._position:
             d.append(exit_direction(self._target, self._size))

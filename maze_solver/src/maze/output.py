@@ -1,12 +1,12 @@
 import matplotlib.pyplot as plt
 
-from maze import Maze, Direction
-from maze.navigation import direction, exit_direction
-
 from rich.console import Console
 from rich.text import Text
 
-from move import Coordinate, neighbor
+from maze import Maze
+from maze.core.direction import Direction
+from maze.core.navigation import neighbor, direction, exit_direction
+from maze.core.coordinate import Coordinate
 
 def save_maze(maze: Maze, save_path: str):
     fig, _ = draw_maze(maze)
@@ -50,9 +50,9 @@ def draw_maze(maze, ax=None, show_path=True):
                                  facecolor=facecolor, edgecolor='lightgray', linewidth=0.5)
             ax.add_patch(rect)
 
-            if j < grid_size - 1 and not cl.horizontal[i][j]:
+            if j < grid_size - 1 and not cl.horizontal_passages[i][j]:
                 ax.plot([j + 1, j + 1], [y_plot, y_plot + 1], 'k-', linewidth=WALL_WIDTH)
-            if i < grid_size - 1 and not cl.vertical[i][j]:
+            if i < grid_size - 1 and not cl.vertical_passages[i][j]:
                 ax.plot([j, j + 1], [y_plot, y_plot], 'k-', linewidth=WALL_WIDTH)
 
     # Start marker
@@ -94,7 +94,7 @@ def print_maze(maze: Maze):
             top_line.append("+")
             if (i == 0 and e_direction == Direction.NORTH and j == t_j):
                 top_line.append("   ")
-            elif i == 0 or not maze.connection_list().vertical[i - 1][j]:
+            elif i == 0 or not maze.connection_list().vertical_passages[i - 1][j]:
                 top_line.append("---")
             else:
                 top_line.append("   ")
@@ -105,7 +105,7 @@ def print_maze(maze: Maze):
         for j in range(grid_size):
             if (j == 0 and e_direction == Direction.WEST and i == grid_size - t_i - 1):
                 mid_line.append(" ")
-            elif j == 0 or not maze.connection_list().horizontal[i][j - 1]:
+            elif j == 0 or not maze.connection_list().horizontal_passages[i][j - 1]:
                 mid_line.append("|")
             else:
                 mid_line.append(" ")
