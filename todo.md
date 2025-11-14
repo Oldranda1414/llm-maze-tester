@@ -12,8 +12,6 @@
 
 ## bugs:
 
-- visualizer:
-    - fix green character dot not appearing when maze is solved
 - maze
     - when seed is 39
         - solve warning reset global seed

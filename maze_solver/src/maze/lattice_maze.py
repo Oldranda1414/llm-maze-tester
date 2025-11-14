@@ -97,6 +97,7 @@ class LatticeMaze:
     def reset(self):
         self._path = [self._start]
         self._position = self._start
+        self._solved = False
 
     def to_yaml(self) -> str:
         """Return the maze serialized as a YAML string."""
