@@ -101,8 +101,8 @@ class LatticeMaze:
     def to_yaml(self) -> str:
         """Return the maze serialized as a YAML string."""
         data = {
-            "horizontal": self._connection_list.horizontal,
-            "vertical": self._connection_list.vertical,
+            "horizontal": self._connection_list.horizontal_passages,
+            "vertical": self._connection_list.vertical_passages,
             "start": list(self._start),
             "target": list(self._target),
             "path": [list(p) for p in self._path],
@@ -117,8 +117,8 @@ class LatticeMaze:
         data = yaml.safe_load(yaml_str)
 
         connection_list = ConnectionList(
-            horizontal=[list(row) for row in data["horizontal"]],
-            vertical=[list(row) for row in data["vertical"]],
+            horizontal_passages=[list(row) for row in data["horizontal"]],
+            vertical_passages=[list(row) for row in data["vertical"]],
         )
 
         start = Coordinate(data["start"])
