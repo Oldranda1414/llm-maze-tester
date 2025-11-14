@@ -9,45 +9,62 @@ from chat_history import Exchange
 
 class Run:
     def __init__(self, maze: Maze, chat_history: ChatHistory, illegal_directions: int, illegal_responses: int, execution_time: float):
-        self.maze = maze
-        self.chat_history = chat_history
-        set_path(self.maze, chat_history.chat)
+        self._maze = maze
+        self._chat_history = chat_history
+        set_path(self._maze, chat_history.chat)
         self._illegal_directions = illegal_directions
         self._illegal_responses = illegal_responses
         self._execution_time = execution_time
 
+    @property
+    def maze(self) -> Maze:
+        return self._maze
+
+    @property
+    def chat_history(self) -> ChatHistory:
+        return self._chat_history
+
+    @property
     def illegal_directions(self) -> int:
         return self._illegal_directions
 
+    @property
     def illegal_responses(self) -> int:
         return self._illegal_responses
 
+    @property
     def execution_time(self) -> float:
         return self._execution_time
 
+    @property
     def is_solved(self) -> bool:
-        return self.maze.solved
+        return self._maze.solved
 
+    @property
     def start_position(self) -> Coordinate:
-        return self.maze.start
+        return self._maze.start
 
+    @property
     def target_position(self) -> Coordinate:
-        return self.maze.target
+        return self._maze.target
 
+    @property
     def current_position(self) -> Coordinate:
-        return self.maze.position
+        return self._maze.position
 
+    @property
     def maze_dimension(self) -> int:
-        return self.maze.size
+        return self._maze.size
 
+    @property
     def unique_positions_visited(self) -> int:
-        return len(set(self.maze.path))
+        return len(set(self._maze.path))
 
     def save(self, path: str):
         """Save the run to a YAML file."""
         data = {
-            "maze": yaml.safe_load(self.maze.to_yaml()),
-            "chat_history": yaml.safe_load(self.chat_history.to_yaml()),
+            "maze": yaml.safe_load(self._maze.to_yaml()),
+            "chat_history": yaml.safe_load(self._chat_history.to_yaml()),
             "illegal_directions": self._illegal_directions,
             "illegal_responses": self._illegal_responses,
             "execution_time": self._execution_time
