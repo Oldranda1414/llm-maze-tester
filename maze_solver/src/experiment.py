@@ -60,11 +60,11 @@ class Experiment:
 
 def compute_stats(run_list):
     total_steps_list = [len(r.chat_history.chat) for r in run_list]
-    illegal_dirs_list = [r.illegal_directions() for r in run_list]
-    illegal_resps_list = [r.illegal_responses() for r in run_list]
-    decisions_list = [len(r.maze.decisions()) for r in run_list]
-    execution_list = [r.execution_time() for r in run_list]
-    solved_list = [r.is_solved() for r in run_list]
+    illegal_dirs_list = [r.illegal_directions for r in run_list]
+    illegal_resps_list = [r.illegal_responses for r in run_list]
+    decisions_list = [len(r.maze.decisions) for r in run_list]
+    execution_list = [r.execution_time for r in run_list]
+    solved_list = [r.is_solved for r in run_list]
 
     mean_illegal_dirs = statistics.mean(illegal_dirs_list)
     perc_illegal_dirs = statistics.mean([id_ / ts * 100 if ts > 0 else 0
