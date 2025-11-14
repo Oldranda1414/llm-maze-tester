@@ -20,4 +20,6 @@ After thinking it through, provide your next move.
 
 The goal is to test if the history actually helps the llm.
 
-So the history is never passed to the model
+So the history is never passed to the model.
+
+The model receives the system prompt, the preamble and the step info every step.
