@@ -12,6 +12,7 @@
     print(f"Prompt tokens used: {prompt_tokens}")
     ```
 - add full messages history passed per exchange in the chat_history object and visualizer
+- add properties to maze, run, maybe others
 
 ## bugs:
 
