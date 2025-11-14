@@ -12,9 +12,10 @@
         - solve maze exit output wrong, only cli
     - have path consider the last move also. As of now no maze loaded can be solved.
 
-history condensata, controllare input massimo
+history condensata, controllare input massimo, fare una run senza history
 
 ### New concept
 Have a short version of the prompt generation (step_prompt() != step_prompt_short()).
 Use it to condense the history except the last prompt.
 Also consider removing erroneus prompts.
+

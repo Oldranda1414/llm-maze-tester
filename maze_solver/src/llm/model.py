@@ -25,10 +25,12 @@ class Model:
         self.model_name = model_name
         self.chat_history: ChatHistory = ChatHistory("You are a helpful assistant.")
 
-    def ask(self, prompt: str) -> str:
+    def ask(self, prompt: str, provide_history: bool = True) -> str:
         start_server()
         try:
             messages = self.chat_history.to_list()
+            if not provide_history:
+                messages = [messages[0]] # keep system prompt
             messages.append({"role": "user", "content": prompt})
             response = completion(
                         model = get_server_model_name(self.model_name),

@@ -71,7 +71,7 @@ class MazeSolver:
 
         prompt += step_prompt(self.maze)
 
-        response = self.model.ask(prompt)
+        response = self.model.ask(prompt, False)
         self._print_message(f"available_directions: {available_directions}")
 
         move = None

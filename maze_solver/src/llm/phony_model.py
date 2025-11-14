@@ -10,7 +10,7 @@ class Model():
     def __init__(self, _: str):
         self.chat_history = ChatHistory(debug_system_prompt)
 
-    def ask(self, prompt: str) -> str:
+    def ask(self, prompt: str, _: bool) -> str:
         move = input(prompt)
         move = move.strip(" ").upper()
         coordinates = ["N", "E", "S", "W"]
