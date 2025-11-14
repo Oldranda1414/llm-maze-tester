@@ -16,4 +16,8 @@ Your possible moves are: N, S, E.
 After thinking it through, provide your next move.
 '''
 
+## new
 
+The goal is to test if the history actually helps the llm.
+
+So the history is never passed to the model

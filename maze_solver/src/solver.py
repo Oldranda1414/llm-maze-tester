@@ -49,7 +49,7 @@ class MazeSolver:
         # Show the initial maze state
         self._print_maze()
 
-    def step(self) -> None:
+    def step(self, provide_history: bool = True) -> None:
         """
         Execute a single step in the maze solving process.
         """
@@ -57,21 +57,24 @@ class MazeSolver:
 
         prompt = ""
 
-        if self.first_step:
-            self.first_step = False
+        if provide_history:
+            if self.first_step:
+                self.first_step = False
+                prompt += get_preamble(self.maze)
+            elif self.invalid_answer_provided:
+                prompt += illegal_answer_warning(self.maze)
+                self.invalid_answer_provided = False
+            elif self.invalid_direction_provided:
+                prompt += illegal_direction_warning(self.maze)
+                self.invalid_direction_provided = False
+            elif self.valid_last_move:
+                prompt += last_move_info(self.maze)
+        else:
             prompt += get_preamble(self.maze)
-        elif self.invalid_answer_provided:
-            prompt += illegal_answer_warning(self.maze)
-            self.invalid_answer_provided = False
-        elif self.invalid_direction_provided:
-            prompt += illegal_direction_warning(self.maze)
-            self.invalid_direction_provided = False
-        elif self.valid_last_move:
-            prompt += last_move_info(self.maze)
 
         prompt += step_prompt(self.maze)
 
-        response = self.model.ask(prompt, False)
+        response = self.model.ask(prompt, provide_history)
         self._print_message(f"available_directions: {available_directions}")
 
         move = None

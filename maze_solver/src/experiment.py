@@ -91,7 +91,7 @@ def compute_stats(run_list):
     }
 
 
-def run_experiment(model_names: list[str], maze_sizes: list[int], iterations: int):
+def run_experiment(model_names: list[str], maze_sizes: list[int], iterations: int, provide_history: bool = True):
     timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
     for model_name in model_names:
         start_model = time.time()
@@ -107,7 +107,7 @@ def run_experiment(model_names: list[str], maze_sizes: list[int], iterations: in
                 step = 0
                 while not maze_solver.is_solved() and step < max_steps:
                     try:
-                        maze_solver.step()
+                        maze_solver.step(provide_history)
                     except Exception:
                         logging.error("Exception occurred", exc_info=True)
                     step += 1
