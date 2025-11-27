@@ -8,6 +8,9 @@
     print(f"Prompt tokens used: {prompt_tokens}")
     ```
 - add full messages history passed per exchange in the chat_history object and visualizer
+- ensure maze solutions are not trivial
+    - implement solve(maze) -> list[Coordinates] that returns the shortest path from start to exit
+    - implement min_path_length in maze generation. Candidates for the values are (2*N) or (alpha*sqrt(N)) where N is the size of the maze and alpha is a tuned parameter
 
 ## bugs:
 
