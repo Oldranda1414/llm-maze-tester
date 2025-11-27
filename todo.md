@@ -17,7 +17,11 @@
         - solve maze exit output wrong, only cli
 
 ### New concept
+
 Have a short version of the prompt generation (step_prompt() != step_prompt_short()).
 Use it to condense the history except the last prompt.
 Also consider removing erroneus prompts.
 
+### Ideas
+
+Have the output from the llm solver be passed as input to another llm with the only goal of determining given the input provide the sanitised output, i.e. the direction the solver wants to move to.
