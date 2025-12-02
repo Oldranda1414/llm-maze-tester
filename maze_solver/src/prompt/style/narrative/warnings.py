@@ -1,4 +1,4 @@
-illegal_answer_warning_text = """
+illegal_answer = """
 Your last answer did not end with a valid direction.
 
 Remember that your answers must end by providing the direction you want to move to.
@@ -16,6 +16,6 @@ Here are some examples of invalid last phrases:
 - I want to step north!
 """
 
-illegal_direction_warning_text = """
+illegal_direction = """
 You walk directly into a wall, hitting your nose. Place more attention on the direcions that are available to you!
 """

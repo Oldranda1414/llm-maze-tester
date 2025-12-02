@@ -1,15 +1,18 @@
 from maze.core.direction import Direction
 from maze.factory import create_maze, create_dataset
-from prompt import step_prompt, get_preamble
+from prompt import PromptGenerator
+from prompt.style.narrative import NarrativeStyle
 
 def main():
+    maze_size = 3
     sight_depth = 3
-    maze = create_maze(size=3, sight_depth=sight_depth)
-    print(get_preamble(maze))
+    maze = create_maze(size=maze_size, sight_depth=sight_depth)
+    pg = PromptGenerator(NarrativeStyle())
+    print(pg.get_preamble(maze))
 
     while not maze.solved:
 
-        print(step_prompt(maze))
+        print(pg.step_prompt(maze))
         maze.print()
 
         move = input("give me a move (C to close): ")
@@ -29,12 +32,13 @@ def main():
 def many_maze():
     sight_depth = 3
     mazes = create_dataset(10,3, sight_depth).mazes
+    pg = PromptGenerator(NarrativeStyle())
     for maze in mazes:
-        print(get_preamble(maze))
+        print(pg.get_preamble(maze))
 
         while not maze.solved:
 
-            print(step_prompt(maze))
+            print(pg.step_prompt(maze))
             maze.print()
 
             move = input("give me a move (C to close): ")

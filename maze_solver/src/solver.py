@@ -9,7 +9,8 @@ from llm.phony_model import Model as PhonyModel
 from maze.factory import create_maze
 from maze.core.direction import Direction
 
-from prompt import last_move_info, step_prompt, illegal_answer_warning, illegal_direction_warning, get_preamble
+from prompt import PromptGenerator
+from prompt.style import PromptStyle
 from run import Run
 
 class MazeSolver:
@@ -19,7 +20,7 @@ class MazeSolver:
     to make decisions about which direction to move at each step.
     """
 
-    def __init__(self, model_name: str, maze_size: int = 6, sight_depth: int = 3, seed: int = 42, debug: bool = False, quiet: bool = False):
+    def __init__(self, model_name: str, prompt_style: PromptStyle, maze_size: int = 6, sight_depth: int = 3, seed: int = 42, debug: bool = False, quiet: bool = False):
         """
         Initialize the maze solver with a model and maze.
         
@@ -31,6 +32,7 @@ class MazeSolver:
             self.model = PhonyModel(model_name)
         else:
             self.model = Model(model_name)
+        self.prompt = PromptGenerator(prompt_style)
         self.maze = create_maze(size=maze_size, sight_depth=sight_depth, seed=seed)
         self.debug = debug
         self._quiet = quiet
@@ -55,26 +57,26 @@ class MazeSolver:
         """
         available_directions = self.maze.available_directions()
 
-        prompt = ""
+        step_prompt = ""
 
         if provide_history:
             if self.first_step:
                 self.first_step = False
-                prompt += get_preamble(self.maze)
+                step_prompt += self.prompt.get_preamble(self.maze)
             elif self.invalid_answer_provided:
-                prompt += illegal_answer_warning(self.maze)
+                step_prompt += self.prompt.illegal_answer_warning()
                 self.invalid_answer_provided = False
             elif self.invalid_direction_provided:
-                prompt += illegal_direction_warning(self.maze)
+                step_prompt += self.prompt.illegal_direction_warning()
                 self.invalid_direction_provided = False
             elif self.valid_last_move:
-                prompt += last_move_info(self.maze)
+                step_prompt += self.prompt.last_move_info(self.maze)
         else:
-            prompt += get_preamble(self.maze)
+            step_prompt += self.prompt.get_preamble(self.maze)
 
-        prompt += step_prompt(self.maze)
+        step_prompt += self.prompt.step_prompt(self.maze)
 
-        response = self.model.ask(prompt, provide_history)
+        response = self.model.ask(step_prompt, provide_history)
         self._print_message(f"available_directions: {available_directions}")
 
         move = None

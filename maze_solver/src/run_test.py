@@ -1,9 +1,10 @@
+from prompt.style.narrative import NarrativeStyle
 from solver import MazeSolver
 from run import Run
 
 def main() -> None:
     run_path = 'test_run.yaml'
-    solver = MazeSolver("llama3", debug=True)
+    solver = MazeSolver("llama3", NarrativeStyle(), debug=True)
     while not solver.maze.solved:
         solver.step()
     solver.save_run(run_path, 60)

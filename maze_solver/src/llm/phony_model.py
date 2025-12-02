@@ -13,11 +13,6 @@ class Model():
     def ask(self, prompt: str, _: bool) -> str:
         move = input(prompt)
         move = move.strip(" ").upper()
-        coordinates = ["N", "E", "S", "W"]
-        actions = ["C"]
-        while move not in coordinates + actions:
-            print("invalid move try again")
-            move = input(prompt)
 
         if move == "C":
             sys.exit()

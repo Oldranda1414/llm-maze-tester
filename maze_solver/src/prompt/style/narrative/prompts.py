@@ -38,7 +38,7 @@ exit_found = "you can see the exit in that direction! One last step and you are 
 
 dead_end = " It is a dead end."
 
-out_of_sight = "the corridor streatches further than you can see, so you are unable to predict what lies ahead."
+out_of_sight = "the corridor stretches further than you can see, so you are unable to predict what lies ahead."
 
-options = " Althogh the corridor ends with a wall, you notice that some of the lateral paths along the way are open so it isn't a dead end."
+options = " Although the corridor ends with a wall, you notice that some of the lateral paths along the way are open so it isn't a dead end."
 
