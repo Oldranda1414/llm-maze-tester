@@ -4,6 +4,9 @@ The folliwing details the approaches taken for the Experiments
 
 ## 2025-11-12_16:55:10
 
+reference commit:
+5992960026932015ca81ffa6fa3ca4c0e6e8056a
+
 The goal is to test if illigal_direction numbers lower when providing the available directions explicitly
 
 Full history passed.
@@ -74,6 +77,9 @@ mean_execution_time: 00:28:09
 total_execution_time: 18:45:54
 
 ## 2025-11-14_13:19:12
+
+reference commit:
+5992960026932015ca81ffa6fa3ca4c0e6e8056a
 
 The goal is to test if the history actually helps the llm.
 
