@@ -2,6 +2,7 @@
 
 - prompt
     - history max length
+    - add reminder on legal output format in every step prompt
 - check the context lenght:
     ```
     prompt_tokens = response.get("prompt_eval_count")
