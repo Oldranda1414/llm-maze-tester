@@ -5,6 +5,7 @@ from datetime import datetime
 from collections import defaultdict
 import statistics
 
+from prompt.style.narrative import NarrativeStyle
 from solver import MazeSolver
 from log import log
 from util import seconds_to_padded_time
@@ -103,7 +104,7 @@ def run_experiment(model_names: list[str], maze_sizes: list[int], iterations: in
                 log(f"solving {maze_size}x{maze_size} maze with model {model_name} for {i} time")
                 start_maze = time.time()
                 max_steps = maze_size * maze_size * 10
-                maze_solver = MazeSolver(model_name=model_name, maze_size=maze_size, quiet=True, seed=i)
+                maze_solver = MazeSolver(model_name=model_name, prompt_style=NarrativeStyle(), maze_size=maze_size, quiet=True, seed=i)
                 step = 0
                 while not maze_solver.is_solved() and step < max_steps:
                     try:
