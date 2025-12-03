@@ -1,6 +1,8 @@
 from copy import deepcopy
+from collections import deque
 
 import yaml
+
 from maze.core.coordinate import Coordinate
 from maze.core.direction import Direction, get_offsets
 from maze.core.navigation import direction_strict, exit_direction
@@ -10,11 +12,6 @@ from maze.output import save_maze, print_maze
 class LatticeMaze:
     """
     A class representing a maze with a start and end point.
-
-    args:
-        width (int): Width of the maze
-        height (int): Height of the maze
-        save_path (str): Path to save maze png to
     """
     def __init__(self, cl: ConnectionList, size: int, start: Coordinate, target: Coordinate, sight_depth: int):
         self._sight_depth = sight_depth
@@ -107,6 +104,48 @@ class LatticeMaze:
         self._path = [self._start]
         self._position = self._start
         self._solved = False
+
+
+
+    def solution(self) -> list[Coordinate]:
+        """
+        Compute the optimal (shortest) path from start to target using BFS.
+        Returns:
+            list[Coordinate]: the path from start to target, inclusive.
+        Raises:
+            ValueError: if no path exists (disconnected maze).
+        """
+
+        start = self._start
+        target = self._target
+        cl = self._connection_list   # do NOT deepcopy → speed
+
+        # BFS initialization
+        queue = deque([start])
+        visited = {start: None}  # child -> parent
+
+        while queue:
+            current = queue.popleft()
+
+            if current == target:
+                break  # Found target
+
+            for nb in cl.connected_neighbors(current):
+                if nb not in visited:
+                    visited[nb] = current
+                    queue.append(nb)
+
+        # Reconstruct path
+        if target not in visited:
+            raise ValueError("Maze has no valid path from start to target")
+
+        path = []
+        cur = target
+        while cur is not None:
+            path.append(cur)
+            cur = visited[cur]
+
+        return list(reversed(path))
 
     def to_yaml(self) -> str:
         """Return the maze serialized as a YAML string."""

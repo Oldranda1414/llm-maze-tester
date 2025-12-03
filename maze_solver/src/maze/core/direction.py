@@ -1,5 +1,7 @@
 from enum import Enum
+
 from maze.core.coordinate import Coordinate
+from maze.core.navigation import direction_strict
 
 class Direction(Enum):
     NORTH = "north"
@@ -48,4 +50,35 @@ def get_offsets(direction: Direction) -> Coordinate:
         Direction.WEST: (0, -1)
     }
     return DIRECTION_OFFSETS[direction]
+
+def path_to_directions(path: list[Coordinate]) -> list[Direction]:
+    """
+    Convert a path (list of Coordinates) into a list of Directions.
+    Each consecutive pair of coordinates must be adjacent.
+
+    Args:
+        path: List of coordinates forming a valid path.
+
+    Returns:
+        List of Directions representing the steps.
+
+    Raises:
+        ValueError: if two consecutive coordinates are not adjacent.
+    """
+    if len(path) < 2:
+        return []
+
+    directions: list[Direction] = []
+
+    for a, b in zip(path, path[1:]):
+        try:
+            d = direction_strict(a, b)
+        except ValueError:
+            raise ValueError(
+                f"Invalid path: coordinates {a} and {b} are not adjacent."
+            ) from None
+
+        directions.append(d)
+
+    return directions
 

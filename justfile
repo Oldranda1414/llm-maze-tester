@@ -74,3 +74,8 @@ vis *args:
 leak *args:
   uv --project maze_solver run maze_solver/src/ollama_leakege_test.py {{args}}
 
+# Run maze solving test
+[no-exit-message]
+solve *args:
+  uv --project maze_solver run maze_solver/src/solve_test.py {{args}}
+
