@@ -67,17 +67,12 @@ def path_to_directions(path: list[Coordinate]) -> list[Direction]:
     """
     if len(path) < 2:
         return []
-
     directions: list[Direction] = []
-
     for a, b in zip(path, path[1:]):
         try:
             d = direction_strict(a, b)
         except ValueError:
-            raise ValueError(
-                f"Invalid path: coordinates {a} and {b} are not adjacent."
-            ) from None
-
+            raise ValueError(f"Invalid path: coordinates {a} and {b} are not adjacent.")
         directions.append(d)
 
     return directions
