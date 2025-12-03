@@ -1,5 +1,6 @@
 from typing import Protocol
 import random
+from functools import cached_property
 
 from maze.core.direction import Direction
 from maze.core.coordinate import Coordinate
@@ -71,6 +72,7 @@ class Maze(Protocol):
 
     def reset(self) -> None: ...
 
+    @cached_property
     def solution(self) -> list[Coordinate]: ...
 
     def to_yaml(self) -> str: ...

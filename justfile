@@ -76,6 +76,6 @@ leak *args:
 
 # Run maze solving test
 [no-exit-message]
-solve *args:
-  uv --project maze_solver run maze_solver/src/solve_test.py {{args}}
+solution *args:
+  uv --project maze_solver run maze_solver/src/solution_test.py {{args}}
 

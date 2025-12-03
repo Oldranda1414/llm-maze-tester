@@ -1,6 +1,6 @@
 from copy import deepcopy
 from collections import deque
-
+from functools import cached_property
 import yaml
 
 from maze.core.coordinate import Coordinate
@@ -105,30 +105,29 @@ class LatticeMaze:
         self._position = self._start
         self._solved = False
 
-
-
+    @cached_property
     def solution(self) -> list[Coordinate]:
         """
         Compute the optimal (shortest) path from start to target using BFS.
         Returns:
             list[Coordinate]: the path from start to target, inclusive.
         Raises:
-            ValueError: if no path exists (disconnected maze).
+            ValueError: if no path exists.
         """
 
         start = self._start
         target = self._target
-        cl = self._connection_list   # do NOT deepcopy → speed
+        cl = self._connection_list
 
         # BFS initialization
         queue = deque([start])
-        visited = {start: None}  # child -> parent
+        visited = {start: None}
 
         while queue:
             current = queue.popleft()
 
             if current == target:
-                break  # Found target
+                break
 
             for nb in cl.connected_neighbors(current):
                 if nb not in visited:
