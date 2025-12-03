@@ -144,6 +144,18 @@ perc_solved: 57.50
 mean_execution_time: 00:30:33
 total_execution_time: 20:21:43
 
+## no history, remove trivial mazes
+
+commit reference:
+91bf078afd5b26362a9686b1b6d60690eff70736
+
+Given the results in experiment 11-14 it seems that some mazes have trivial solutions and they dirty the results.
+
+A filter has been added to the maze generation to ensure that the generated mazes are not trivial
+This experiment attempts to see if the filter works properly.
+
+Once again no prompt history is provided so the expected hit rate is low (preferably 0%)
+
 ## Summary table
 
 | Date  | Hit Rate (3×3) | Hit Rate (4×4) | Hit Rate (5×5) | Hit Rate (6×6) | Overall Hit Rate |
