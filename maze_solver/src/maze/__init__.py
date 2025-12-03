@@ -80,7 +80,7 @@ class Maze(Protocol):
     @classmethod
     def from_yaml(cls, yaml_str: str) -> "Maze": ...
 
-def generate_target(maze_size) -> Coordinate:
+def generate_target(maze_size: int, rng: random.Random) -> Coordinate:
     border_cells = [
             (r, c)
             for r in range(maze_size)
@@ -88,9 +88,10 @@ def generate_target(maze_size) -> Coordinate:
             if r == 0 or r == maze_size - 1 or c == 0 or c == maze_size - 1
         ]
     borders = [cell for cell in border_cells]
-    border_point = random.choice(borders)
+    border_point = rng.choice(borders)
     return border_point
 
-def generate_start(maze_size: int, maze_target: Coordinate) -> Coordinate:
+def generate_start(maze_size: int, maze_target: Coordinate, rng: random.Random) -> Coordinate:
     start_candidates = [(i,j) for i in range(maze_size) for j in range(maze_size) if (i,j) != maze_target]
-    return random.choice(start_candidates)
+    return rng.choice(start_candidates)
+
