@@ -23,7 +23,7 @@ class LatticeMaze:
         self._start = start
         self._target = target
         self._path = [self._start]
-        self._decisions = []
+        self._decisions: list[Direction] = []
         self._position = self._start
         self._solved = False
 
