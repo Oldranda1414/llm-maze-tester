@@ -17,7 +17,7 @@ def create_dataset(n_mazes: int = 1, maze_size: int = 5, sight_depth: int = 2, s
 
 def create_maze(size: int = 6, start: Coordinate | None = None, target: Coordinate | None = None, sight_depth: int = 2, seed: int = 42, maze_filter: Callable[[Maze], bool] | None = _is_non_trivial) -> Maze:
     rng = random.Random(seed)
-    random_maze = create_dataset(1, size, sight_depth, seed, maze_filter).mazes[0]
+    random_maze = create_dataset(n_mazes=1, maze_size=size, sight_depth=sight_depth, seed=seed, maze_filter=maze_filter).mazes[0]
     if target is None:
         target = generate_target(size, rng)
     if start is None:
