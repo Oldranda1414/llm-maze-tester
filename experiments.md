@@ -198,6 +198,14 @@ I'm going to take a step back and reassess my options... Hmmm... Given that I kn
 
 So, my next move is: W
 
+## no history, remove trivial mazes, attempt 2 ()
+
+Since the first attempt did not work, as trivial mazes where not filtered out, this second attempt is necessary.
+
+Everything said in the premise of the previous experiment (2025-12-03_15:29:13) is still valid.
+
+This is a very good lesson in testing code before trusting it :)
+
 ## Summary table
 
 | Date  | Hit Rate (3×3) | Hit Rate (4×4) | Hit Rate (5×5) | Hit Rate (6×6) | Overall Hit Rate |
