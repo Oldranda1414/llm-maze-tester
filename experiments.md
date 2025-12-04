@@ -200,6 +200,9 @@ So, my next move is: W
 
 ## no history, remove trivial mazes, attempt 2 ()
 
+reference commit:
+02a65980a5c80f9aafdc191751431e0173343a53
+
 Since the first attempt did not work, as trivial mazes where not filtered out, this second attempt is necessary.
 
 Everything said in the premise of the previous experiment (2025-12-03_15:29:13) is still valid.
