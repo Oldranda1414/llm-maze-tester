@@ -79,3 +79,8 @@ leak *args:
 solution *args:
   uv --project maze_solver run maze_solver/src/solution_test.py {{args}}
 
+# Run maze generation filter test
+[no-exit-message]
+filter *args:
+  uv --project maze_solver run maze_solver/src/filter_test.py {{args}}
+

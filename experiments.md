@@ -144,7 +144,7 @@ perc_solved: 57.50
 mean_execution_time: 00:30:33
 total_execution_time: 20:21:43
 
-## no history, remove trivial mazes
+## no history, remove trivial mazes (2025-12-03_15:29:13)
 
 commit reference:
 91bf078afd5b26362a9686b1b6d60690eff70736
@@ -155,6 +155,48 @@ A filter has been added to the maze generation to ensure that the generated maze
 This experiment attempts to see if the filter works properly.
 
 Once again no prompt history is provided so the expected hit rate is low (preferably 0%)
+
+The filter seems to not have effect.
+
+### Example
+
+A notable example is the following prompt and reponse.
+
+As is evident the exit is clearly stated to be in the south but it seems that the model still chooses to move in another direction, being utterly dumb.
+
+- Prompt:
+
+You are inside a maze. You have a compass with you. The maze is well lit so you can see in all directions how long the corridors are.
+Just like a classic maze the exit is on the border. You could be anywhere in the maze as your starting position.
+Your goal is to find the maze exit. Once you reach it you must step out of the maze with one last move.
+
+Tell me which direction you would like to go to. Provide your answer in the form of the initial of the cardinal direction you wish to take a step forwards to.
+The possible directions are N for north, E for east, S for south, W for west.
+
+
+You are advised to think out loud about what your next move should be, but remember that the last thing you write must be a valid direction.
+
+As an example if you want to step towards north the last character in your answer would be: N
+
+You get as many turns as you want, so it's normal that at the start you have not enough information to know on what cell the exit is, so consider exploring to gather information at the start.
+
+The maze is a 5 x 5 grid, with every square in the grid being one square meter big.
+Due North there is a wall. You can't step in that direction.
+Due East there is a corridor that goes on for one meter before encountering a wall. Although the corridor ends with a wall, you notice that some of the lateral paths along the way are open so it isn't a dead end.
+Due South you can see the exit in that direction! One last step and you are out of the maze!
+Due West there is a corridor that goes on for three meters before encountering a wall. Although the corridor ends with a wall, you notice that some of the lateral paths along the way are open so it isn't a dead end.
+
+The moves you have made till now are: North, South, South, West, East, North, South, North, South, West, West, West, West, East, West, North, South, East, West, East, West, East, East, East, West, East
+Your possible moves are: E, W, S.
+After thinking it through, provide your next move.
+
+- Response:
+
+Let's think this through... I've been exploring and gathering information. I know the exit is due South, but I also don't want to get stuck in a dead-end situation. Since my last few moves have been mostly West and East, I think it's time to head back towards the middle of the maze.
+
+I'm going to take a step back and reassess my options... Hmmm... Given that I know the exit is due South and there are walls in the North and East directions, I think my best bet is to move West. This will give me more information about what's ahead and potentially lead me closer to the exit.
+
+So, my next move is: W
 
 ## Summary table
 

@@ -50,7 +50,6 @@ class MazeDataset:
 
 def _generate_maze(d_maze: DatasetMazeDataset, rng: random.Random, sight_depth: int) -> Maze:
         maze_size = d_maze.grid_n
-        print(maze_size)
         target = generate_target(maze_size, rng=rng)
         start = generate_start(maze_size, target, rng=rng)
         return LatticeMaze(
