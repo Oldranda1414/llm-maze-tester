@@ -6,7 +6,7 @@ from maze.lattice_maze import LatticeMaze
 from maze.core.coordinate import Coordinate
 
 def _is_non_trivial(maze: Maze) -> bool:
-    alpha = 0.25
+    alpha = 0.5
     size = maze.size
     min_path_lenght = round(size * size * alpha)
     return len(maze.solution) >= min_path_lenght
