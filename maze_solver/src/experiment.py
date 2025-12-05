@@ -67,15 +67,30 @@ def compute_stats(run_list):
     execution_list = [r.execution_time for r in run_list]
     solved_list = [r.is_solved for r in run_list]
 
+    step_execution_times = [
+        exec_t / steps
+        for exec_t, steps in zip(execution_list, total_steps_list)
+        if steps > 0
+    ]
+    mean_step_execution_seconds = statistics.mean(step_execution_times)
+    mean_step_execution_time = seconds_to_padded_time(mean_step_execution_seconds)
+
     mean_illegal_dirs = statistics.mean(illegal_dirs_list)
-    perc_illegal_dirs = statistics.mean([id_ / ts * 100 if ts > 0 else 0
-                                        for id_, ts in zip(illegal_dirs_list, total_steps_list)])
+    perc_illegal_dirs = statistics.mean([
+        id_ / ts * 100 if ts > 0 else 0
+        for id_, ts in zip(illegal_dirs_list, total_steps_list)
+    ])
+
     mean_illegal_resps = statistics.mean(illegal_resps_list)
-    perc_illegal_resps = statistics.mean([ir / ts * 100 if ts > 0 else 0
-                                         for ir, ts in zip(illegal_resps_list, total_steps_list)])
+    perc_illegal_resps = statistics.mean([
+        ir / ts * 100 if ts > 0 else 0
+        for ir, ts in zip(illegal_resps_list, total_steps_list)
+    ])
+
     mean_total_steps = statistics.mean(total_steps_list)
     mean_decisions = statistics.mean(decisions_list)
     perc_solved = sum(solved_list) / len(solved_list) * 100
+
     mean_execution = seconds_to_padded_time(statistics.mean(execution_list))
     total_execution = seconds_to_padded_time(sum(execution_list))
 
@@ -88,7 +103,8 @@ def compute_stats(run_list):
         "mean_decisions": mean_decisions,
         "perc_solved": perc_solved,
         "mean_execution_time": mean_execution,
-        "total_execution_time": total_execution
+        "total_execution_time": total_execution,
+        "mean_step_execution_time": mean_step_execution_time,
     }
 
 
