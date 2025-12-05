@@ -28,3 +28,10 @@ Also consider removing erroneus prompts.
 ### Ideas
 
 Have the output from the llm solver be passed as input to another llm with the only goal of determining given the input provide the sanitised output, i.e. the direction the solver wants to move to.
+
+### Thoughts
+
+The history seems to help quite a bit, although still no real reasoning is detected
+
+The execution time does not really vary a lot when smaller prompt (i.e. without history) are passed, so I believe that history dimension does not really affect execution times.
+Still it could be that the no history version takes a lot more steps than the history aided experiment, so the times even out for that reason.

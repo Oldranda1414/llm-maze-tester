@@ -266,6 +266,13 @@ perc_solved: 47.50
 mean_execution_time: 00:34:47
 total_execution_time: 23:11:01
 
+### Thoughts
+
+Some trivial mazes passed through anyway, but still there is an improvement.
+
+No real reasoning can be detected in the COT so I suspect that the solved mazes are due to random bruteforcing the solving process
+The declining hit rate (as maze dimensions increase) proves this point
+
 ## Summary table
 
 | Date  | Hit Rate (3×3) | Hit Rate (4×4) | Hit Rate (5×5) | Hit Rate (6×6) | Overall Hit Rate |
