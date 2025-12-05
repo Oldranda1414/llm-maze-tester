@@ -273,6 +273,14 @@ Some trivial mazes passed through anyway, but still there is an improvement.
 No real reasoning can be detected in the COT so I suspect that the solved mazes are due to random bruteforcing the solving process
 The declining hit rate (as maze dimensions increase) proves this point
 
+## no history, remove trivial mazes, path summary, attempt 3 ()
+
+reference commit:
+38ac79435b3939beee71aabbf91a3f4113c39362
+
+Improved the maze generation filtering some more.
+This new attempt is just to have more data, even if the filtering is improved similar results to the second attempt are expected
+
 ## Summary table
 
 | Date  | Hit Rate (3×3) | Hit Rate (4×4) | Hit Rate (5×5) | Hit Rate (6×6) | Overall Hit Rate |
