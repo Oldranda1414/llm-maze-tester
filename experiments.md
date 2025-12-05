@@ -198,7 +198,7 @@ I'm going to take a step back and reassess my options... Hmmm... Given that I kn
 
 So, my next move is: W
 
-## no history, remove trivial mazes, attempt 2 ()
+## no history, remove trivial mazes, attempt 2 (2025-12-04_14:44:25)
 
 reference commit:
 02a65980a5c80f9aafdc191751431e0173343a53
@@ -209,15 +209,74 @@ Everything said in the premise of the previous experiment (2025-12-03_15:29:13) 
 
 This is a very good lesson in testing code before trusting it :)
 
+### Stats
+
+=== Maze size: 3 ===
+mean_illegal_directions: 0.70
+perc_illegal_directions: 1.17
+mean_illegal_responses: 14.40
+perc_illegal_responses: 36.77
+mean_total_steps: 38.40
+mean_decisions: 24
+perc_solved: 80.00
+mean_execution_time: 00:07:45
+total_execution_time: 01:17:30
+
+=== Maze size: 4 ===
+mean_illegal_directions: 2.60
+perc_illegal_directions: 1.85
+mean_illegal_responses: 51.20
+perc_illegal_responses: 37.98
+mean_total_steps: 133.30
+mean_decisions: 82.10
+perc_solved: 40.00
+mean_execution_time: 00:27:09
+total_execution_time: 04:31:28
+
+=== Maze size: 5 ===
+mean_illegal_directions: 3
+perc_illegal_directions: 1.57
+mean_illegal_responses: 77.60
+perc_illegal_responses: 37.99
+mean_total_steps: 200.20
+mean_decisions: 122.60
+perc_solved: 50.00
+mean_execution_time: 00:41:04
+total_execution_time: 06:50:44
+
+=== Maze size: 6 ===
+mean_illegal_directions: 4.10
+perc_illegal_directions: 1.23
+mean_illegal_responses: 130.70
+perc_illegal_responses: 41.32
+mean_total_steps: 307
+mean_decisions: 176.30
+perc_solved: 20.00
+mean_execution_time: 01:03:08
+total_execution_time: 10:31:19
+
+=== Overall stats ===
+mean_illegal_directions: 2.60
+perc_illegal_directions: 1.46
+mean_illegal_responses: 68.47
+perc_illegal_responses: 38.51
+mean_total_steps: 169.72
+mean_decisions: 101.25
+perc_solved: 47.50
+mean_execution_time: 00:34:47
+total_execution_time: 23:11:01
+
 ## Summary table
 
 | Date  | Hit Rate (3×3) | Hit Rate (4×4) | Hit Rate (5×5) | Hit Rate (6×6) | Overall Hit Rate |
 |-------|-----------------|-----------------|-----------------|-----------------|-------------------|
 | 11-12 | 100.00%         | 100.00%         | 60.00%          | 40.00%          | 75.00%            |
 | 11-14 | 80.00%          | 60.00%          | 60.00%          | 30.00%          | 57.50%            |
+| 12-04 | 80.00%          | 40.00%          | 50.00%          | 20.00%          | 47.50%            |
 
 | Date  | Exec Time (3×3) | Exec Time (4×4) | Exec Time (5×5) | Exec Time (6×6) | Total Exec Time |
 |-------|------------------|------------------|------------------|------------------|------------------|
 | 11-12 | 00:54:37         | 01:58:10         | 05:37:37         | 10:15:30         | 18:45:54         |
 | 11-14 | 01:37:08         | 03:15:02         | 05:00:59         | 10:28:34         | 20:21:43         |
+| 12-04 | 01:17:30         | 04:31:28         | 06:50:44         | 10:31:19         | 23:11:01         |
 
