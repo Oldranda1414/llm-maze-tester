@@ -84,3 +84,8 @@ solution *args:
 filter *args:
   uv --project maze_solver run maze_solver/src/filter_test.py {{args}}
 
+# Run prompt token test
+[no-exit-message]
+token *args:
+  uv --project maze_solver run maze_solver/src/prompt_token_test.py {{args}}
+

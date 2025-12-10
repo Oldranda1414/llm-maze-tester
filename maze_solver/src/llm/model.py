@@ -32,13 +32,17 @@ class Model:
             if not provide_history:
                 messages = [messages[0]] # keep system prompt
             messages.append({"role": "user", "content": prompt})
-            response = completion(
+
+            completion_result = completion(
                         model = get_server_model_name(self.model_name),
                         messages = messages,
                         api_base = get_api_base(),
                         request_timeout = REQUEST_TIMEOUT,
                         extra_body={"keep_alive": 0},
-            ).choices[0].message.content
+            )
+            prompt_tokens = completion_result.usage.prompt_tokens
+            print(prompt_tokens)
+            response = completion_result.choices[0].message.content
             self.chat_history.add_exchange(Exchange(prompt, response))
             stop_server()
             return response
