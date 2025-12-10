@@ -41,7 +41,7 @@ class Model:
                         extra_body={"keep_alive": 0},
             )
             prompt_tokens = completion_result.usage.prompt_tokens
-            print(prompt_tokens)
+            print("prompt tokens:", prompt_tokens)
             if prompt_tokens >= prompt_token_limit[self.model_name]:
                 raise PromptTokenLimit(self.model_name)
             response = completion_result.choices[0].message.content
