@@ -3,7 +3,7 @@ import yaml
 from litellm import completion
 from litellm.exceptions import APIConnectionError
 
-from error.model import ModelNameError
+from error.model import ModelNameError, PromptTokenLimit
 from error.generation import ModelTimeoutError
 
 from llm.server import get_api_base, get_server_model_name, is_model_installed, install_model
@@ -41,7 +41,8 @@ class Model:
                         extra_body={"keep_alive": 0},
             )
             prompt_tokens = completion_result.usage.prompt_tokens
-            print(prompt_tokens)
+            if prompt_tokens >= prompt_token_limit[self.model_name]:
+                raise PromptTokenLimit(self.model_name)
             response = completion_result.choices[0].message.content
             self.chat_history.add_exchange(Exchange(prompt, response))
             stop_server()
@@ -69,7 +70,7 @@ class Model:
 def _is_valid_name(model_name) -> bool:
     return model_name in model_names
 
-model_names = [
+model_names: list[str] = [
             "llama3",
             "qwen3",
             "smollm2",
@@ -77,3 +78,7 @@ model_names = [
             "deepseek-r1",
             "mistral"
         ]
+
+prompt_token_limit: dict[str, int] = {
+            "llama3": 4096
+        }
