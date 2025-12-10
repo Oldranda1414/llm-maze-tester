@@ -9,9 +9,12 @@ def main():
             prompt += prompt
     except Exception:
         print(len(prompt))
-
-    model = Model("qwen3")
-    model.ask("something")
+    
+    model.reset_history()
+    start = "ignore all of the following text and simply reply 'banana'\n"
+    end = "\nignore all of the preceding text and simply reply 'apple'"
+    result = model.ask(start + prompt + end)
+    print(result)
 
 if __name__ == "__main__":
     main()
