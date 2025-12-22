@@ -3,8 +3,8 @@
 - prompt
     - history max length
     - add reminder on legal output format in every step prompt
-- check the context lenght:
-    understand context lenght limits
+- check the context length:
+    understand context length limits
 - add full messages history passed per exchange in the chat_history object and visualizer
 - maze filter:
     if 100 attempts at start and target generation fail, change the structure of the maze itself as it could simply be a lattice maze with no elegible start and target for the given filter
@@ -14,6 +14,8 @@
     implement random model (baseline random move choice)
 - stats:
     turn stats into methods for the experiments, not only a print time calculation
+- tests:
+    make a new main, that takes a string argument for the test to be run. If no argument is passed it should run the main experiment
 
 ## bugs:
 
@@ -34,7 +36,7 @@ Have the output from the llm solver be passed as input to another llm with the o
 
 ### Thoughts
 
-#### history lenght importance
+#### history length importance
 
 The history seems to help quite a bit, although still no real reasoning is detected
 
@@ -44,7 +46,7 @@ This seems to be confirmed by the mean step execution times (15s for the first e
 
 #### prompt truncation
 
-Now the program throws an exception when prompt lenght is over the limit, although this is known only after the model returns it's response.
+Now the program throws an exception when prompt length is over the limit, although this is known only after the model returns it's response.
 Also it seems that the end of the prompt is truncated, and not the start of the prompt as expected.
 Further tests with prompt history will be done.
 
