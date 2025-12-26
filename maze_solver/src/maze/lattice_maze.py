@@ -121,7 +121,7 @@ class LatticeMaze:
 
         # BFS initialization
         queue = deque([start])
-        visited = {start: None}
+        visited: dict[Coordinate, Coordinate | None] = {start: None}
 
         while queue:
             current = queue.popleft()
