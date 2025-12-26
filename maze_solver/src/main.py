@@ -1,10 +1,11 @@
 from experiment import run_experiment
+from model.factory import llm_model
 
 def main():
     model_names = ["llama3"]
     maze_sizes = [3,4,5,6]
     iterations = 10
-    run_experiment(model_names, maze_sizes, iterations, provide_history=False)
+    run_experiment([llm_model(name) for name in model_names], maze_sizes, iterations, provide_history=False)
 
 if __name__ == "__main__":
     main()

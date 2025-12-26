@@ -6,6 +6,9 @@ from chat_history import ChatHistory
 class Model(Protocol):
 
     @property
+    def name(self) -> str: ...
+
+    @property
     def history(self) -> ChatHistory: ...
 
     def ask(self, prompt: str, provide_history: bool = True) -> str: ...

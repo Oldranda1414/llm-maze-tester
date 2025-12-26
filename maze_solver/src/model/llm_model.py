@@ -26,22 +26,25 @@ class LLMModel(Model):
         if not is_model_installed(model_name):
             install_model(model_name)
 
-        self.model_name = model_name
-        self.chat_history: ChatHistory = ChatHistory("You are a helpful assistant.")
+        self._name = model_name
+        self._chat_history: ChatHistory = ChatHistory(SYSTEM_PROMPT)
 
     @property
-    def history(self) -> ChatHistory: return self.chat_history
+    def name(self) -> str: return self._name
+
+    @property
+    def history(self) -> ChatHistory: return self._chat_history
 
     def ask(self, prompt: str, provide_history: bool = True) -> str:
         start_server()
-        messages = self.chat_history.to_list()
+        messages = self._chat_history.to_list()
         if not provide_history:
             messages = [messages[0]] # keep system prompt
         messages.append({"role": "user", "content": prompt})
 
         try:
             raw_completion_result = completion(
-                        model = get_server_model_name(self.model_name),
+                        model = get_server_model_name(self._name),
                         messages = messages,
                         api_base = get_api_base(),
                         request_timeout = REQUEST_TIMEOUT,
@@ -49,22 +52,22 @@ class LLMModel(Model):
             )
         except APIConnectionError:
             stop_server()
-            raise ModelTimeoutError(self.model_name, REQUEST_TIMEOUT)
+            raise ModelTimeoutError(self._name, REQUEST_TIMEOUT)
         completion_result = cast(CompletionResult, raw_completion_result)
 
-        _check_prompt_token_limit(completion_result, self.model_name)
+        _check_prompt_token_limit(completion_result, self._name)
         response = completion_result.choices[0].message.content
-        self.chat_history.add_exchange(Exchange(prompt, response))
+        self._chat_history.add_exchange(Exchange(prompt, response))
         stop_server()
         return response
 
     def reset_history(self):
-        self.chat_history = ChatHistory(SYSTEM_PROMPT)
+        self._chat_history = ChatHistory(SYSTEM_PROMPT)
 
     def save_history(self, filepath: str) -> bool:
         try:
             with open(filepath, 'w', encoding='utf-8') as f:
-                yaml.safe_dump(self.chat_history.to_yaml(), f, sort_keys=False)
+                yaml.safe_dump(self._chat_history.to_yaml(), f, sort_keys=False)
             print(f"Chat history saved to {filepath}")
             return True
         except (IOError, OSError) as e:

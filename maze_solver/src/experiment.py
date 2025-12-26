@@ -6,7 +6,7 @@ from collections import defaultdict
 import statistics
 
 from maze.factory import create_dataset
-from model.factory import llm_model, phony_model
+from model import Model
 from prompt import PromptGenerator
 from prompt.style.narrative import NarrativeStyle
 from solver import MazeSolver
@@ -111,20 +111,19 @@ def compute_stats(run_list):
     }
 
 
-def run_experiment(model_names: list[str], maze_sizes: list[int], iterations: int, provide_history: bool = True, debug: bool = False):
+def run_experiment(models: list[Model], maze_sizes: list[int], iterations: int, provide_history: bool = True):
     timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
-    for model_name in model_names:
+    for model in models:
         start_model = time.time()
         for maze_size in maze_sizes:
             start_size = time.time()
-            results_dir = f"results/{timestamp}/{model_name}/{maze_size}x{maze_size}"
+            results_dir = f"results/{timestamp}/{model.name}/{maze_size}x{maze_size}"
             mazes = create_dataset(iterations, maze_size).mazes
             for i in range(iterations):
                 solved_mazes = 0
-                log(f"solving {maze_size}x{maze_size} maze with model {model_name} for {i} time")
+                log(f"solving {maze_size}x{maze_size} maze with model {model.name} for {i} time")
                 start_maze = time.time()
                 max_steps = maze_size * maze_size * 10
-                model = phony_model(model_name) if debug else llm_model(model_name)
                 maze_solver = MazeSolver(model, PromptGenerator(NarrativeStyle()), mazes[i], quiet=True)
                 step = 0
                 while not maze_solver.is_solved() and step < max_steps:
@@ -144,7 +143,7 @@ def run_experiment(model_names: list[str], maze_sizes: list[int], iterations: in
                 maze_solver.save_run(f"{results_dir}/{i}.yaml", delta_t(start_maze))
             log_time(2, f"maze size {maze_size}", start_size)
             log("solved mazes / attempted mazes: {solved_mazes}/{iterations}")
-        log_time(1, f"model {model_name}", start_model)
+        log_time(1, f"model {model.name}", start_model)
 
 def log_time(indent: int, message: str, start_time: float):
     log((tab * indent) + f"Time taken for {message}: {seconds_to_padded_time(delta_t(start_time))}")
