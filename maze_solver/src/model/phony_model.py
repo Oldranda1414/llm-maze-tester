@@ -13,6 +13,7 @@ class PhonyModel(Model):
         self.chat_history = ChatHistory(debug_system_prompt)
 
     def ask(self, prompt: str, provide_history: bool = True) -> str:
+        _ = provide_history # unused parameter
         move = input(prompt)
         move = move.strip(" ").upper()
 

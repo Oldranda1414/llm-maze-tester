@@ -24,13 +24,13 @@ class ConnectionList:
     def connected_neighbors(self, cell: Coordinate) -> list[Coordinate]:
         """Return all adjacent cells connected to cell."""
         neighbors = []
-        
+
         # Check all four possible directions
         for direction in Direction:
             neighbor_cell = neighbor(cell, direction)
             if self._has_passage(cell, direction):
                 neighbors.append(neighbor_cell)
-                
+
         return neighbors
 
     def num_neighbors(self, cell: Coordinate) -> int:
@@ -39,14 +39,13 @@ class ConnectionList:
     def _has_passage(self, cell: Coordinate, direction: Direction) -> bool:
         """Check if there's a passage from the cell in the given direction."""
         row, col = cell
-        
+
         if direction == Direction.NORTH:
             return row > 0 and self.vertical_passages[row - 1][col]
         elif direction == Direction.SOUTH:
             return row < self.size - 1 and self.vertical_passages[row][col]
         elif direction == Direction.WEST:
             return col > 0 and self.horizontal_passages[row][col - 1]
-        elif direction == Direction.EAST:
+        else: # direction == Direction.EAST
             return col < self.size - 1 and self.horizontal_passages[row][col]
-        
-        return False
+

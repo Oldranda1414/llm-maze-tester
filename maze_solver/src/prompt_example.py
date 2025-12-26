@@ -7,14 +7,16 @@ from maze import Maze
 from maze.factory import create_maze
 from maze.output import draw_maze
 
-from prompt import step_prompt
+from prompt import PromptGenerator
+from prompt.style.narrative import NarrativeStyle
 
 def main() -> None:
     mazes: list[tuple[Maze, str]] = []
+    prompt_generator = PromptGenerator(NarrativeStyle())
     for i in range(2, 7):
         sight_depth = 2
         m = create_maze(size=i, sight_depth=sight_depth)
-        prompt = step_prompt(m)
+        prompt = prompt_generator.step_prompt(m)
         mazes.append((m, prompt))
 
     _, axes = plt.subplots(len(mazes), 2, figsize=(8, len(mazes) * 4))

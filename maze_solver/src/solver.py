@@ -22,7 +22,7 @@ class MazeSolver:
     def __init__(self, model_name: str, prompt_style: PromptStyle, maze_size: int = 6, sight_depth: int = 3, seed: int = 42, debug: bool = False, quiet: bool = False):
         """
         Initialize the maze solver with a model and maze.
-        
+
         Args:
             model_name: Name of the LLM model to use
             maze_size: Width and height of the maze
@@ -35,7 +35,7 @@ class MazeSolver:
         self.maze = create_maze(size=maze_size, sight_depth=sight_depth, seed=seed)
         self.debug = debug
         self._quiet = quiet
-        
+
         # Track last step errors
         self.first_step = True
         self.invalid_answer_provided = False
@@ -107,7 +107,7 @@ class MazeSolver:
     def get_statistics(self) -> dict[str, Any]:
         """
         Get statistics about the maze solving progress.
-        
+
         Returns:
             Dict with statistics
         """
@@ -127,7 +127,7 @@ class MazeSolver:
     def is_solved(self) -> bool:
         """
         Check if the maze is solved.
-        
+
         Returns:
             bool: True if the maze is solved, False otherwise
         """
@@ -143,3 +143,4 @@ class MazeSolver:
     def _print_message(self, message: str) -> None:
         if not self._quiet:
             print(message)
+
