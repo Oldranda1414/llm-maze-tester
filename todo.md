@@ -9,7 +9,6 @@
 - maze filter:
     if 100 attempts at start and target generation fail, change the structure of the maze itself as it could simply be a lattice maze with no elegible start and target for the given filter
 - experiment:
-    turn Model into interface 
     allow phony model or any type of model to be passed to an experiment.
     implement random model (baseline random move choice)
 - stats:

@@ -1,3 +1,4 @@
+from typing import cast
 import yaml
 
 from litellm import completion
@@ -10,6 +11,7 @@ from model import Model, model_names
 
 from model.server import get_api_base, get_server_model_name, is_model_installed, install_model
 from model.server import start as start_server, stop as stop_server
+from model.completion_result import CompletionResult
 
 from chat_history import ChatHistory, Exchange
 
@@ -32,30 +34,29 @@ class LLMModel(Model):
 
     def ask(self, prompt: str, provide_history: bool = True) -> str:
         start_server()
-        try:
-            messages = self.chat_history.to_list()
-            if not provide_history:
-                messages = [messages[0]] # keep system prompt
-            messages.append({"role": "user", "content": prompt})
+        messages = self.chat_history.to_list()
+        if not provide_history:
+            messages = [messages[0]] # keep system prompt
+        messages.append({"role": "user", "content": prompt})
 
-            completion_result = completion(
+        try:
+            raw_completion_result = completion(
                         model = get_server_model_name(self.model_name),
                         messages = messages,
                         api_base = get_api_base(),
                         request_timeout = REQUEST_TIMEOUT,
                         extra_body={"keep_alive": 0},
             )
-            prompt_tokens = completion_result.usage.prompt_tokens
-            print("prompt tokens:", prompt_tokens)
-            if prompt_tokens >= prompt_token_limit[self.model_name]:
-                raise PromptTokenLimit(self.model_name)
-            response = completion_result.choices[0].message.content
-            self.chat_history.add_exchange(Exchange(prompt, response))
-            stop_server()
-            return response
         except APIConnectionError:
             stop_server()
             raise ModelTimeoutError(self.model_name, REQUEST_TIMEOUT)
+        completion_result = cast(CompletionResult, raw_completion_result)
+
+        _check_prompt_token_limit(completion_result, self.model_name)
+        response = completion_result.choices[0].message.content
+        self.chat_history.add_exchange(Exchange(prompt, response))
+        stop_server()
+        return response
 
     def reset_history(self):
         self.chat_history = ChatHistory(SYSTEM_PROMPT)
@@ -72,6 +73,11 @@ class LLMModel(Model):
 
 def _is_valid_name(model_name) -> bool:
     return model_name in model_names
+
+def _check_prompt_token_limit(completion_result: CompletionResult, model_name: str):
+    prompt_tokens = completion_result.usage.prompt_tokens
+    if prompt_tokens >= prompt_token_limit[model_name]:
+        raise PromptTokenLimit(model_name)
 
 prompt_token_limit: dict[str, int] = {
             "llama3": 4096
