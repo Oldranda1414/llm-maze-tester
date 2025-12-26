@@ -6,15 +6,17 @@ from litellm.exceptions import APIConnectionError
 from error.model import ModelNameError, PromptTokenLimit
 from error.generation import ModelTimeoutError
 
-from llm.server import get_api_base, get_server_model_name, is_model_installed, install_model
-from llm.server import start as start_server, stop as stop_server
+from model import Model, model_names
+
+from model.server import get_api_base, get_server_model_name, is_model_installed, install_model
+from model.server import start as start_server, stop as stop_server
 
 from chat_history import ChatHistory, Exchange
 
 REQUEST_TIMEOUT = 3600
 SYSTEM_PROMPT = "You are a helpful assistant."
 
-class Model:
+class LLMModel(Model):
     
     def __init__(self, model_name: str):
         if not _is_valid_name(model_name):
@@ -24,6 +26,9 @@ class Model:
 
         self.model_name = model_name
         self.chat_history: ChatHistory = ChatHistory("You are a helpful assistant.")
+
+    @property
+    def history(self) -> ChatHistory: return self.chat_history
 
     def ask(self, prompt: str, provide_history: bool = True) -> str:
         start_server()
@@ -52,9 +57,6 @@ class Model:
             stop_server()
             raise ModelTimeoutError(self.model_name, REQUEST_TIMEOUT)
 
-    def history(self) -> ChatHistory:
-        return self.chat_history
-
     def reset_history(self):
         self.chat_history = ChatHistory(SYSTEM_PROMPT)
 
@@ -70,15 +72,6 @@ class Model:
 
 def _is_valid_name(model_name) -> bool:
     return model_name in model_names
-
-model_names: list[str] = [
-            "llama3",
-            "qwen3",
-            "smollm2",
-            "phi4-mini",
-            "deepseek-r1",
-            "mistral"
-        ]
 
 prompt_token_limit: dict[str, int] = {
             "llama3": 4096

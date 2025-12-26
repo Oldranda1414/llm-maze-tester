@@ -1,4 +1,4 @@
-from llm.model import Model
+from model import llm_model
 
 def main():
     """Main function to run the llm-maze-tester."""
@@ -7,7 +7,7 @@ def main():
     model_name = "llama3"
     print(f"Initializing model: {model_name}")
 
-    model = Model(model_name)
+    model = llm_model(model_name)
 
     print("\n--- Testing model interactions ---")
 
@@ -22,7 +22,7 @@ def main():
     print(f"Response: {response2}")
 
     print("\n--- Chat History ---")
-    history = model.history()
+    history = model.history
     print(history)
 
 if __name__ == "__main__":

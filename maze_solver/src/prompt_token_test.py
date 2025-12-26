@@ -1,7 +1,7 @@
-from llm.model import Model
+from model import llm_model
 
 def main():
-    model = Model("llama3")
+    model = llm_model("llama3")
     prompt = "something"
     try:
         while(len(prompt) != 100000):

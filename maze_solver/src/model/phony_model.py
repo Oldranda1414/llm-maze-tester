@@ -1,16 +1,18 @@
 import sys
 import yaml
 
+from model import Model
+
 from chat_history import ChatHistory, Exchange
 
 debug_system_prompt = "debug system prompt"
 
-class Model():
+class PhonyModel(Model):
 
     def __init__(self, _: str):
         self.chat_history = ChatHistory(debug_system_prompt)
 
-    def ask(self, prompt: str, _: bool) -> str:
+    def ask(self, prompt: str, provide_history: bool = True) -> str:
         move = input(prompt)
         move = move.strip(" ").upper()
 
@@ -20,8 +22,8 @@ class Model():
         self.chat_history.add_exchange(Exchange(prompt, move))
         return move
 
-    def history(self) -> ChatHistory:
-        return self.chat_history
+    @property
+    def history(self) -> ChatHistory: return self.chat_history
 
     def reset_history(self):
         self.chat_history = ChatHistory(debug_system_prompt)

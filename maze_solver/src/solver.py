@@ -3,8 +3,7 @@ A class that uses an LLM model to solve a maze.
 """
 from typing import Any
 
-from llm.model import Model
-from llm.phony_model import Model as PhonyModel
+from model import llm_model, phony_model
 
 from maze.factory import create_maze
 from maze.core.direction import Direction
@@ -29,9 +28,9 @@ class MazeSolver:
             maze_size: Width and height of the maze
         """
         if debug:
-            self.model = PhonyModel(model_name)
+            self.model = phony_model(model_name)
         else:
-            self.model = Model(model_name)
+            self.model = llm_model(model_name)
         self.prompt = PromptGenerator(prompt_style)
         self.maze = create_maze(size=maze_size, sight_depth=sight_depth, seed=seed)
         self.debug = debug
@@ -135,7 +134,7 @@ class MazeSolver:
         return self.maze.solved
 
     def save_run(self, path: str, execution_time: float) -> None:
-        Run(self.maze, self.model.chat_history, self.illegal_directions, self.illegal_responses, execution_time).save(path)
+        Run(self.maze, self.model.history, self.illegal_directions, self.illegal_responses, execution_time).save(path)
 
     def _print_maze(self):
         if not self._quiet:
