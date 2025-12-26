@@ -89,3 +89,8 @@ filter *args:
 token *args:
   uv --project maze_solver run maze_solver/src/prompt_token_test.py {{args}}
 
+# Run experiment test
+[no-exit-message]
+experiment *args:
+  uv --project maze_solver run maze_solver/src/experiment_test.py {{args}}
+

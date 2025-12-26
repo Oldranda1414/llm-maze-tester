@@ -3,13 +3,12 @@ A class that uses an LLM model to solve a maze.
 """
 from typing import Any
 
-from model.factory import llm_model, phony_model
+from maze import Maze
+from model import Model
 
-from maze.factory import create_maze
 from maze.core.direction import Direction
 
 from prompt import PromptGenerator
-from prompt.style import PromptStyle
 from run import Run
 
 class MazeSolver:
@@ -19,21 +18,10 @@ class MazeSolver:
     to make decisions about which direction to move at each step.
     """
 
-    def __init__(self, model_name: str, prompt_style: PromptStyle, maze_size: int = 6, sight_depth: int = 3, seed: int = 42, debug: bool = False, quiet: bool = False):
-        """
-        Initialize the maze solver with a model and maze.
-
-        Args:
-            model_name: Name of the LLM model to use
-            maze_size: Width and height of the maze
-        """
-        if debug:
-            self.model = phony_model(model_name)
-        else:
-            self.model = llm_model(model_name)
-        self.prompt = PromptGenerator(prompt_style)
-        self.maze = create_maze(size=maze_size, sight_depth=sight_depth, seed=seed)
-        self.debug = debug
+    def __init__(self, model: Model, prompt_generator: PromptGenerator, maze: Maze, quiet: bool = False):
+        self.model = model
+        self.prompt = prompt_generator
+        self.maze = maze
         self._quiet = quiet
 
         # Track last step errors
