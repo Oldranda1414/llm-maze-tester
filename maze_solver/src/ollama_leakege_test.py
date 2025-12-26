@@ -1,4 +1,4 @@
-from model import llm_model
+from model.factory import llm_model
 
 SYSTEM_PROMPT = "You are a helpful assistant."
 

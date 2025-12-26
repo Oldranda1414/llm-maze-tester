@@ -3,7 +3,7 @@ A class that uses an LLM model to solve a maze.
 """
 from typing import Any
 
-from model import llm_model, phony_model
+from model.factory import llm_model, phony_model
 
 from maze.factory import create_maze
 from maze.core.direction import Direction

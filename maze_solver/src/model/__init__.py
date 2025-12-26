@@ -1,8 +1,7 @@
 from typing import Protocol
 
 from chat_history import ChatHistory
-from model.llm_model import LLMModel
-from model.phony_model import PhonyModel
+
 
 class Model(Protocol):
 
@@ -14,12 +13,6 @@ class Model(Protocol):
     def reset_history(self): ...
 
     def save_history(self, filepath: str) -> bool: ...
-
-def llm_model(name: str) -> Model:
-    return LLMModel(name)
-
-def phony_model(name: str) -> Model:
-    return PhonyModel(name)
 
 model_names: list[str] = [
             "llama3",

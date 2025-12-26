@@ -1,7 +1,11 @@
 import random
 from typing import Callable
 
-from maze_dataset import MazeDataset as DatasetMazeDataset, MazeDatasetConfig
+from maze_dataset import (
+    MazeDataset as MDMazeDataset,
+    SolvedMaze as MDSolvedMaze,
+    MazeDatasetConfig as MDConfig,
+)
 from maze_dataset.generation import LatticeMazeGenerators
 
 from maze import Maze, generate_start, generate_target
@@ -22,14 +26,15 @@ class MazeDataset:
         attempts: int = 100,
     ):
 
-        config = MazeDatasetConfig(
-            name=name,
-            grid_n=maze_size,
-            n_mazes=n_mazes,
-            maze_ctor=LatticeMazeGenerators.gen_dfs,
-            seed=seed,
+        # Disabeling pyright due to annoying 'no parameter named "X"' error
+        config = MDConfig(
+            name=name, #type: ignore
+            grid_n=maze_size, #type: ignore
+            n_mazes=n_mazes, #type: ignore
+            maze_ctor=LatticeMazeGenerators.gen_dfs, #type: ignore
+            seed=seed, #type: ignore
         )
-        dataset = DatasetMazeDataset.from_config(config)
+        dataset = MDMazeDataset.from_config(config)
 
         self.mazes: list[Maze] = []
         rng = random.Random(seed)
@@ -48,7 +53,7 @@ class MazeDataset:
                         f"Failed to generate a valid maze after {attempts} attempts."
                     )
 
-def _generate_maze(d_maze: DatasetMazeDataset, rng: random.Random, sight_depth: int) -> Maze:
+def _generate_maze(d_maze: MDSolvedMaze, rng: random.Random, sight_depth: int) -> Maze:
         maze_size = d_maze.grid_n
         target = generate_target(maze_size, rng=rng)
         start = generate_start(maze_size, target, rng=rng)

@@ -1,4 +1,4 @@
-from model import llm_model
+from model.factory import llm_model
 
 def main():
     model = llm_model("llama3")
