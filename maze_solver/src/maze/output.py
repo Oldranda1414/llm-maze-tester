@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+from matplotlib.patches import Rectangle
 
 from rich.console import Console
 from rich.text import Text
@@ -46,7 +47,7 @@ def draw_maze(maze, ax=None, show_path=True):
         for j in range(grid_size):
             y_plot = grid_size - i - 1
             facecolor = "yellow" if _is_seen((i, j), maze) else "white"
-            rect = plt.Rectangle((j, y_plot), cell_size, cell_size,
+            rect = Rectangle((j, y_plot), cell_size, cell_size,
                                  facecolor=facecolor, edgecolor='lightgray', linewidth=0.5)
             ax.add_patch(rect)
 
@@ -60,7 +61,8 @@ def draw_maze(maze, ax=None, show_path=True):
         (maze.start, "darkorange", "o", "Start"),
     ]:
         if pos:
-            x, y = _plot_coords(*pos, grid_size)
+            pos_x, pos_y = pos
+            x, y = _plot_coords(pos_x, pos_y, grid_size)
             ax.plot(x, y, marker, markersize=12, markeredgecolor=color,
                     label=label, color=color)
 
