@@ -10,8 +10,6 @@
     if 100 attempts at start and target generation fail, change the structure of the maze itself as it could simply be a lattice maze with no elegible start and target for the given filter
 - stats:
     turn stats into methods for the experiments, not only a print time calculation
-- tests:
-    make a new main, that takes a string argument for the test to be run. If no argument is passed it should run the main experiment
 
 ## bugs:
 
