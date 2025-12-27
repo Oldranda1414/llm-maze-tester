@@ -5,16 +5,17 @@ from datetime import datetime
 from collections import defaultdict
 import statistics
 
-from maze.factory import create_dataset
-from model import Model
-from prompt import PromptGenerator
-from prompt.style.narrative import NarrativeStyle
-from solver import MazeSolver
-from log import log
 from util import seconds_to_padded_time
 from run import Run
 
-tab = "   "
+from experiment.config import ExperimentConfig
+from experiment.utils import delta_t, log_time, tab
+from experiment.log import log
+
+from maze.factory import create_dataset
+from prompt import PromptGenerator
+from prompt.style.narrative import NarrativeStyle
+from solver import MazeSolver
 
 class Experiment:
     def __init__(self, date: str):
@@ -111,15 +112,15 @@ def compute_stats(run_list):
     }
 
 
-def run_experiment(models: list[Model], maze_sizes: list[int], iterations: int, provide_history: bool = True):
+def run_experiment(config: ExperimentConfig):
     timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
-    for model in models:
+    for model in config.models:
         start_model = time.time()
-        for maze_size in maze_sizes:
+        for maze_size in config.maze_sizes:
             start_size = time.time()
             results_dir = f"results/{timestamp}/{model.name}/{maze_size}x{maze_size}"
-            mazes = create_dataset(iterations, maze_size).mazes
-            for i in range(iterations):
+            mazes = create_dataset(config.iterations, maze_size).mazes
+            for i in range(config.iterations):
                 solved_mazes = 0
                 log(f"solving {maze_size}x{maze_size} maze with model {model.name} for {i} time")
                 start_maze = time.time()
@@ -128,7 +129,7 @@ def run_experiment(models: list[Model], maze_sizes: list[int], iterations: int, 
                 step = 0
                 while not maze_solver.is_solved() and step < max_steps:
                     try:
-                        maze_solver.step(provide_history)
+                        maze_solver.step(config.provide_history)
                     except Exception:
                         logging.error("Exception occurred", exc_info=True)
                     step += 1
@@ -144,10 +145,4 @@ def run_experiment(models: list[Model], maze_sizes: list[int], iterations: int, 
             log_time(2, f"maze size {maze_size}", start_size)
             log("solved mazes / attempted mazes: {solved_mazes}/{iterations}")
         log_time(1, f"model {model.name}", start_model)
-
-def log_time(indent: int, message: str, start_time: float):
-    log((tab * indent) + f"Time taken for {message}: {seconds_to_padded_time(delta_t(start_time))}")
-
-def delta_t(start_time: float) -> float:
-    return time.time() - start_time
 

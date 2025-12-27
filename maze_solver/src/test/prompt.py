@@ -3,7 +3,7 @@ from maze.factory import create_maze, create_dataset
 from prompt import PromptGenerator
 from prompt.style.narrative import NarrativeStyle
 
-def main():
+def run():
     maze_size = 3
     sight_depth = 3
     maze = create_maze(size=maze_size, sight_depth=sight_depth)
@@ -54,7 +54,4 @@ def many_maze():
             maze.move(Direction.from_coordinate(move))
             print("New position:", maze.position)
             print("Solved?", maze.solved)
-
-if __name__ == "__main__":
-    main()
 

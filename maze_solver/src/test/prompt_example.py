@@ -10,7 +10,7 @@ from maze.output import draw_maze
 from prompt import PromptGenerator
 from prompt.style.narrative import NarrativeStyle
 
-def main() -> None:
+def run() -> None:
     mazes: list[tuple[Maze, str]] = []
     prompt_generator = PromptGenerator(NarrativeStyle())
     for i in range(2, 7):
@@ -32,5 +32,3 @@ def main() -> None:
     plt.tight_layout()
     plt.savefig("maze_summary.png", bbox_inches="tight", dpi=150)
 
-if __name__ == "__main__":
-    main()

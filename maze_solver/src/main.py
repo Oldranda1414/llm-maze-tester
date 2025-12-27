@@ -1,11 +1,12 @@
 from experiment import run_experiment
-from model.factory import llm_model
+from experiment.config import ExperimentConfig
 
 def main():
-    model_names = ["llama3"]
-    maze_sizes = [3,4,5,6]
-    iterations = 10
-    run_experiment([llm_model(name) for name in model_names], maze_sizes, iterations, provide_history=False)
+    config_path = "experiment_config.yaml"
+    config = ExperimentConfig.from_yaml(config_path)
+    run_experiment(config)
+
 
 if __name__ == "__main__":
     main()
+

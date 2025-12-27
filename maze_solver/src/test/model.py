@@ -1,6 +1,6 @@
 from model.factory import llm_model
 
-def main():
+def run():
     """Main function to run the llm-maze-tester."""
     print("Testing LLM model wrapper...")
 
@@ -25,5 +25,3 @@ def main():
     history = model.history
     print(history)
 
-if __name__ == "__main__":
-    main()

@@ -5,7 +5,7 @@ from prompt.style.narrative import NarrativeStyle
 from solver import MazeSolver
 from run import Run
 
-def main() -> None:
+def run() -> None:
     run_path = 'test_run.yaml'
     solver = MazeSolver(phony_model("llama3"), PromptGenerator(NarrativeStyle()), create_maze())
     while not solver.maze.solved:
@@ -14,7 +14,4 @@ def main() -> None:
     run = Run.load(run_path)
     print(run.chat_history)
     run.maze.print()
-
-if __name__ == "__main__":
-    main()
 

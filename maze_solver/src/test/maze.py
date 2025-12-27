@@ -1,7 +1,7 @@
 from maze.core.direction import Direction
 from maze.factory import create_maze
 
-if __name__ == "__main__":
+def run() -> None:
     size = int(input("maze size?:"))
     maze = create_maze(seed=39, size=size)
 
