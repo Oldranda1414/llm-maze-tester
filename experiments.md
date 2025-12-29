@@ -343,6 +343,14 @@ mean_execution_time: 00:37:07
 total_execution_time: 24:44:23
 mean_step_execution_time: 00:00:12
 
+## Random choice baseline test (2025-12-29_16:25:15)
+
+reference commit:
+f77d8aa4949e2baada82b4af3c8a345de5860d54
+
+A random model is used, that returns a random next move, independently from the prompt.
+The goal of this experiment is to have a baseline random walk test to compare real model attempts and see if they can improve on pure random choice.
+
 ## Summary table
 
 | Date  | Hit Rate (3×3) | Hit Rate (4×4) | Hit Rate (5×5) | Hit Rate (6×6) | Overall Hit Rate |
