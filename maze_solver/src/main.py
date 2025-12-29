@@ -1,11 +1,8 @@
 from experiment import run_experiment
-from experiment.config import ExperimentConfig
+from experiment.config import load_config
 
 def main():
-    config_path = "experiment_config.yaml"
-    config = ExperimentConfig.from_yaml(config_path)
-    run_experiment(config)
-
+    run_experiment(load_config())
 
 if __name__ == "__main__":
     main()

@@ -281,6 +281,68 @@ reference commit:
 Improved the maze generation filtering some more.
 This new attempt is just to have more data, even if the filtering is improved similar results to the second attempt are expected
 
+### Stats
+
+=== Maze size: 3 ===
+mean_illegal_directions: 0.60
+perc_illegal_directions: 1.21
+mean_illegal_responses: 14.10
+perc_illegal_responses: 29.44
+mean_total_steps: 43.90
+mean_decisions: 29.80
+perc_solved: 70.00
+mean_execution_time: 00:08:44
+total_execution_time: 01:27:20
+mean_step_execution_time: 00:00:12
+
+=== Maze size: 4 ===
+mean_illegal_directions: 1.90
+perc_illegal_directions: 2.23
+mean_illegal_responses: 42.10
+perc_illegal_responses: 33.72
+mean_total_steps: 121.30
+mean_decisions: 79.20
+perc_solved: 50.00
+mean_execution_time: 00:24:19
+total_execution_time: 04:03:10
+mean_step_execution_time: 00:00:12
+
+=== Maze size: 5 ===
+mean_illegal_directions: 2.80
+perc_illegal_directions: 1.21
+mean_illegal_responses: 85.10
+perc_illegal_responses: 39.85
+mean_total_steps: 210.40
+mean_decisions: 125.30
+perc_solved: 30.00
+mean_execution_time: 00:42:36
+total_execution_time: 07:06:05
+mean_step_execution_time: 00:00:12
+
+=== Maze size: 6 ===
+mean_illegal_directions: 5.70
+perc_illegal_directions: 1.61
+mean_illegal_responses: 152.60
+perc_illegal_responses: 42.88
+mean_total_steps: 356.30
+mean_decisions: 203.70
+perc_solved: 10.00
+mean_execution_time: 01:12:47
+total_execution_time: 12:07:49
+mean_step_execution_time: 00:00:12
+
+=== Overall stats ===
+mean_illegal_directions: 2.75
+perc_illegal_directions: 1.57
+mean_illegal_responses: 73.47
+perc_illegal_responses: 36.47
+mean_total_steps: 182.97
+mean_decisions: 109.50
+perc_solved: 40.00
+mean_execution_time: 00:37:07
+total_execution_time: 24:44:23
+mean_step_execution_time: 00:00:12
+
 ## Summary table
 
 | Date  | Hit Rate (3×3) | Hit Rate (4×4) | Hit Rate (5×5) | Hit Rate (6×6) | Overall Hit Rate |
