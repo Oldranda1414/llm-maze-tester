@@ -3,15 +3,22 @@ import os
 import importlib.util
 
 def main():
+    test_dir = 'maze_solver/src/test/'
+
     if len(sys.argv) != 2:
         print(f"Error: Expected exactly 1 argument, but got {len(sys.argv) - 1}")
         print(f"Usage: python {sys.argv[0]} <filename>")
+        file_names = [
+            os.path.splitext(f)[0]
+            for f in os.listdir(test_dir)
+            if f.endswith(".py")
+        ]
+        print("Available tests:")
+        print("   " + "\n   ".join(file_names))
         sys.exit(1)
     filename = sys.argv[1]
     if not filename.endswith('.py'):
         filename += '.py'
-
-    test_dir = 'maze_solver/src/test/'
     file_path = os.path.join(test_dir, filename)
 
     if not os.path.exists(file_path):
