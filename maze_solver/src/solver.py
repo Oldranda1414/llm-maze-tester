@@ -19,6 +19,9 @@ class MazeSolver:
     """
 
     def __init__(self, model: Model, prompt_generator: PromptGenerator, maze: Maze, quiet: bool = False):
+        if len(model.history.chat) != 0:
+            raise ValueError("model provided to solver has non empty chat history. Reset the chat history before providing the model to the solver")
+
         self.model = model
         self.prompt = prompt_generator
         self.maze = maze
@@ -42,6 +45,9 @@ class MazeSolver:
         """
         Execute a single step in the maze solving process.
         """
+        if self.maze.solved:
+            raise RuntimeError("MazeSolver.step() called when maze solved. MazeSolver.step() cannot be called when maze is solved!")
+
         available_directions = self.maze.available_directions()
 
         step_prompt = ""
@@ -89,7 +95,6 @@ class MazeSolver:
             is_solved = self.maze.solved
             if is_solved:
                 self._print_message(f"🎉 Maze solved in {self.steps_taken} steps!")
-                self.maze.save("solved_maze.png")
             self._print_maze()
 
     def get_statistics(self) -> dict[str, Any]:
@@ -122,6 +127,8 @@ class MazeSolver:
         return self.maze.solved
 
     def save_run(self, path: str, execution_time: float) -> None:
+        # print("maze solver: printing chat history")
+        # print(self.model.history)
         Run(self.maze, self.model.history, self.illegal_directions, self.illegal_responses, execution_time).save(path)
 
     def _print_maze(self):

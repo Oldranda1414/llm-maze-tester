@@ -24,7 +24,7 @@ class PhonyModel(Model):
         return move
 
     @property
-    def name(self) -> str: return "phony model"
+    def name(self) -> str: return "phony_model"
 
     @property
     def history(self) -> ChatHistory: return self._chat_history

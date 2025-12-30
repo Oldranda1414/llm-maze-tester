@@ -20,7 +20,7 @@ class RandomModel(Model):
         return move
 
     @property
-    def name(self) -> str: return "random model"
+    def name(self) -> str: return "random_model"
 
     @property
     def history(self) -> ChatHistory: return self._chat_history

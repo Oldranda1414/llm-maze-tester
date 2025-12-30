@@ -74,6 +74,9 @@ class LatticeMaze:
         self._position = new_path[-1]
 
     def move(self, direction: Direction) -> bool:
+        if self._solved:
+            raise RuntimeError("Maze.move() called on solved maze\nMaze.move() cannot be called on a solved maze!")
+
         legal_directions = self.available_directions()
         self._decisions.append(direction)
         if self._target == self._position and direction == exit_direction(self._target, self._size):

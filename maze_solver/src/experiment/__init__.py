@@ -120,12 +120,13 @@ def run_experiment(config: ExperimentConfig):
             start_size = time.time()
             results_dir = f"results/{timestamp}/{model.name}/{maze_size}x{maze_size}"
             mazes = create_dataset(config.iterations, maze_size).mazes
+            solved_mazes = 0
             for i in range(config.iterations):
-                solved_mazes = 0
                 log(f"solving {maze_size}x{maze_size} maze with model {model.name} for {i} time")
                 start_maze = time.time()
                 max_steps = maze_size * maze_size * 10
-                maze_solver = MazeSolver(model, PromptGenerator(NarrativeStyle()), mazes[i], quiet=True)
+                model.reset_history()
+                maze_solver = MazeSolver(model, config.prompt_generator, mazes[i], quiet=config.quiet)
                 step = 0
                 while not maze_solver.is_solved() and step < max_steps:
                     try:
@@ -143,6 +144,6 @@ def run_experiment(config: ExperimentConfig):
                 os.makedirs(results_dir, exist_ok=True)
                 maze_solver.save_run(f"{results_dir}/{i}.yaml", delta_t(start_maze))
             log_time(2, f"maze size {maze_size}", start_size)
-            log("solved mazes / attempted mazes: {solved_mazes}/{iterations}")
+            log(f"solved mazes / attempted mazes: {solved_mazes}/{config.iterations}")
         log_time(1, f"model {model.name}", start_model)
 

@@ -343,26 +343,89 @@ mean_execution_time: 00:37:07
 total_execution_time: 24:44:23
 mean_step_execution_time: 00:00:12
 
-## Random choice baseline test (2025-12-29_16:25:15)
+## Random choice baseline test (2025-12-30_13:06:02)
 
 reference commit:
-f77d8aa4949e2baada82b4af3c8a345de5860d54
+fef9abeae8cb72d30ac62ed12f6d2a5ac4a92a39
 
-A random model is used, that returns a random next move, independently from the prompt.
-The goal of this experiment is to have a baseline random walk test to compare real model attempts and see if they can improve on pure random choice.
+Goal of this experiment is to have a baseline experiment with random movement provided by the 'dummy model'.
+This is to validate the move limit imposed by the experiment execution, and to have a baseline 'worst case' to compare approaches to.
+
+### stats
+
+=== Maze size: 3 ===
+mean_illegal_directions: 33.90
+perc_illegal_directions: 52.62
+mean_illegal_responses: 0
+perc_illegal_responses: 0.00
+mean_total_steps: 65.30
+mean_decisions: 65.30
+perc_solved: 60.00
+mean_execution_time: 00:00:00
+total_execution_time: 00:00:00
+mean_step_execution_time: 00:00:00
+
+=== Maze size: 4 ===
+mean_illegal_directions: 67.10
+perc_illegal_directions: 51.98
+mean_illegal_responses: 0
+perc_illegal_responses: 0.00
+mean_total_steps: 125.80
+mean_decisions: 125.80
+perc_solved: 40.00
+mean_execution_time: 00:00:00
+total_execution_time: 00:00:00
+mean_step_execution_time: 00:00:00
+
+=== Maze size: 5 ===
+mean_illegal_directions: 115.60
+perc_illegal_directions: 53.71
+mean_illegal_responses: 0
+perc_illegal_responses: 0.00
+mean_total_steps: 214.40
+mean_decisions: 214.40
+perc_solved: 30.00
+mean_execution_time: 00:00:00
+total_execution_time: 00:00:00
+mean_step_execution_time: 00:00:00
+
+=== Maze size: 6 ===
+mean_illegal_directions: 184.60
+perc_illegal_directions: 51.28
+mean_illegal_responses: 0
+perc_illegal_responses: 0.00
+mean_total_steps: 360
+mean_decisions: 360
+perc_solved: 0.00
+mean_execution_time: 00:00:00
+total_execution_time: 00:00:00
+mean_step_execution_time: 00:00:00
+
+=== Overall stats ===
+mean_illegal_directions: 100.30
+perc_illegal_directions: 52.40
+mean_illegal_responses: 0
+perc_illegal_responses: 0.00
+mean_total_steps: 191.38
+mean_decisions: 191.38
+perc_solved: 32.50
+mean_execution_time: 00:00:00
+total_execution_time: 00:00:00
+mean_step_execution_time: 00:00:00
 
 ### Thoughts
 
-The results reveal a bug in the programming. Fixes must be implemented before rerunning this test.
-It seems simulations are not stopped when the maze is solved.
+Although good results in the smaller maze sizes seem discouraging it is clear from the 0% solved in the 6x6 maze that the limits are correctly imposed.
+Even experiments with no prompt history provided have demonstrate clearly improved efficacy, showing that some reasoning is present even without providing the prompt history
 
 ## Summary table
 
-| Date  | Hit Rate (3×3) | Hit Rate (4×4) | Hit Rate (5×5) | Hit Rate (6×6) | Overall Hit Rate |
-|-------|-----------------|-----------------|-----------------|-----------------|-------------------|
-| 11-12 | 100.00%         | 100.00%         | 60.00%          | 40.00%          | 75.00%            |
-| 11-14 | 80.00%          | 60.00%          | 60.00%          | 30.00%          | 57.50%            |
-| 12-04 | 80.00%          | 40.00%          | 50.00%          | 20.00%          | 47.50%            |
+| Date   | Hit Rate (3×3) | Hit Rate (4×4) | Hit Rate (5×5) | Hit Rate (6×6) | Overall Hit Rate |
+|--------|-----------------|-----------------|-----------------|-----------------|-------------------|
+| 11-12  | 100.00%         | 100.00%         | 60.00%          | 40.00%          | 75.00%            |
+| 11-14  | 80.00%          | 60.00%          | 60.00%          | 30.00%          | 57.50%            |
+| 12-04  | 80.00%          | 40.00%          | 50.00%          | 20.00%          | 47.50%            |
+| random | 60.00%          | 40.00%          | 30.00%          | 0.00%           | 32.50%            |
 
 | Date  | Exec Time (3×3) | Exec Time (4×4) | Exec Time (5×5) | Exec Time (6×6) | Total Exec Time |
 |-------|------------------|------------------|------------------|------------------|------------------|
