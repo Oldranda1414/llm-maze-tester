@@ -12,6 +12,5 @@ def run() -> None:
         solver.step()
     solver.save_run(run_path, 60)
     run = Run.load(run_path)
-    print(run.chat_history)
     run.maze.print()
 

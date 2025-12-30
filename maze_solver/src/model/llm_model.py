@@ -79,9 +79,11 @@ def _is_valid_name(model_name) -> bool:
 
 def _check_prompt_token_limit(completion_result: CompletionResult, model_name: str):
     prompt_tokens = completion_result.usage.prompt_tokens
+    print("prompt tokens", prompt_tokens)
     if prompt_tokens >= prompt_token_limit[model_name]:
         raise PromptTokenLimit(model_name)
 
 prompt_token_limit: dict[str, int] = {
-            "llama3": 4096
+            "llama3": 4096,
+            "deepseek-r1": 100000
         }
