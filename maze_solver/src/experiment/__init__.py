@@ -139,7 +139,6 @@ def run_experiment(config: ExperimentConfig):
                     solved_mazes += 1
                 else:
                     log((tab * 3) + "maze not solved...")
-                log(str(maze_solver.get_statistics()))
                 log_time(3, f"maze {i}", start_maze)
                 os.makedirs(results_dir, exist_ok=True)
                 maze_solver.save_run(f"{results_dir}/{i}.yaml", delta_t(start_maze))

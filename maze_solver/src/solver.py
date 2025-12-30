@@ -1,8 +1,6 @@
 """
 A class that uses an LLM model to solve a maze.
 """
-from typing import Any
-
 from maze import Maze
 from model import Model
 
@@ -35,9 +33,6 @@ class MazeSolver:
         self.illegal_directions = 0
         self.valid_last_move = False
 
-        # Statistics and tracking
-        self.steps_taken = 0
-
         # Show the initial maze state
         self._print_maze()
 
@@ -54,8 +49,8 @@ class MazeSolver:
 
         if provide_history:
             if self.first_step:
-                self.first_step = False
                 step_prompt += self.prompt.get_preamble(self.maze)
+                self.first_step = False
             elif self.invalid_answer_provided:
                 step_prompt += self.prompt.illegal_answer_warning()
                 self.invalid_answer_provided = False
@@ -90,32 +85,10 @@ class MazeSolver:
 
         self.valid_last_move = self.maze.move(Direction.from_coordinate(move))
         if self.valid_last_move:
-            self.steps_taken += 1
-
             is_solved = self.maze.solved
             if is_solved:
-                self._print_message(f"🎉 Maze solved in {self.steps_taken} steps!")
+                self._print_message(f"Maze solved!")
             self._print_maze()
-
-    def get_statistics(self) -> dict[str, Any]:
-        """
-        Get statistics about the maze solving progress.
-
-        Returns:
-            Dict with statistics
-        """
-        return {
-            "steps_taken": self.steps_taken,
-            "moves_history": self.maze.decisions,
-            "is_solved": self.is_solved(),
-            "start_position": self.maze.start,
-            "end_position": self.maze.target,
-            "current_position": self.maze.position,
-            "maze_dimension": self.maze.size,
-            "unique_positions_visited": len(set(self.maze.path)),
-            "illegal_directions": self.illegal_directions,
-            "illegal_responses": self.illegal_responses,
-        }
 
     def is_solved(self) -> bool:
         """
