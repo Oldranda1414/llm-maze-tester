@@ -41,7 +41,7 @@ class Experiment:
         # Organize runs by maze size
         runs_by_size = defaultdict(list)
         for run in self.runs:
-            size = run.maze_dimension
+            size = run.maze_size
             runs_by_size[size].append(run)
 
         # Print stats per maze size
@@ -108,7 +108,6 @@ def compute_stats(run_list):
         "total_execution_time": total_execution,
         "mean_step_execution_time": mean_step_execution_time,
     }
-
 
 def run_experiment(config: ExperimentConfig):
     timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")

@@ -53,7 +53,7 @@ class Run:
         return self._maze.position
 
     @property
-    def maze_dimension(self) -> int:
+    def maze_size(self) -> int:
         return self._maze.size
 
     @property

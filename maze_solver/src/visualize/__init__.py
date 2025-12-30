@@ -30,7 +30,7 @@ def visualize_run(run: Run):
         <table style="width: 100%;">
             <tr>
                 <td><strong>Maze Dimension:</strong></td>
-                <td>{run.maze_dimension}x{run.maze_dimension}</td>
+                <td>{run.maze_size}x{run.maze_size}</td>
                 <td><strong>Start Position:</strong></td>
                 <td>{run.start_position}</td>
             </tr>
