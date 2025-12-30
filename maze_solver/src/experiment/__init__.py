@@ -13,8 +13,6 @@ from experiment.utils import delta_t, log_time, tab
 from experiment.log import log
 
 from maze.factory import create_dataset
-from prompt import PromptGenerator
-from prompt.style.narrative import NarrativeStyle
 from solver import MazeSolver
 
 class Experiment:
