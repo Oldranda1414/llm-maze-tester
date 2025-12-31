@@ -418,6 +418,12 @@ mean_step_execution_time: 00:00:00
 Although good results in the smaller maze sizes seem discouraging it is clear from the 0% solved in the 6x6 maze that the limits are correctly imposed.
 Even experiments with no prompt history provided have demonstrate clearly improved efficacy, showing that some reasoning is present even without providing the prompt history
 
+## deepseek base experiment
+
+reference commit:
+
+Only a basic run with 3x3 maze using deepseek model. This is to test if the current code is well implemented to use deepseek as a model.
+
 ## Summary table
 
 | Date   | Hit Rate (3×3) | Hit Rate (4×4) | Hit Rate (5×5) | Hit Rate (6×6) | Overall Hit Rate |

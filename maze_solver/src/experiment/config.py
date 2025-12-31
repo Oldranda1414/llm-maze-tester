@@ -1,9 +1,9 @@
 from dataclasses import dataclass
 
 from model import Model
-from model.factory import random_model
+from model.factory import llm_model
 from prompt import PromptGenerator
-from prompt.style.empty import EmptyStyle
+from prompt.style.narrative import NarrativeStyle
 
 @dataclass(frozen=True)
 class ExperimentConfig:
@@ -16,11 +16,11 @@ class ExperimentConfig:
 
 def load_config() -> ExperimentConfig:
     models = [
-        random_model('llama3')
+        llm_model('deepseek-r1')
     ]
-    prompt_generator = PromptGenerator(EmptyStyle())
+    prompt_generator = PromptGenerator(NarrativeStyle())
     maze_sizes = [
-        3, 4, 5, 6
+        3
     ]
     iterations = 10
     provide_history = True
