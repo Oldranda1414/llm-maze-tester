@@ -85,5 +85,5 @@ def _check_prompt_token_limit(completion_result: CompletionResult, model_name: s
 
 prompt_token_limit: dict[str, int] = {
             "llama3": 4096,
-            "deepseek-r1": 100000
-        }
+            "deepseek-r1": 4096,
+}
