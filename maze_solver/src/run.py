@@ -6,6 +6,7 @@ from maze.factory import maze_from_yaml
 from maze.core.coordinate import Coordinate
 from maze.core.direction import Direction
 from chat_history import Exchange
+from util import extract_direction
 
 class Run:
     def __init__(self, maze: Maze, chat_history: ChatHistory, illegal_directions: int, illegal_responses: int, execution_time: float):
@@ -92,7 +93,7 @@ class Run:
 def set_path(maze: Maze, chat: list[Exchange]) -> Maze:
     maze.reset()
     for e in chat:
-        response = e.response[-1].upper()
+        response = extract_direction(e.response)
         if response in ["W","N","E","S"]:
             next_move = Direction.from_coordinate(response)
             maze.move(next_move)

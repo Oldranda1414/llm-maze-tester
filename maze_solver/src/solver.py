@@ -1,8 +1,6 @@
 """
 A class that uses an LLM model to solve a maze.
 """
-import re
-
 from maze import Maze
 from model import Model
 
@@ -10,6 +8,7 @@ from maze.core.direction import Direction
 
 from prompt import PromptGenerator
 from run import Run
+from util import extract_direction
 
 class MazeSolver:
     """
@@ -70,7 +69,7 @@ class MazeSolver:
         self._print_message(f"available_directions: {available_directions}")
 
         move = None
-        decision = self.extract_direction(response)
+        decision = extract_direction(response)
         if decision in ["N", "S", "W", "E"]:
             if decision in [direction.to_coordinate() for direction in available_directions]:
                 move = decision
@@ -102,20 +101,7 @@ class MazeSolver:
         return self.maze.solved
 
     def save_run(self, path: str, execution_time: float) -> None:
-        # print("maze solver: printing chat history")
-        # print(self.model.history)
         Run(self.maze, self.model.history, self.illegal_directions, self.illegal_responses, execution_time).save(path)
-
-    def extract_direction(self, response: str) -> str | None:
-        if not response:
-            return None
-
-        # Look for a single direction letter at the end (optionally wrapped in punctuation)
-        match = re.search(r"\b([NSEW])\b\s*$", response.strip(), re.IGNORECASE)
-        if match:
-            return match.group(1).upper()
-
-        return None
 
     def _print_maze(self):
         if not self._quiet:
