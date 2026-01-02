@@ -5,6 +5,7 @@ from datetime import datetime
 from collections import defaultdict
 import statistics
 
+from error.model import PromptTokenLimit
 from util import seconds_to_padded_time
 from run import Run
 
@@ -128,9 +129,12 @@ def run_experiment(config: ExperimentConfig):
                 while not maze_solver.is_solved() and step < max_steps:
                     try:
                         maze_solver.step(config.provide_history)
+                        step += 1
+                    except PromptTokenLimit:
+                        break
                     except Exception:
                         logging.error("Exception occurred", exc_info=True)
-                    step += 1
+                        break
                 if maze_solver.is_solved():
                     log((tab * 3) + "maze solved!")
                     solved_mazes += 1

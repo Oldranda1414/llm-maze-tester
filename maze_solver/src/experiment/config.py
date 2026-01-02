@@ -22,7 +22,7 @@ def load_config() -> ExperimentConfig:
     maze_sizes = [
         3
     ]
-    iterations = 10
+    iterations = 1
     provide_history = True
     quiet = True
     return ExperimentConfig(models, prompt_generator, maze_sizes, iterations, provide_history, quiet)
