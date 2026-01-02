@@ -1,4 +1,7 @@
+from maze.factory import create_maze
 from model.factory import llm_model
+from prompt import PromptGenerator
+from prompt.style.narrative import NarrativeStyle
 
 def run():
     """Main function to run the llm-maze-tester."""
@@ -9,10 +12,12 @@ def run():
 
     print("\n--- Testing model COT ---")
 
-    cot_prompt = "I want you to explain quantum physics to me. Think through your process, consider in what order you should explain things and then start explaining"
-    print(f"\nPrompt: {cot_prompt}")
-    cot_response = model.ask(cot_prompt)
-    print(f"Response: {cot_response}")
+    prompt_gen = PromptGenerator(NarrativeStyle())
+    maze = create_maze()
+    prompt = prompt_gen.get_preamble(maze) + prompt_gen.step_prompt(maze)
+    print(f"\nPrompt: {prompt}")
+    response = model.ask(prompt)
+    print(f"Response: {response}")
 
     print("\n--- Testing model interactions ---")
     model.reset_history()
