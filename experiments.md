@@ -421,7 +421,6 @@ Even experiments with no prompt history provided have demonstrate clearly improv
 ## deepseek base experiment
 
 reference commit:
-87be992919254ccdd01dc8013d4298dc20221a3e
 
 Only a basic run with 3x3 maze using deepseek model. This is to test if the current code is well implemented to use deepseek as a model.
 

@@ -4,7 +4,7 @@ def run():
     """Main function to run the llm-maze-tester."""
     print("Testing LLM model wrapper...")
 
-    model_name = "llama3"
+    model_name = "deepseek-r1"
     print(f"Initializing model: {model_name}")
 
     model = llm_model(model_name)
