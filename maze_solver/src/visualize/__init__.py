@@ -7,7 +7,7 @@ from IPython.display import display, clear_output
 
 from run import Run
 from chat_history import Exchange
-from util import seconds_to_padded_time
+from util import seconds_to_padded_time, set_path
 from maze import Maze
 from maze.output import draw_maze
 from maze.core.direction import Direction
@@ -79,7 +79,7 @@ def visualize_run(run: Run):
         with maze_out:
             clear_output(wait=True)
             partial_maze = deepcopy(maze)
-            partial_maze = set_path(partial_maze, step_idx, chat)
+            partial_maze = set_path(partial_maze, chat, step_idx)
             draw_maze(partial_maze, show_path=True)
             plt.show()
 
@@ -104,13 +104,4 @@ def visualize_run(run: Run):
     )
 
     display(stats_html, maze_out, msg_out)
-
-def set_path(maze: Maze, step_idx: int, chat: list[Exchange]) -> Maze:
-    maze.reset()
-    for i in range(step_idx):
-        response = chat[i].response[-1].upper()
-        if response in ["W", "N", "E", "S"]:
-            next_move = Direction.from_coordinate(response)
-            maze.move(next_move)
-    return maze
 

@@ -4,9 +4,7 @@ from chat_history import ChatHistory
 from maze import Maze
 from maze.factory import maze_from_yaml
 from maze.core.coordinate import Coordinate
-from maze.core.direction import Direction
-from chat_history import Exchange
-from util import extract_direction
+from util import set_path
 
 class Run:
     def __init__(self, maze: Maze, chat_history: ChatHistory, illegal_directions: int, illegal_responses: int, execution_time: float):
@@ -89,13 +87,4 @@ class Run:
         chat_history = ChatHistory.from_yaml(chat_data)
 
         return cls(maze, chat_history, i_d, i_r, execution_time)
-
-def set_path(maze: Maze, chat: list[Exchange]) -> Maze:
-    maze.reset()
-    for e in chat:
-        response = extract_direction(e.response)
-        if response in ["W","N","E","S"]:
-            next_move = Direction.from_coordinate(response)
-            maze.move(next_move)
-    return maze
 
