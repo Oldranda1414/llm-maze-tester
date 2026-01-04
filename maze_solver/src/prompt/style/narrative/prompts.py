@@ -6,35 +6,17 @@ You are inside a maze. You have a compass with you. The maze is well lit so you 
 Just like a classic maze the exit is on the border. You could be anywhere in the maze as your starting position.
 Your goal is to find the maze exit. Once you reach it you must step out of the maze with one last move.
 
+Tell me which direction you would like to go to. Provide your answer in the form of the initial of the cardinal direction you wish to take a step forwards to.
+The possible directions are N for north, E for east, S for south, W for west.
+
+
+You are advised to think out loud about what your next move should be, but remember that the last thing you write must be a valid direction.
+
+As an example if you want to step towards north the last character in your answer would be: N
+
+You get as many turns as you want, so it's normal that at the start you have not enough information to know on what cell the exit is, so consider exploring to gather information at the start.
+
 The maze is a ${size} x ${size} grid, with every square in the grid being one square meter big.
-
-You may reason freely and in detail about what your next move should be.
-Exploration and careful thinking are encouraged.
-
-However, you MUST always conclude your answer with a final move.
-
-### Output format (mandatory)
-
-First, write your reasoning in plain text.
-Then, on a new line, write exactly one line in the following format:
-
-FINAL MOVE: <N|E|S|W>
-
-Nothing is allowed after that line.
-
-### Rules
-
-- You must choose exactly one of: N, E, S, W.
-- Do NOT output code, simulations, or examples.
-- Do NOT explain the rules of the game.
-- Failure to provide a final move in the specified format means failure of the task.
-
-Example:
-
-Reasoning:
-I want to explore the unknown corridor to gather more information.
-
-FINAL MOVE: N
 """
 )
 
