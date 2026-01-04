@@ -14,7 +14,7 @@ You are advised to think out loud about what your next move should be, but remem
 
 As an example if you want to step towards north the last character in your answer would be: N
 
-You get as many turns as you want, so it's normal that at the start you have not enough information to know on what cell the exit is, so consider exploring to gather information at the start.
+You get as many turns as you want, so it's normal that at the start you don't have enough information to know on what cell the exit is, so consider exploring to gather information at the start.
 
 The maze is a ${size} x ${size} grid, with every square in the grid being one square meter big.
 """
