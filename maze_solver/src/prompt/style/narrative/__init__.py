@@ -38,8 +38,11 @@ class NarrativeStyle(PromptStyle):
         return desc + prompts.options
 
     def steps_summary(self, maze: Maze):
-        decisions = ", ".join(str(d) for d in maze.decisions)
-        return prompts.steps_summary.substitute(decisions=decisions)
+        decisions = maze.decisions
+        if len(decisions) == 0:
+            return ""
+        string_decisions = ", ".join(str(d) for d in decisions)
+        return prompts.steps_summary.substitute(decisions=string_decisions)
 
     def step_epilogue(self, maze: Maze):
         directions = ", ".join(d.to_coordinate() for d in maze.available_directions())
