@@ -1,5 +1,6 @@
 # TODOS
 
+- remove litellm, call ollama directly, with '/set nothink'
 - prompt
     - history max length
     - add reminder on legal output format in every step prompt
@@ -43,4 +44,28 @@ This seems to be confirmed by the mean step execution times (15s for the first e
 Now the program throws an exception when prompt length is over the limit, although this is known only after the model returns it's response.
 Also it seems that the end of the prompt is truncated, and not the start of the prompt as expected.
 Further tests with prompt history will be done.
+
+### Working ds prompt
+
+The following preamble worked with deepseek-r1
+
+You are inside a maze. You have a compass with you. The maze is well lit so you can see in all directions how long the corridors are.
+Just like a classic maze the exit is on the border. You could be anywhere in the maze as your starting position.
+Your goal is to find the maze exit. Once you reach it you must step out of the maze with one last move.
+
+Tell me which direction you would like to go to. Provide your answer in the form of the initial of the cardinal direction you wish to take a step forwards to.
+The possible directions are N for north, E for east, S for south, W for west.
+
+As an example if you want to step towards north the last character in your answer would be: N
+
+You get as many turns as you want, so it's normal that at the start you don't have enough information to know on what cell the exit is, so consider exploring to gather information at the start.
+
+The maze is a 3 x 3 grid, with every square in the grid being one square meter big.
+
+Due North there is a wall. You can't step in that direction.
+Due East there is a wall. You can't step in that direction.
+Due South there is a corridor that goes on for two meters before encountering a wall. Although the corridor ends with a wall, you notice that some of the lateral paths along the way are open so it isn't a dead end.
+Due West there is a wall. You can't step in that direction.
+Your possible moves are: S.
+What is your next move?
 
