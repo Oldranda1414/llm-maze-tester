@@ -1,8 +1,7 @@
 import sys
-import os
 from typing import Callable
 
-from experiment import Experiment
+from experiment import Experiment, experiment_list
 from stats.experiment import print_experiment_stats
 
 def help():
@@ -33,12 +32,6 @@ def commands() -> dict[str, Callable]:
         "last": last,
         "list": print_experiment_list
     }
-
-def experiment_list():
-    experiments = [d for d in os.listdir('results') if os.path.isdir(os.path.join('results', d))]
-    experiments.remove("logs")
-    experiments.sort()
-    return experiments if experiments else []
 
 def main() -> None:
     if len(sys.argv) == 1:

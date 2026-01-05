@@ -64,3 +64,10 @@ def run_experiment(config: ExperimentConfig):
             log(f"solved mazes / attempted mazes: {solved_mazes}/{config.iterations}")
         log_time(1, f"model {model.name}", start_model)
 
+
+def experiment_list():
+    experiments = [d for d in os.listdir('results') if os.path.isdir(os.path.join('results', d))]
+    experiments.remove("logs")
+    experiments.sort()
+    return experiments if experiments else []
+
