@@ -23,7 +23,7 @@ def extract_direction(response: str) -> str | None:
     return None
 
 def set_path(maze: Maze, chat: list[Exchange], step_index: int | None = None) -> Maze:
-    if not step_index:
+    if step_index is None:
         step_index = len(chat)
     maze.reset()
     for i in range(step_index):
