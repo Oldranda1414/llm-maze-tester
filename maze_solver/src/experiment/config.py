@@ -20,9 +20,9 @@ def load_config() -> ExperimentConfig:
     ]
     prompt_generator = PromptGenerator(NarrativeStyle())
     maze_sizes = [
-        3
+        3, 4, 5, 6
     ]
-    iterations = 1
+    iterations = 10
     provide_history = True
     quiet = True
     return ExperimentConfig(models, prompt_generator, maze_sizes, iterations, provide_history, quiet)
