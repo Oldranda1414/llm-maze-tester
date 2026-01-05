@@ -6,11 +6,8 @@ from ipywidgets import interact, IntSlider, HTML, Output
 from IPython.display import display, clear_output
 
 from run import Run
-from chat_history import Exchange
 from util import seconds_to_padded_time, set_path
-from maze import Maze
 from maze.output import draw_maze
-from maze.core.direction import Direction
 
 def format_text(text: str) -> str:
     return html.escape(text).replace("\n", "<br>")
