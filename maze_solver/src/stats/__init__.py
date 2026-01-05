@@ -3,6 +3,7 @@ import os
 from typing import Callable
 
 from experiment import Experiment
+from stats.experiment import print_experiment_stats
 
 def help():
     print("If first argument is not a command, it must be a valid experiment date")
@@ -24,7 +25,7 @@ def default(dates: list[str]):
             print(f"Provided date ({date}) is not a valid experiment date")
             print_experiment_list()
             return
-        Experiment(date).print_experiment_stats()
+        print_experiment_stats(Experiment(date))
 
 def commands() -> dict[str, Callable]:
     return {
