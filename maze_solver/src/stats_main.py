@@ -12,18 +12,19 @@ def help():
     print("   help: print help message")
 
 def last():
-    default(experiment_list()[-1])
+    default([experiment_list()[-1]])
 
 def print_experiment_list():
     print('Available experiments:')
     print("\n".join(experiment_list()))
 
-def default(date: str):
-    if date not in experiment_list():
-        print(f"Provided date ({date}) is not a valid experiment date")
-        print_experiment_list()
-        return
-    Experiment(date).print_experiment_stats()
+def default(dates: list[str]):
+    for date in dates:
+        if date not in experiment_list():
+            print(f"Provided date ({date}) is not a valid experiment date")
+            print_experiment_list()
+            return
+        Experiment(date).print_experiment_stats()
 
 def commands() -> dict[str, Callable]:
     return {
@@ -43,11 +44,12 @@ def main() -> None:
         help()
         return
 
-    arg = sys.argv[1]
-    if arg in commands().keys():
-        commands()[arg]()
+    args = sys.argv[1:]
+    if len(args) == 1 and args[0] in commands().keys():
+        commands()[args[0]]()
     else:
-        default(arg)
+        default(args)
 
 if __name__ == "__main__":
     main()
+
