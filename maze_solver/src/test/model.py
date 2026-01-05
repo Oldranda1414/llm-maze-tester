@@ -5,7 +5,7 @@ from prompt.style.narrative import NarrativeStyle
 
 def run():
     """Main function to run the llm-maze-tester."""
-    model_name = "deepseek-r1"
+    model_name = "llama3"
     print(f"Initializing model: {model_name}")
 
     model = llm_model(model_name)
