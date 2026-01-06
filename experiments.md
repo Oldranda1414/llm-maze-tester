@@ -418,12 +418,22 @@ mean_step_execution_time: 00:00:00
 Although good results in the smaller maze sizes seem discouraging it is clear from the 0% solved in the 6x6 maze that the limits are correctly imposed.
 Even experiments with no prompt history provided have demonstrate clearly improved efficacy, showing that some reasoning is present even without providing the prompt history
 
-## deepseek base experiment
+## deepseek base experiment (2026-01-05_10:34:45)
 
 reference commit:
-TODO set this when a positive result is obtained
+5774b651687d4f4048caae224ce94562fafc705c
 
-Only a basic run with 3x3 maze using deepseek model. This is to test if the current code is well implemented to use deepseek as a model.
+Only a basic run using deepseek model. This is to test if the current code is well implemented to use deepseek as a model.
+
+The results are not very good. Exploring the responses it seems clear that the model is reasoning well, but not providing a well formatted response.
+
+## deepseek with dumb response parsing
+
+reference commit:
+TODO add this here
+
+To attempt to give deepseek a better chance, the response is parsed by checking for capital letter coordinates (N,S,W,E) or full name coordinates (North, South, West, East).
+The first occurrence of a coordinate name or capitalized initial, starting from the end of the response going backwards, is the defined move.
 
 ## Summary table
 
