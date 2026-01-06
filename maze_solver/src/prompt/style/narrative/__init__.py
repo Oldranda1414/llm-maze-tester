@@ -11,6 +11,9 @@ class NarrativeStyle(PromptStyle):
     def preamble(self, maze: Maze):
         return prompts.preamble.substitute(size=maze.size)
 
+    def response_rules(self) -> str:
+        return prompts.response_rules
+
     def describe_direction(self, direction: Direction, maze: Maze) -> str:
 
         facts = extract(direction, maze)

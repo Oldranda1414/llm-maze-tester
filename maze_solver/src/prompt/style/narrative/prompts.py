@@ -9,16 +9,19 @@ Your goal is to find the maze exit. Once you reach it you must step out of the m
 Tell me which direction you would like to go to. Provide your answer in the form of the initial of the cardinal direction you wish to take a step forwards to.
 The possible directions are N for north, E for east, S for south, W for west.
 
+The maze is a ${size} x ${size} grid, with every square in the grid being one square meter big.
+
+Tell me which direction you would like to go to. Provide your answer in the form of the initial of the cardinal direction you wish to take a step forwards to.
+The possible directions are N for north, E for east, S for south, W for west.\n
+"""
+)
+
+response_rules = """
 
 You are advised to think out loud about what your next move should be, but remember that the last thing you write must be a valid direction.
 
-As an example if you want to step towards north the last character in your answer would be: N
-
-You get as many turns as you want, so it's normal that at the start you don't have enough information to know on what cell the exit is, so consider exploring to gather information at the start.
-
-The maze is a ${size} x ${size} grid, with every square in the grid being one square meter big.
+As an example if you want to step towards north the last character in your answer would be: N\n
 """
-)
 
 direction = Template("Due ${direction} ")
 

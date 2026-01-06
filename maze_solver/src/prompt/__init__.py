@@ -8,7 +8,7 @@ class PromptGenerator:
         self.style = style
 
     def get_preamble(self, maze: Maze) -> str:
-        return self.style.preamble(maze)
+        return self.style.preamble(maze) + self.style.response_rules()
 
     def step_prompt(self, maze: Maze) -> str:
         parts = []
@@ -17,9 +17,10 @@ class PromptGenerator:
 
         return (
             "\n".join(parts)
-            + "\n"
+            + "\n\n"
             + self.style.steps_summary(maze)
             + self.style.step_epilogue(maze)
+            + self.style.response_rules()
         )
 
     def last_move_info(self, maze: Maze) -> str:
