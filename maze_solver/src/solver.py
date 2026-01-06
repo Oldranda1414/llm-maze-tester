@@ -4,8 +4,6 @@ A class that uses an LLM model to solve a maze.
 from maze import Maze
 from model import Model
 
-from maze.core.direction import Direction
-
 from prompt import PromptGenerator
 from run import Run
 from util import extract_direction
@@ -70,8 +68,8 @@ class MazeSolver:
 
         move = None
         decision = extract_direction(response)
-        if decision in ["N", "S", "W", "E"]:
-            if decision in [direction.to_coordinate() for direction in available_directions]:
+        if decision:
+            if decision in available_directions:
                 move = decision
             else:
                 self._print_message(f"model provided an illegal direction: {decision}")
@@ -84,7 +82,7 @@ class MazeSolver:
         if move is None:
             return
 
-        self.valid_last_move = self.maze.move(Direction.from_coordinate(move))
+        self.valid_last_move = self.maze.move(move)
         if self.valid_last_move:
             is_solved = self.maze.solved
             if is_solved:

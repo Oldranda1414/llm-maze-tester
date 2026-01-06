@@ -11,14 +11,42 @@ def seconds_to_padded_time(seconds: float) -> str:
     
     return f"{hours:02d}:{minutes:02d}:{remaining_seconds:02d}"
 
-def extract_direction(response: str) -> str | None:
+def extract_direction(response: str) -> Direction | None:
     if not response:
         return None
 
-    # Look for a single direction letter at the end (optionally wrapped in punctuation)
-    match = re.search(r"\b([NSEW])\b\s*$", response.strip(), re.IGNORECASE)
-    if match:
-        return match.group(1).upper()
+    # Matches either:
+    #  - single-letter coordinates: N S E W
+    #  - full words: north south east west
+    #
+    # Ensures they are delimited by whitespace or punctuation
+    pattern = re.compile(
+        r"""
+        (?<!\w)                    # not preceded by a word char
+        (
+            N|S|E|W
+            |north|south|east|west
+        )
+        (?!\w)                     # not followed by a word char
+        """,
+        re.IGNORECASE | re.VERBOSE,
+    )
+
+    matches = list(pattern.finditer(response))
+    if not matches:
+        return None
+
+    last = matches[-1].group(1).lower()
+
+    # Normalize to Direction
+    if last in {"n", "north"}:
+        return Direction.NORTH
+    if last in {"e", "east"}:
+        return Direction.EAST
+    if last in {"s", "south"}:
+        return Direction.SOUTH
+    if last in {"w", "west"}:
+        return Direction.WEST
 
     return None
 
@@ -28,8 +56,8 @@ def set_path(maze: Maze, chat: list[Exchange], step_index: int | None = None) ->
     maze.reset()
     for i in range(step_index):
         response = extract_direction(chat[i].response)
-        if response in ["W","N","E","S"]:
-            next_move = Direction.from_coordinate(response)
+        if response is not None:
+            next_move = response
             maze.move(next_move)
     return maze
 
