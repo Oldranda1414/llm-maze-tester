@@ -2,6 +2,8 @@ import sys
 import os
 import importlib.util
 
+from error.maze_solver import MazeSolverError
+
 def main():
     test_dir = 'maze_solver/src/test/'
 

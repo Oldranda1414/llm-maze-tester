@@ -1,26 +1,16 @@
-from maze.factory import create_maze
 from model.factory import llm_model
-from prompt import PromptGenerator
-from prompt.style.narrative import NarrativeStyle
 
 def run():
     """Main function to run the llm-maze-tester."""
+
     model_name = "llama3"
+    system_prompt = "you are a helpfull assistant"
     print(f"Initializing model: {model_name}")
 
     model = llm_model(model_name)
-
-    print("\n--- Testing model COT ---")
-
-    prompt_gen = PromptGenerator(NarrativeStyle())
-    maze = create_maze()
-    prompt = prompt_gen.get_preamble(maze) + prompt_gen.step_prompt(maze)
-    print(f"\nPrompt: {prompt}")
-    response = model.ask(prompt)
-    print(f"Response: {response}")
+    model.set_system_prompt(system_prompt)
 
     print("\n--- Testing model interactions ---")
-    model.reset_history()
     prompt1 = "What is the capital of France?"
     print(f"\nPrompt: {prompt1}")
     response1 = model.ask(prompt1)
