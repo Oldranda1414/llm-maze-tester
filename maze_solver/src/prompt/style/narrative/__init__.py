@@ -14,6 +14,9 @@ class NarrativeStyle(PromptStyle):
     def response_rules(self) -> str:
         return prompts.response_rules
 
+    def strategy_hint(self) -> str:
+        return prompts.strategy_hint
+
     def describe_direction(self, direction: Direction, maze: Maze) -> str:
 
         facts = extract(direction, maze)

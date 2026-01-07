@@ -20,6 +20,7 @@ class PromptGenerator:
             + "\n\n"
             + self.style.steps_summary(maze)
             + self.style.step_epilogue(maze)
+            + self.style.strategy_hint()
             + self.style.response_rules()
         )
 

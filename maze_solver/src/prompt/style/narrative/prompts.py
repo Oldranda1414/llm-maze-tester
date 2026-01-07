@@ -17,10 +17,13 @@ The possible directions are N for north, E for east, S for south, W for west.\n
 )
 
 response_rules = """
-
 You are advised to think out loud about what your next move should be, but remember that the last thing you write must be a valid direction.
 
 As an example if you want to step towards north the last character in your answer would be: N\n
+"""
+
+strategy_hint = """
+Try to analize your last moves and avoid repeating patterns (such as [north, south, north, ...] and [west, east, west, ...] as they do not lead to improvements in finding the exit.\n
 """
 
 direction = Template("Due ${direction} ")
