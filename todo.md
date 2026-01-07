@@ -1,18 +1,23 @@
 # TODOS
 
 - prompt
-    - history max length
     - add reminder on legal output format in every step prompt
+    - have steps_summary provide last n steps, passing n as an argument
+- stats:
+    - turn stats into methods for the experiments, not only a print time calculation
+    - remove unsuccessfull attempts from stats (as they only dirty the results)
+    - Programmatically create summary tables
+- experiments:
+    - try an experiment removing the prompt history with deepseek
+
+## minor:
+
+- check and understand history max length
 - check the context length:
     understand context length limits
 - add full messages history passed per exchange in the chat_history object and visualizer
 - maze filter:
     if 100 attempts at start and target generation fail, change the structure of the maze itself as it could simply be a lattice maze with no elegible start and target for the given filter
-- stats:
-    turn stats into methods for the experiments, not only a print time calculation
-
-- experiments:
-    try to provide the 'expected response explanation and example' in every prompt, not just the preamble, and verify if illegal moves perc decreases
 
 ## bugs:
 

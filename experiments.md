@@ -1,13 +1,13 @@
 # Experiments
 
-The folliwing details the approaches taken for the Experiments
+The following details the approaches taken for the Experiments
 
 ## 2025-11-12_16:55:10
 
 reference commit:
 5992960026932015ca81ffa6fa3ca4c0e6e8056a
 
-The goal is to test if illigal_direction numbers lower when providing the available directions explicitly
+The goal is to test if illegal_direction numbers lower when providing the available directions explicitly
 
 Full history passed.
 
@@ -427,23 +427,16 @@ Only a basic run using deepseek model. This is to test if the current code is we
 
 The results are not very good. Exploring the responses it seems clear that the model is reasoning well, but not providing a well formatted response.
 
-## deepseek with dumb response parsing
+## improve system prompt
 
 reference commit:
 TODO add this here
 
-To attempt to give deepseek a better chance, the response is parsed by checking for capital letter coordinates (N,S,W,E) or full name coordinates (North, South, West, East).
-The first occurrence of a coordinate name or capitalized initial, starting from the end of the response going backwards, is the defined move.
+This is to test the importance of the system prompt.
+The preamble is passed as a system prompt. The steps info are provided in a plain and simple way, with no real help.
 
-Also to try and avoid illegal responses, a reminder on the correct type of response is passed with every step:
-
-```py
-"""
-You are advised to think out loud about what your next move should be, but remember that the last thing you write must be a valid direction.
-
-As an example if you want to step towards north the last character in your answer would be: N
-"""
-```
+### Goal
+This is an attempt of resetting all prompt innovations, and test the usage of the system prompt.
 
 ## Summary table
 

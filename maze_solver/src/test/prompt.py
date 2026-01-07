@@ -1,13 +1,14 @@
 from maze.core.direction import Direction
 from maze.factory import create_maze, create_dataset
 from prompt import PromptGenerator
+from prompt.config import PromptConfig
 from prompt.style.narrative import NarrativeStyle
 
 def run():
     maze_size = 3
     sight_depth = 3
     maze = create_maze(size=maze_size, sight_depth=sight_depth)
-    pg = PromptGenerator(NarrativeStyle())
+    pg = PromptGenerator(NarrativeStyle(), PromptConfig(True, True))
     print(pg.get_preamble(maze))
 
     while not maze.solved:
@@ -32,7 +33,7 @@ def run():
 def many_maze():
     sight_depth = 3
     mazes = create_dataset(10,3, sight_depth).mazes
-    pg = PromptGenerator(NarrativeStyle())
+    pg = PromptGenerator(NarrativeStyle(), PromptConfig(False, False))
     for maze in mazes:
         print(pg.get_preamble(maze))
 

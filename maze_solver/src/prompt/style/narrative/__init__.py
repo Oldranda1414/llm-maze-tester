@@ -8,19 +8,11 @@ from prompt.util import length_to_string
 
 class NarrativeStyle(PromptStyle):
 
-    def preamble(self, maze: Maze):
+    def preamble(self, maze: Maze) -> str:
         return prompts.preamble.substitute(size=maze.size)
 
-    def response_rules(self) -> str:
-        return prompts.response_rules
-
-    def strategy_hint(self) -> str:
-        return prompts.strategy_hint
-
     def describe_direction(self, direction: Direction, maze: Maze) -> str:
-
         facts = extract(direction, maze)
-
         base = prompts.direction.substitute(direction=str(direction))
 
         if facts.exit_distance and facts.exit_distance < maze.sight_depth:
@@ -43,16 +35,19 @@ class NarrativeStyle(PromptStyle):
 
         return desc + prompts.options
 
-    def steps_summary(self, maze: Maze):
+    def steps_summary(self, maze: Maze)-> str:
         decisions = maze.decisions
         if len(decisions) == 0:
             return ""
         string_decisions = ", ".join(str(d) for d in decisions)
         return prompts.steps_summary.substitute(decisions=string_decisions)
 
-    def step_epilogue(self, maze: Maze):
+    def step_epilogue(self) -> str:
+        return prompts.step_epilogue
+
+    def possible_moves(self, maze: Maze) -> str:
         directions = ", ".join(d.to_coordinate() for d in maze.available_directions())
-        return prompts.step_epilogue.substitute(directions=directions)
+        return prompts.possible_moves.substitute(directions=directions)
 
     def last_move_info(self, maze: Maze) -> str:
         return prompts.last_move.substitute(direction=maze.decisions[-1])  

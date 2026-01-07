@@ -9,7 +9,7 @@ DEBUG_SYSTEM_PROMPT = "debug system prompt"
 
 class PhonyModel(Model):
 
-    def __init__(self, _: str):
+    def __init__(self):
         self._chat_history = ChatHistory(DEBUG_SYSTEM_PROMPT)
 
     def ask(self, prompt: str, provide_history: bool = True) -> str:

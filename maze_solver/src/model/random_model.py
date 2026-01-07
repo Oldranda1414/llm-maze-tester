@@ -9,7 +9,7 @@ RANDOM_SYSTEM_PROMPT = "random model system prompt"
 
 class RandomModel(Model):
 
-    def __init__(self, _: str):
+    def __init__(self):
         self._chat_history = ChatHistory(RANDOM_SYSTEM_PROMPT)
 
     def ask(self, prompt: str, provide_history: bool = True) -> str:

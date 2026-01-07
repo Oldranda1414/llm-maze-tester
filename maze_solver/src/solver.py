@@ -2,7 +2,7 @@
 A class that uses an LLM model to solve a maze.
 """
 from maze import Maze
-from model import Model
+from model import PartialModel
 
 from prompt import PromptGenerator
 from run import Run
@@ -15,17 +15,14 @@ class MazeSolver:
     to make decisions about which direction to move at each step.
     """
 
-    def __init__(self, model: Model, prompt_generator: PromptGenerator, maze: Maze, quiet: bool = False):
-        if len(model.history.chat) != 0:
-            raise ValueError("model provided to solver has non empty chat history. Reset the chat history before providing the model to the solver")
-
-        self.model = model
+    def __init__(self, partial_model: PartialModel, prompt_generator: PromptGenerator, maze: Maze, quiet: bool = False):
         self.prompt = prompt_generator
         self.maze = maze
+        system_prompt = prompt_generator.get_preamble(maze)
+        self.model = partial_model(system_prompt)
         self._quiet = quiet
 
         # Track last step errors
-        self.first_step = True
         self.invalid_answer_provided = False
         self.illegal_responses = 0
         self.invalid_direction_provided = False
@@ -47,10 +44,7 @@ class MazeSolver:
         step_prompt = ""
 
         if provide_history:
-            if self.first_step:
-                step_prompt += self.prompt.get_preamble(self.maze)
-                self.first_step = False
-            elif self.invalid_answer_provided:
+            if self.invalid_answer_provided:
                 step_prompt += self.prompt.illegal_answer_warning()
                 self.invalid_answer_provided = False
             elif self.invalid_direction_provided:

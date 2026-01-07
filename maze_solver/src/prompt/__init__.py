@@ -1,28 +1,28 @@
 from maze import Maze
 from maze.core.direction import Direction
+from prompt.config import PromptConfig
 from prompt.style import PromptStyle
 
 class PromptGenerator:
 
-    def __init__(self, style: PromptStyle):
+    def __init__(self, style: PromptStyle, config: PromptConfig):
         self.style = style
+        self.config = config
 
     def get_preamble(self, maze: Maze) -> str:
-        return self.style.preamble(maze) + self.style.response_rules()
+        return self.style.preamble(maze)
 
     def step_prompt(self, maze: Maze) -> str:
         parts = []
         for direction in Direction:
             parts.append(self.style.describe_direction(direction, maze))
 
-        return (
-            "\n".join(parts)
-            + "\n\n"
-            + self.style.steps_summary(maze)
-            + self.style.step_epilogue(maze)
-            + self.style.strategy_hint()
-            + self.style.response_rules()
-        )
+        step_prompt = "\n".join(parts)
+        if self.config.provide_steps_summary:
+            step_prompt += self.style.steps_summary(maze)
+        if self.config.provide_possible_moves:
+            step_prompt += self.style.possible_moves(maze)
+        return step_prompt
 
     def last_move_info(self, maze: Maze) -> str:
         return self.style.last_move_info(maze)

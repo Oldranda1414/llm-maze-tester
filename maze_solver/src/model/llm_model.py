@@ -3,7 +3,7 @@ import yaml
 from ollama import chat, RequestError
 
 from error.model import ModelNameError
-from error.generation import ModelTimeoutError
+from error.generation import ModelRequestError
 
 from model import Model, model_names
 
@@ -12,19 +12,17 @@ from model.server import start as start_server
 
 from chat_history import ChatHistory, Exchange
 
-REQUEST_TIMEOUT = 3600
-SYSTEM_PROMPT = "You are a helpful assistant."
-
 class LLMModel(Model):
 
-    def __init__(self, model_name: str):
+    def __init__(self, model_name: str, system_prompt: str):
         if not _is_valid_name(model_name):
             raise ModelNameError(model_name)
         if not is_model_installed(model_name):
             install_model(model_name)
 
         self._name = model_name
-        self._chat_history: ChatHistory = ChatHistory(SYSTEM_PROMPT)
+        self._system_prompt = system_prompt
+        self._chat_history: ChatHistory = ChatHistory(system_prompt)
 
     @property
     def name(self) -> str: return self._name
@@ -47,14 +45,14 @@ class LLMModel(Model):
                         stream=False,
             )
         except RequestError:
-            raise ModelTimeoutError(self._name, REQUEST_TIMEOUT)
+            raise ModelRequestError(self._name)
         raw_response = chat_response.message.content
         response = raw_response if raw_response else ""
         self._chat_history.add_exchange(Exchange(prompt, response))
         return response
 
     def reset_history(self):
-        self._chat_history = ChatHistory(SYSTEM_PROMPT)
+        self._chat_history = ChatHistory(self._system_prompt)
 
     def save_history(self, filepath: str) -> bool:
         try:
