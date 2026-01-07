@@ -435,6 +435,16 @@ TODO add this here
 To attempt to give deepseek a better chance, the response is parsed by checking for capital letter coordinates (N,S,W,E) or full name coordinates (North, South, West, East).
 The first occurrence of a coordinate name or capitalized initial, starting from the end of the response going backwards, is the defined move.
 
+Also to try and avoid illegal responses, a reminder on the correct type of response is passed with every step:
+
+```py
+"""
+You are advised to think out loud about what your next move should be, but remember that the last thing you write must be a valid direction.
+
+As an example if you want to step towards north the last character in your answer would be: N
+"""
+```
+
 ## Summary table
 
 | Date   | Hit Rate (3×3) | Hit Rate (4×4) | Hit Rate (5×5) | Hit Rate (6×6) | Overall Hit Rate |

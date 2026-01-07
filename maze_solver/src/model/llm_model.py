@@ -49,7 +49,6 @@ class LLMModel(Model):
         except RequestError:
             raise ModelTimeoutError(self._name, REQUEST_TIMEOUT)
         raw_response = chat_response.message.content
-        # TODO could add thinking to history
         response = raw_response if raw_response else ""
         self._chat_history.add_exchange(Exchange(prompt, response))
         return response
