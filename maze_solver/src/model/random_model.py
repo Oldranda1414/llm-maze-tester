@@ -25,7 +25,14 @@ class RandomModel(Model):
     @property
     def history(self) -> ChatHistory: return self._chat_history
 
-    def reset_history(self):
+    @property
+    def system_prompt(self) -> str: return RANDOM_SYSTEM_PROMPT
+
+    def set_system_prompt(self, system_prompt: str) -> None:
+        _ = system_prompt
+
+    def reset_model(self, system_prompt: str | None = None):
+        _ = system_prompt
         self._chat_history = ChatHistory(RANDOM_SYSTEM_PROMPT)
 
     def save_history(self, filepath: str) -> bool:

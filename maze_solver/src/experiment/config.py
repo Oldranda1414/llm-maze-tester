@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from model import PartialModel
+from model import Model
 from model.factory import llm_model
 from prompt import PromptGenerator
 from prompt.config import PromptConfig
@@ -8,7 +8,7 @@ from prompt.style.narrative import NarrativeStyle
 
 @dataclass(frozen=True)
 class ExperimentConfig:
-    models: list[PartialModel]
+    models: list[Model]
     prompt_generator: PromptGenerator
     maze_sizes: list[int]
     iterations: int

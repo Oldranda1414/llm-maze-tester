@@ -1,4 +1,4 @@
-from typing import Callable, Protocol, TypeAlias
+from typing import Protocol
 
 from chat_history import ChatHistory
 
@@ -11,13 +11,16 @@ class Model(Protocol):
     @property
     def history(self) -> ChatHistory: ...
 
+    @property
+    def system_prompt(self) -> str: ...
+
+    def set_system_prompt(self, system_prompt: str) -> None: ...
+
     def ask(self, prompt: str, provide_history: bool = True) -> str: ...
 
-    def reset_history(self): ...
+    def reset_model(self, system_prompt: str | None = None): ...
 
     def save_history(self, filepath: str) -> bool: ...
-
-PartialModel: TypeAlias = Callable[[str], Model]
 
 model_names: list[str] = [
             "llama3",

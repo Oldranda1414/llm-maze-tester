@@ -30,3 +30,12 @@ class ModelNotInstalledError(MazeSolverError):
             "To see all installed models run 'just run --list'."
         )
 
+class ModelNotInitializedError(MazeSolverError):
+    def __init__(self, model: str):
+        self.model = model
+
+    def build_message(self) -> tuple[str, ...]:
+        return (
+            f"Model {self.model} is not initialized.",
+            "To initialize the model call model.set_system_prompt()"
+        )

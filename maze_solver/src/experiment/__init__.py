@@ -3,7 +3,6 @@ import logging
 import time
 from datetime import datetime
 
-from error.model import PromptTokenLimit
 from run import Run
 
 from experiment.config import ExperimentConfig
@@ -47,8 +46,6 @@ def run_experiment(config: ExperimentConfig):
                     try:
                         maze_solver.step(config.provide_history)
                         step += 1
-                    except PromptTokenLimit:
-                        break
                     except Exception:
                         logging.error("Exception occurred", exc_info=True)
                         break
