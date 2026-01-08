@@ -91,7 +91,7 @@ class MazeSolver:
         if self.valid_last_move:
             is_solved = self.maze.solved
             if is_solved:
-                self._print_message(f"Maze solved!")
+                self._print_message("Maze solved!")
             self._print_maze()
 
     def is_solved(self) -> bool:

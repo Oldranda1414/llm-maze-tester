@@ -45,11 +45,11 @@ class ChatHistory:
         return result
 
     def to_list(self) -> list[dict[str, str]]:
-        l = [{"role": "system", "content": self.system_prompt}]
+        chat_list = [{"role": "system", "content": self.system_prompt}]
         for exchange in self.chat:
-            l.append({"role": "user", "content": exchange.prompt})
-            l.append({"role": "assistant", "content": exchange.response})
-        return l
+            chat_list.append({"role": "user", "content": exchange.prompt})
+            chat_list.append({"role": "assistant", "content": exchange.response})
+        return chat_list
 
     def to_dict(self):
         return {
