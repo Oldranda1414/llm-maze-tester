@@ -2,8 +2,6 @@ import sys
 import os
 import importlib.util
 
-from error.maze_solver import MazeSolverError
-
 def main():
     test_dir = 'maze_solver/src/test/'
 
@@ -41,6 +39,6 @@ def main():
             sys.exit(1)
         module.run()
     except Exception as e:
-        print(f"Error running test '{filename}': {e}")
+        print(f"Error running test '{filename}':\n{e}")
         sys.exit(1)
 
