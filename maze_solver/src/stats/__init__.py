@@ -3,6 +3,7 @@ from typing import Callable
 
 from experiment import Experiment, experiment_list
 from stats.experiment import print_experiment_stats
+from stats.stats import STATS
 
 
 def help():
@@ -28,7 +29,7 @@ def default(dates: list[str]):
             print(f"Provided date ({date}) is not a valid experiment date")
             print_experiment_list()
             return
-        print_experiment_stats(Experiment(date))
+        print_experiment_stats(Experiment(date), STATS)
 
 
 def commands() -> dict[str, Callable]:

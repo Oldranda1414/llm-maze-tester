@@ -53,7 +53,9 @@ def extract_direction(response: str) -> Direction | None:
     return None
 
 
-def set_path(maze: Maze, chat: list[Exchange], step_index: int | None = None) -> Maze:
+def execute_history(
+    maze: Maze, chat: list[Exchange], step_index: int | None = None
+) -> Maze:
     if step_index is None:
         step_index = len(chat)
     maze.reset()

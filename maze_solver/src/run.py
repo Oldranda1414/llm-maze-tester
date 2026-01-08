@@ -4,7 +4,6 @@ from chat_history import ChatHistory
 from maze import Maze
 from maze.factory import maze_from_yaml
 from maze.core.coordinate import Coordinate
-from util import set_path
 
 
 class Run:
@@ -18,7 +17,6 @@ class Run:
     ):
         self._maze = maze
         self._chat_history = chat_history
-        set_path(self._maze, chat_history.chat)
         self._illegal_directions = illegal_directions
         self._illegal_responses = illegal_responses
         self._execution_time = execution_time

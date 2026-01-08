@@ -5,7 +5,7 @@ from ipywidgets import interact, IntSlider, HTML, Output
 from IPython.display import display, clear_output
 
 from run import Run
-from util import seconds_to_padded_time, set_path
+from util import seconds_to_padded_time, execute_history
 from maze.output import draw_maze
 
 
@@ -76,7 +76,7 @@ def visualize_run(run: Run):
         with maze_out:
             clear_output(wait=True)
             partial_maze = deepcopy(maze)
-            partial_maze = set_path(partial_maze, chat, step_idx)
+            partial_maze = execute_history(partial_maze, chat, step_idx)
             draw_maze(partial_maze, show_path=True)
             plt.show()
 

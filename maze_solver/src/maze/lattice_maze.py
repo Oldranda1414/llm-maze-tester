@@ -81,9 +81,10 @@ class LatticeMaze:
         """Get the current path"""
         return deepcopy(self._path)
 
-    def set_path(self, new_path: list[Coordinate]):
+    def _set_path(self, new_path: list[Coordinate], is_solved: bool = False):
         self._path = new_path
         self._position = new_path[-1]
+        self._solved = is_solved
 
     def move(self, direction: Direction) -> bool:
         if self._solved:
@@ -175,6 +176,7 @@ class LatticeMaze:
             "path": [list(p) for p in self._path],
             "sight_depth": self._sight_depth,
             "size": self._size,
+            "solved": self.solved,
         }
         return yaml.safe_dump(data, sort_keys=False)
 
@@ -193,8 +195,9 @@ class LatticeMaze:
         path = [Coordinate(p) for p in data.get("path", [])]
         sight_depth = data.get("sight_depth", 0)
         size = data.get("size", 0)
+        is_solved = data.get("solved", False)
 
         maze = cls(connection_list, size, start, target, sight_depth)
-        maze.set_path(path)
+        maze._set_path(path, is_solved)
 
         return maze
