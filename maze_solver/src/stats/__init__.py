@@ -2,7 +2,7 @@ import sys
 from typing import Callable
 
 from experiment import Experiment, experiment_list
-from stats.experiment import print_experiment_stats
+from stats.output import print_experiment_stats, print_experiment_comparison
 from stats.stats import STATS
 
 
@@ -24,12 +24,20 @@ def print_experiment_list():
 
 
 def default(dates: list[str]):
-    for date in dates:
+    if len(dates) == 1:
+        date = dates[0]
         if date not in experiment_list():
             print(f"Provided date ({date}) is not a valid experiment date")
             print_experiment_list()
             return
         print_experiment_stats(Experiment(date), STATS)
+    else:
+        for date in dates:
+            if date not in experiment_list():
+                print(f"Provided date ({date}) is not a valid experiment date")
+                print_experiment_list()
+                return
+        print_experiment_comparison([Experiment(date) for date in dates])
 
 
 def commands() -> dict[str, Callable]:

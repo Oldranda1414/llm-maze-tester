@@ -1,12 +1,10 @@
 from collections import defaultdict
-from typing import Any, Callable
 
 from experiment import Experiment
+from stats.types import StatFn
 
-StatFn = Callable[[list], tuple[str, Any]]
 
-
-def print_experiment_stats(experiment: Experiment, stats: list[StatFn]):
+def print_experiment_stats(experiment: Experiment, stats: list[StatFn]) -> None:
     if not experiment.runs:
         print("No runs provided.")
         return
@@ -25,7 +23,10 @@ def print_experiment_stats(experiment: Experiment, stats: list[StatFn]):
 
 def print_stats(runs: list, stats: list[StatFn]):
     for stat in stats:
-        name, value = stat(runs)
-        if isinstance(value, float):
-            value = f"{value:.2f}"
-        print(f"{name}: {value}")
+        statistics = stat(runs)
+        print(f"{statistics.name}: {statistics.value}")
+
+
+def print_experiment_comparison(experiments: list[Experiment]) -> None:
+    # TODO implement this
+    _ = experiments

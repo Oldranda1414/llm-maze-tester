@@ -13,6 +13,10 @@ def seconds_to_padded_time(seconds: float) -> str:
     return f"{hours:02d}:{minutes:02d}:{remaining_seconds:02d}"
 
 
+def format_float(value: float) -> str:
+    return f"{value:.2f}"
+
+
 def extract_direction(response: str) -> Direction | None:
     if not response:
         return None
