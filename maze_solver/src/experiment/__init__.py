@@ -39,7 +39,6 @@ def run_experiment(config: ExperimentConfig):
                 log(f"solving {maze_size}x{maze_size} maze with model {model.name} for {i} time")
                 start_maze = time.time()
                 max_steps = maze_size * maze_size * 10
-                model.reset_model()
                 maze_solver = MazeSolver(model, config.prompt_generator, mazes[i], quiet=config.quiet)
                 step = 0
                 while not maze_solver.is_solved() and step < max_steps:
