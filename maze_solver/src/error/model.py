@@ -1,5 +1,6 @@
 from error.maze_solver import MazeSolverError
 
+
 class ModelNameError(MazeSolverError):
     def __init__(self, model: str):
         self.model = model
@@ -10,6 +11,7 @@ class ModelNameError(MazeSolverError):
             f"Model name '{self.model}' is not a valid model name.\n"
             "To see all valid model names run 'just run --list'."
         )
+
 
 class ModelAlreadyInstalledError(MazeSolverError):
     def __init__(self, model: str):
@@ -22,6 +24,7 @@ class ModelAlreadyInstalledError(MazeSolverError):
             "To see all installed models run 'just run --list'."
         )
 
+
 class ModelNotInstalledError(MazeSolverError):
     def __init__(self, model: str):
         self.model = model
@@ -32,6 +35,7 @@ class ModelNotInstalledError(MazeSolverError):
             f"Model {self.model} is not installed.\n"
             "To see all installed models run 'just run --list'."
         )
+
 
 class ModelNotInitializedError(MazeSolverError):
     def __init__(self, model: str):

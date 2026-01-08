@@ -13,8 +13,8 @@ from model.server import start as start_server
 
 from chat_history import ChatHistory, Exchange
 
-class LLMModel(Model):
 
+class LLMModel(Model):
     def __init__(self, model_name: str):
         if not _is_valid_name(model_name):
             raise ModelNameError(model_name)
@@ -52,15 +52,15 @@ class LLMModel(Model):
 
         messages = list(self._chat_history.to_list())
         if not provide_history:
-            messages = [messages[0]] # keep system prompt
+            messages = [messages[0]]  # keep system prompt
         messages.append({"role": "user", "content": prompt})
 
         try:
             chat_response = chat(
-                        model = self._name,
-                        messages = messages,
-                        think=False,
-                        stream=False,
+                model=self._name,
+                messages=messages,
+                think=False,
+                stream=False,
             )
         except RequestError as e:
             raise ModelRequestError(self._name) from e
@@ -79,12 +79,12 @@ class LLMModel(Model):
         if self._chat_history is None:
             raise ModelNotInitializedError(self.name)
         try:
-            with open(filepath, 'w', encoding='utf-8') as f:
+            with open(filepath, "w", encoding="utf-8") as f:
                 yaml.safe_dump(self._chat_history.to_yaml(), f, sort_keys=False)
             return True
         except (IOError, OSError):
             return False
 
-def _is_valid_name(model_name: str) -> bool: 
-    return model_name in model_names
 
+def _is_valid_name(model_name: str) -> bool:
+    return model_name in model_names

@@ -1,10 +1,12 @@
 from maze.core.coordinate import Coordinate
 from maze.core.direction import Direction, get_offsets
 
+
 def neighbor(cell: Coordinate, direction: Direction) -> Coordinate:
     dr, dc = get_offsets(direction)
     r, c = cell
     return (r + dr, c + dc)
+
 
 def direction(start: Coordinate, target: Coordinate) -> Direction | None:
     """
@@ -27,14 +29,18 @@ def direction(start: Coordinate, target: Coordinate) -> Direction | None:
 
     return None
 
+
 def direction_strict(start: Coordinate, target: Coordinate) -> Direction:
     """
     Returns the direction from start to target if one exists, raises exception otherwise
     """
     d = direction(start, target)
     if d is None:
-        raise ValueError(f"{target} is not adiacent to {start}. Use direction() if adiacency is not guarantied")
+        raise ValueError(
+            f"{target} is not adiacent to {start}. Use direction() if adiacency is not guarantied"
+        )
     return d
+
 
 def exit_direction(exit_cord: Coordinate, maze_size: int) -> Direction:
     """Return the direction where the maze exit is located, based on the target position."""
@@ -48,8 +54,9 @@ def exit_direction(exit_cord: Coordinate, maze_size: int) -> Direction:
         return Direction.WEST
     elif exit_col == maze_size - 1:
         return Direction.EAST
-    
+
     raise ValueError("Exit cell is not on the maze border")
+
 
 def path_to_directions(path: list[Coordinate]) -> list[Direction]:
     """
@@ -76,4 +83,3 @@ def path_to_directions(path: list[Coordinate]) -> list[Direction]:
         directions.append(d)
 
     return directions
-

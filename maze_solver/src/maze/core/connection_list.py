@@ -3,6 +3,7 @@ from maze.core.coordinate import Coordinate
 from maze.core.direction import Direction
 from maze.core.navigation import neighbor
 
+
 @dataclass
 class ConnectionList:
     vertical_passages: list[list[bool]]
@@ -13,7 +14,9 @@ class ConnectionList:
         """Return the size of the maze (assuming square maze)."""
         return len(self.vertical_passages)
 
-    def __init__(self, vertical_passages: list[list[bool]], horizontal_passages: list[list[bool]]):
+    def __init__(
+        self, vertical_passages: list[list[bool]], horizontal_passages: list[list[bool]]
+    ):
         self.vertical_passages = vertical_passages
         self.horizontal_passages = horizontal_passages
 
@@ -46,6 +49,5 @@ class ConnectionList:
             return row < self.size - 1 and self.vertical_passages[row][col]
         elif direction == Direction.WEST:
             return col > 0 and self.horizontal_passages[row][col - 1]
-        else: # direction == Direction.EAST
+        else:  # direction == Direction.EAST
             return col < self.size - 1 and self.horizontal_passages[row][col]
-

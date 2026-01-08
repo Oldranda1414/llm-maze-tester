@@ -9,13 +9,15 @@ from maze.core.direction import Direction
 from maze.core.navigation import neighbor, direction, exit_direction
 from maze.core.coordinate import Coordinate
 
+
 def save_maze(maze: Maze, save_path: str):
     fig, _ = draw_maze(maze)
     fig.savefig(save_path, dpi=300, bbox_inches="tight")
 
+
 def draw_maze(maze, ax=None, show_path=True):
     if ax is None:
-        plt.close('all')
+        plt.close("all")
         fig, ax = plt.subplots(figsize=(5, 5))
     else:
         fig = ax.figure
@@ -24,7 +26,7 @@ def draw_maze(maze, ax=None, show_path=True):
     WALL_WIDTH = 3
     cell_size = 1.0
 
-    ax.set_facecolor('white')
+    ax.set_facecolor("white")
 
     t_i, t_j = maze.target
     e_direction = exit_direction(maze.target, maze.size)
@@ -32,14 +34,14 @@ def draw_maze(maze, ax=None, show_path=True):
     # Borders
     for j in range(grid_size):
         if not (e_direction == Direction.SOUTH and j == t_j):
-            ax.plot([j, j + 1], [0, 0], 'k-', linewidth=WALL_WIDTH)
+            ax.plot([j, j + 1], [0, 0], "k-", linewidth=WALL_WIDTH)
         if not (e_direction == Direction.NORTH and j == t_j):
-            ax.plot([j, j + 1], [grid_size, grid_size], 'k-', linewidth=WALL_WIDTH)
+            ax.plot([j, j + 1], [grid_size, grid_size], "k-", linewidth=WALL_WIDTH)
     for i in range(grid_size):
         if not (e_direction == Direction.WEST and i == grid_size - t_i - 1):
-            ax.plot([0, 0], [i, i + 1], 'k-', linewidth=WALL_WIDTH)
+            ax.plot([0, 0], [i, i + 1], "k-", linewidth=WALL_WIDTH)
         if not (e_direction == Direction.EAST and i == grid_size - t_i - 1):
-            ax.plot([grid_size, grid_size], [i, i + 1], 'k-', linewidth=WALL_WIDTH)
+            ax.plot([grid_size, grid_size], [i, i + 1], "k-", linewidth=WALL_WIDTH)
 
     # Cells
     cl = maze.connection_list
@@ -47,14 +49,22 @@ def draw_maze(maze, ax=None, show_path=True):
         for j in range(grid_size):
             y_plot = grid_size - i - 1
             facecolor = "yellow" if _is_seen((i, j), maze) else "white"
-            rect = Rectangle((j, y_plot), cell_size, cell_size,
-                                 facecolor=facecolor, edgecolor='lightgray', linewidth=0.5)
+            rect = Rectangle(
+                (j, y_plot),
+                cell_size,
+                cell_size,
+                facecolor=facecolor,
+                edgecolor="lightgray",
+                linewidth=0.5,
+            )
             ax.add_patch(rect)
 
             if j < grid_size - 1 and not cl.horizontal_passages[i][j]:
-                ax.plot([j + 1, j + 1], [y_plot, y_plot + 1], 'k-', linewidth=WALL_WIDTH)
+                ax.plot(
+                    [j + 1, j + 1], [y_plot, y_plot + 1], "k-", linewidth=WALL_WIDTH
+                )
             if i < grid_size - 1 and not cl.vertical_passages[i][j]:
-                ax.plot([j, j + 1], [y_plot, y_plot], 'k-', linewidth=WALL_WIDTH)
+                ax.plot([j, j + 1], [y_plot, y_plot], "k-", linewidth=WALL_WIDTH)
 
     # Start marker
     for pos, color, marker, label in [
@@ -63,19 +73,27 @@ def draw_maze(maze, ax=None, show_path=True):
         if pos:
             pos_x, pos_y = pos
             x, y = _plot_coords(pos_x, pos_y, grid_size)
-            ax.plot(x, y, marker, markersize=12, markeredgecolor=color,
-                    label=label, color=color)
+            ax.plot(
+                x,
+                y,
+                marker,
+                markersize=12,
+                markeredgecolor=color,
+                label=label,
+                color=color,
+            )
 
     if show_path:
         _draw_path(ax, maze)
 
     ax.set_xlim(-0.1, grid_size + 0.1)
     ax.set_ylim(-0.1, grid_size + 0.1)
-    ax.set_aspect('equal')
-    ax.axis('off')
+    ax.set_aspect("equal")
+    ax.axis("off")
     ax.set_title(f"Maze {grid_size}x{grid_size}")
 
     return fig, ax
+
 
 def print_maze(maze: Maze):
     console = Console()
@@ -94,7 +112,7 @@ def print_maze(maze: Maze):
         top_line = Text()
         for j in range(grid_size):
             top_line.append("+")
-            if (i == 0 and e_direction == Direction.NORTH and j == t_j):
+            if i == 0 and e_direction == Direction.NORTH and j == t_j:
                 top_line.append("   ")
             elif i == 0 or not maze.connection_list.vertical_passages[i - 1][j]:
                 top_line.append("---")
@@ -105,7 +123,7 @@ def print_maze(maze: Maze):
 
         mid_line = Text()
         for j in range(grid_size):
-            if (j == 0 and e_direction == Direction.WEST and i == grid_size - t_i - 1):
+            if j == 0 and e_direction == Direction.WEST and i == grid_size - t_i - 1:
                 mid_line.append(" ")
             elif j == 0 or not maze.connection_list.horizontal_passages[i][j - 1]:
                 mid_line.append("|")
@@ -138,14 +156,15 @@ def print_maze(maze: Maze):
     bottom.append("+")
     console.print(bottom)
 
+
 def _draw_path(ax, maze: Maze):
     path = maze.path
     maze_size = maze.size
     if not path:
         return
 
-    PATH_COLOR = 'orange'
-    CURRENT_COLOR = 'green'
+    PATH_COLOR = "orange"
+    CURRENT_COLOR = "green"
     PATH_ALPHA = 0.8
 
     # Draw path segments and points
@@ -153,19 +172,43 @@ def _draw_path(ax, maze: Maze):
         x, y = _plot_coords(*path[i], maze_size)
         if i > 0:
             px, py = _plot_coords(*path[i - 1], maze_size)
-            ax.plot([px, x], [py, y], color=PATH_COLOR, linewidth=8, alpha=PATH_ALPHA, solid_capstyle='round')
+            ax.plot(
+                [px, x],
+                [py, y],
+                color=PATH_COLOR,
+                linewidth=8,
+                alpha=PATH_ALPHA,
+                solid_capstyle="round",
+            )
 
         if i == len(path) - 1 and not maze.solved:
-            ax.plot(x, y, 'o', color=CURRENT_COLOR, markersize=10,
-                    alpha=PATH_ALPHA, markeredgecolor='darkgreen', markeredgewidth=2)
+            ax.plot(
+                x,
+                y,
+                "o",
+                color=CURRENT_COLOR,
+                markersize=10,
+                alpha=PATH_ALPHA,
+                markeredgecolor="darkgreen",
+                markeredgewidth=2,
+            )
         else:
-            ax.plot(x, y, 'o', color=PATH_COLOR, markersize=6,
-                    alpha=PATH_ALPHA, markeredgecolor='goldenrod', markeredgewidth=1)
+            ax.plot(
+                x,
+                y,
+                "o",
+                color=PATH_COLOR,
+                markersize=6,
+                alpha=PATH_ALPHA,
+                markeredgecolor="goldenrod",
+                markeredgewidth=1,
+            )
 
 
 def _plot_coords(i: int, j: int, grid_size: int) -> tuple[float, float]:
     """Convert maze indices (i,j) to plotting coordinates (x,y)."""
     return j + 0.5, grid_size - i - 1 + 0.5
+
 
 def _is_seen(cell: Coordinate, maze: Maze) -> bool:
     if maze.position == cell:
@@ -178,10 +221,12 @@ def _is_seen(cell: Coordinate, maze: Maze) -> bool:
     while d is not None and distance < maze.sight_depth:
         n = neighbor(position, d)
         if cl.connected(position, n):
-            if n == cell: return True
+            if n == cell:
+                return True
             position = n
             distance += 1
 
-        else: break
+        else:
+            break
 
     return False

@@ -14,7 +14,6 @@ from maze.lattice_maze import LatticeMaze
 
 
 class MazeDataset:
-
     def __init__(
         self,
         name: str,
@@ -25,14 +24,13 @@ class MazeDataset:
         maze_filter: Callable[[Maze], bool] | None = None,
         attempts: int = 100,
     ):
-
         # Disabeling pyright due to annoying 'no parameter named "X"' error
         config = MDConfig(
-            name=name, #type: ignore
-            grid_n=maze_size, #type: ignore
-            n_mazes=n_mazes, #type: ignore
-            maze_ctor=LatticeMazeGenerators.gen_dfs, #type: ignore
-            seed=seed, #type: ignore
+            name=name,  # type: ignore
+            grid_n=maze_size,  # type: ignore
+            n_mazes=n_mazes,  # type: ignore
+            maze_ctor=LatticeMazeGenerators.gen_dfs,  # type: ignore
+            seed=seed,  # type: ignore
         )
         dataset = MDMazeDataset.from_config(config)
 
@@ -53,18 +51,18 @@ class MazeDataset:
                         f"Failed to generate a valid maze after {attempts} attempts."
                     )
 
-def _generate_maze(d_maze: MDSolvedMaze, rng: random.Random, sight_depth: int) -> Maze:
-        maze_size = d_maze.grid_n
-        target = generate_target(maze_size, rng=rng)
-        start = generate_start(maze_size, target, rng=rng)
-        return LatticeMaze(
-            ConnectionList(
-                d_maze.connection_list[0].tolist(),
-                d_maze.connection_list[1].tolist(),
-            ),
-            maze_size,
-            start,
-            target,
-            sight_depth,
-        )
 
+def _generate_maze(d_maze: MDSolvedMaze, rng: random.Random, sight_depth: int) -> Maze:
+    maze_size = d_maze.grid_n
+    target = generate_target(maze_size, rng=rng)
+    start = generate_start(maze_size, target, rng=rng)
+    return LatticeMaze(
+        ConnectionList(
+            d_maze.connection_list[0].tolist(),
+            d_maze.connection_list[1].tolist(),
+        ),
+        maze_size,
+        start,
+        target,
+        sight_depth,
+    )

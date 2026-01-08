@@ -1,4 +1,3 @@
-
 from util import extract_direction
 
 

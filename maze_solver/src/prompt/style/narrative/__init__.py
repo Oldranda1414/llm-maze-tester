@@ -6,8 +6,8 @@ from prompt.style.narrative import prompts
 from prompt.style.narrative import warnings
 from prompt.util import length_to_string
 
-class NarrativeStyle(PromptStyle):
 
+class NarrativeStyle(PromptStyle):
     def preamble(self, maze: Maze) -> str:
         return prompts.preamble.substitute(size=maze.size)
 
@@ -28,14 +28,16 @@ class NarrativeStyle(PromptStyle):
             return base + prompts.out_of_sight
 
         # Visible corridor
-        desc = base + prompts.corridor.substitute(path_length=length_to_string(facts.path_length))
+        desc = base + prompts.corridor.substitute(
+            path_length=length_to_string(facts.path_length)
+        )
 
         if facts.is_dead_end:
             return desc + prompts.dead_end
 
         return desc + prompts.options
 
-    def steps_summary(self, maze: Maze)-> str:
+    def steps_summary(self, maze: Maze) -> str:
         decisions = maze.decisions
         if len(decisions) == 0:
             return ""
@@ -50,11 +52,10 @@ class NarrativeStyle(PromptStyle):
         return prompts.possible_moves.substitute(directions=directions)
 
     def last_move_info(self, maze: Maze) -> str:
-        return prompts.last_move.substitute(direction=maze.decisions[-1])  
+        return prompts.last_move.substitute(direction=maze.decisions[-1])
 
     def illegal_answer(self) -> str:
         return warnings.illegal_answer
 
     def illegal_direction(self) -> str:
         return warnings.illegal_direction
-

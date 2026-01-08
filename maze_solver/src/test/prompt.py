@@ -4,6 +4,7 @@ from prompt import PromptGenerator
 from prompt.config import PromptConfig
 from prompt.style.narrative import NarrativeStyle
 
+
 def run():
     maze_size = 3
     sight_depth = 3
@@ -12,7 +13,6 @@ def run():
     print(pg.get_preamble(maze))
 
     while not maze.solved:
-
         print(pg.step_prompt(maze))
         maze.print()
 
@@ -30,15 +30,15 @@ def run():
         print("New position:", maze.position)
         print("Solved?", maze.solved)
 
+
 def many_maze():
     sight_depth = 3
-    mazes = create_dataset(10,3, sight_depth).mazes
+    mazes = create_dataset(10, 3, sight_depth).mazes
     pg = PromptGenerator(NarrativeStyle(), PromptConfig(False, False))
     for maze in mazes:
         print(pg.get_preamble(maze))
 
         while not maze.solved:
-
             print(pg.step_prompt(maze))
             maze.print()
 
@@ -55,4 +55,3 @@ def many_maze():
             maze.move(Direction.from_coordinate(move))
             print("New position:", maze.position)
             print("Solved?", maze.solved)
-

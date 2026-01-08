@@ -9,11 +9,20 @@ from maze.core.navigation import direction_strict, exit_direction
 from maze.core.connection_list import ConnectionList
 from maze.output import save_maze, print_maze
 
+
 class LatticeMaze:
     """
     A class representing a maze with a start and end point.
     """
-    def __init__(self, cl: ConnectionList, size: int, start: Coordinate, target: Coordinate, sight_depth: int):
+
+    def __init__(
+        self,
+        cl: ConnectionList,
+        size: int,
+        start: Coordinate,
+        target: Coordinate,
+        sight_depth: int,
+    ):
         self._sight_depth = sight_depth
         self._connection_list = cl
         self._size = size
@@ -25,16 +34,20 @@ class LatticeMaze:
         self._solved = False
 
     @property
-    def size(self) -> int: return self._size
+    def size(self) -> int:
+        return self._size
 
     @property
-    def start(self) -> Coordinate: return self._start
+    def start(self) -> Coordinate:
+        return self._start
 
     @property
-    def target(self) -> Coordinate: return self._target
+    def target(self) -> Coordinate:
+        return self._target
 
     @property
-    def sight_depth(self) -> int: return self._sight_depth
+    def sight_depth(self) -> int:
+        return self._sight_depth
 
     @property
     def connection_list(self) -> ConnectionList:
@@ -65,8 +78,7 @@ class LatticeMaze:
 
     @property
     def path(self):
-        """Get the current path
-        """
+        """Get the current path"""
         return deepcopy(self._path)
 
     def set_path(self, new_path: list[Coordinate]):
@@ -75,11 +87,15 @@ class LatticeMaze:
 
     def move(self, direction: Direction) -> bool:
         if self._solved:
-            raise RuntimeError("Maze.move() called on solved maze\nMaze.move() cannot be called on a solved maze!")
+            raise RuntimeError(
+                "Maze.move() called on solved maze\nMaze.move() cannot be called on a solved maze!"
+            )
 
         legal_directions = self.available_directions()
         self._decisions.append(direction)
-        if self._target == self._position and direction == exit_direction(self._target, self._size):
+        if self._target == self._position and direction == exit_direction(
+            self._target, self._size
+        ):
             self._solved = True
             return True
         if direction in legal_directions:
@@ -182,4 +198,3 @@ class LatticeMaze:
         maze.set_path(path)
 
         return maze
-

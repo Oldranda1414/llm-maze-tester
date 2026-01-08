@@ -4,7 +4,6 @@ from chat_history import ChatHistory
 
 
 class Model(Protocol):
-
     @property
     def name(self) -> str: ...
 
@@ -22,12 +21,12 @@ class Model(Protocol):
 
     def save_history(self, filepath: str) -> bool: ...
 
-model_names: list[str] = [
-            "llama3",
-            "qwen3",
-            "smollm2",
-            "phi4-mini",
-            "deepseek-r1",
-            "mistral"
-        ]
 
+model_names: list[str] = [
+    "llama3",
+    "qwen3",
+    "smollm2",
+    "phi4-mini",
+    "deepseek-r1",
+    "mistral",
+]

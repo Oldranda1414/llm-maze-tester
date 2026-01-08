@@ -1,6 +1,7 @@
 from maze.core.navigation import path_to_directions
 from maze.factory import create_maze
 
+
 def run() -> None:
     for seed in range(10):
         m = create_maze(seed=seed)
@@ -10,4 +11,3 @@ def run() -> None:
         if m.position != m.target:
             print(f"Unsolved seed: {seed}")
             m.print()
-

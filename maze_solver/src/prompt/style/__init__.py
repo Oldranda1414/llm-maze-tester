@@ -2,8 +2,8 @@ from typing import Protocol
 from maze import Maze
 from maze.core.direction import Direction
 
-class PromptStyle(Protocol):
 
+class PromptStyle(Protocol):
     def preamble(self, maze: Maze) -> str: ...
 
     def describe_direction(self, direction: Direction, maze: Maze) -> str: ...

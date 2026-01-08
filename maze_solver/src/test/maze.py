@@ -1,6 +1,7 @@
 from maze.core.direction import Direction
 from maze.factory import create_maze
 
+
 def run() -> None:
     size = int(input("maze size?:"))
     maze = create_maze(seed=39, size=size)
@@ -26,7 +27,6 @@ def run() -> None:
         if move == "C":
             break
         elif move == "Q":
-            maze.save('./maze_test.png')
+            maze.save("./maze_test.png")
         else:
             maze.move(Direction.from_coordinate(move))
-

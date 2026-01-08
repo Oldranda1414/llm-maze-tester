@@ -7,13 +7,13 @@ from chat_history import ChatHistory, Exchange
 
 DEBUG_SYSTEM_PROMPT = "debug system prompt"
 
-class PhonyModel(Model):
 
+class PhonyModel(Model):
     def __init__(self):
         self._chat_history = ChatHistory(DEBUG_SYSTEM_PROMPT)
 
     def ask(self, prompt: str, provide_history: bool = True) -> str:
-        _ = provide_history # unused parameter
+        _ = provide_history  # unused parameter
         move = input(prompt)
         move = move.strip(" ").upper()
 
@@ -24,13 +24,16 @@ class PhonyModel(Model):
         return move
 
     @property
-    def name(self) -> str: return "phony_model"
+    def name(self) -> str:
+        return "phony_model"
 
     @property
-    def history(self) -> ChatHistory: return self._chat_history
+    def history(self) -> ChatHistory:
+        return self._chat_history
 
     @property
-    def system_prompt(self) -> str: return DEBUG_SYSTEM_PROMPT
+    def system_prompt(self) -> str:
+        return DEBUG_SYSTEM_PROMPT
 
     def set_system_prompt(self, system_prompt: str) -> None:
         _ = system_prompt
@@ -41,7 +44,7 @@ class PhonyModel(Model):
 
     def save_history(self, filepath: str) -> bool:
         try:
-            with open(filepath, 'w', encoding='utf-8') as f:
+            with open(filepath, "w", encoding="utf-8") as f:
                 yaml.safe_dump(self._chat_history.to_yaml(), f, sort_keys=False)
             print(f"Chat history saved to {filepath}")
             return True

@@ -1,4 +1,3 @@
-
 from copy import deepcopy
 import html
 import matplotlib.pyplot as plt
@@ -9,11 +8,12 @@ from run import Run
 from util import seconds_to_padded_time, set_path
 from maze.output import draw_maze
 
+
 def format_text(text: str) -> str:
     return html.escape(text).replace("\n", "<br>")
 
-def visualize_run(run: Run):
 
+def visualize_run(run: Run):
     maze = run.maze
     chat = run.chat_history.chat
     system_prompt = run.chat_history.system_prompt
@@ -40,7 +40,7 @@ def visualize_run(run: Run):
             </tr>
             <tr>
                 <td><strong>Solved:</strong></td>
-                <td>{'Yes' if run.is_solved else 'No'}</td>
+                <td>{"Yes" if run.is_solved else "No"}</td>
                 <td><strong>Unique Positions Visited:</strong></td>
                 <td>{run.unique_positions_visited}</td>
             </tr>
@@ -72,7 +72,6 @@ def visualize_run(run: Run):
 
     # ------------ UPDATE FUNCTION ------------
     def draw_step(step_idx):
-
         # Update maze
         with maze_out:
             clear_output(wait=True)
@@ -110,4 +109,3 @@ def visualize_run(run: Run):
     )
 
     display(stats_html, maze_out, msg_out)
-

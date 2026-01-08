@@ -2,8 +2,8 @@ from maze import Maze
 from maze.core.direction import Direction
 from prompt.style import PromptStyle
 
-class EmptyStyle(PromptStyle):
 
+class EmptyStyle(PromptStyle):
     def preamble(self, maze: Maze) -> str:
         _ = maze
         return ""
@@ -13,8 +13,7 @@ class EmptyStyle(PromptStyle):
         _ = maze
         return ""
 
-    def step_epilogue(self, maze: Maze) -> str:
-        _ = maze
+    def step_epilogue(self) -> str:
         return ""
 
     def steps_summary(self, maze: Maze) -> str:
@@ -22,6 +21,10 @@ class EmptyStyle(PromptStyle):
         return ""
 
     def last_move_info(self, maze: Maze) -> str:
+        _ = maze
+        return ""
+
+    def possible_moves(self, maze: Maze) -> str:
         _ = maze
         return ""
 

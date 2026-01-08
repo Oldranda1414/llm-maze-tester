@@ -12,6 +12,7 @@ from experiment.log import log
 from maze.factory import create_dataset
 from solver import MazeSolver
 
+
 class Experiment:
     def __init__(self, date: str):
         base_path = "results"
@@ -26,6 +27,7 @@ class Experiment:
                     run = Run.load(file_path)
                     self.runs.append(run)
 
+
 def run_experiment(config: ExperimentConfig):
     timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
     for model in config.models:
@@ -36,10 +38,17 @@ def run_experiment(config: ExperimentConfig):
             mazes = create_dataset(config.iterations, maze_size).mazes
             solved_mazes = 0
             for i in range(config.iterations):
-                log(f"solving {maze_size}x{maze_size} maze with model {model.name} for {i} time")
+                log(
+                    f"solving {maze_size}x{maze_size} maze with model {model.name} for {i} time"
+                )
                 start_maze = time.time()
                 max_steps = maze_size * maze_size * 10
-                maze_solver = MazeSolver(model, config.prompt_generator, mazes[i], quiet=config.quiet)
+                maze_solver = MazeSolver(
+                    model=model,
+                    prompt_generator=config.prompt_generator,
+                    maze=mazes[i],
+                    quiet=config.quiet,
+                )
                 step = 0
                 while not maze_solver.is_solved() and step < max_steps:
                     try:
@@ -62,8 +71,9 @@ def run_experiment(config: ExperimentConfig):
 
 
 def experiment_list():
-    experiments = [d for d in os.listdir('results') if os.path.isdir(os.path.join('results', d))]
+    experiments = [
+        d for d in os.listdir("results") if os.path.isdir(os.path.join("results", d))
+    ]
     experiments.remove("logs")
     experiments.sort()
     return experiments if experiments else []
-

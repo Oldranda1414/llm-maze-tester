@@ -1,5 +1,6 @@
 from model.factory import llm_model
 
+
 def run():
     """Main function to run the llm-maze-tester."""
 
@@ -24,4 +25,3 @@ def run():
     print("\n--- Chat History ---")
     history = model.history
     print(history)
-

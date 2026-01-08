@@ -1,12 +1,14 @@
 """
 A class that uses an LLM model to solve a maze.
 """
+
 from maze import Maze
 from model import Model
 
 from prompt import PromptGenerator
 from run import Run
 from util import extract_direction
+
 
 class MazeSolver:
     """
@@ -15,7 +17,13 @@ class MazeSolver:
     to make decisions about which direction to move at each step.
     """
 
-    def __init__(self, model: Model, prompt_generator: PromptGenerator, maze: Maze, quiet: bool = False):
+    def __init__(
+        self,
+        model: Model,
+        prompt_generator: PromptGenerator,
+        maze: Maze,
+        quiet: bool = False,
+    ):
         self.prompt = prompt_generator
         self.maze = maze
         self.model = model
@@ -38,7 +46,9 @@ class MazeSolver:
         Execute a single step in the maze solving process.
         """
         if self.maze.solved:
-            raise RuntimeError("MazeSolver.step() called when maze solved. MazeSolver.step() cannot be called when maze is solved!")
+            raise RuntimeError(
+                "MazeSolver.step() called when maze solved. MazeSolver.step() cannot be called when maze is solved!"
+            )
 
         available_directions = self.maze.available_directions()
 
@@ -94,7 +104,13 @@ class MazeSolver:
         return self.maze.solved
 
     def save_run(self, path: str, execution_time: float) -> None:
-        Run(self.maze, self.model.history, self.illegal_directions, self.illegal_responses, execution_time).save(path)
+        Run(
+            self.maze,
+            self.model.history,
+            self.illegal_directions,
+            self.illegal_responses,
+            execution_time,
+        ).save(path)
 
     def _print_maze(self):
         if not self._quiet:
@@ -103,4 +119,3 @@ class MazeSolver:
     def _print_message(self, message: str) -> None:
         if not self._quiet:
             print(message)
-

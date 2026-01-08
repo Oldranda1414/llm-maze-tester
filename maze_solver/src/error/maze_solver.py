@@ -1,5 +1,6 @@
 from abc import abstractmethod, ABC
 
+
 class MazeSolverError(Exception, ABC):
     """Base exception for all AutoDev errors."""
 
@@ -10,4 +11,3 @@ class MazeSolverError(Exception, ABC):
     def build_message(self) -> str:
         """Build the error message. Must be implemented by subclasses."""
         pass
-

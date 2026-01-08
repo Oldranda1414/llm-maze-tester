@@ -4,6 +4,7 @@ import statistics
 from experiment import Experiment
 from util import seconds_to_padded_time
 
+
 def print_experiment_stats(experiment: Experiment):
     """
     Computes and prints statistics on a list of Run objects.
@@ -24,17 +25,18 @@ def print_experiment_stats(experiment: Experiment):
         stats = compute_stats(run_list)
         print(f"\n=== Maze size: {size} ===")
         for k, v in stats.items():
-            if type(v) == float:
+            if type(v) is float:
                 v = f"{v:.2f}"
             print(f"{k}: {v}")
 
     # Compute overall stats
     overall_stats = compute_stats(experiment.runs)
-    print(f"\n=== Overall stats ===")
+    print("\n=== Overall stats ===")
     for k, v in overall_stats.items():
-        if type(v) == float:
+        if type(v) is float:
             v = f"{v:.2f}"
         print(f"{k}: {v}")
+
 
 def compute_stats(run_list):
     total_steps_list = [len(r.chat_history.chat) for r in run_list]
@@ -53,16 +55,20 @@ def compute_stats(run_list):
     mean_step_execution_time = seconds_to_padded_time(mean_step_execution_seconds)
 
     mean_illegal_dirs = statistics.mean(illegal_dirs_list)
-    perc_illegal_dirs = statistics.mean([
-        id_ / ts * 100 if ts > 0 else 0
-        for id_, ts in zip(illegal_dirs_list, total_steps_list)
-    ])
+    perc_illegal_dirs = statistics.mean(
+        [
+            id_ / ts * 100 if ts > 0 else 0
+            for id_, ts in zip(illegal_dirs_list, total_steps_list)
+        ]
+    )
 
     mean_illegal_resps = statistics.mean(illegal_resps_list)
-    perc_illegal_resps = statistics.mean([
-        ir / ts * 100 if ts > 0 else 0
-        for ir, ts in zip(illegal_resps_list, total_steps_list)
-    ])
+    perc_illegal_resps = statistics.mean(
+        [
+            ir / ts * 100 if ts > 0 else 0
+            for ir, ts in zip(illegal_resps_list, total_steps_list)
+        ]
+    )
 
     mean_total_steps = statistics.mean(total_steps_list)
     mean_decisions = statistics.mean(decisions_list)
@@ -83,4 +89,3 @@ def compute_stats(run_list):
         "total_execution_time": total_execution,
         "mean_step_execution_time": mean_step_execution_time,
     }
-

@@ -1,10 +1,12 @@
 from dataclasses import dataclass
 import yaml
 
+
 @dataclass
 class Exchange:
     prompt: str
     response: str
+
 
 @dataclass
 class ChatHistory:
@@ -21,7 +23,7 @@ class ChatHistory:
     def to_string(self) -> str:
         result = f"System prompt: {self.system_prompt}\n"
         for i, exchange in enumerate(self.chat):
-            result += f"Interaction {i+1}:\n"
+            result += f"Interaction {i + 1}:\n"
             result += f"  Prompt: {exchange.prompt}\n"
             result += f"  Response: {exchange.response}\n"
         return result
@@ -29,9 +31,17 @@ class ChatHistory:
     def __str__(self):
         result = f"System prompt: {self.system_prompt}\n"
         for i, exchange in enumerate(self.chat):
-            result += f"Interaction {i+1}:\n"
-            result += f"  Prompt: {exchange.prompt[:100]}...\n" if len(exchange.prompt) > 100 else f"  Prompt: {exchange.prompt}\n"
-            result += f"  Content: {exchange.response[:100]}...\n" if len(exchange.response) > 100 else f"  Content: {exchange.response}\n"
+            result += f"Interaction {i + 1}:\n"
+            result += (
+                f"  Prompt: {exchange.prompt[:100]}...\n"
+                if len(exchange.prompt) > 100
+                else f"  Prompt: {exchange.prompt}\n"
+            )
+            result += (
+                f"  Content: {exchange.response[:100]}...\n"
+                if len(exchange.response) > 100
+                else f"  Content: {exchange.response}\n"
+            )
         return result
 
     def to_list(self) -> list[dict[str, str]]:
@@ -44,10 +54,7 @@ class ChatHistory:
     def to_dict(self):
         return {
             "system_prompt": self.system_prompt,
-            "chat": [
-                {"prompt": e.prompt, "response": e.response}
-                for e in self.chat
-            ],
+            "chat": [{"prompt": e.prompt, "response": e.response} for e in self.chat],
         }
 
     def to_yaml(self) -> str:
@@ -63,5 +70,3 @@ class ChatHistory:
             for e in data.get("chat", [])
         ]
         return cls(system_prompt=data["system_prompt"], chat=chat)
-
-

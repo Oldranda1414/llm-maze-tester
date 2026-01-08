@@ -4,6 +4,7 @@ from typing import Callable
 from experiment import Experiment, experiment_list
 from stats.experiment import print_experiment_stats
 
+
 def help():
     print("If first argument is not a command, it must be a valid experiment date")
     print("Possible commands:")
@@ -11,12 +12,15 @@ def help():
     print("   list: list available experiment dates")
     print("   help: print help message")
 
+
 def last():
     default([experiment_list()[-1]])
 
+
 def print_experiment_list():
-    print('Available experiments:')
+    print("Available experiments:")
     print("\n".join(experiment_list()))
+
 
 def default(dates: list[str]):
     for date in dates:
@@ -26,12 +30,10 @@ def default(dates: list[str]):
             return
         print_experiment_stats(Experiment(date))
 
+
 def commands() -> dict[str, Callable]:
-    return {
-        "help": help,
-        "last": last,
-        "list": print_experiment_list
-    }
+    return {"help": help, "last": last, "list": print_experiment_list}
+
 
 def main() -> None:
     if len(sys.argv) == 1:
@@ -43,4 +45,3 @@ def main() -> None:
         commands()[args[0]]()
     else:
         default(args)
-

@@ -1,7 +1,7 @@
 from model.factory import llm_model
 
-def run() -> None:
 
+def run() -> None:
     print("control case...")
     m = llm_model("llama3")
 
@@ -13,7 +13,6 @@ def run() -> None:
 
     print(m.ask("What is the capital of France?"))
 
-    m.reset_history()
+    m.reset_model()
 
     print(m.ask("Can you repeat that?"))
-

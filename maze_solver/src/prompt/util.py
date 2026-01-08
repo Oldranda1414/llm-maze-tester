@@ -4,12 +4,15 @@ from maze import Maze
 from maze.core.direction import Direction
 from maze.core.navigation import neighbor
 
+
 def path_length_str(direction: Direction, maze: Maze) -> str:
     return length_to_string(path_length(direction, maze))
+
 
 def length_to_string(lenght: int) -> str:
     unit = "meter" if lenght == 1 else "meters"
     return f"{num2words(lenght)} {unit}"
+
 
 def path_length(direction: Direction, maze: Maze) -> int:
     position = maze.position
@@ -20,6 +23,7 @@ def path_length(direction: Direction, maze: Maze) -> int:
         position = n
     return length
 
+
 def exit_distance(maze):
     (px, py), (tx, ty) = maze.position, maze.target
     if px == tx:
@@ -27,4 +31,3 @@ def exit_distance(maze):
     if py == ty:
         return abs(px - tx)
     raise ValueError("Maze not axis-aligned for exit distance.")
-

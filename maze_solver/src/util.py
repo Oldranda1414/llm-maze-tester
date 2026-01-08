@@ -4,12 +4,14 @@ from chat_history import Exchange
 from maze import Maze
 from maze.core.direction import Direction
 
+
 def seconds_to_padded_time(seconds: float) -> str:
     hours = int(seconds // 3600)
     minutes = int((seconds % 3600) // 60)
     remaining_seconds = round(seconds % 60)
-    
+
     return f"{hours:02d}:{minutes:02d}:{remaining_seconds:02d}"
+
 
 def extract_direction(response: str) -> Direction | None:
     if not response:
@@ -50,6 +52,7 @@ def extract_direction(response: str) -> Direction | None:
 
     return None
 
+
 def set_path(maze: Maze, chat: list[Exchange], step_index: int | None = None) -> Maze:
     if step_index is None:
         step_index = len(chat)
@@ -60,4 +63,3 @@ def set_path(maze: Maze, chat: list[Exchange], step_index: int | None = None) ->
             next_move = response
             maze.move(next_move)
     return maze
-

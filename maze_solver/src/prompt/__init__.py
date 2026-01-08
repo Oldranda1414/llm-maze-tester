@@ -3,8 +3,8 @@ from maze.core.direction import Direction
 from prompt.config import PromptConfig
 from prompt.style import PromptStyle
 
-class PromptGenerator:
 
+class PromptGenerator:
     def __init__(self, style: PromptStyle, config: PromptConfig):
         self.style = style
         self.config = config
@@ -32,4 +32,3 @@ class PromptGenerator:
 
     def illegal_direction_warning(self) -> str:
         return self.style.illegal_direction()
-

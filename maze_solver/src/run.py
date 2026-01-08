@@ -6,8 +6,16 @@ from maze.factory import maze_from_yaml
 from maze.core.coordinate import Coordinate
 from util import set_path
 
+
 class Run:
-    def __init__(self, maze: Maze, chat_history: ChatHistory, illegal_directions: int, illegal_responses: int, execution_time: float):
+    def __init__(
+        self,
+        maze: Maze,
+        chat_history: ChatHistory,
+        illegal_directions: int,
+        illegal_responses: int,
+        execution_time: float,
+    ):
         self._maze = maze
         self._chat_history = chat_history
         set_path(self._maze, chat_history.chat)
@@ -66,7 +74,7 @@ class Run:
             "chat_history": yaml.safe_load(self._chat_history.to_yaml()),
             "illegal_directions": self._illegal_directions,
             "illegal_responses": self._illegal_responses,
-            "execution_time": self._execution_time
+            "execution_time": self._execution_time,
         }
         with open(path, "w") as f:
             yaml.safe_dump(data, f, sort_keys=False)
@@ -79,7 +87,7 @@ class Run:
 
         maze_data = yaml.safe_dump(data["maze"])
         chat_data = yaml.safe_dump(data["chat_history"])
-        i_d = data["illegal_directions"] 
+        i_d = data["illegal_directions"]
         i_r = data["illegal_responses"]
         execution_time = data["execution_time"]
 
@@ -87,4 +95,3 @@ class Run:
         chat_history = ChatHistory.from_yaml(chat_data)
 
         return cls(maze, chat_history, i_d, i_r, execution_time)
-
