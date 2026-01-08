@@ -16,6 +16,7 @@ def visualize_run(run: Run):
 
     maze = run.maze
     chat = run.chat_history.chat
+    system_prompt = run.chat_history.system_prompt
     num_steps = len(chat)
 
     # ------------ STATIC BLOCK (does not update) ------------
@@ -84,11 +85,19 @@ def visualize_run(run: Run):
         with msg_out:
             clear_output(wait=True)
             if step_idx < len(chat):
-                msg = chat[step_idx]
-                html_block = (
-                    f"<h4>Prompt</h4><p>{format_text(msg.prompt)}</p>"
-                    f"<h4>Response</h4><p>{format_text(msg.response)}</p>"
-                )
+                if step_idx == 0:
+                    msg = chat[step_idx]
+                    html_block = (
+                        f"<h4>System Prompt</h4><p>{format_text(system_prompt)}</p>"
+                        f"<h4>Prompt</h4><p>{format_text(msg.prompt)}</p>"
+                        f"<h4>Response</h4><p>{format_text(msg.response)}</p>"
+                    )
+                else:
+                    msg = chat[step_idx]
+                    html_block = (
+                        f"<h4>Prompt</h4><p>{format_text(msg.prompt)}</p>"
+                        f"<h4>Response</h4><p>{format_text(msg.response)}</p>"
+                    )
             else:
                 html_block = "<h4>Run finished</h4>"
 
