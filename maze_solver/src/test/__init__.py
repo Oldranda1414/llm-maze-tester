@@ -1,3 +1,4 @@
+import traceback
 import sys
 import os
 import importlib.util
@@ -41,4 +42,5 @@ def main():
         module.run()
     except Exception as e:
         print(f"Error running test '{filename}':\n{e}")
+        traceback.print_exc()
         sys.exit(1)
