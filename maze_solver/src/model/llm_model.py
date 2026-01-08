@@ -66,8 +66,11 @@ class LLMModel(Model):
         return response
 
     def reset_model(self, system_prompt: str | None = None):
-        self._system_prompt = system_prompt
-        self._chat_history = None if system_prompt is None else ChatHistory(system_prompt)
+        if self._system_prompt is None:
+            raise RuntimeError("Cannot reset uninitialized model.\nInitialize the model with Model.set_system_prompt()")
+        if system_prompt is not None:
+            self._system_prompt = system_prompt
+        self._chat_history = ChatHistory(self._system_prompt)
 
     def save_history(self, filepath: str) -> bool:
         try:
