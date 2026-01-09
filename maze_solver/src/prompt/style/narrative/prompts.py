@@ -21,9 +21,7 @@ Here are some examples of valid end of response, in case you decide to move due 
 - I want to step N!
 - My next move will be north.
 
-Analize your moves and avoid oscillating patterns (such as [north, south, north, ...] and [west, east, west, ...] as they do not lead to improvements in finding the exit.\n
 Try to formulate a plan and keep track of what what tiles you have already visited to ensure you are making progress in exploring the maze.
-Backtrack only if you are sure that you have reached a dead end.
 """
 )
 
