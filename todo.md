@@ -1,14 +1,14 @@
 # TODOS
 
 - prompt
-    - add reminder on legal output format in every step prompt
     - have steps_summary provide last n steps, passing n as an argument
 - stats:
-    - turn stats into methods for the experiments, not only a print time calculation
-    - remove unsuccessfull attempts from stats (as they only dirty the results)
     - Programmatically create summary tables
-- experiments:
-    - try an experiment removing the prompt history with deepseek
+
+## bugs:
+- stats:
+    - mean decisions seems to not be computed correctly:
+        - 'just stats 2026-01-08_16:23:34' displays 'mean decisions: 0.00'
 
 ## minor:
 
@@ -19,12 +19,6 @@
 - maze filter:
     if 100 attempts at start and target generation fail, change the structure of the maze itself as it could simply be a lattice maze with no elegible start and target for the given filter
 
-## bugs:
-
-- maze
-    - when seed is 39
-        - solve warning reset global seed
-        - solve maze exit output wrong, only cli
 
 ## New concept
 
