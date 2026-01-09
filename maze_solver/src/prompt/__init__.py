@@ -30,5 +30,5 @@ class PromptGenerator:
     def illegal_answer_warning(self) -> str:
         return self.style.illegal_answer()
 
-    def illegal_direction_warning(self) -> str:
-        return self.style.illegal_direction()
+    def illegal_direction_warning(self, illegal_direction: str) -> str:
+        return self.style.illegal_direction(illegal_direction)

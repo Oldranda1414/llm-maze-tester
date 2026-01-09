@@ -57,5 +57,5 @@ class NarrativeStyle(PromptStyle):
     def illegal_answer(self) -> str:
         return warnings.illegal_answer
 
-    def illegal_direction(self) -> str:
-        return warnings.illegal_direction
+    def illegal_direction(self, illegal_direction: str) -> str:
+        return warnings.illegal_direction.substitute(direction=illegal_direction)

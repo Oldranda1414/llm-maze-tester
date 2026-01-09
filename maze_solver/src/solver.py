@@ -3,6 +3,7 @@ A class that uses an LLM model to solve a maze.
 """
 
 from maze import Maze
+from maze.core.direction import Direction
 from model import Model
 
 from prompt import PromptGenerator
@@ -34,7 +35,7 @@ class MazeSolver:
         # Track last step errors
         self.invalid_answer_provided = False
         self.illegal_responses = 0
-        self.invalid_direction_provided = False
+        self.invalid_direction_provided: Direction | None = None
         self.illegal_directions = 0
         self.valid_last_move = False
 
@@ -58,9 +59,11 @@ class MazeSolver:
             if self.invalid_answer_provided:
                 step_prompt += self.prompt.illegal_answer_warning()
                 self.invalid_answer_provided = False
-            elif self.invalid_direction_provided:
-                step_prompt += self.prompt.illegal_direction_warning()
-                self.invalid_direction_provided = False
+            elif self.invalid_direction_provided is not None:
+                step_prompt += self.prompt.illegal_direction_warning(
+                    self.invalid_direction_provided.to_coordinate()
+                )
+                self.invalid_direction_provided = None
             elif self.valid_last_move:
                 step_prompt += self.prompt.last_move_info(self.maze)
         else:
@@ -78,7 +81,7 @@ class MazeSolver:
                 move = decision
             else:
                 self._print_message(f"model provided an illegal direction: {decision}")
-                self.invalid_direction_provided = True
+                self.invalid_direction_provided = decision
                 self.illegal_directions += 1
         else:
             self.invalid_answer_provided = True
