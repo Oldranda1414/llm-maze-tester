@@ -1,21 +1,27 @@
+from string import Template
+
+
 illegal_answer = """
 Your last answer did not end with a valid direction.
 
 Remember that your answers must end by providing the direction you want to move to.
 
-The valid directions you can provide are N for north, E for east, S for south, W for west.
+The valid directions you can provide are north, east, south, west.
 
 The last character in your response must be one of the valid directions, including eventual punctuation, so remove it from your last phrase please
 
-As an example if you want to step towards north the last character in your answer would be: N
+You are allowed to output the direction with any casing you want, as long as it is the last thing in your answer.
+Here are some examples of valid end of response, in case you decide to move due north:
 
-Here are some examples of invalid last phrases:
-
-- I want to step north
+- Let's go North
 - I want to step N!
-- I want to step north!
+- My next move will be north.
+
 """
 
-illegal_direction = """
+illegal_direction = Template(
+    """
+You try to walk ${direction}.
 You walk directly into a wall, hitting your nose. Place more attention on the direcions that are available to you!
 """
+)

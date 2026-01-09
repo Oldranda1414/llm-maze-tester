@@ -3,40 +3,11 @@ from util import extract_direction
 
 def run():
     response = """
-      'I''m starting in the center of a 3x3 grid maze. From my current position,
-      I have four directions to consider: North, East, South, and West.
+Based on the current description, we're at a position where the East direction is blocked by a wall, and the North and South directions are also walls or have limited corridors. However, the West direction has a corridor that is two meters long with lateral paths open, meaning it's not a dead end.
 
+Since we're trying to reach the exit, which is on the border of this 3x3 grid, moving West could lead us to a new area with potential paths to the exit. The previous move was East, and now West is the only viable open direction. This avoids oscillating and focuses on progress.
 
-      - Due North: Wall, blocked. Can''t go there.
-
-      - Due East: Wall, blocked. Can''t go there.
-
-      - Due South: Corridor that goes two meters before a wall. I can move forward
-      and explore this path.
-
-      - Due West: Wall, blocked. Can''t go there.
-
-
-      Since North, East, and West are blocked, the only possible move is South. The
-      corridor to the South is two meters long, so I should move forward to gather
-      more information about this path.
-
-
-      Moving South might lead me closer to the exit or provide insight into the maze''s
-      layout. Since the exit is on the border, and I''m in the center, moving South
-      could potentially bring me closer to the bottom edge of the maze.
-
-
-      The corridor is two meters long, so after moving one meter, I''ll be at the
-      midpoint of this corridor. From there, I can reassess the situation with more
-      information.
-
-
-      My next move is to go South. This will allow me to explore the corridor and
-      potentially find the exit or gather more data about the maze.
-
-
-      Final decision: Move South.'
+Moving West now might bring us closer to the exit. Let's go with that.
     """
 
     print("response:" + response)

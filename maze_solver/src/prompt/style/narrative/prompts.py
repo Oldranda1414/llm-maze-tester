@@ -9,15 +9,21 @@ Just like a classic maze the exit is on the border. The starting position could 
 Your goal is to find the maze exit. Once you reach it you must step out of the maze with one last move.
 
 After the user provides you with informations regarding you current surroundings, you will provide the direction to step towards next.
-Provide your answer in the form of the initial of the cardinal direction you wish to take a step forwards to.
-The possible directions are N for north, E for east, S for south, W for west.
+The possible directions are north, east, south, west.
 
 The maze is a ${size} x ${size} grid, with every square in the grid being one square meter big.
 You are advised to think out loud about what your next move should be, but remember that the last thing you write must be a valid direction.
 
-As an example if you want to step towards north the last character in your answer would be: N
+You are allowed to output the direction with any casing you want, as long as it is the last thing in your answer.
+Here are some examples of valid end of response, in case you decide to move due north:
+
+- Let's go North
+- I want to step N!
+- My next move will be north.
 
 Analize your moves and avoid oscillating patterns (such as [north, south, north, ...] and [west, east, west, ...] as they do not lead to improvements in finding the exit.\n
+Try to formulate a plan and keep track of what what tiles you have already visited to ensure you are making progress in exploring the maze.
+Backtrack only if you are sure that you have reached a dead end.
 """
 )
 
