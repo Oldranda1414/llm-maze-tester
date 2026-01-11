@@ -427,16 +427,38 @@ Only a basic run using deepseek model. This is to test if the current code is we
 
 The results are not very good. Exploring the responses it seems clear that the model is reasoning well, but not providing a well formatted response.
 
-## improve system prompt
+## improve system prompt (2026-01-09_16:47:24)
 
 reference commit:
-TODO add this here
+c41197a3520050f13dd736654d04ec4a5d2d01b6
 
 This is to test the importance of the system prompt.
 The preamble is passed as a system prompt. The steps info are provided in a plain and simple way, with no real help.
+Only 10 3x3 mazes are tested for feedback speed necessity
+
+### stats
+
+=== Maze size: 3 ===
+mean illegal directions: 3.00
+perc illegal directions: 7.06
+mean illegal responses: 0.00
+perc illegal responses: 0.00
+mean total steps (for solved): 23.30
+perc solved: 100.00
+mean execution time (for solved): 00:08:05
+mean step execution time (for solved): 00:00:20
+total execution time: 01:20:46
 
 ### Goal
 This is an attempt of resetting all prompt innovations, and test the usage of the system prompt.
+
+### Thoughts
+This is a good improvement but it could simply be due to the low difficulty nature of 3x3 mazes.
+A more extensive experiment with the same parameters should be made with bigger mazes.
+
+## Extensive system prompt experiment
+
+Given the results in the preceding experiment, a more extensive experiment is launched with bigger mazes to check if the prompt scales well with maze size.
 
 ## Summary table
 
