@@ -24,10 +24,3 @@ The history seems to help quite a bit, although still no real reasoning is detec
 The execution time does not really vary a lot when smaller prompt (i.e. without history) are passed, so I believe that history dimension does not really affect execution times.
 Still it could be that the no history version takes a lot more steps than the history aided experiment, so the times even out for that reason.
 This seems to be confirmed by the mean step execution times (15s for the first experiment, 12s for the no history experiment)
-
-#### prompt truncation
-
-Now the program throws an exception when prompt length is over the limit, although this is known only after the model returns it's response.
-Also it seems that the end of the prompt is truncated, and not the start of the prompt as expected.
-Further tests with prompt history will be done.
-
