@@ -61,7 +61,7 @@ class MazeSolver:
                 self.invalid_answer_provided = False
             elif self.invalid_direction_provided is not None:
                 step_prompt += self.prompt.illegal_direction_warning(
-                    self.invalid_direction_provided.to_coordinate()
+                    str(self.invalid_direction_provided)
                 )
                 self.invalid_direction_provided = None
             elif self.valid_last_move:

@@ -4,15 +4,11 @@
     - have steps_summary provide last n steps, passing n as an argument
 - stats:
     - Programmatically create summary tables
-- to-mp3:
-    - implement a way to turn the maze resolving into an mp3 video, with maze, path, prompt ecc.
 
 ## bugs:
 - stats:
     - mean decisions seems to not be computed correctly:
         - 'just stats 2026-01-08_16:23:34' displays 'mean decisions: 0.00'
-- prompt:
-    - when waliking into a wall it prints the direction wrong ('E' instead of 'East')
 
 ## minor:
 

@@ -15,7 +15,7 @@ class Run:
         illegal_directions: int,
         illegal_responses: int,
         execution_time: float,
-        git_hash: str | None,
+        git_hash: str | None = None,
     ):
         self._maze = maze
         self._chat_history = chat_history

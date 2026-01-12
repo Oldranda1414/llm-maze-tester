@@ -177,7 +177,7 @@ class LatticeMaze:
             "start": list(self._start),
             "target": list(self._target),
             "path": [list(p) for p in self._path],
-            "decisions": [list(d.to_coordinate()) for d in self._decisions],
+            "decisions": [d.to_coordinate() for d in self._decisions],
             "sight_depth": self._sight_depth,
             "size": self._size,
             "solved": self.solved,
