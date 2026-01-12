@@ -14,7 +14,6 @@
 - maze filter:
     if 100 attempts at start and target generation fail, change the structure of the maze itself as it could simply be a lattice maze with no elegible start and target for the given filter
 
-
 ## Thoughts
 
 ### history length importance
