@@ -5,11 +5,6 @@
 - stats:
     - Programmatically create summary tables
 
-## bugs:
-- stats:
-    - mean decisions seems to not be computed correctly:
-        - 'just stats 2026-01-08_16:23:34' displays 'mean decisions: 0.00'
-
 ## minor:
 
 - check and understand history max length
