@@ -86,6 +86,9 @@ class LatticeMaze:
         self._position = new_path[-1]
         self._solved = is_solved
 
+    def _set_decisions(self, decisions: list[Direction]):
+        self._decisions = decisions
+
     def move(self, direction: Direction) -> bool:
         if self._solved:
             raise RuntimeError(
@@ -174,6 +177,7 @@ class LatticeMaze:
             "start": list(self._start),
             "target": list(self._target),
             "path": [list(p) for p in self._path],
+            "decisions": [list(d.to_coordinate()) for d in self._decisions],
             "sight_depth": self._sight_depth,
             "size": self._size,
             "solved": self.solved,
@@ -193,11 +197,13 @@ class LatticeMaze:
         start = Coordinate(data["start"])
         target = Coordinate(data["target"])
         path = [Coordinate(p) for p in data.get("path", [])]
+        decisions = [Direction.from_coordinate(d) for d in data.get("decisions", [])]
         sight_depth = data.get("sight_depth", 0)
         size = data.get("size", 0)
         is_solved = data.get("solved", False)
 
         maze = cls(connection_list, size, start, target, sight_depth)
         maze._set_path(path, is_solved)
+        maze._set_decisions(decisions)
 
         return maze
