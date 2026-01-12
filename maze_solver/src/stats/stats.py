@@ -48,7 +48,6 @@ def mean_total_steps(runs: list[Run]) -> Statistic:
 
 def mean_decisions(runs: list[Run]) -> Statistic:
     name = "mean decisions (for solved)"
-    print(runs[0].maze.decisions)
     values = [len(r.maze.decisions) for r in runs if r.is_solved]
     return mean_stat(name, values)
 
@@ -57,6 +56,12 @@ def perc_solved(runs: list[Run]) -> Statistic:
     name = "perc solved"
     solved = sum(r.is_solved for r in runs)
     return Statistic(name, format_float(solved / len(runs) * 100))
+
+
+def solved(runs: list[Run]) -> Statistic:
+    name = "solved"
+    solved = sum(r.is_solved for r in runs)
+    return Statistic(name, f"{solved} / {len(runs)}")
 
 
 def mean_execution_time(runs: list[Run]) -> Statistic:
@@ -88,8 +93,9 @@ STATS: list[Callable[[list[Run]], Statistic]] = [
     perc_illegal_responses,
     mean_total_steps,
     mean_decisions,
-    perc_solved,
     mean_execution_time,
     mean_step_execution_time,
     total_execution_time,
+    solved,
+    perc_solved,
 ]
