@@ -18,8 +18,10 @@ class PromptGenerator:
             parts.append(self.style.describe_direction(direction, maze))
 
         step_prompt = "\n".join(parts)
-        if self.config.provide_steps_summary:
-            step_prompt += self.style.steps_summary(maze)
+        if self.config.provide_steps_summary is not None:
+            step_prompt += self.style.steps_summary(
+                maze, self.config.provide_possible_moves
+            )
         if self.config.provide_possible_moves:
             step_prompt += self.style.possible_moves(maze)
         return step_prompt

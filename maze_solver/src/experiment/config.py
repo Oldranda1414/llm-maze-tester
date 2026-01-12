@@ -27,7 +27,7 @@ def load_config() -> ExperimentConfig:
         llm_model("mistral"),
     ]
     prompt_config = PromptConfig(
-        provide_steps_summary=False, provide_possible_moves=False
+        provide_steps_summary=None, provide_possible_moves=False
     )
     prompt_style = NarrativeStyle()
     maze_sizes = [3]

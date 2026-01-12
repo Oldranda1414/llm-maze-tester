@@ -16,8 +16,9 @@ class EmptyStyle(PromptStyle):
     def step_epilogue(self) -> str:
         return ""
 
-    def steps_summary(self, maze: Maze) -> str:
+    def steps_summary(self, maze: Maze, steps_provided: int | None = None) -> str:
         _ = maze
+        _ = steps_provided
         return ""
 
     def last_move_info(self, maze: Maze) -> str:
@@ -31,5 +32,6 @@ class EmptyStyle(PromptStyle):
     def illegal_answer(self) -> str:
         return ""
 
-    def illegal_direction(self) -> str:
+    def illegal_direction(self, illegal_direction: str) -> str:
+        _ = illegal_direction
         return ""

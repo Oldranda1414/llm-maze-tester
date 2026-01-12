@@ -11,7 +11,7 @@ def run() -> None:
     run_path = "test_run.yaml"
     solver = MazeSolver(
         phony_model(),
-        PromptGenerator(NarrativeStyle(), PromptConfig(True, True)),
+        PromptGenerator(NarrativeStyle(), PromptConfig(0, True)),
         create_maze(),
     )
     while not solver.maze.solved:

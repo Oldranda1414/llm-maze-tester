@@ -1,18 +1,25 @@
 # TODOS
 
 - prompt
-    - have steps_summary provide last n steps, passing n as an argument
-- stats:
-    - Programmatically create summary tables
+    - tell in system prompt that the maze is always solvable
+    - when saying 'due direciton', specify what direction the charachter is coming from:
+        - first help him in system prompt, maybe with examples
+        - then attempt in step prompt
+    - improve lateral path info
+- implement colored cells system
 
 ## minor:
 
+- prompt:
+    - have steps_summary provide last n steps, passing n as an argument (to be finished)
 - check and understand history max length
 - check the context length:
     understand context length limits
 - add full messages history passed per exchange in the chat_history object and visualizer
 - maze filter:
     if 100 attempts at start and target generation fail, change the structure of the maze itself as it could simply be a lattice maze with no elegible start and target for the given filter
+- stats:
+    - Programmatically create summary tables
 
 ## Thoughts
 
