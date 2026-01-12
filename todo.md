@@ -15,9 +15,9 @@
     if 100 attempts at start and target generation fail, change the structure of the maze itself as it could simply be a lattice maze with no elegible start and target for the given filter
 
 
-### Thoughts
+## Thoughts
 
-#### history length importance
+### history length importance
 
 The history seems to help quite a bit, although still no real reasoning is detected
 
