@@ -519,6 +519,10 @@ mean execution time (for solved): 00:11:40
 mean step execution time (for solved): 00:00:17
 total execution time: 18:21:02
 
+## various models ()
+
+Given the partial success of the current 'system prompt' approach, a run for other possible models is attempted, to see how other models compare.
+
 ## Summary table
 
 | Date   | Hit Rate (3×3) | Hit Rate (4×4) | Hit Rate (5×5) | Hit Rate (6×6) | Overall Hit Rate |
