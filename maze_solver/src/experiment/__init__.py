@@ -1,3 +1,4 @@
+from collections import defaultdict
 import os
 import logging
 import time
@@ -17,15 +18,31 @@ class Experiment:
     def __init__(self, date: str):
         base_path = "results"
         experiment_path = os.path.join(base_path, date)
-        self.runs: list[Run] = []
 
-        # Walk through all subdirectories and find YAML files
+        self.git_hash: str | None = None
+        self.runs: dict[str, list[Run]] = defaultdict(list)
+
         for root, _, files in os.walk(experiment_path):
             for file in files:
-                if file.endswith(".yaml"):
-                    file_path = os.path.join(root, file)
-                    run = Run.load(file_path)
-                    self.runs.append(run)
+                if not file.endswith(".yaml"):
+                    continue
+
+                file_path = os.path.join(root, file)
+
+                # Get path relative to the experiment directory
+                rel_path = os.path.relpath(root, experiment_path)
+                parts = rel_path.split(os.sep)
+
+                # Expect: <model>/<maze_dim>/<i>.yaml
+                if not parts or parts[0] == ".":
+                    continue
+
+                model_name = parts[0]
+
+                run = Run.load(file_path)
+                if self.git_hash is None:
+                    self.git_hash = run.git_hash
+                self.runs[model_name].append(run)
 
 
 def run_experiment(config: ExperimentConfig):

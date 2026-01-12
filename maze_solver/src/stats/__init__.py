@@ -34,7 +34,7 @@ def default(dates: list[str]):
         print(f"Loading experiment in date {date}")
         experiment = Experiment(date)
         git_hash = current_hash()
-        experiment_git_hash = experiment.runs[0].git_hash
+        experiment_git_hash = experiment.git_hash
         if experiment_git_hash and git_hash != experiment_git_hash:
             print(
                 f"The current commit ({git_hash}) is not the same the experiment was run on ({experiment_git_hash}) "

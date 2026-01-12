@@ -9,16 +9,19 @@ def print_experiment_stats(experiment: Experiment, stats: list[StatFn]) -> None:
         print("No runs provided.")
         return
 
-    runs_by_size = defaultdict(list)
-    for run in experiment.runs:
-        runs_by_size[run.maze_size].append(run)
+    for model, runs in experiment.runs.items():
+        print(f"\n===== Model: {model} =====")
 
-    for size, runs in sorted(runs_by_size.items()):
-        print(f"\n=== Maze size: {size} ===")
+        runs_by_size = defaultdict(list)
+        for run in runs:
+            runs_by_size[run.maze_size].append(run)
+
+        for size, runs in sorted(runs_by_size.items()):
+            print(f"\n=== Maze size: {size} ===")
+            print_stats(runs, stats)
+
+        print("\n=== Overall stats ===")
         print_stats(runs, stats)
-
-    print("\n=== Overall stats ===")
-    print_stats(experiment.runs, stats)
 
 
 def print_stats(runs: list, stats: list[StatFn]):
