@@ -456,9 +456,68 @@ This is an attempt of resetting all prompt innovations, and test the usage of th
 This is a good improvement but it could simply be due to the low difficulty nature of 3x3 mazes.
 A more extensive experiment with the same parameters should be made with bigger mazes.
 
-## Extensive system prompt experiment
+## Extensive system prompt experiment (2026-01-11_12:48:24)
+
+reference commit:
+ba27f8c
 
 Given the results in the preceding experiment, a more extensive experiment is launched with bigger mazes to check if the prompt scales well with maze size.
+
+### stats
+=== Maze size: 3 ===
+mean illegal directions: 0.80
+perc illegal directions: 0.98
+mean illegal responses: 0.20
+perc illegal responses: 0.25
+mean total steps (for solved): 16.00
+perc solved: 70.00
+mean execution time (for solved): 00:02:32
+mean step execution time (for solved): 00:00:10
+total execution time: 01:20:43
+
+=== Maze size: 4 ===
+mean illegal directions: 3.30
+perc illegal directions: 2.31
+mean illegal responses: 0.20
+perc illegal responses: 0.12
+mean total steps (for solved): 54.50
+perc solved: 20.00
+mean execution time (for solved): 00:16:36
+mean step execution time (for solved): 00:00:37
+total execution time: 05:32:37
+
+=== Maze size: 5 ===
+mean illegal directions: 9.70
+perc illegal directions: 4.31
+mean illegal responses: 1.40
+perc illegal responses: 0.59
+mean total steps (for solved): 131.50
+perc solved: 20.00
+mean execution time (for solved): 00:38:42
+mean step execution time (for solved): 00:00:20
+total execution time: 09:03:39
+
+=== Maze size: 6 ===
+mean illegal directions: 7.50
+perc illegal directions: 2.08
+mean illegal responses: 0.50
+perc illegal responses: 0.14
+mean total steps (for solved): N/A
+perc solved: 0.00
+mean execution time (for solved): N/A
+mean step execution time (for solved): N/A
+total execution time: 02:24:03
+
+=== Overall stats ===
+mean illegal directions: 4.78
+perc illegal directions: 2.50
+mean illegal responses: 0.59
+perc illegal responses: 0.31
+mean total steps (for solved): 44.00
+perc solved: 34.38
+mean execution time (for solved): 00:11:40
+mean step execution time (for solved): 00:00:17
+total execution time: 18:21:02
 
 ## Summary table
 
