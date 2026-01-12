@@ -2,6 +2,7 @@ import sys
 from typing import Callable
 
 from experiment import Experiment, experiment_list
+from run.git import current_hash
 from stats.output import print_experiment_stats, print_experiment_comparison
 from stats.stats import STATS
 
@@ -30,7 +31,18 @@ def default(dates: list[str]):
             print(f"Provided date ({date}) is not a valid experiment date")
             print_experiment_list()
             return
-        print_experiment_stats(Experiment(date), STATS)
+        print(f"Loading experiment in date {date}")
+        experiment = Experiment(date)
+        git_hash = current_hash()
+        experiment_git_hash = experiment.runs[0].git_hash
+        if experiment_git_hash and git_hash != experiment_git_hash:
+            print(
+                f"The current commit ({git_hash}) is not the same the experiment was run on ({experiment_git_hash}) "
+            )
+            print(
+                f"To ensure correct stats display, run 'git checkout {experiment_git_hash}'"
+            )
+        print_experiment_stats(experiment, STATS)
     else:
         for date in dates:
             if date not in experiment_list():

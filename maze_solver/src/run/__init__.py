@@ -4,6 +4,7 @@ from chat_history import ChatHistory
 from maze import Maze
 from maze.factory import maze_from_yaml
 from maze.core.coordinate import Coordinate
+from run.git import current_hash
 
 
 class Run:
@@ -14,12 +15,18 @@ class Run:
         illegal_directions: int,
         illegal_responses: int,
         execution_time: float,
+        git_hash: str | None,
     ):
         self._maze = maze
         self._chat_history = chat_history
         self._illegal_directions = illegal_directions
         self._illegal_responses = illegal_responses
         self._execution_time = execution_time
+        self._git_hash = git_hash
+
+    @property
+    def git_hash(self) -> str | None:
+        return self._git_hash
 
     @property
     def maze(self) -> Maze:
@@ -68,6 +75,7 @@ class Run:
     def save(self, path: str):
         """Save the run to a YAML file."""
         data = {
+            "git_hash": current_hash(),
             "maze": yaml.safe_load(self._maze.to_yaml()),
             "chat_history": yaml.safe_load(self._chat_history.to_yaml()),
             "illegal_directions": self._illegal_directions,
@@ -88,8 +96,9 @@ class Run:
         i_d = data["illegal_directions"]
         i_r = data["illegal_responses"]
         execution_time = data["execution_time"]
+        git_hash = data.get("git_hash", None)
 
         maze = maze_from_yaml(maze_data)
         chat_history = ChatHistory.from_yaml(chat_data)
 
-        return cls(maze, chat_history, i_d, i_r, execution_time)
+        return cls(maze, chat_history, i_d, i_r, execution_time, git_hash)

@@ -6,8 +6,6 @@
     - Programmatically create summary tables
 - to-mp3:
     - implement a way to turn the maze resolving into an mp3 video, with maze, path, prompt ecc.
-- experiments:
-    - have experiments save themselves with commit hashes so that it is easy to check the conditions the experiment was executed in.
 
 ## bugs:
 - stats:
