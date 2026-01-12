@@ -1,3 +1,5 @@
+from matplotlib.axes import Axes
+from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 
@@ -15,12 +17,15 @@ def save_maze(maze: Maze, save_path: str):
     fig.savefig(save_path, dpi=300, bbox_inches="tight")
 
 
-def draw_maze(maze, ax=None, show_path=True):
+def draw_maze(
+    maze: Maze, ax: Axes | None = None, show_path: bool = True
+) -> tuple[Figure, Axes]:
     if ax is None:
         plt.close("all")
         fig, ax = plt.subplots(figsize=(5, 5))
     else:
         fig = ax.figure
+        assert isinstance(fig, Figure)
 
     grid_size = maze.size
     WALL_WIDTH = 3
@@ -95,7 +100,7 @@ def draw_maze(maze, ax=None, show_path=True):
     return fig, ax
 
 
-def print_maze(maze: Maze):
+def print_maze(maze: Maze) -> None:
     console = Console()
     grid_size = maze.size
     path = maze.path

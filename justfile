@@ -16,6 +16,11 @@ run *args:
 stats *args:
   uv --project maze_solver run maze_solver/src/stats_main.py {{args}}
 
+# Render a run
+[no-exit-message]
+render *args:
+  uv --project maze_solver run maze_solver/src/render_main.py {{args}}
+
 # Run a given test
 [no-exit-message]
 test *args:
