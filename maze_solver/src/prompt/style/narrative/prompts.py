@@ -67,7 +67,7 @@ exit_found = (
     "you can see the exit in that direction! One last step and you are out of the maze!"
 )
 
-dead_end = " It is a dead end."
+dead_end = " The corridor ends without any lateral paths."
 
 out_of_sight = "the corridor stretches further than you can see, so you are unable to predict what lies ahead."
 
