@@ -1,10 +1,6 @@
 # TODOS
 
 - prompt
-    - tell in system prompt that the maze is always solvable
-    - when saying 'due direciton', specify what direction the charachter is coming from:
-        - first help him in system prompt, maybe with examples
-        - then attempt in step prompt
     - improve lateral path info
 - implement colored cells system
 
