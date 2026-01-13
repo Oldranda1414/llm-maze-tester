@@ -1,7 +1,11 @@
 from dataclasses import dataclass
 
+from maze import Maze
+from maze.factory import create_dataset
+
 from model import Model
 from model.factory import llm_model
+
 from prompt import PromptGenerator
 from prompt.config import PromptConfig
 from prompt.style.narrative import NarrativeStyle
@@ -15,16 +19,12 @@ class ExperimentConfig:
     iterations: int
     provide_history: bool
     quiet: bool
+    mazes: list[Maze] | None = None
 
 
 def load_config() -> ExperimentConfig:
     models = [
-        llm_model("llama3"),
-        llm_model("qwen3"),
-        llm_model("smollm2"),
-        llm_model("phi4-mini"),
         llm_model("deepseek-r1"),
-        llm_model("mistral"),
     ]
     prompt_config = PromptConfig(
         provide_steps_summary=None, provide_possible_moves=False
@@ -41,4 +41,11 @@ def load_config() -> ExperimentConfig:
         iterations=iterations,
         provide_history=provide_history,
         quiet=quiet,
+        mazes=hard_3x3_mazes(),
     )
+
+
+def hard_3x3_mazes():
+    mazes = create_dataset(10, 3).mazes
+    indexes = [4, 5, 6, 7, 8]
+    return [maze for i, maze in enumerate(mazes) if i in indexes]

@@ -1,4 +1,4 @@
-from experiment import run_experiment
+from experiment.run import run_experiment
 from experiment.config import ExperimentConfig
 from model.factory import random_model
 from prompt import PromptGenerator
