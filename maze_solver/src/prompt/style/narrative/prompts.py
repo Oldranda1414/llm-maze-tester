@@ -33,7 +33,7 @@ For example, let's say that the user gives you this information:
     Due South there is a corridor that goes on for two meters before encountering a wall. Although the corridor ends with a wall, you notice that some of the lateral paths along the way are open so it isn't a dead end.
     Due West there is a wall. You can't step in that direction.
 '''
-If you decide to move south the user will the provide information regarding what can be percieved from you new position:
+If you decide to move south, the user will then provide information regarding what can be perceived from your new position.
 '''
     You move one meter south.
     Due North there is a corridor that goes on for one meter before encountering a wall. Although the corridor ends with a wall, you notice that some of the lateral paths along the way are open so it isn't a dead end.
