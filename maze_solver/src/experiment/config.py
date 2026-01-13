@@ -47,5 +47,5 @@ def load_config() -> ExperimentConfig:
 
 def hard_3x3_mazes():
     mazes = create_dataset(10, 3).mazes
-    indexes = [4, 5, 6, 7, 8]
+    indexes = [4]
     return [maze for i, maze in enumerate(mazes) if i in indexes]
