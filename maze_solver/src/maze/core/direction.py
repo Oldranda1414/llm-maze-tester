@@ -51,3 +51,13 @@ def get_offsets(direction: Direction) -> Coordinate:
         Direction.WEST: (0, -1),
     }
     return DIRECTION_OFFSETS[direction]
+
+
+def get_opposite(direction: Direction) -> Direction:
+    DIRECTION_OPPOSITES: dict[Direction, Direction] = {
+        Direction.NORTH: Direction.SOUTH,
+        Direction.EAST: Direction.WEST,
+        Direction.SOUTH: Direction.NORTH,
+        Direction.WEST: Direction.EAST,
+    }
+    return DIRECTION_OPPOSITES[direction]

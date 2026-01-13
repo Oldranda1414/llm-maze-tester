@@ -1,7 +1,5 @@
 # TODOS
 
-- prompt
-    - improve lateral path info
 - implement colored cells system
 
 ## minor:

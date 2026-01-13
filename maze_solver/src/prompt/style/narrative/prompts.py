@@ -71,4 +71,8 @@ dead_end = " The corridor ends without any lateral paths."
 
 out_of_sight = "the corridor stretches further than you can see, so you are unable to predict what lies ahead."
 
-options = " Although the corridor ends with a wall, you notice that some of the lateral paths along the way are open so it isn't a dead end."
+lateral_path_preable = " You are able to see that the corridor has some lateral paths:"
+
+lateral_path = Template(
+    "\n   - After ${distance} there is a lateral path due ${direction}."
+)
