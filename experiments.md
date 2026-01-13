@@ -523,6 +523,98 @@ total execution time: 18:21:02
 
 Given the partial success of the current 'system prompt' approach, a run for other possible models is attempted, to see how other models compare.
 
+### stats
+
+===== Model: phi4-mini =====
+
+=== Maze size: 3 ===
+mean illegal directions: 12.30
+perc illegal directions: 20.29
+mean illegal responses: 26.70
+perc illegal responses: 37.61
+mean total steps (for solved): 5.33
+mean decisions (for solved): 4.67
+mean execution time (for solved): 00:00:23
+mean step execution time (for solved): 00:00:04
+total execution time: 02:25:56
+solved: 3 / 10
+perc solved: 30.00
+
+===== Model: llama3 =====
+
+=== Maze size: 3 ===
+mean illegal directions: 10.50
+perc illegal directions: 12.91
+mean illegal responses: 0.10
+perc illegal responses: 0.11
+mean total steps (for solved): 17.33
+mean decisions (for solved): 16.17
+mean execution time (for solved): 00:01:24
+mean step execution time (for solved): 00:00:04
+total execution time: 00:49:18
+solved: 6 / 10
+perc solved: 60.00
+
+===== Model: smollm2 =====
+
+=== Maze size: 3 ===
+mean illegal directions: 51.10
+perc illegal directions: 58.37
+mean illegal responses: 0.00
+perc illegal responses: 0.00
+mean total steps (for solved): 11.00
+mean decisions (for solved): 9.00
+mean execution time (for solved): 00:00:19
+mean step execution time (for solved): 00:00:02
+total execution time: 00:41:38
+solved: 1 / 10
+perc solved: 10.00
+
+===== Model: qwen3 =====
+
+=== Maze size: 3 ===
+mean illegal directions: 0.10
+perc illegal directions: 1.43
+mean illegal responses: 0.00
+perc illegal responses: 0.00
+mean total steps (for solved): 7.33
+mean decisions (for solved): 7.00
+mean execution time (for solved): 00:00:20
+mean step execution time (for solved): 00:00:03
+total execution time: 01:15:25
+solved: 3 / 10
+perc solved: 30.00
+
+===== Model: deepseek-r1 =====
+
+=== Maze size: 3 ===
+mean illegal directions: 1.00
+perc illegal directions: 1.21
+mean illegal responses: 0.00
+perc illegal responses: 0.00
+mean total steps (for solved): 17.29
+mean decisions (for solved): 16.14
+mean execution time (for solved): 00:06:23
+mean step execution time (for solved): 00:00:25
+total execution time: 01:37:55
+solved: 7 / 10
+perc solved: 70.00
+
+===== Model: mistral =====
+
+=== Maze size: 3 ===
+mean illegal directions: 23.70
+perc illegal directions: 33.33
+mean illegal responses: 0.00
+perc illegal responses: 0.00
+mean total steps (for solved): 36.86
+mean decisions (for solved): 24.57
+mean execution time (for solved): 00:06:51
+mean step execution time (for solved): 00:00:10
+total execution time: 02:50:13
+solved: 7 / 10
+perc solved: 70.00
+
 ## Summary table
 
 | Date   | Hit Rate (3×3) | Hit Rate (4×4) | Hit Rate (5×5) | Hit Rate (6×6) | Overall Hit Rate |
