@@ -9,7 +9,9 @@ from prompt.util import length_to_string
 
 class NarrativeStyle(PromptStyle):
     def preamble(self, maze: Maze) -> str:
-        return prompts.preamble.substitute(size=maze.size)
+        return prompts.preamble.substitute(
+            size=maze.size, sight_depth=length_to_string(maze.sight_depth)
+        )
 
     def describe_direction(self, direction: Direction, maze: Maze) -> str:
         facts = extract_facts(direction, maze)

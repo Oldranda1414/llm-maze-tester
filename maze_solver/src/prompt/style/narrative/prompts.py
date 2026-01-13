@@ -5,6 +5,7 @@ preamble = Template(
 You are a maze solving model. You are an expert in solving classic lattice mazes.
 
 The user will provide you with descriptions of what you can perceive from inside the maze.
+The information provided considers you to have a sight depth of ${sight_depth}. Anything that is further away from you than ${sight_depth} is not mentioned in the user prompt.
 Just like a classic lattice maze the exit is on the border. The starting position could be anywhere in the maze.
 Your goal is to find the maze exit. Once you reach it you must step out of the maze with one last move.
 The maze is always solvable and the user is always honest on the information that he provides you.
