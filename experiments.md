@@ -173,7 +173,6 @@ Your goal is to find the maze exit. Once you reach it you must step out of the m
 Tell me which direction you would like to go to. Provide your answer in the form of the initial of the cardinal direction you wish to take a step forwards to.
 The possible directions are N for north, E for east, S for south, W for west.
 
-
 You are advised to think out loud about what your next move should be, but remember that the last thing you write must be a valid direction.
 
 As an example if you want to step towards north the last character in your answer would be: N
@@ -450,9 +449,11 @@ mean step execution time (for solved): 00:00:20
 total execution time: 01:20:46
 
 ### Goal
+
 This is an attempt of resetting all prompt innovations, and test the usage of the system prompt.
 
 ### Thoughts
+
 This is a good improvement but it could simply be due to the low difficulty nature of 3x3 mazes.
 A more extensive experiment with the same parameters should be made with bigger mazes.
 
@@ -464,6 +465,7 @@ ba27f8c
 Given the results in the preceding experiment, a more extensive experiment is launched with bigger mazes to check if the prompt scales well with maze size.
 
 ### stats
+
 === Maze size: 3 ===
 mean illegal directions: 0.80
 perc illegal directions: 0.98
@@ -618,15 +620,14 @@ perc solved: 70.00
 ## Summary table
 
 | Date   | Hit Rate (3×3) | Hit Rate (4×4) | Hit Rate (5×5) | Hit Rate (6×6) | Overall Hit Rate |
-|--------|-----------------|-----------------|-----------------|-----------------|-------------------|
-| 11-12  | 100.00%         | 100.00%         | 60.00%          | 40.00%          | 75.00%            |
-| 11-14  | 80.00%          | 60.00%          | 60.00%          | 30.00%          | 57.50%            |
-| 12-04  | 80.00%          | 40.00%          | 50.00%          | 20.00%          | 47.50%            |
-| random | 60.00%          | 40.00%          | 30.00%          | 0.00%           | 32.50%            |
+| ------ | -------------- | -------------- | -------------- | -------------- | ---------------- |
+| 11-12  | 100.00%        | 100.00%        | 60.00%         | 40.00%         | 75.00%           |
+| 11-14  | 80.00%         | 60.00%         | 60.00%         | 30.00%         | 57.50%           |
+| 12-04  | 80.00%         | 40.00%         | 50.00%         | 20.00%         | 47.50%           |
+| random | 60.00%         | 40.00%         | 30.00%         | 0.00%          | 32.50%           |
 
 | Date  | Exec Time (3×3) | Exec Time (4×4) | Exec Time (5×5) | Exec Time (6×6) | Total Exec Time |
-|-------|------------------|------------------|------------------|------------------|------------------|
-| 11-12 | 00:54:37         | 01:58:10         | 05:37:37         | 10:15:30         | 18:45:54         |
-| 11-14 | 01:37:08         | 03:15:02         | 05:00:59         | 10:28:34         | 20:21:43         |
-| 12-04 | 01:17:30         | 04:31:28         | 06:50:44         | 10:31:19         | 23:11:01         |
-
+| ----- | --------------- | --------------- | --------------- | --------------- | --------------- |
+| 11-12 | 00:54:37        | 01:58:10        | 05:37:37        | 10:15:30        | 18:45:54        |
+| 11-14 | 01:37:08        | 03:15:02        | 05:00:59        | 10:28:34        | 20:21:43        |
+| 12-04 | 01:17:30        | 04:31:28        | 06:50:44        | 10:31:19        | 23:11:01        |
