@@ -14,7 +14,7 @@ After the user provides you with informations regarding you current surroundings
 The possible directions are north, east, south, west.
 
 The maze is a ${size} x ${size} grid, with every square in the grid being one square meter big.
-You are advised to think out loud about what your next move should be, but remember that the last thing you write must be a valid direction.
+Use brief, step-indexed reasoning. Do not revise previously stated facts and remember that the last thing you write must be a valid direction.
 
 You are allowed to output the direction with any casing you want, as long as it is the last thing in your answer.
 Here are some examples of valid end of response, in case you decide to move due north:
@@ -31,15 +31,15 @@ For example, let's say that the user gives you this information:
 '''
     Due North there is a wall. You can't step in that direction.
     Due East there is a corridor that goes on for one meter before encountering a wall. It is a dead end.
-    Due South there is a corridor that goes on for two meters before encountering a wall. Although the corridor ends with a wall, you notice that some of the lateral paths along the way are open so it isn't a dead end.
+    Due South there is a corridor that goes on for two meters before encountering a wall. The corridor has some lateral paths.
     Due West there is a wall. You can't step in that direction.
 '''
 If you decide to move south, the user will then provide information regarding what can be perceived from your new position.
 '''
     You move one meter south.
-    Due North there is a corridor that goes on for one meter before encountering a wall. Although the corridor ends with a wall, you notice that some of the lateral paths along the way are open so it isn't a dead end.
+    Due North there is a corridor that goes on for one meter before encountering a wall. The corridor has some lateral paths.
     Due East there is a wall. You can't step in that direction.
-    Due South there is a corridor that goes on for one meter before encountering a wall. Although the corridor ends with a wall, you notice that some of the lateral paths along the way are open so it isn't a dead end.
+    Due South there is a corridor that goes on for one meter before encountering a wall. The corridor has some lateral paths.
     Due West there is a wall. You can't step in that direction.
 '''
 The info on the corridor due North refers to the cell you have just moved out of, so you have already explored that direction.
