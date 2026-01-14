@@ -20,7 +20,7 @@ class PromptGenerator:
         step_prompt = "\n".join(parts)
         if self.config.provide_steps_summary is not None:
             step_prompt += self.style.steps_summary(
-                maze, self.config.provide_possible_moves
+                maze, self.config.provide_steps_summary
             )
         if self.config.provide_possible_moves:
             step_prompt += self.style.possible_moves(maze)

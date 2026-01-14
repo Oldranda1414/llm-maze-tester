@@ -1,5 +1,7 @@
 # TODOS
 
+- prompt:
+  - fix the TODO in narrative/\_\_init\_\_.py
 - implement colored cells system
 
 ## minor:

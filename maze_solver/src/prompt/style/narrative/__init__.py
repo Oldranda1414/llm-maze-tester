@@ -46,12 +46,13 @@ class NarrativeStyle(PromptStyle):
         if steps_provided == 0: all decisions are provided
         else: last steps_provided decisions are provided
         """
+        print("steps_provided value:", steps_provided)
         # TODO this should not be decisions, this should actually be taken from path, as decisions contains moves made agianst walls also
         decisions = maze.decisions
         if len(decisions) == 0:
             return ""
         if steps_provided != 0:
-            decisions = decisions[:-steps_provided]
+            decisions = decisions[-steps_provided:]
         string_decisions = ", ".join(str(d) for d in decisions)
         return prompts.steps_summary.substitute(decisions=string_decisions)
 
