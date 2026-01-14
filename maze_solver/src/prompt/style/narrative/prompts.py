@@ -23,7 +23,8 @@ Here are some examples of valid end of response, in case you decide to move due 
 - I want to step N!
 - My next move will be north.
 
-Try to formulate a plan and keep track of what what tiles you have already visited to ensure you are making progress in exploring the maze.
+To keep track of the progress you make, maintain a persistent 2D map of the maze using ASCII characters..
+This will help you track you progress and inform your decisions
 
 The user notifies you when you move in a given direction, such as 'You move one meter west', if you decide to move due west.
 Keep in mind that after you step in a given direction, the information provided for what you percieve in the opposite direction refers to the area you are coming from.
