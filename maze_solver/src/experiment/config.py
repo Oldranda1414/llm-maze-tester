@@ -26,9 +26,7 @@ def load_config() -> ExperimentConfig:
     models = [
         llm_model("deepseek-r1"),
     ]
-    prompt_config = PromptConfig(
-        provide_steps_summary=None, provide_possible_moves=False
-    )
+    prompt_config = PromptConfig(provide_steps_summary=0, provide_possible_moves=False)
     prompt_style = NarrativeStyle()
     maze_sizes = [3]
     iterations = 10

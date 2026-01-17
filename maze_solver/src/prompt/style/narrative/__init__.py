@@ -1,5 +1,6 @@
 from maze import Maze
 from maze.core.direction import Direction
+from maze.core.navigation import path_to_directions
 from prompt.facts import Facts, extract_facts
 from prompt.style import PromptStyle
 from prompt.style.narrative import prompts
@@ -26,7 +27,6 @@ class NarrativeStyle(PromptStyle):
         if facts.is_wall:
             return base + prompts.wall
 
-        # TODO this should consider laterla paths too
         if facts.out_of_sight:
             return base + prompts.out_of_sight + _add_lateral_paths(facts)
 
@@ -46,14 +46,12 @@ class NarrativeStyle(PromptStyle):
         if steps_provided == 0: all decisions are provided
         else: last steps_provided decisions are provided
         """
-        print("steps_provided value:", steps_provided)
-        # TODO this should not be decisions, this should actually be taken from path, as decisions contains moves made agianst walls also
-        decisions = maze.decisions
-        if len(decisions) == 0:
+        productive_decisions = path_to_directions(maze.path)
+        if len(productive_decisions) == 0:
             return ""
         if steps_provided != 0:
-            decisions = decisions[-steps_provided:]
-        string_decisions = ", ".join(str(d) for d in decisions)
+            productive_decisions = productive_decisions[-steps_provided:]
+        string_decisions = ", ".join(str(d) for d in productive_decisions)
         return prompts.steps_summary.substitute(decisions=string_decisions)
 
     def step_epilogue(self) -> str:

@@ -3,6 +3,7 @@ from collections import deque
 from functools import cached_property
 import yaml
 
+from maze import Maze
 from maze.core.coordinate import Coordinate
 from maze.core.direction import Direction, get_offsets
 from maze.core.navigation import direction_strict, exit_direction
@@ -10,7 +11,7 @@ from maze.core.connection_list import ConnectionList
 from maze.output import save_maze, print_maze
 
 
-class LatticeMaze:
+class LatticeMaze(Maze):
     """
     A class representing a maze with a start and end point.
     """
@@ -28,7 +29,7 @@ class LatticeMaze:
         self._size = size
         self._start = start
         self._target = target
-        self._path = [self._start]
+        self._path: list[Coordinate] = [self._start]
         self._decisions: list[Direction] = []
         self._position = self._start
         self._solved = False
