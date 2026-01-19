@@ -16,9 +16,9 @@ def print_experiment_stats(experiment: Experiment, stats: list[StatFn]) -> None:
         for run in runs:
             runs_by_size[run.maze_size].append(run)
 
-        for size, runs in sorted(runs_by_size.items()):
+        for size, size_runs in sorted(runs_by_size.items()):
             print(f"\n=== Maze size: {size} ===")
-            print_stats(runs, stats)
+            print_stats(size_runs, stats)
 
         print("\n=== Overall stats ===")
         print_stats(runs, stats)
