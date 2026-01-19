@@ -28,7 +28,7 @@ def load_config() -> ExperimentConfig:
     ]
     prompt_config = PromptConfig(provide_steps_summary=0, provide_possible_moves=False)
     prompt_style = NarrativeStyle()
-    maze_sizes = [3]
+    maze_sizes = [3, 4, 5, 6]
     iterations = 10
     provide_history = True
     quiet = True
@@ -39,7 +39,6 @@ def load_config() -> ExperimentConfig:
         iterations=iterations,
         provide_history=provide_history,
         quiet=quiet,
-        mazes=hard_3x3_mazes(),
     )
 
 

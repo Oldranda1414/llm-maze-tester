@@ -617,6 +617,11 @@ total execution time: 02:50:13
 solved: 7 / 10
 perc solved: 70.00
 
+## Current best test
+
+This test attempts to provide the current best prompt found with some big complex mazes.
+Considering the results from (2026-01-17_12:34:35), where the hardest 3x3 maze was solved, this experiment aims at taking stock of the current state of the experiments.
+
 ## Summary table
 
 | Date   | Hit Rate (3×3) | Hit Rate (4×4) | Hit Rate (5×5) | Hit Rate (6×6) | Overall Hit Rate |
