@@ -24,9 +24,9 @@ class ExperimentConfig:
 
 def load_config() -> ExperimentConfig:
     models = [
-        llm_model("kimi-k2"),
-        llm_model("glm-4.6"),
-        llm_model("minimax-m2"),
+        llm_model("huihui_ai/kimi-k2"),
+        llm_model("glm-4.7-flash"),
+        llm_model("MichelRosselli/minimax-m2:q2_k"),
         llm_model("yi"),
     ]
     prompt_config = PromptConfig(provide_steps_summary=0, provide_possible_moves=False)

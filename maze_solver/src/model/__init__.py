@@ -30,8 +30,8 @@ model_names: list[str] = [
     "deepseek-r1",
     "mistral",
     # new attempts
-    "kimi-k2",
-    "glm-4.6",
-    "minimax-m2",
+    "huihui_ai/kimi-k2",
+    "glm-4.7-flash",
+    "MichelRosselli/minimax-m2:q2_k",
     "yi",
 ]
