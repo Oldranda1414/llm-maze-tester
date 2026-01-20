@@ -24,11 +24,14 @@ class ExperimentConfig:
 
 def load_config() -> ExperimentConfig:
     models = [
-        llm_model("deepseek-r1"),
+        llm_model("kimi-k2"),
+        llm_model("glm-4.6"),
+        llm_model("minimax-m2"),
+        llm_model("yi"),
     ]
     prompt_config = PromptConfig(provide_steps_summary=0, provide_possible_moves=False)
     prompt_style = NarrativeStyle()
-    maze_sizes = [3, 4, 5, 6]
+    maze_sizes = [3, 4]
     iterations = 10
     provide_history = True
     quiet = True
@@ -39,6 +42,7 @@ def load_config() -> ExperimentConfig:
         iterations=iterations,
         provide_history=provide_history,
         quiet=quiet,
+        mazes=None,
     )
 
 
