@@ -1,6 +1,7 @@
 from typing import Callable
 
 from maze import Maze
+from maze.colored_cell import ColoredCell
 from maze.dataset import MazeDataset
 from maze.lattice_maze import LatticeMaze
 from maze.core.coordinate import Coordinate
@@ -19,8 +20,15 @@ def create_dataset(
     sight_depth: int = 2,
     seed: int = 42,
     maze_filter: Callable[[Maze], bool] | None = _is_non_trivial,
+    colored_cells: list[list[ColoredCell]] | None = None,
 ) -> MazeDataset:
-    return MazeDataset("dataset", n_mazes, maze_size, sight_depth, seed, maze_filter)
+    if colored_cells is not None and len(colored_cells) != n_mazes:
+        raise ValueError(
+            f"number of mazes ({n_mazes}) and number of colored_cells dispositions ({len(colored_cells)}) must be equal"
+        )
+    return MazeDataset(
+        "dataset", n_mazes, maze_size, sight_depth, seed, colored_cells, maze_filter
+    )
 
 
 def create_maze(
@@ -30,6 +38,7 @@ def create_maze(
     sight_depth: int = 2,
     seed: int = 42,
     maze_filter: Callable[[Maze], bool] | None = _is_non_trivial,
+    colored_cells: list[ColoredCell] | None = None,
 ) -> Maze:
     random_maze = create_dataset(
         n_mazes=1,
@@ -45,7 +54,12 @@ def create_maze(
     if start:
         final_start = start
     return LatticeMaze(
-        random_maze.connection_list, size, final_start, final_target, sight_depth
+        random_maze.connection_list,
+        size,
+        final_start,
+        final_target,
+        sight_depth,
+        colored_cells,
     )
 
 

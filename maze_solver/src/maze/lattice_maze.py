@@ -4,6 +4,7 @@ from functools import cached_property
 import yaml
 
 from maze import Maze
+from maze.colored_cell import ColoredCell
 from maze.core.coordinate import Coordinate
 from maze.core.direction import Direction, get_offsets
 from maze.core.navigation import direction_strict, exit_direction
@@ -23,6 +24,7 @@ class LatticeMaze(Maze):
         start: Coordinate,
         target: Coordinate,
         sight_depth: int,
+        colored_cells: list[ColoredCell] | None = None,
     ):
         self._sight_depth = sight_depth
         self._connection_list = cl
@@ -32,6 +34,7 @@ class LatticeMaze(Maze):
         self._path: list[Coordinate] = [self._start]
         self._decisions: list[Direction] = []
         self._position = self._start
+        self._colored_cells = colored_cells if colored_cells is not None else []
         self._solved = False
 
     @property
@@ -57,6 +60,10 @@ class LatticeMaze(Maze):
     @property
     def decisions(self) -> list[Direction]:
         return self._decisions
+
+    @property
+    def colored_cells(self) -> list[ColoredCell]:
+        return self._colored_cells
 
     @property
     def solved(self):
@@ -179,6 +186,7 @@ class LatticeMaze(Maze):
             "target": list(self._target),
             "path": [list(p) for p in self._path],
             "decisions": [d.to_coordinate() for d in self._decisions],
+            "colored_cells": [c.to_yaml() for c in self._colored_cells],
             "sight_depth": self._sight_depth,
             "size": self._size,
             "solved": self.solved,
@@ -199,11 +207,14 @@ class LatticeMaze(Maze):
         target = Coordinate(data["target"])
         path = [Coordinate(p) for p in data.get("path", [])]
         decisions = [Direction.from_coordinate(d) for d in data.get("decisions", [])]
+        colored_cells = [
+            ColoredCell.from_yaml(c) for c in data.get("colored_cells", [])
+        ]
         sight_depth = data.get("sight_depth", 0)
         size = data.get("size", 0)
         is_solved = data.get("solved", False)
 
-        maze = cls(connection_list, size, start, target, sight_depth)
+        maze = cls(connection_list, size, start, target, sight_depth, colored_cells)
         maze._set_path(path, is_solved)
         maze._set_decisions(decisions)
 
