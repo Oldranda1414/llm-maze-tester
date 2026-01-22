@@ -35,6 +35,10 @@ class LatticeMaze(Maze):
         self._decisions: list[Direction] = []
         self._position = self._start
         self._colored_cells = colored_cells if colored_cells is not None else []
+        for cell in self._colored_cells:
+            x, y = cell.coordinate
+            if not 0 <= x < size or not 0 <= y < size:
+                raise ValueError(f"Illegal colored cell coordinate: {cell.coordinate}")
         self._solved = False
 
     @property
