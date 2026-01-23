@@ -29,7 +29,6 @@ model_names: list[str] = [
     "phi4-mini",
     "deepseek-r1",
     "mistral",
-    # new attempts
     "glm-4.7-flash",
     "yi",
 ]
