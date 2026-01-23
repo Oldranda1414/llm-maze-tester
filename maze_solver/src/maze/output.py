@@ -12,6 +12,8 @@ from maze.core.direction import Direction
 from maze.core.navigation import neighbor, direction, exit_direction
 from maze.core.coordinate import Coordinate
 
+WALL_WIDTH = 3
+
 
 def save_maze(maze: Maze, save_path: str):
     fig, _ = draw_maze(maze)
@@ -29,8 +31,6 @@ def draw_maze(
         assert isinstance(fig, Figure)
 
     grid_size = maze.size
-    WALL_WIDTH = 3
-    cell_size = 1.0
 
     ax.set_facecolor("white")
 
@@ -50,45 +50,7 @@ def draw_maze(
             ax.plot([grid_size, grid_size], [i, i + 1], "k-", linewidth=WALL_WIDTH)
 
     # Cells
-    cl = maze.connection_list
-    for i in range(grid_size):
-        for j in range(grid_size):
-            y_plot = grid_size - i - 1
-            facecolor = "yellow" if _is_seen((i, j), maze) else "white"
-            edgecolor = "lightgrey"
-            rect = Rectangle(
-                (j, y_plot),
-                cell_size,
-                cell_size,
-                facecolor=facecolor,
-                edgecolor=edgecolor,
-                linewidth=0.5,
-            )
-            ax.add_patch(rect)
-
-            cell_color = _cell_color((i, j), maze)
-            if cell_color is not None:
-                inner_border_color = cell_color.to_hex()
-                inner_border_width = 2
-                inner_padding = cell_size * 0.1
-
-                inner_rect = Rectangle(
-                    (j + inner_padding / 2, y_plot + inner_padding / 2),
-                    cell_size - inner_padding,
-                    cell_size - inner_padding,
-                    facecolor="none",
-                    edgecolor=inner_border_color,
-                    linewidth=inner_border_width,
-                    zorder=2,
-                )
-                ax.add_patch(inner_rect)
-
-            if j < grid_size - 1 and not cl.horizontal_passages[i][j]:
-                ax.plot(
-                    [j + 1, j + 1], [y_plot, y_plot + 1], "k-", linewidth=WALL_WIDTH
-                )
-            if i < grid_size - 1 and not cl.vertical_passages[i][j]:
-                ax.plot([j, j + 1], [y_plot, y_plot], "k-", linewidth=WALL_WIDTH)
+    _draw_cells(ax, maze)
 
     _draw_start(ax, maze)
     if show_path:
@@ -163,6 +125,50 @@ def print_maze(maze: Maze) -> None:
             bottom.append("---")
     bottom.append("+")
     console.print(bottom)
+
+
+def _draw_cells(ax, maze: Maze):
+    cell_size = 1.0
+    cl = maze.connection_list
+    grid_size = maze.size
+    for i in range(grid_size):
+        for j in range(grid_size):
+            y_plot = grid_size - i - 1
+            facecolor = "yellow" if _is_seen((i, j), maze) else "white"
+            edgecolor = "lightgrey"
+            rect = Rectangle(
+                (j, y_plot),
+                cell_size,
+                cell_size,
+                facecolor=facecolor,
+                edgecolor=edgecolor,
+                linewidth=0.5,
+            )
+            ax.add_patch(rect)
+
+            cell_color = _cell_color((i, j), maze)
+            if cell_color is not None:
+                inner_border_color = cell_color.to_hex()
+                inner_border_width = 2
+                inner_padding = cell_size * 0.1
+
+                inner_rect = Rectangle(
+                    (j + inner_padding / 2, y_plot + inner_padding / 2),
+                    cell_size - inner_padding,
+                    cell_size - inner_padding,
+                    facecolor="none",
+                    edgecolor=inner_border_color,
+                    linewidth=inner_border_width,
+                    zorder=2,
+                )
+                ax.add_patch(inner_rect)
+
+            if j < grid_size - 1 and not cl.horizontal_passages[i][j]:
+                ax.plot(
+                    [j + 1, j + 1], [y_plot, y_plot + 1], "k-", linewidth=WALL_WIDTH
+                )
+            if i < grid_size - 1 and not cl.vertical_passages[i][j]:
+                ax.plot([j, j + 1], [y_plot, y_plot], "k-", linewidth=WALL_WIDTH)
 
 
 def _draw_start(ax, maze: Maze):
