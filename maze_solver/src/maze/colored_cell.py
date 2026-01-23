@@ -46,7 +46,7 @@ def random_colored_cells(
     n_mazes: int, maze_size: int, n_colored_cells: int, seed: int = 42
 ) -> list[list[ColoredCell]]:
     rng = random.Random(seed)
-    if n_colored_cells >= len(CellColor):
+    if n_colored_cells > len(CellColor):
         raise ValueError(
             f"n_colored_cells cannot be bigger then the available number of colors ({len(CellColor)})"
         )
@@ -56,7 +56,7 @@ def random_colored_cells(
             [
                 ColoredCell(coord, color)
                 for coord in _unique_random_coordinates(maze_size, n_colored_cells, rng)
-                for color in rng.sample(set(CellColor), n_colored_cells)
+                for color in rng.sample(list(CellColor), n_colored_cells)
             ]
         )
 

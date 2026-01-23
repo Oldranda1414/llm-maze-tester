@@ -7,6 +7,7 @@ from rich.console import Console
 from rich.text import Text
 
 from maze import Maze
+from maze.colored_cell import CellColor
 from maze.core.direction import Direction
 from maze.core.navigation import neighbor, direction, exit_direction
 from maze.core.coordinate import Coordinate
@@ -54,15 +55,33 @@ def draw_maze(
         for j in range(grid_size):
             y_plot = grid_size - i - 1
             facecolor = "yellow" if _is_seen((i, j), maze) else "white"
+            edgecolor = "lightgrey"
             rect = Rectangle(
                 (j, y_plot),
                 cell_size,
                 cell_size,
                 facecolor=facecolor,
-                edgecolor="lightgray",
+                edgecolor=edgecolor,
                 linewidth=0.5,
             )
             ax.add_patch(rect)
+
+            cell_color = _cell_color((i, j), maze)
+            if cell_color is not None:
+                inner_border_color = cell_color.to_hex()
+                inner_border_width = 2
+                inner_padding = cell_size * 0.1
+
+                inner_rect = Rectangle(
+                    (j + inner_padding / 2, y_plot + inner_padding / 2),
+                    cell_size - inner_padding,
+                    cell_size - inner_padding,
+                    facecolor="none",
+                    edgecolor=inner_border_color,
+                    linewidth=inner_border_width,
+                    zorder=2,
+                )
+                ax.add_patch(inner_rect)
 
             if j < grid_size - 1 and not cl.horizontal_passages[i][j]:
                 ax.plot(
@@ -71,23 +90,7 @@ def draw_maze(
             if i < grid_size - 1 and not cl.vertical_passages[i][j]:
                 ax.plot([j, j + 1], [y_plot, y_plot], "k-", linewidth=WALL_WIDTH)
 
-    # Start marker
-    for pos, color, marker, label in [
-        (maze.start, "darkorange", "o", "Start"),
-    ]:
-        if pos:
-            pos_x, pos_y = pos
-            x, y = _plot_coords(pos_x, pos_y, grid_size)
-            ax.plot(
-                x,
-                y,
-                marker,
-                markersize=12,
-                markeredgecolor=color,
-                label=label,
-                color=color,
-            )
-
+    _draw_start(ax, maze)
     if show_path:
         _draw_path(ax, maze)
 
@@ -160,6 +163,26 @@ def print_maze(maze: Maze) -> None:
             bottom.append("---")
     bottom.append("+")
     console.print(bottom)
+
+
+def _draw_start(ax, maze: Maze):
+    start_pos = maze.start
+    grid_size = maze.size
+    start_color = "#FF8C00"
+    start_marker = "o"
+    start_label = "Start"
+
+    pos_x, pos_y = start_pos
+    x, y = _plot_coords(pos_x, pos_y, grid_size)
+    ax.plot(
+        x,
+        y,
+        start_marker,
+        markersize=12,
+        markeredgecolor=start_color,
+        label=start_label,
+        color=start_color,
+    )
 
 
 def _draw_path(ax, maze: Maze):
@@ -235,3 +258,15 @@ def _is_seen(cell: Coordinate, maze: Maze) -> bool:
             break
 
     return False
+
+
+def _cell_color(coord: Coordinate, maze: Maze) -> CellColor | None:
+    colored_cells_coords: list[Coordinate] = [
+        cell.coordinate for cell in maze.colored_cells
+    ]
+    colored_cells_dict: dict[Coordinate, CellColor] = {
+        cell.coordinate: cell.color for cell in maze.colored_cells
+    }
+    if coord in colored_cells_coords:
+        return colored_cells_dict[coord]
+    return None
