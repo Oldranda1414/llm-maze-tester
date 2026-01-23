@@ -9,7 +9,7 @@ def run():
     maze_size = 3
     sight_depth = 3
     maze = create_maze(size=maze_size, sight_depth=sight_depth)
-    pg = PromptGenerator(NarrativeStyle(), PromptConfig(0, True))
+    pg = PromptGenerator(NarrativeStyle(), PromptConfig(True, True, 0, True))
     print(pg.get_preamble(maze))
 
     while not maze.solved:
@@ -34,7 +34,7 @@ def run():
 def many_maze():
     sight_depth = 3
     mazes = create_dataset(10, 3, sight_depth).mazes
-    pg = PromptGenerator(NarrativeStyle(), PromptConfig(None, False))
+    pg = PromptGenerator(NarrativeStyle(), PromptConfig(False, False, None, False))
     for maze in mazes:
         print(pg.get_preamble(maze))
 

@@ -4,7 +4,12 @@ from maze.core.direction import Direction
 
 
 class PromptStyle(Protocol):
-    def preamble(self, maze: Maze) -> str: ...
+    def preamble(
+        self,
+        maze: Maze,
+        provide_legal_output_hint: bool,
+        provide_spacial_awerness_hint: bool,
+    ) -> str: ...
 
     def describe_direction(self, direction: Direction, maze: Maze) -> str: ...
 

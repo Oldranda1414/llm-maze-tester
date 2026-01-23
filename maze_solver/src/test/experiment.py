@@ -10,7 +10,7 @@ def run() -> None:
     run_experiment(
         ExperimentConfig(
             [random_model()],
-            PromptGenerator(EmptyStyle(), PromptConfig(0, True)),
+            PromptGenerator(EmptyStyle(), PromptConfig(True, True, 0, True)),
             [3],
             1,
             True,

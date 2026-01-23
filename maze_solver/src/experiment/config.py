@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 
 from maze import Maze
-from maze.factory import create_dataset
 
 from model import Model
 from model.factory import llm_model
@@ -27,9 +26,14 @@ def load_config() -> ExperimentConfig:
         llm_model("glm-4.7-flash"),
         llm_model("yi"),
     ]
-    prompt_config = PromptConfig(provide_steps_summary=0, provide_possible_moves=False)
+    prompt_config = PromptConfig(
+        provide_legal_output_hint=True,
+        provide_spacial_awerness_hint=False,
+        provide_steps_summary=None,
+        provide_possible_moves=False,
+    )
     prompt_style = NarrativeStyle()
-    maze_sizes = [3, 4]
+    maze_sizes = [3]
     iterations = 10
     provide_history = True
     quiet = True
@@ -44,7 +48,8 @@ def load_config() -> ExperimentConfig:
     )
 
 
-def hard_3x3_mazes():
-    mazes = create_dataset(10, 3).mazes
-    indexes = [4]
-    return [maze for i, maze in enumerate(mazes) if i in indexes]
+# from maze.factory import create_dataset
+# def _hard_3x3_mazes():
+#     mazes = create_dataset(10, 3).mazes
+#     indexes = [4]
+#     return [maze for i, maze in enumerate(mazes) if i in indexes]

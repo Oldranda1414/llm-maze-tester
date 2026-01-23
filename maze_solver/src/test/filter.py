@@ -13,7 +13,7 @@ def run() -> None:
 
     solver = MazeSolver(
         llm_model(model),
-        PromptGenerator(NarrativeStyle(), PromptConfig(0, True)),
+        PromptGenerator(NarrativeStyle(), PromptConfig(True, True, 0, True)),
         create_maze(size=size, seed=i),
         True,
     )

@@ -16,6 +16,10 @@ The possible directions are north, east, south, west.
 The maze is a ${size} x ${size} grid, with every square in the grid being one square meter big.
 Use brief, step-indexed reasoning. Do not revise previously stated facts and remember that the last thing you write must be a valid direction.
 
+"""
+)
+
+legal_output_hint = """
 You are allowed to output the direction with any casing you want, as long as it is the last thing in your answer.
 Here are some examples of valid end of response, in case you decide to move due north:
 
@@ -23,9 +27,9 @@ Here are some examples of valid end of response, in case you decide to move due 
 - I want to step N!
 - My next move will be north.
 
-To keep track of the progress you make, maintain a persistent 2D map of the maze using ASCII characters..
-This will help you track you progress and inform your decisions
+"""
 
+spacial_awerness_hint = """
 The user notifies you when you move in a given direction, such as 'You move one meter west', if you decide to move due west.
 Keep in mind that after you step in a given direction, the information provided for what you percieve in the opposite direction refers to the area you are coming from.
 For example, let's say that the user gives you this information:
@@ -45,7 +49,6 @@ If you decide to move south, the user will then provide information regarding wh
 '''
 The info on the corridor due North refers to the cell you have just moved out of, so you have already explored that direction.
 """
-)
 
 direction = Template("Due ${direction} ")
 

@@ -10,7 +10,11 @@ class PromptGenerator:
         self.config = config
 
     def get_preamble(self, maze: Maze) -> str:
-        return self.style.preamble(maze)
+        return self.style.preamble(
+            maze,
+            self.config.provide_legal_output_hint,
+            self.config.provide_spacial_awerness_hint,
+        )
 
     def step_prompt(self, maze: Maze) -> str:
         parts = []
