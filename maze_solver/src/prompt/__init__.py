@@ -17,7 +17,7 @@ class PromptGenerator:
         )
 
     def step_prompt(self, maze: Maze) -> str:
-        parts = []
+        parts = [self.style.step_preamble(maze)]
         for direction in Direction:
             parts.append(self.style.describe_direction(direction, maze))
 

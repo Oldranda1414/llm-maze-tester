@@ -1,45 +1,6 @@
 import random
-from enum import Enum
-from dataclasses import dataclass
-
+from maze.color.colored_cell import CellColor, ColoredCell
 from maze.core.coordinate import Coordinate
-
-
-class CellColor(Enum):
-    WHITE = "#FFFFFF"
-    BLACK = "#000000"
-    RED = "#FF0000"
-    GREEN = "#00FF00"
-    BLUE = "#0000FF"
-    YELLOW = "#FFFF00"
-    CYAN = "#00FFFF"
-    MAGENTA = "#FF00FF"
-    GRAY = "#808080"
-    ORANGE = "#FFA500"
-
-    def to_hex(self) -> str:
-        return self.value
-
-
-@dataclass
-class ColoredCell:
-    coordinate: Coordinate
-    color: CellColor
-
-    def to_yaml(self) -> dict:
-        """Return a YAML-serializable representation."""
-        return {
-            "coordinate": list(self.coordinate),
-            "color": self.color.name,
-        }
-
-    @classmethod
-    def from_yaml(cls, data: dict) -> "ColoredCell":
-        """Reconstruct a ColoredCell from YAML-loaded data."""
-        return cls(
-            coordinate=Coordinate(data["coordinate"]),
-            color=CellColor[data["color"]],
-        )
 
 
 def random_colored_cells(
@@ -61,6 +22,18 @@ def random_colored_cells(
         )
 
     return colored_cells
+
+
+def get_cell_color(
+    coord: Coordinate, colored_cells: list[ColoredCell]
+) -> CellColor | None:
+    colored_cells_coords: list[Coordinate] = [cell.coordinate for cell in colored_cells]
+    colored_cells_dict: dict[Coordinate, CellColor] = {
+        cell.coordinate: cell.color for cell in colored_cells
+    }
+    if coord in colored_cells_coords:
+        return colored_cells_dict[coord]
+    return None
 
 
 def _unique_random_coordinates(

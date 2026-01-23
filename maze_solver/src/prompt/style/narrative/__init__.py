@@ -25,6 +25,10 @@ class NarrativeStyle(PromptStyle):
 
         return preamble
 
+    def step_preamble(self, maze: Maze) -> str:
+        _ = maze
+        return ""
+
     def describe_direction(self, direction: Direction, maze: Maze) -> str:
         facts = extract_facts(direction, maze)
         base = prompts.direction.substitute(direction=str(direction))
@@ -39,7 +43,7 @@ class NarrativeStyle(PromptStyle):
             return base + prompts.wall
 
         if facts.out_of_sight:
-            return base + prompts.out_of_sight + _add_lateral_paths(facts)
+            return base + prompts.out_of_sight + self._add_lateral_paths(facts)
 
         # Visible corridor
         desc = base + prompts.corridor.substitute(
@@ -49,7 +53,7 @@ class NarrativeStyle(PromptStyle):
         if facts.is_dead_end:
             return desc + prompts.dead_end
 
-        return desc + _add_lateral_paths(facts)
+        return desc + self._add_lateral_paths(facts)
 
     def steps_summary(self, maze: Maze, steps_provided: int) -> str:
         """
@@ -81,16 +85,15 @@ class NarrativeStyle(PromptStyle):
     def illegal_direction(self, illegal_direction: str) -> str:
         return warnings.illegal_direction.substitute(direction=illegal_direction)
 
-
-def _add_lateral_paths(facts: Facts) -> str:
-    lateral_paths_description = ""
-    if facts.lateral_paths is not None:
-        for path in facts.lateral_paths:
-            lateral_paths_description += prompts.lateral_path.substitute(
-                direction=path.direction, distance=length_to_string(path.distance)
-            )
-    return (
-        prompts.lateral_path_preable + lateral_paths_description
-        if lateral_paths_description != ""
-        else ""
-    )
+    def _add_lateral_paths(self, facts: Facts) -> str:
+        lateral_paths_description = ""
+        if facts.lateral_paths is not None:
+            for path in facts.lateral_paths:
+                lateral_paths_description += prompts.lateral_path.substitute(
+                    direction=path.direction, distance=length_to_string(path.distance)
+                )
+        return (
+            prompts.lateral_path_preable + lateral_paths_description
+            if lateral_paths_description != ""
+            else ""
+        )

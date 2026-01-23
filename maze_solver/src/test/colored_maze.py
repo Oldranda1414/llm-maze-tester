@@ -1,4 +1,4 @@
-from maze.colored_cell import random_colored_cells
+from maze.color.util import random_colored_cells
 from maze.core.direction import Direction
 from maze.factory import create_maze
 

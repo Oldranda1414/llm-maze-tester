@@ -2,7 +2,7 @@ from typing import Protocol
 import random
 from functools import cached_property
 
-from maze.colored_cell import ColoredCell
+from maze.color.colored_cell import ColoredCell
 from maze.core.direction import Direction
 from maze.core.coordinate import Coordinate
 from maze.core.connection_list import ConnectionList

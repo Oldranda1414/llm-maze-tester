@@ -7,7 +7,7 @@ from rich.console import Console
 from rich.text import Text
 
 from maze import Maze
-from maze.colored_cell import CellColor
+from maze.color.util import get_cell_color
 from maze.core.direction import Direction
 from maze.core.navigation import neighbor, direction, exit_direction
 from maze.core.coordinate import Coordinate
@@ -147,7 +147,7 @@ def _draw_cells(ax: Axes, maze: Maze):
             )
             ax.add_patch(rect)
 
-            cell_color = _cell_color((i, j), maze)
+            cell_color = get_cell_color((i, j), maze.colored_cells)
             if cell_color is not None:
                 inner_border_color = cell_color.to_hex()
                 inner_border_width = 2
@@ -265,15 +265,3 @@ def _is_seen(cell: Coordinate, maze: Maze) -> bool:
             break
 
     return False
-
-
-def _cell_color(coord: Coordinate, maze: Maze) -> CellColor | None:
-    colored_cells_coords: list[Coordinate] = [
-        cell.coordinate for cell in maze.colored_cells
-    ]
-    colored_cells_dict: dict[Coordinate, CellColor] = {
-        cell.coordinate: cell.color for cell in maze.colored_cells
-    }
-    if coord in colored_cells_coords:
-        return colored_cells_dict[coord]
-    return None

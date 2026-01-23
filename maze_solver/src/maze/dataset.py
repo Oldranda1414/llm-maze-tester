@@ -10,7 +10,7 @@ from maze_dataset import (
 from maze_dataset.generation import LatticeMazeGenerators
 
 from maze import Maze, generate_start, generate_target
-from maze.colored_cell import ColoredCell
+from maze.color.colored_cell import ColoredCell
 from maze.core.connection_list import ConnectionList
 from maze.lattice_maze import LatticeMaze
 

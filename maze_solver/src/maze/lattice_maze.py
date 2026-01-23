@@ -4,7 +4,7 @@ from functools import cached_property
 import yaml
 
 from maze import Maze
-from maze.colored_cell import ColoredCell
+from maze.color.colored_cell import ColoredCell
 from maze.core.coordinate import Coordinate
 from maze.core.direction import Direction, get_offsets
 from maze.core.navigation import direction_strict, exit_direction

@@ -1,7 +1,7 @@
 from typing import Callable
 
 from maze import Maze
-from maze.colored_cell import ColoredCell
+from maze.color.colored_cell import ColoredCell
 from maze.dataset import MazeDataset
 from maze.lattice_maze import LatticeMaze
 from maze.core.coordinate import Coordinate

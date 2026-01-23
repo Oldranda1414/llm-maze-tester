@@ -4,7 +4,18 @@ from prompt.style import PromptStyle
 
 
 class EmptyStyle(PromptStyle):
-    def preamble(self, maze: Maze) -> str:
+    def preamble(
+        self,
+        maze: Maze,
+        provide_legal_output_hint: bool,
+        provide_spacial_awerness_hint: bool,
+    ) -> str:
+        _ = maze
+        _ = provide_legal_output_hint
+        _ = provide_spacial_awerness_hint
+        return ""
+
+    def step_preamble(self, maze: Maze) -> str:
         _ = maze
         return ""
 
