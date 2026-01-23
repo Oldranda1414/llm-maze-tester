@@ -30,32 +30,15 @@ def draw_maze(
         fig = ax.figure
         assert isinstance(fig, Figure)
 
-    grid_size = maze.size
-
     ax.set_facecolor("white")
 
-    t_i, t_j = maze.target
-    e_direction = exit_direction(maze.target, maze.size)
-
-    # Borders
-    for j in range(grid_size):
-        if not (e_direction == Direction.SOUTH and j == t_j):
-            ax.plot([j, j + 1], [0, 0], "k-", linewidth=WALL_WIDTH)
-        if not (e_direction == Direction.NORTH and j == t_j):
-            ax.plot([j, j + 1], [grid_size, grid_size], "k-", linewidth=WALL_WIDTH)
-    for i in range(grid_size):
-        if not (e_direction == Direction.WEST and i == grid_size - t_i - 1):
-            ax.plot([0, 0], [i, i + 1], "k-", linewidth=WALL_WIDTH)
-        if not (e_direction == Direction.EAST and i == grid_size - t_i - 1):
-            ax.plot([grid_size, grid_size], [i, i + 1], "k-", linewidth=WALL_WIDTH)
-
-    # Cells
+    _draw_borders(ax, maze)
     _draw_cells(ax, maze)
-
     _draw_start(ax, maze)
     if show_path:
         _draw_path(ax, maze)
 
+    grid_size = maze.size
     ax.set_xlim(-0.1, grid_size + 0.1)
     ax.set_ylim(-0.1, grid_size + 0.1)
     ax.set_aspect("equal")
@@ -127,7 +110,25 @@ def print_maze(maze: Maze) -> None:
     console.print(bottom)
 
 
-def _draw_cells(ax, maze: Maze):
+def _draw_borders(ax: Axes, maze: Maze):
+    grid_size = maze.size
+    t_i, t_j = maze.target
+    e_direction = exit_direction(maze.target, maze.size)
+
+    # Borders
+    for j in range(grid_size):
+        if not (e_direction == Direction.SOUTH and j == t_j):
+            ax.plot([j, j + 1], [0, 0], "k-", linewidth=WALL_WIDTH)
+        if not (e_direction == Direction.NORTH and j == t_j):
+            ax.plot([j, j + 1], [grid_size, grid_size], "k-", linewidth=WALL_WIDTH)
+    for i in range(grid_size):
+        if not (e_direction == Direction.WEST and i == grid_size - t_i - 1):
+            ax.plot([0, 0], [i, i + 1], "k-", linewidth=WALL_WIDTH)
+        if not (e_direction == Direction.EAST and i == grid_size - t_i - 1):
+            ax.plot([grid_size, grid_size], [i, i + 1], "k-", linewidth=WALL_WIDTH)
+
+
+def _draw_cells(ax: Axes, maze: Maze):
     cell_size = 1.0
     cl = maze.connection_list
     grid_size = maze.size
@@ -171,7 +172,7 @@ def _draw_cells(ax, maze: Maze):
                 ax.plot([j, j + 1], [y_plot, y_plot], "k-", linewidth=WALL_WIDTH)
 
 
-def _draw_start(ax, maze: Maze):
+def _draw_start(ax: Axes, maze: Maze):
     start_pos = maze.start
     grid_size = maze.size
     start_color = "#FF8C00"
@@ -191,7 +192,7 @@ def _draw_start(ax, maze: Maze):
     )
 
 
-def _draw_path(ax, maze: Maze):
+def _draw_path(ax: Axes, maze: Maze):
     path = maze.path
     maze_size = maze.size
     if not path:
