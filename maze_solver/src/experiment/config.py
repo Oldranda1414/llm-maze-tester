@@ -2,12 +2,15 @@ from dataclasses import dataclass
 
 from maze import Maze
 
+from maze.color.util import random_colored_cells
 from model import Model
 from model.factory import llm_model
 
 from prompt import PromptGenerator
 from prompt.config import PromptConfig
-from prompt.style.narrative import NarrativeStyle
+from prompt.style.color import ColorStyle
+
+from maze.factory import create_dataset
 
 
 @dataclass(frozen=True)
@@ -23,17 +26,16 @@ class ExperimentConfig:
 
 def load_config() -> ExperimentConfig:
     models = [
-        llm_model("glm-4.7-flash"),
-        llm_model("yi"),
+        llm_model("deepseek-r1"),
     ]
     prompt_config = PromptConfig(
         provide_legal_output_hint=True,
         provide_spacial_awerness_hint=False,
-        provide_color_hint=False,
+        provide_color_hint=True,
         provide_steps_summary=None,
         provide_possible_moves=False,
     )
-    prompt_style = NarrativeStyle()
+    prompt_style = ColorStyle()
     maze_sizes = [3]
     iterations = 10
     provide_history = True
@@ -45,12 +47,13 @@ def load_config() -> ExperimentConfig:
         iterations=iterations,
         provide_history=provide_history,
         quiet=quiet,
-        mazes=None,
+        mazes=_hard_3x3_mazes(),
     )
 
 
-# from maze.factory import create_dataset
-# def _hard_3x3_mazes():
-#     mazes = create_dataset(10, 3).mazes
-#     indexes = [4]
-#     return [maze for i, maze in enumerate(mazes) if i in indexes]
+def _hard_3x3_mazes():
+    colored_cells_number = 5
+    colored_cells = random_colored_cells(1, 3, colored_cells_number)[0]
+    mazes = create_dataset(10, 3, colored_cells=[colored_cells] * 10).mazes
+    indexes = [4]
+    return [maze for i, maze in enumerate(mazes) if i in indexes]
