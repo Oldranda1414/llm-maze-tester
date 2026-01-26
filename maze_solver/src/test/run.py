@@ -1,8 +1,9 @@
+from maze.color.util import random_colored_cells
 from maze.factory import create_maze
 from model.factory import phony_model
 from prompt import PromptGenerator
 from prompt.config import PromptConfig
-from prompt.style.narrative import NarrativeStyle
+from prompt.style.color import ColorStyle
 from solver import MazeSolver
 from run import Run
 
@@ -11,8 +12,8 @@ def run() -> None:
     run_path = "test_run.yaml"
     solver = MazeSolver(
         phony_model(),
-        PromptGenerator(NarrativeStyle(), PromptConfig(True, True, False, 0, True)),
-        create_maze(),
+        PromptGenerator(ColorStyle(), PromptConfig(True, True, True, 0, True)),
+        create_maze(colored_cells=random_colored_cells(1, 6, 10)[0]),
     )
     while not solver.maze.solved:
         solver.step()

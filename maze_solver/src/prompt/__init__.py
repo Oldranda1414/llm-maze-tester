@@ -29,7 +29,7 @@ class PromptGenerator:
             if len(color_desc) > 0:
                 color_parts.append(color_desc)
         if len(color_parts) > 0:
-            step_prompt += "\n" + "\n".join(color_parts)
+            step_prompt += "\n\n" + "\n".join(color_parts)
 
         if self.config.provide_steps_summary is not None:
             step_prompt += self.style.steps_summary(

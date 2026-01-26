@@ -10,7 +10,7 @@ class CellColor(Enum):
     RED = "#FF0000"
     GREEN = "#00FF00"
     BLUE = "#0000FF"
-    YELLOW = "#FFFF00"
+    YELLOW = "#FFDD00"
     CYAN = "#00FFFF"
     MAGENTA = "#FF00FF"
     GRAY = "#808080"
