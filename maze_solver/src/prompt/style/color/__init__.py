@@ -75,7 +75,7 @@ class ColorStyle(NarrativeStyle):
             cell.coordinate: cell.color for cell in maze.colored_cells
         }
 
-        for distance in range(1, path_len + 1):
+        for distance in range(1, min(path_len, maze.sight_depth) + 1):
             maze.move(direction)
             if maze.position in colored_cells_coordinates:
                 color = cell_colors[maze.position]

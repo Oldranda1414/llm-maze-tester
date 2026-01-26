@@ -1,8 +1,7 @@
 # TODOS
 
 - prompt:
-  - fix the TODO in narrative/\_\_init\_\_.py
-- implement colored cells system
+  - have the colored prompt, through config, provide the number of numbered cells or not (from a given bool)
 
 ## minor:
 

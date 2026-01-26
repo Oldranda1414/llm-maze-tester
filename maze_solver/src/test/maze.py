@@ -1,10 +1,14 @@
+from maze.color.util import random_colored_cells
 from maze.core.direction import Direction
 from maze.factory import create_maze
 
 
 def run() -> None:
     size = int(input("maze size?:"))
-    maze = create_maze(seed=39, size=size)
+    tile_number = int(input("tile number?:"))
+    maze = create_maze(
+        size=size, colored_cells=random_colored_cells(1, 3, tile_number)[0]
+    )
 
     print("Start:", maze.start)
     print("End:", maze.target)
