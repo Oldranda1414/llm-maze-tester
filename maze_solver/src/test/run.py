@@ -4,7 +4,7 @@ from model.factory import phony_model
 from prompt import PromptGenerator
 from prompt.config import PromptConfig
 from prompt.style.color import ColorStyle
-from solver import MazeSolver
+from solver import MazeSolver, PreambleLocation
 from run import Run
 
 
@@ -14,6 +14,7 @@ def run() -> None:
         phony_model(),
         PromptGenerator(ColorStyle(), PromptConfig(True, True, True, 0, True)),
         create_maze(colored_cells=random_colored_cells(1, 6, 10)[0]),
+        PreambleLocation.SYSTEM,
     )
     while not solver.maze.solved:
         solver.step()

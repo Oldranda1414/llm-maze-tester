@@ -3,7 +3,7 @@ from model.factory import llm_model
 from prompt import PromptGenerator
 from prompt.config import PromptConfig
 from prompt.style.narrative import NarrativeStyle
-from solver import MazeSolver
+from solver import MazeSolver, PreambleLocation
 
 
 def run() -> None:
@@ -15,6 +15,7 @@ def run() -> None:
         llm_model(model),
         PromptGenerator(NarrativeStyle(), PromptConfig(True, True, False, 0, True)),
         create_maze(size=size, seed=i),
+        PreambleLocation.SYSTEM,
         True,
     )
     solver.maze.print()
