@@ -3,7 +3,6 @@ from maze.color.colored_cell import CellColor, ColoredCell
 from maze.core.coordinate import Coordinate
 
 
-# TODO solve the fact that cyan is present twice
 def random_colored_cells(
     n_mazes: int, maze_size: int, n_colored_cells: int, seed: int = 42
 ) -> list[list[ColoredCell]]:
@@ -14,12 +13,10 @@ def random_colored_cells(
         )
     colored_cells: list[list[ColoredCell]] = []
     for _ in range(n_mazes):
+        coords = _unique_random_coordinates(maze_size, n_colored_cells, rng)
+        colors = rng.sample(list(CellColor), n_colored_cells)
         colored_cells.append(
-            [
-                ColoredCell(coord, color)
-                for coord in _unique_random_coordinates(maze_size, n_colored_cells, rng)
-                for color in rng.sample(list(CellColor), n_colored_cells)
-            ]
+            [ColoredCell(coord, color) for coord, color in zip(coords, colors)]
         )
 
     return colored_cells
