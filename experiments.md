@@ -622,9 +622,15 @@ perc solved: 70.00
 This test attempts to provide the current best prompt found with some big complex mazes.
 Considering the results from (2026-01-17_12:34:35), where the hardest 3x3 maze was solved, this experiment aims at taking stock of the current state of the experiments.
 
-## colored cells with hard maze ()
+## colored cells with hard maze (2026-01-26_12:12:35)
 
 Having selected a hard maze, a test is run to see if the addition of the colored cells improve the results on the hard maze.
+Results where not good :(
+
+## Attempting hard maze with bigger deepseek model ()
+
+Attempting to solve the hard maze with deepseek-r1:14b.
+Since using deepseekV3.2 from deepseek online chat the maze is correctly solved, we try to see if using a bigger model helps to solve the maze.
 
 ## Summary table
 
