@@ -10,7 +10,7 @@ from prompt.facts import _extract_lateral_paths
 def run():
     solver = MazeSolver(
         phony_model(),
-        PromptGenerator(NarrativeStyle(), PromptConfig(False, False, 0, False)),
+        PromptGenerator(NarrativeStyle(), PromptConfig(False, False, False, 0, False)),
         create_maze(),
         True,
     )

@@ -22,6 +22,14 @@ class PromptGenerator:
             parts.append(self.style.describe_direction(direction, maze))
 
         step_prompt = "\n".join(parts)
+        color_parts: list[str] = []
+        for direction in Direction:
+            color_desc = self.style.describe_color(direction, maze)
+            if len(color_desc) > 0:
+                color_parts.append(color_desc)
+        if len(color_parts) > 0:
+            step_prompt += "\n" + "\n".join(color_parts)
+
         if self.config.provide_steps_summary is not None:
             step_prompt += self.style.steps_summary(
                 maze, self.config.provide_steps_summary

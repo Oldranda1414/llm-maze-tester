@@ -24,6 +24,11 @@ class EmptyStyle(PromptStyle):
         _ = maze
         return ""
 
+    def describe_color(self, direction: Direction, maze: Maze) -> str:
+        _ = direction
+        _ = maze
+        return ""
+
     def step_epilogue(self) -> str:
         return ""
 

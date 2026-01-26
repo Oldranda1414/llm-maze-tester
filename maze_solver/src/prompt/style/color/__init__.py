@@ -1,11 +1,14 @@
+from copy import deepcopy
 from maze import Maze
+from maze.color.colored_cell import CellColor
 from maze.color.util import get_cell_color
+from maze.core.coordinate import Coordinate
 from maze.core.direction import Direction
 from prompt.facts import extract_facts
 from prompt.style.narrative import NarrativeStyle
 from prompt.style.narrative import prompts as narrative_prompts
 from prompt.style.color import prompts
-from prompt.util import length_to_string
+from prompt.util import length_to_string, path_length
 
 
 class ColorStyle(NarrativeStyle):
@@ -56,3 +59,25 @@ class ColorStyle(NarrativeStyle):
             return desc + narrative_prompts.dead_end
 
         return desc + super()._add_lateral_paths(facts)
+
+    def describe_color(self, direction: Direction, maze: Maze) -> str:
+        maze = deepcopy(maze)
+        path_len = path_length(direction, maze)
+        desc: list[str] = [prompts.direction.substitute(direction=str(direction))]
+        colored_cells_coordinates: list[Coordinate] = [
+            cell.coordinate for cell in maze.colored_cells
+        ]
+        cell_colors: dict[Coordinate, CellColor] = {
+            cell.coordinate: cell.color for cell in maze.colored_cells
+        }
+
+        for distance in range(1, path_len + 1):
+            maze.move(direction)
+            if maze.position in colored_cells_coordinates:
+                color = cell_colors[maze.position]
+                desc.append(
+                    prompts.color_direction.substitute(
+                        distance=length_to_string(distance), color=color
+                    )
+                )
+        return "\n".join(desc) if len(desc) > 1 else ""

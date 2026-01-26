@@ -29,6 +29,7 @@ def load_config() -> ExperimentConfig:
     prompt_config = PromptConfig(
         provide_legal_output_hint=True,
         provide_spacial_awerness_hint=False,
+        provide_color_hint=False,
         provide_steps_summary=None,
         provide_possible_moves=False,
     )

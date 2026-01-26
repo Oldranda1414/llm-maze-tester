@@ -12,3 +12,9 @@ The floor you are currently standing on is colored ${color}.
 no_current_floor_color = (
     "The floor you are currently standing on has no distinctive color."
 )
+
+direction = Template("Due ${direction} you can see:")
+
+color_direction = Template(
+    "    - after ${distance} there is a floor tile colored ${color}"
+)

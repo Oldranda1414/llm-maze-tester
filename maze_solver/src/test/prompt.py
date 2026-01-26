@@ -15,7 +15,7 @@ def run():
         sight_depth=sight_depth,
         colored_cells=random_colored_cells(1, maze_size, 9)[0],
     )
-    pg = PromptGenerator(ColorStyle(), PromptConfig(True, True, 0, True))
+    pg = PromptGenerator(ColorStyle(), PromptConfig(True, True, True, 0, True))
     print(pg.get_preamble(maze))
 
     while not maze.solved:
@@ -40,7 +40,9 @@ def run():
 def many_maze():
     sight_depth = 3
     mazes = create_dataset(10, 3, sight_depth).mazes
-    pg = PromptGenerator(NarrativeStyle(), PromptConfig(False, False, None, False))
+    pg = PromptGenerator(
+        NarrativeStyle(), PromptConfig(False, False, False, None, False)
+    )
     for maze in mazes:
         print(pg.get_preamble(maze))
 

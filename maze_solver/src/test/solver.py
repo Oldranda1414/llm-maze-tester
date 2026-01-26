@@ -11,7 +11,7 @@ def run():
     sight_depth = 3
     model = phony_model()
     maze = create_maze(size=maze_size, sight_depth=sight_depth)
-    pg = PromptGenerator(NarrativeStyle(), PromptConfig(True, True, 0, True))
+    pg = PromptGenerator(NarrativeStyle(), PromptConfig(True, True, False, 0, True))
     maze_solver = MazeSolver(model, pg, maze)
     while not maze_solver.is_solved():
         maze_solver.step()

@@ -55,6 +55,11 @@ class NarrativeStyle(PromptStyle):
 
         return desc + self._add_lateral_paths(facts)
 
+    def describe_color(self, direction: Direction, maze: Maze) -> str:
+        _ = maze
+        _ = direction
+        return ""
+
     def steps_summary(self, maze: Maze, steps_provided: int) -> str:
         """
         provides the last moves made in the maze
