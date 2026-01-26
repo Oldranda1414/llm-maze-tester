@@ -622,6 +622,10 @@ perc solved: 70.00
 This test attempts to provide the current best prompt found with some big complex mazes.
 Considering the results from (2026-01-17_12:34:35), where the hardest 3x3 maze was solved, this experiment aims at taking stock of the current state of the experiments.
 
+## colored cells with hard maze ()
+
+Having selected a hard maze, a test is run to see if the addition of the colored cells improve the results on the hard maze.
+
 ## Summary table
 
 | Date   | Hit Rate (3×3) | Hit Rate (4×4) | Hit Rate (5×5) | Hit Rate (6×6) | Overall Hit Rate |
