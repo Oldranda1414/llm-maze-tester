@@ -8,15 +8,17 @@ from model.factory import llm_model
 
 from prompt import PromptGenerator
 from prompt.config import PromptConfig
-from prompt.style.color import ColorStyle
 
 from maze.factory import create_dataset
+from prompt.style.narrative import NarrativeStyle
+from solver import PreambleLocation
 
 
 @dataclass(frozen=True)
 class ExperimentConfig:
     models: list[Model]
     prompt_generator: PromptGenerator
+    preamble_location: PreambleLocation
     maze_sizes: list[int]
     iterations: int
     provide_history: bool
@@ -26,7 +28,7 @@ class ExperimentConfig:
 
 def load_config() -> ExperimentConfig:
     models = [
-        llm_model("deepseek-r1"),
+        llm_model("deepseek-r1:14"),
     ]
     prompt_config = PromptConfig(
         provide_legal_output_hint=True,
@@ -35,7 +37,7 @@ def load_config() -> ExperimentConfig:
         provide_steps_summary=None,
         provide_possible_moves=False,
     )
-    prompt_style = ColorStyle()
+    prompt_style = NarrativeStyle()
     maze_sizes = [3]
     iterations = 10
     provide_history = True
@@ -43,6 +45,7 @@ def load_config() -> ExperimentConfig:
     return ExperimentConfig(
         models=models,
         prompt_generator=PromptGenerator(prompt_style, prompt_config),
+        preamble_location=PreambleLocation.SYSTEM,
         maze_sizes=maze_sizes,
         iterations=iterations,
         provide_history=provide_history,

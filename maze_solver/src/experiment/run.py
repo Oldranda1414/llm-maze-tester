@@ -3,9 +3,11 @@ import time
 from datetime import datetime
 import logging
 
+from maze import Maze
 from maze.factory import create_dataset
 from model import Model
-from solver import MazeSolver
+from prompt import PromptGenerator
+from solver import MazeSolver, PreambleLocation
 from experiment.utils import delta_t, log_time, tab
 
 from experiment.config import ExperimentConfig
@@ -78,6 +80,7 @@ def run_maze_batch(
             model=model,
             maze=maze,
             prompt_generator=config.prompt_generator,
+            preamble_location=config.preamble_location,
             provide_history=config.provide_history,
             quiet=config.quiet,
             results_dir=results_dir,
@@ -91,8 +94,9 @@ def run_maze_batch(
 def solve_single_maze(
     *,
     model: Model,
-    maze,
-    prompt_generator,
+    maze: Maze,
+    prompt_generator: PromptGenerator,
+    preamble_location: PreambleLocation,
     provide_history: bool,
     quiet: bool,
     results_dir: str,
@@ -107,6 +111,7 @@ def solve_single_maze(
     solver = MazeSolver(
         model=model,
         prompt_generator=prompt_generator,
+        preamble_location=preamble_location,
         maze=maze,
         quiet=quiet,
     )

@@ -28,6 +28,7 @@ model_names: list[str] = [
     "smollm2",
     "phi4-mini",
     "deepseek-r1",
+    "deepseek-r1:14b",
     "mistral",
     "glm-4.7-flash",
     "yi",

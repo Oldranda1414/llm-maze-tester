@@ -68,7 +68,10 @@ class MazeSolver:
         step_prompt = ""
 
         if provide_history:
-            if self.invalid_answer_provided:
+            if self.is_first_step:
+                step_prompt += self.prompt.get_preamble(self.maze)
+                self.is_first_step = False
+            elif self.invalid_answer_provided:
                 step_prompt += self.prompt.illegal_answer_warning()
                 self.invalid_answer_provided = False
             elif self.invalid_direction_provided is not None:
