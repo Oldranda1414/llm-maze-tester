@@ -2,7 +2,7 @@ from string import Template
 
 
 color_explanation = """
-Some of the cells of the maze have a colored pavement. Keep track of the ones you find, as they can help you navigate the maze.
+Some of the cells of the maze have a colored tiles. Keep track of the ones you find, as they can help you navigate the maze.
 """
 
 current_floor_color = Template("""

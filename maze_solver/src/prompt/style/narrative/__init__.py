@@ -14,7 +14,9 @@ class NarrativeStyle(PromptStyle):
         maze: Maze,
         provide_legal_output_hint: bool,
         provide_spacial_awerness_hint: bool,
+        provide_color_hint: bool,
     ) -> str:
+        _ = provide_color_hint
         preamble = prompts.preamble.substitute(
             size=maze.size, sight_depth=length_to_string(maze.sight_depth)
         )

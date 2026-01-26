@@ -9,6 +9,7 @@ class PromptStyle(Protocol):
         maze: Maze,
         provide_legal_output_hint: bool,
         provide_spacial_awerness_hint: bool,
+        provide_color_hint: bool,
     ) -> str: ...
 
     def step_preamble(self, maze: Maze) -> str: ...

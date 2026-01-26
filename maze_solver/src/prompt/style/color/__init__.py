@@ -17,11 +17,15 @@ class ColorStyle(NarrativeStyle):
         maze: Maze,
         provide_legal_output_hint: bool,
         provide_spacial_awerness_hint: bool,
+        provide_color_hint: bool,
     ) -> str:
         preamble = super().preamble(
-            maze, provide_legal_output_hint, provide_spacial_awerness_hint
+            maze,
+            provide_legal_output_hint,
+            provide_spacial_awerness_hint,
+            provide_color_hint,
         )
-        return preamble + prompts.color_explanation
+        return preamble + prompts.color_explanation if provide_color_hint else preamble
 
     def step_preamble(self, maze: Maze) -> str:
         position_cell_color = get_cell_color(maze.position, maze.colored_cells)
