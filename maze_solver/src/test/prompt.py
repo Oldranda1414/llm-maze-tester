@@ -5,16 +5,18 @@ from prompt import PromptGenerator
 from prompt.config import PromptConfig
 from prompt.style.narrative import NarrativeStyle
 from prompt.style.color import ColorStyle
+from experiment.config import _hard_3x3_mazes
 
 
 def run():
-    maze_size = 3
-    sight_depth = 3
-    maze = create_maze(
-        size=maze_size,
-        sight_depth=sight_depth,
-        colored_cells=random_colored_cells(1, maze_size, 9)[0],
-    )
+    # maze_size = 3
+    # sight_depth = 3
+    # maze = create_maze(
+    #     size=maze_size,
+    #     sight_depth=sight_depth,
+    #     colored_cells=random_colored_cells(1, maze_size, 9)[0],
+    # )
+    maze = _hard_3x3_mazes()[0]
     pg = PromptGenerator(ColorStyle(), PromptConfig(True, True, True, 0, True))
     print(pg.get_preamble(maze))
 

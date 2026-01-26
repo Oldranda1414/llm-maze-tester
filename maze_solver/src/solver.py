@@ -2,6 +2,7 @@
 A class that uses an LLM model to solve a maze.
 """
 
+from enum import Enum
 from maze import Maze
 from maze.core.direction import Direction
 from model import Model
@@ -9,6 +10,11 @@ from model import Model
 from prompt import PromptGenerator
 from run import Run
 from util import extract_direction
+
+
+class PreambleLocation(Enum):
+    SYSTEM = "system"
+    USER = "user"
 
 
 class MazeSolver:
@@ -23,16 +29,22 @@ class MazeSolver:
         model: Model,
         prompt_generator: PromptGenerator,
         maze: Maze,
+        preamble_location: PreambleLocation,
         quiet: bool = False,
     ):
         self.prompt = prompt_generator
         self.maze = maze
         self.model = model
-        system_prompt = prompt_generator.get_preamble(maze)
-        model.set_system_prompt(system_prompt)
+        self._preamble_location = preamble_location
+        if self._preamble_location == PreambleLocation.SYSTEM:
+            system_prompt = prompt_generator.get_preamble(maze)
+            model.set_system_prompt(system_prompt)
+        else:
+            model.set_system_prompt("You are a helpfull AI assistant.")
         self._quiet = quiet
 
         # Track last step errors
+        self.is_first_step = True
         self.invalid_answer_provided = False
         self.illegal_responses = 0
         self.invalid_direction_provided: Direction | None = None
@@ -66,7 +78,7 @@ class MazeSolver:
                 self.invalid_direction_provided = None
             elif self.valid_last_move:
                 step_prompt += self.prompt.last_move_info(self.maze)
-        else:
+        elif self._preamble_location == PreambleLocation.USER:
             step_prompt += self.prompt.get_preamble(self.maze)
 
         step_prompt += self.prompt.step_prompt(self.maze)
