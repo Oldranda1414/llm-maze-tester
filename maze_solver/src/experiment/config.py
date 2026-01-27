@@ -28,7 +28,7 @@ class ExperimentConfig:
 
 def load_config() -> ExperimentConfig:
     models = [
-        llm_model("deepseek-r1:14b"),
+        llm_model("deepseek-r1:32b"),
     ]
     prompt_config = PromptConfig(
         provide_legal_output_hint=True,
