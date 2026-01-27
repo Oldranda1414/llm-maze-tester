@@ -629,7 +629,7 @@ Results where not good :(
 
 ## Attempting hard maze with bigger deepseek model ()
 
-Attempting to solve the hard maze with deepseek-r1:14b.
+Attempting to solve the hard maze with deepseek-r1:32b.
 Since using deepseekV3.2 from deepseek online chat the maze is correctly solved, we try to see if using a bigger model helps to solve the maze.
 
 ## Summary table
