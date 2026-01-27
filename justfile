@@ -21,6 +21,11 @@ stats *args:
 render *args:
   uv --project maze_solver run maze_solver/src/render_main.py {{args}}
 
+# Run the cli chat
+[no-exit-message]
+chat *args:
+  uv --project maze_solver run maze_solver/src/chat_main.py {{args}}
+
 # Run a given test
 [no-exit-message]
 test *args:
