@@ -18,12 +18,14 @@ class ColorStyle(NarrativeStyle):
         provide_legal_output_hint: bool,
         provide_spacial_awerness_hint: bool,
         provide_color_hint: bool,
+        provide_repetition_hint: bool,
     ) -> str:
         preamble = super().preamble(
             maze,
             provide_legal_output_hint,
             provide_spacial_awerness_hint,
             provide_color_hint,
+            provide_repetition_hint,
         )
         return preamble + prompts.color_explanation if provide_color_hint else preamble
 

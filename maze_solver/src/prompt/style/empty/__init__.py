@@ -10,11 +10,13 @@ class EmptyStyle(PromptStyle):
         provide_legal_output_hint: bool,
         provide_spacial_awerness_hint: bool,
         provide_color_hint: bool,
+        provide_repetition_hint: bool,
     ) -> str:
         _ = maze
         _ = provide_legal_output_hint
         _ = provide_spacial_awerness_hint
         _ = provide_color_hint
+        _ = provide_repetition_hint
         return ""
 
     def step_preamble(self, maze: Maze) -> str:

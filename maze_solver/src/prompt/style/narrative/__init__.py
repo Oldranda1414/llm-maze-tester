@@ -15,6 +15,7 @@ class NarrativeStyle(PromptStyle):
         provide_legal_output_hint: bool,
         provide_spacial_awerness_hint: bool,
         provide_color_hint: bool,
+        provide_repetition_hint: bool,
     ) -> str:
         _ = provide_color_hint
         preamble = prompts.preamble.substitute(
@@ -24,6 +25,8 @@ class NarrativeStyle(PromptStyle):
             preamble += prompts.legal_output_hint
         if provide_spacial_awerness_hint:
             preamble += prompts.spacial_awerness_hint
+        if provide_repetition_hint:
+            preamble += prompts.repetition_hint
 
         return preamble
 

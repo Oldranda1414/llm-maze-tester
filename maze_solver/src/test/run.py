@@ -12,7 +12,7 @@ def run() -> None:
     run_path = "test_run.yaml"
     solver = MazeSolver(
         phony_model(),
-        PromptGenerator(ColorStyle(), PromptConfig(True, True, True, 0, True)),
+        PromptGenerator(ColorStyle(), PromptConfig(True, True, True, True, 0, True)),
         create_maze(colored_cells=random_colored_cells(1, 6, 10)[0]),
         PreambleLocation.SYSTEM,
     )

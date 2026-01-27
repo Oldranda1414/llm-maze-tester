@@ -34,7 +34,8 @@ def load_config() -> ExperimentConfig:
         provide_legal_output_hint=True,
         provide_spacial_awerness_hint=False,
         provide_color_hint=True,
-        provide_steps_summary=None,
+        provide_repetition_hint=True,
+        provide_steps_summary=0,
         provide_possible_moves=False,
     )
     prompt_style = NarrativeStyle()

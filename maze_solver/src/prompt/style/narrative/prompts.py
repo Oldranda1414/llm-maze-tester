@@ -19,6 +19,8 @@ Use brief, step-indexed reasoning. Do not revise previously stated facts and rem
 """
 )
 
+repetition_hint = "Do not go back on you steps unless there is a clear reason to. Prioritize exploring the maze in new directions."
+
 legal_output_hint = """
 You are allowed to output the direction with any casing you want, as long as it is the last thing in your answer.
 Here are some examples of valid end of response, in case you decide to move due north:
