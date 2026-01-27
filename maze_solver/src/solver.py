@@ -36,11 +36,13 @@ class MazeSolver:
         self.maze = maze
         self.model = model
         self._preamble_location = preamble_location
-        if self._preamble_location == PreambleLocation.SYSTEM:
-            system_prompt = prompt_generator.get_preamble(maze)
-            model.set_system_prompt(system_prompt)
-        else:
-            model.set_system_prompt("You are a helpfull AI assistant.")
+
+        system_prompt = (
+            prompt_generator.get_preamble(maze)
+            if self._preamble_location == PreambleLocation.SYSTEM
+            else "You are a helpfull AI assistant."
+        )
+        model.set_system_prompt(system_prompt)
         self._quiet = quiet
 
         # Track last step errors
@@ -68,7 +70,7 @@ class MazeSolver:
         step_prompt = ""
 
         if provide_history:
-            if self.is_first_step:
+            if self.is_first_step and self._preamble_location == PreambleLocation.USER:
                 step_prompt += self.prompt.get_preamble(self.maze)
                 self.is_first_step = False
             elif self.invalid_answer_provided:

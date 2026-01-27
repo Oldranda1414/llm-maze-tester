@@ -11,6 +11,7 @@ DEBUG_SYSTEM_PROMPT = "debug system prompt"
 class PhonyModel(Model):
     def __init__(self):
         self._chat_history = ChatHistory(DEBUG_SYSTEM_PROMPT)
+        self._system_prompt = "prompt not set"
 
     def ask(self, prompt: str, provide_history: bool = True) -> str:
         _ = provide_history  # unused parameter
@@ -36,7 +37,8 @@ class PhonyModel(Model):
         return DEBUG_SYSTEM_PROMPT
 
     def set_system_prompt(self, system_prompt: str) -> None:
-        _ = system_prompt
+        print("PhonyModel: set_system_prompt called with:", system_prompt)
+        self._system_prompt = system_prompt
 
     def reset_model(self, system_prompt: str | None = None):
         _ = system_prompt
