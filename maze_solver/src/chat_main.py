@@ -19,7 +19,7 @@ def main():
         else:
             with yaspin(text="Processing...", color="yellow") as spinner:
                 response = model.ask(prompt)
-                spinner.ok("✅ Done!")
+                spinner.ok("")
             print("Response:\n", response)
 
 
