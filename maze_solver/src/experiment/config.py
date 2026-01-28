@@ -10,7 +10,7 @@ from prompt import PromptGenerator
 from prompt.config import PromptConfig
 
 from maze.factory import create_dataset
-from prompt.style.narrative import NarrativeStyle
+from prompt.style.color import ColorStyle
 from solver import PreambleLocation
 
 
@@ -38,7 +38,7 @@ def load_config() -> ExperimentConfig:
         provide_steps_summary=0,
         provide_possible_moves=False,
     )
-    prompt_style = NarrativeStyle()
+    prompt_style = ColorStyle()
     maze_sizes = [3]
     iterations = 10
     provide_history = True
