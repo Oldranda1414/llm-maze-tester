@@ -16,11 +16,14 @@ def main():
             history = model.history
             history.chat = history.chat[:-2]
             model._chat_history = history
+            print("Last exchange deleted.")
+            print("----Current last response----:")
+            print(model.history.chat[-1].response)
         else:
             with yaspin(text="Processing...", color="yellow") as spinner:
                 response = model.ask(prompt)
                 spinner.ok("")
-            print("Response:\n", response)
+            print("------Response------:\n", response)
 
 
 if __name__ == "__main__":
