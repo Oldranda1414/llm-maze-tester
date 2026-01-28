@@ -12,8 +12,8 @@ def main():
             return
         if prompt == "B":
             history = model.history
-            updated_history = history.chat[:-2]
-            model._chat_history = updated_history
+            history.chat = history.chat[:-2]
+            model._chat_history = history
         else:
             response = model.ask(prompt)
             print("Response:\n", response)
