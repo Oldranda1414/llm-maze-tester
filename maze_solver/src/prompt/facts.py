@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from copy import deepcopy
 
 from maze import Maze
+from maze.color.colored_cell import CellColor
 from maze.core.direction import Direction, get_opposite
 from maze.core.navigation import exit_direction
 from prompt.is_direction import (
@@ -13,6 +14,18 @@ from prompt.util import path_length, exit_distance
 
 
 @dataclass(frozen=True)
+class ColoredFloor:
+    distance: int
+    color: CellColor
+
+    def __str__(self) -> str:
+        return f"LateralPath: {self.distance}, {self.color}"
+
+    def __repr__(self) -> str:
+        return str(self)
+
+
+@dataclass(frozen=True)
 class LateralPath:
     direction: Direction
     distance: int
@@ -21,7 +34,7 @@ class LateralPath:
         return f"LateralPath: {self.direction}, {self.distance}"
 
     def __repr__(self) -> str:
-        return f"LateralPath: {self.direction}, {self.distance}"
+        return str(self)
 
 
 @dataclass(frozen=True)
@@ -33,6 +46,7 @@ class Facts:
     is_dead_end: bool
     out_of_sight: bool
     lateral_paths: list[LateralPath] | None
+    colored_floors: list[ColoredFloor] | None
 
 
 def extract_facts(direction: Direction, maze: Maze) -> Facts:
@@ -45,6 +59,7 @@ def extract_facts(direction: Direction, maze: Maze) -> Facts:
     dead_end = is_dead_end(direction, maze)
     out_of_sight = path_length(direction, maze) > maze.sight_depth
     lateral_paths = _extract_lateral_paths(direction, maze)
+    colored_floors = _extract_colored_floors(direction, maze)
 
     return Facts(
         is_wall=is_wall,
@@ -54,6 +69,7 @@ def extract_facts(direction: Direction, maze: Maze) -> Facts:
         is_dead_end=dead_end,
         out_of_sight=out_of_sight,
         lateral_paths=lateral_paths if len(lateral_paths) > 0 else None,
+        colored_floors=colored_floors if len(colored_floors) > 0 else None,
     )
 
 
@@ -73,3 +89,18 @@ def _extract_lateral_paths(direction: Direction, maze: Maze) -> list[LateralPath
         if len(found_paths) > 0:
             lateral_paths.extend(found_paths)
     return lateral_paths
+
+
+def _extract_colored_floors(direction: Direction, maze: Maze) -> list[ColoredFloor]:
+    maze = deepcopy(maze)
+    path_len = path_length(direction, maze)
+    colored_cells_coordinates = [cell.coordinate for cell in maze.colored_cells]
+    cell_colors = {cell.coordinate: cell.color for cell in maze.colored_cells}
+    colored_floors: list[ColoredFloor] = []
+
+    for distance in range(1, min(path_len, maze.sight_depth) + 1):
+        maze.move(direction)
+        if maze.position in colored_cells_coordinates:
+            color = cell_colors[maze.position]
+            colored_floors.append(ColoredFloor(distance, color))
+    return colored_floors

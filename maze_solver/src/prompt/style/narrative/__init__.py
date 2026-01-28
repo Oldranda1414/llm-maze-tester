@@ -48,7 +48,12 @@ class NarrativeStyle(PromptStyle):
             return base + prompts.wall
 
         if facts.out_of_sight:
-            return base + prompts.out_of_sight + self._add_lateral_paths(facts)
+            lateral_paths = (
+                prompts.lateral_path_preable + self._add_lateral_paths(facts)
+                if self._add_lateral_paths(facts) != ""
+                else ""
+            )
+            return base + prompts.out_of_sight + lateral_paths
 
         # Visible corridor
         desc = base + prompts.corridor.substitute(
@@ -58,7 +63,12 @@ class NarrativeStyle(PromptStyle):
         if facts.is_dead_end:
             return desc + prompts.dead_end
 
-        return desc + self._add_lateral_paths(facts)
+        lateral_paths = (
+            prompts.lateral_path_preable + self._add_lateral_paths(facts)
+            if self._add_lateral_paths(facts) != ""
+            else ""
+        )
+        return desc + lateral_paths
 
     def describe_color(self, direction: Direction, maze: Maze) -> str:
         _ = maze
@@ -102,8 +112,4 @@ class NarrativeStyle(PromptStyle):
                 lateral_paths_description += prompts.lateral_path.substitute(
                     direction=path.direction, distance=length_to_string(path.distance)
                 )
-        return (
-            prompts.lateral_path_preable + lateral_paths_description
-            if lateral_paths_description != ""
-            else ""
-        )
+        return lateral_paths_description

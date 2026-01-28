@@ -15,7 +15,7 @@ def main():
         if prompt == "B":
             history = model.history
             history.chat = history.chat[:-2]
-            model._chat_history = history
+            model._chat_history = history  # type: ignore
             print("Last exchange deleted.")
             print("----Current last response----:")
             print(model.history.chat[-1].response)

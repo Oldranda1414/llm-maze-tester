@@ -15,6 +15,8 @@ no_current_floor_color = (
 
 direction = Template("Due ${direction} you can see:")
 
+additional_direction_info = " Also in this direction:"
+
 color_direction = Template(
-    "    - after ${distance} there is a floor tile colored ${color}"
+    "   - After ${distance} there is a floor tile colored ${color}."
 )

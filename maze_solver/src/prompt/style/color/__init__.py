@@ -1,14 +1,11 @@
-from copy import deepcopy
 from maze import Maze
-from maze.color.colored_cell import CellColor
 from maze.color.util import get_cell_color
-from maze.core.coordinate import Coordinate
 from maze.core.direction import Direction
-from prompt.facts import extract_facts
+from prompt.facts import Facts, extract_facts
 from prompt.style.narrative import NarrativeStyle
 from prompt.style.narrative import prompts as narrative_prompts
 from prompt.style.color import prompts
-from prompt.util import length_to_string, path_length
+from prompt.util import length_to_string
 
 
 class ColorStyle(NarrativeStyle):
@@ -50,11 +47,12 @@ class ColorStyle(NarrativeStyle):
             return base + narrative_prompts.wall
 
         if facts.out_of_sight:
-            return (
-                base
-                + narrative_prompts.out_of_sight
-                + super()._add_lateral_paths(facts)
+            additional_info = (
+                prompts.additional_direction_info + self._add_dir_info(facts)
+                if self._add_dir_info(facts) != ""
+                else ""
             )
+            return base + narrative_prompts.out_of_sight + additional_info
 
         # Visible corridor
         desc = base + narrative_prompts.corridor.substitute(
@@ -64,26 +62,26 @@ class ColorStyle(NarrativeStyle):
         if facts.is_dead_end:
             return desc + narrative_prompts.dead_end
 
-        return desc + super()._add_lateral_paths(facts)
+        additional_info = (
+            prompts.additional_direction_info + self._add_dir_info(facts)
+            if self._add_dir_info(facts) != ""
+            else ""
+        )
+        return desc + additional_info
 
-    def describe_color(self, direction: Direction, maze: Maze) -> str:
-        maze = deepcopy(maze)
-        path_len = path_length(direction, maze)
-        desc: list[str] = [prompts.direction.substitute(direction=str(direction))]
-        colored_cells_coordinates: list[Coordinate] = [
-            cell.coordinate for cell in maze.colored_cells
-        ]
-        cell_colors: dict[Coordinate, CellColor] = {
-            cell.coordinate: cell.color for cell in maze.colored_cells
-        }
-
-        for distance in range(1, min(path_len, maze.sight_depth) + 1):
-            maze.move(direction)
-            if maze.position in colored_cells_coordinates:
-                color = cell_colors[maze.position]
-                desc.append(
+    def _add_dir_info(self, facts: Facts) -> str:
+        lateral_paths = super()._add_lateral_paths(facts)
+        floors_info = [""]
+        if facts.colored_floors is not None:
+            for colored_floor in facts.colored_floors:
+                floors_info.append(
                     prompts.color_direction.substitute(
-                        distance=length_to_string(distance), color=color
+                        distance=length_to_string(colored_floor.distance),
+                        color=colored_floor.color,
                     )
                 )
-        return "\n".join(desc) if len(desc) > 1 else ""
+        return (
+            lateral_paths + "\n".join(floors_info)
+            if len(floors_info) > 1
+            else lateral_paths
+        )
