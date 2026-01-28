@@ -627,10 +627,18 @@ Considering the results from (2026-01-17_12:34:35), where the hardest 3x3 maze w
 Having selected a hard maze, a test is run to see if the addition of the colored cells improve the results on the hard maze.
 Results where not good :(
 
-## Attempting hard maze with bigger deepseek model ()
+## Attempting hard maze with bigger deepseek model (2026-01-28_15:13:23)
 
 Attempting to solve the hard maze with deepseek-r1:32b.
 Since using deepseekV3.2 from deepseek online chat the maze is correctly solved, we try to see if using a bigger model helps to solve the maze.
+
+### Result
+
+The hard maze was solved only with the help of the colorization of the tiles.
+
+## Attempting new state of the art with deepseek and colored tiles ()
+
+Given the positive result in 2026-01-28_15:13:23, a new experiment is launched to see if it proves to be a new state of the art.
 
 ## Summary table
 

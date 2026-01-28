@@ -4,6 +4,7 @@ from datetime import datetime
 import logging
 
 from maze import Maze
+from maze.color.util import random_colored_cells
 from maze.factory import create_dataset
 from model import Model
 from prompt import PromptGenerator
@@ -50,8 +51,16 @@ def run_generated_mazes(model: Model, config: ExperimentConfig, timestamp: str):
 
     for maze_size in config.maze_sizes:
         start_size = time.time()
-
-        dataset = create_dataset(config.iterations, maze_size)
+        color_cells = (
+            random_colored_cells(
+                config.iterations, maze_size, config.n_colors(maze_size)
+            )
+            if config.n_colors
+            else None
+        )
+        dataset = create_dataset(
+            config.iterations, maze_size, colored_cells=color_cells
+        )
         results_dir = f"results/{timestamp}/{model.name}/{maze_size}x{maze_size}"
 
         run_maze_batch(

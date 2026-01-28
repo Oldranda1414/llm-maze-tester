@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Callable
 
 from maze import Maze
 
@@ -16,6 +17,24 @@ from solver import PreambleLocation
 
 @dataclass(frozen=True)
 class ExperimentConfig:
+    """
+    Configuration for running experiments.
+
+    Attributes:
+        models (list[Model]): List of models to use in the experiment.
+        prompt_generator (PromptGenerator): Prompt generator to use in the experiment.
+        preamble_location (PreambleLocation): Where to place the problem preamble prompt.
+        maze_sizes (list[int]): Maze sizes to use in the experiment (ignored if ExperimentConfig.mazes is not None).
+        iterations (int): Number of trials to run per model per maze size.
+        provide_history (bool): Whether to provide the model with the chat history or reset the model at every step.
+        quiet (bool): Suppress verbose cli output during experiment execution.
+        n_colors (Callable[[int], int] | None): Optional function mapping maze size to number of
+            colored tiles per maze generated (ignored if ExperimentConfig.mazes is not None).
+            If None, no colored tiles are placed in the mazes. Default: None.
+        mazes (list[Maze] | None): Optional pre-generated mazes. If set it ignores ExperimentConfig.maze_sizes and ExperimentConfig.n_colors.
+            If None, mazes are randomly generated based on maze_sizes during experiment. Default: None.
+    """
+
     models: list[Model]
     prompt_generator: PromptGenerator
     preamble_location: PreambleLocation
@@ -23,6 +42,7 @@ class ExperimentConfig:
     iterations: int
     provide_history: bool
     quiet: bool
+    n_colors: Callable[[int], int] | None = None
     mazes: list[Maze] | None = None
 
 
@@ -39,20 +59,25 @@ def load_config() -> ExperimentConfig:
         provide_possible_moves=False,
     )
     prompt_style = ColorStyle()
-    maze_sizes = [3]
+    preamble_location = PreambleLocation.SYSTEM
+    maze_sizes = [3, 4, 5, 6]
     iterations = 10
     provide_history = True
     quiet = True
     return ExperimentConfig(
         models=models,
         prompt_generator=PromptGenerator(prompt_style, prompt_config),
-        preamble_location=PreambleLocation.SYSTEM,
+        preamble_location=preamble_location,
         maze_sizes=maze_sizes,
         iterations=iterations,
         provide_history=provide_history,
         quiet=quiet,
-        mazes=_hard_3x3_mazes(),
+        n_colors=_calculate_n_colors,
     )
+
+
+def _calculate_n_colors(maze_size: int) -> int:
+    return round(maze_size * maze_size / 2)
 
 
 def _hard_3x3_mazes():
