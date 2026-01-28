@@ -1,3 +1,5 @@
+from yaspin import yaspin
+
 from model.factory import llm_model
 
 
@@ -15,7 +17,9 @@ def main():
             history.chat = history.chat[:-2]
             model._chat_history = history
         else:
-            response = model.ask(prompt)
+            with yaspin(text="Processing...", color="yellow") as spinner:
+                response = model.ask(prompt)
+                spinner.ok("✅ Done!")
             print("Response:\n", response)
 
 
