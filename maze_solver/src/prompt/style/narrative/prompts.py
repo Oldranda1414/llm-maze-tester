@@ -88,4 +88,4 @@ lateral_path = Template(
     "\n   - After ${distance} there is a lateral path due ${direction}."
 )
 
-cot_reminder = "Think through what you observe know and what you have observed in previous steps and then provide your answer."
+cot_reminder = "\nThink through what you know and what you have observed in previous steps and then provide your answer."
