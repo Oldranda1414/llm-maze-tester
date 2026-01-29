@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from typing import Callable
+from copy import deepcopy
 
 from maze import Maze
 
@@ -57,6 +58,7 @@ def load_config() -> ExperimentConfig:
         provide_repetition_hint=True,
         provide_steps_summary=0,
         provide_possible_moves=False,
+        provide_cot_reminder=True,
     )
     prompt_style = ColorStyle()
     preamble_location = PreambleLocation.SYSTEM
@@ -72,7 +74,7 @@ def load_config() -> ExperimentConfig:
         iterations=iterations,
         provide_history=provide_history,
         quiet=quiet,
-        n_colors=_calculate_n_colors,
+        mazes=_maze_to_list(_hard_3x3_mazes()[0], 10),
     )
 
 
@@ -86,3 +88,10 @@ def _hard_3x3_mazes():
     mazes = create_dataset(10, 3, colored_cells=[colored_cells] * 10).mazes
     indexes = [4]
     return [maze for i, maze in enumerate(mazes) if i in indexes]
+
+
+def _maze_to_list(maze: Maze, n: int) -> list[Maze]:
+    filled_list: list[Maze] = []
+    for _ in range(n):
+        filled_list.append(deepcopy(maze))
+    return filled_list

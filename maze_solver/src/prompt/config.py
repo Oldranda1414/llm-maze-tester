@@ -9,3 +9,4 @@ class PromptConfig:
     provide_repetition_hint: bool
     provide_steps_summary: int | None
     provide_possible_moves: bool
+    provide_cot_reminder: bool

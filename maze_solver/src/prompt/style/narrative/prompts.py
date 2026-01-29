@@ -1,5 +1,7 @@
 from string import Template
 
+# ----preamble----
+
 preamble = Template(
     """
 You are a maze solving model. You are an expert in solving classic lattice mazes.
@@ -52,6 +54,8 @@ If you decide to move south, the user will then provide information regarding wh
 The info on the corridor due North refers to the cell you have just moved out of, so you have already explored that direction.
 """
 
+# ---- step prompt ----
+
 direction = Template("Due ${direction} ")
 
 corridor = Template(
@@ -83,3 +87,5 @@ lateral_path_preable = " You are able to see that the corridor has some lateral 
 lateral_path = Template(
     "\n   - After ${distance} there is a lateral path due ${direction}."
 )
+
+cot_reminder = "Think through what you observe know and what you have observed in previous steps and then provide your answer."

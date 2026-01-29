@@ -38,6 +38,9 @@ class PromptGenerator:
             )
         if self.config.provide_possible_moves:
             step_prompt += self.style.possible_moves(maze)
+        if self.config.provide_cot_reminder:
+            step_prompt += self.style.cot_reminder()
+
         return step_prompt
 
     def last_move_info(self, maze: Maze) -> str:

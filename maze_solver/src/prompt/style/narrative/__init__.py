@@ -105,6 +105,9 @@ class NarrativeStyle(PromptStyle):
     def illegal_direction(self, illegal_direction: str) -> str:
         return warnings.illegal_direction.substitute(direction=illegal_direction)
 
+    def cot_reminder(self) -> str:
+        return prompts.cot_reminder
+
     def _add_lateral_paths(self, facts: Facts) -> str:
         lateral_paths_description = ""
         if facts.lateral_paths is not None:

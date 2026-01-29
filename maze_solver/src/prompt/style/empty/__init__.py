@@ -55,3 +55,6 @@ class EmptyStyle(PromptStyle):
     def illegal_direction(self, illegal_direction: str) -> str:
         _ = illegal_direction
         return ""
+
+    def cot_reminder(self) -> str:
+        return ""
