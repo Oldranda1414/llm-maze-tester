@@ -13,6 +13,8 @@ def main():
     model = llm_model(config.model)
     system_prompt = read_file(SYSTEM_PROMPT_PATH)
     model.set_system_prompt(system_prompt)
+    print("----loaded system prompt----:")
+    print(model.system_prompt)
     while True:
         user_command = input(
             "Provide command (Q to quit, B to go back in history) or <enter> to execute next step:\n"
@@ -24,8 +26,13 @@ def main():
             history.chat = history.chat[:-2]
             model._chat_history = history  # type: ignore
             print("Last exchange deleted.")
-            print("----Current last response----:")
-            print(model.history.chat[-1].response)
+            if len(model.history.chat):
+                print("----Current last response----:")
+                print(model.history.chat[-1].response)
+            else:
+                print("Exchange history is currently empty")
+                print("----System prompt----:")
+                print(model.system_prompt)
         else:
             with yaspin(text="Processing...", color="yellow") as spinner:
                 prompt = read_file(PROMPT_PATH)
