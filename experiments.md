@@ -636,9 +636,58 @@ Since using deepseekV3.2 from deepseek online chat the maze is correctly solved,
 
 The hard maze was solved only with the help of the colorization of the tiles.
 
-## Attempting new state of the art with deepseek and colored tiles ()
+## Attempting new state of the art with deepseek and colored tiles (2026-01-28_15:59:42)
 
 Given the positive result in 2026-01-28_15:13:23, a new experiment is launched to see if it proves to be a new state of the art.
+
+### Result
+
+It seems no true progress has been made:
+
+===== Model: deepseek-r1:32b =====
+
+=== Maze size: 3 ===
+mean illegal directions: 3.70
+perc illegal directions: 8.76
+mean illegal responses: 0.10
+perc illegal responses: 0.11
+mean total steps (for solved): 12.25
+mean decisions (for solved): 11.12
+mean execution time (for solved): 00:02:07
+mean step execution time (for solved): 00:00:09
+total execution time: 01:11:38
+solved: 8 / 10
+perc solved: 80.00
+
+=== Maze size: 4 ===
+mean illegal directions: 15.70
+perc illegal directions: 15.13
+mean illegal responses: 1.10
+perc illegal responses: 0.80
+mean total steps (for solved): 71.20
+mean decisions (for solved): 55.00
+mean execution time (for solved): 00:21:50
+mean step execution time (for solved): 00:00:17
+total execution time: 06:28:41
+solved: 5 / 10
+perc solved: 50.00
+
+=== Overall stats ===
+mean illegal directions: 9.70
+perc illegal directions: 11.94
+mean illegal responses: 0.60
+perc illegal responses: 0.45
+mean total steps (for solved): 34.92
+mean decisions (for solved): 28.00
+mean execution time (for solved): 00:09:42
+mean step execution time (for solved): 00:00:12
+total execution time: 07:40:20
+solved: 13 / 20
+perc solved: 65.00
+
+## Temperature adjusting ()
+
+Testing if setting the temperature to 0 explicitly provides better or worst results.
 
 ## Summary table
 

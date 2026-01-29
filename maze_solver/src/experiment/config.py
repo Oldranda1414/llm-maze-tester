@@ -4,6 +4,7 @@ from copy import deepcopy
 
 from maze import Maze
 
+from maze.color.colored_cell import CellColor
 from maze.color.util import random_colored_cells
 from model import Model
 from model.factory import llm_model
@@ -62,7 +63,7 @@ def load_config() -> ExperimentConfig:
     )
     prompt_style = ColorStyle()
     preamble_location = PreambleLocation.SYSTEM
-    maze_sizes = [3, 4, 5, 6]
+    maze_sizes = [3]
     iterations = 10
     provide_history = True
     quiet = True
@@ -74,12 +75,13 @@ def load_config() -> ExperimentConfig:
         iterations=iterations,
         provide_history=provide_history,
         quiet=quiet,
-        mazes=_maze_to_list(_hard_3x3_mazes()[0], 10),
+        n_colors=_calculate_n_colors,
+        # mazes=_maze_to_list(_hard_3x3_mazes()[0], 10),
     )
 
 
 def _calculate_n_colors(maze_size: int) -> int:
-    return round(maze_size * maze_size / 2)
+    return min(round(maze_size * maze_size / 2), len(CellColor))
 
 
 def _hard_3x3_mazes():
