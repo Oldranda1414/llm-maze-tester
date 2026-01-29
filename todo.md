@@ -28,3 +28,13 @@ The history seems to help quite a bit, although still no real reasoning is detec
 The execution time does not really vary a lot when smaller prompt (i.e. without history) are passed, so I believe that history dimension does not really affect execution times.
 Still it could be that the no history version takes a lot more steps than the history aided experiment, so the times even out for that reason.
 This seems to be confirmed by the mean step execution times (15s for the first experiment, 12s for the no history experiment)
+
+## default temperature
+
+The default temperature for a <model> can be checked using this command:
+
+```sh
+ollama show --parameters <model> | grep temperature
+```
+
+If nothing is printed, then the default value of 0.8 is used [source](https://github.com/ollama/ollama/issues/6410)
