@@ -22,13 +22,18 @@ def main():
         if user_command == "Q":
             return
         if user_command == "B":
-            history = model.history
-            history.chat = history.chat[:-2]
-            model._chat_history = history  # type: ignore
-            print("Last exchange deleted.")
-            if len(model.history.chat):
-                print("----Current last response----:")
-                print(model.history.chat[-1].response)
+            if len(model.history.chat) > 0:
+                history = model.history
+                history.chat = history.chat[:-2]
+                model._chat_history = history  # type: ignore
+                print("Last exchange deleted.")
+                if len(model.history.chat) > 0:
+                    print("----Current last response----:")
+                    print(model.history.chat[-1].response)
+                else:
+                    print("Exchange history is currently empty")
+                    print("----System prompt----:")
+                    print(model.system_prompt)
             else:
                 print("Exchange history is currently empty")
                 print("----System prompt----:")
