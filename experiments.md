@@ -685,9 +685,13 @@ total execution time: 07:40:20
 solved: 13 / 20
 perc solved: 65.00
 
-## Temperature adjusting ()
+## Temperature adjusting (2026-01-29_14:28:23)
 
 Testing if setting the temperature to 0 explicitly provides better or worst results.
+
+## Results
+
+The model performed a lot worse with the temperature set to 0
 
 ## Summary table
 
