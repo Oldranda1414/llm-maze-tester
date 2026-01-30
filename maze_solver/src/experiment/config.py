@@ -50,7 +50,7 @@ class ExperimentConfig:
 
 def load_config() -> ExperimentConfig:
     models = [
-        llm_model("deepseek-r1:32b"),
+        llm_model("deepseek-r1:70b"),
     ]
     prompt_config = PromptConfig(
         provide_legal_output_hint=True,
@@ -75,8 +75,8 @@ def load_config() -> ExperimentConfig:
         iterations=iterations,
         provide_history=provide_history,
         quiet=quiet,
-        n_colors=_calculate_n_colors,
-        # mazes=_maze_to_list(_hard_3x3_mazes()[0], 10),
+        # n_colors=_calculate_n_colors,
+        mazes=_maze_to_list(_hard_3x3_mazes()[0], 10),
     )
 
 
