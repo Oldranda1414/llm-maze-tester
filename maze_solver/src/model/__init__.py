@@ -30,6 +30,7 @@ model_names: list[str] = [
     "deepseek-r1",
     "deepseek-r1:14b",
     "deepseek-r1:32b",
+    "deepseek-r1:70b",
     "mistral",
     "glm-4.7-flash",
     "yi",
