@@ -1,10 +1,10 @@
 # TODOS
 
 - prompt:
-  - have the colored prompt, through config, provide the number of numbered cells or not (from a given bool)
-- live chat system:
-  - to have quick feedback loop, implement chat like functionality.
-  - add a way to go back one step in the prompt history in this tool.
+  - specificare spazio 2d
+  - coordinate, anche con spostamenti relativi
+  - bullet point migliori
+  - ripartire da capo
 
 ## minor:
 
