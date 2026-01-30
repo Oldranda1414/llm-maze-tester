@@ -61,7 +61,6 @@ class LLMModel(Model):
                 messages=messages,
                 think=False,
                 stream=False,
-                options={"temperature": 0},
             )
         except RequestError as e:
             raise ModelRequestError(self._name) from e
