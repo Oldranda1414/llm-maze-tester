@@ -15,8 +15,15 @@ from maze.core.coordinate import Coordinate
 WALL_WIDTH = 3
 
 
-def save_maze(maze: Maze, save_path: str, draw_character: bool = True):
-    fig, _ = draw_maze(maze, draw_character=draw_character)
+def save_maze(
+    maze: Maze,
+    save_path: str,
+    draw_character: bool = True,
+    highlight_seen_tiles: bool = True,
+):
+    fig, _ = draw_maze(
+        maze, draw_character=draw_character, highlight_seen_tiles=highlight_seen_tiles
+    )
     fig.savefig(save_path, dpi=300, bbox_inches="tight")
 
 
@@ -25,6 +32,7 @@ def draw_maze(
     ax: Axes | None = None,
     show_path: bool = True,
     draw_character: bool = True,
+    highlight_seen_tiles: bool = True,
 ) -> tuple[Figure, Axes]:
     if ax is None:
         plt.close("all")
@@ -36,7 +44,7 @@ def draw_maze(
     ax.set_facecolor("white")
 
     _draw_borders(ax, maze)
-    _draw_cells(ax, maze, draw_character)
+    _draw_cells(ax, maze, highlight_seen_tiles)
     if draw_character:
         _draw_start(ax, maze)
         if show_path:

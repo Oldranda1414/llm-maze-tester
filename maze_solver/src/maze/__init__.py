@@ -51,7 +51,12 @@ class Maze(Protocol):
 
     def print(self) -> None: ...
 
-    def save(self, save_path: str, draw_character: bool = True) -> None: ...
+    def save(
+        self,
+        save_path: str,
+        draw_character: bool = True,
+        highlight_seen_tiles: bool = True,
+    ) -> None: ...
 
     def reset(self) -> None: ...
 

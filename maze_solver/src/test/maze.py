@@ -7,7 +7,9 @@ def run() -> None:
     size = int(input("maze size?:"))
     tile_number = int(input("tile number?:"))
     maze = create_maze(
-        size=size, colored_cells=random_colored_cells(1, 3, tile_number)[0]
+        size=size,
+        colored_cells=random_colored_cells(1, 3, tile_number)[0],
+        sight_depth=0,
     )
 
     print("Start:", maze.start)
@@ -31,6 +33,8 @@ def run() -> None:
         if move == "C":
             break
         elif move == "Q":
-            maze.save("./maze_test.png", draw_character=False)
+            maze.save("./maze_test.png")
         else:
             maze.move(Direction.from_coordinate(move))
+
+    maze.save("./solved_maze.png", True, False)
