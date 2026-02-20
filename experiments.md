@@ -693,6 +693,31 @@ Testing if setting the temperature to 0 explicitly provides better or worst resu
 
 The model performed a lot worse with the temperature set to 0
 
+## biggest model possible (2026-01-30_12:00:50)
+
+See if the results change by testing the biggest model available (deepseek-r1:70b) with a trial of 10 attempts at the hardest maze.
+
+This created a hopefull result, with an accuracy of 8/10
+
+### stats
+
+=== Maze size: 3 ===
+mean illegal directions: 1.60
+perc illegal directions: 2.02
+mean illegal responses: 0.00
+perc illegal responses: 0.00
+mean total steps (for solved): 28.25
+mean decisions (for solved): 27.50
+mean execution time (for solved): 01:13:29
+mean step execution time (for solved): 00:02:45
+total execution time: 20:07:25
+solved: 8 / 10
+perc solved: 80.00
+
+## add spacial awareness hint
+
+Repeat the experiment in (2026-01-30_12:00:50), but add a spacial awareness hint
+
 ## Summary table
 
 | Date   | Hit Rate (3×3) | Hit Rate (4×4) | Hit Rate (5×5) | Hit Rate (6×6) | Overall Hit Rate |
