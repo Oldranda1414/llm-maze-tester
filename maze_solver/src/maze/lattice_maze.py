@@ -132,8 +132,8 @@ class LatticeMaze(Maze):
     def print(self):
         print_maze(self)
 
-    def save(self, save_path: str):
-        save_maze(self, save_path)
+    def save(self, save_path: str, draw_character: bool = True):
+        save_maze(self, save_path, draw_character)
 
     def reset(self):
         self._path = [self._start]

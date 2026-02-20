@@ -15,13 +15,16 @@ from maze.core.coordinate import Coordinate
 WALL_WIDTH = 3
 
 
-def save_maze(maze: Maze, save_path: str):
-    fig, _ = draw_maze(maze)
+def save_maze(maze: Maze, save_path: str, draw_character: bool = True):
+    fig, _ = draw_maze(maze, draw_character=draw_character)
     fig.savefig(save_path, dpi=300, bbox_inches="tight")
 
 
 def draw_maze(
-    maze: Maze, ax: Axes | None = None, show_path: bool = True
+    maze: Maze,
+    ax: Axes | None = None,
+    show_path: bool = True,
+    draw_character: bool = True,
 ) -> tuple[Figure, Axes]:
     if ax is None:
         plt.close("all")
@@ -33,10 +36,11 @@ def draw_maze(
     ax.set_facecolor("white")
 
     _draw_borders(ax, maze)
-    _draw_cells(ax, maze)
-    _draw_start(ax, maze)
-    if show_path:
-        _draw_path(ax, maze)
+    _draw_cells(ax, maze, draw_character)
+    if draw_character:
+        _draw_start(ax, maze)
+        if show_path:
+            _draw_path(ax, maze)
 
     grid_size = maze.size
     ax.set_xlim(-0.1, grid_size + 0.1)
@@ -128,14 +132,16 @@ def _draw_borders(ax: Axes, maze: Maze):
             ax.plot([grid_size, grid_size], [i, i + 1], "k-", linewidth=WALL_WIDTH)
 
 
-def _draw_cells(ax: Axes, maze: Maze):
+def _draw_cells(ax: Axes, maze: Maze, highlight_seen: bool = True):
     cell_size = 1.0
     cl = maze.connection_list
     grid_size = maze.size
     for i in range(grid_size):
         for j in range(grid_size):
             y_plot = grid_size - i - 1
-            facecolor = "yellow" if _is_seen((i, j), maze) else "white"
+            facecolor = (
+                "yellow" if _is_seen((i, j), maze) and highlight_seen else "white"
+            )
             edgecolor = "lightgrey"
             rect = Rectangle(
                 (j, y_plot),

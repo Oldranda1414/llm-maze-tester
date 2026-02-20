@@ -31,6 +31,6 @@ def run() -> None:
         if move == "C":
             break
         elif move == "Q":
-            maze.save("./maze_test.png")
+            maze.save("./maze_test.png", draw_character=False)
         else:
             maze.move(Direction.from_coordinate(move))
