@@ -11,7 +11,8 @@ def run():
     solver = MazeSolver(
         phony_model(),
         PromptGenerator(
-            NarrativeStyle(), PromptConfig(False, False, False, False, 0, False)
+            NarrativeStyle(),
+            PromptConfig(False, False, False, False, False, 0, False, False),
         ),
         create_maze(),
         PreambleLocation.SYSTEM,

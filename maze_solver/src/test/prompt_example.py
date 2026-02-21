@@ -16,7 +16,7 @@ from prompt.style.narrative import NarrativeStyle
 def run() -> None:
     mazes: list[tuple[Maze, str]] = []
     prompt_generator = PromptGenerator(
-        NarrativeStyle(), PromptConfig(True, True, True, False, 0, True)
+        NarrativeStyle(), PromptConfig(True, True, True, True, True, 0, True, True)
     )
     for i in range(2, 7):
         sight_depth = 2

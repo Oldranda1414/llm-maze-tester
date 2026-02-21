@@ -12,7 +12,7 @@ def run():
     model = phony_model()
     maze = create_maze(size=maze_size, sight_depth=sight_depth)
     pg = PromptGenerator(
-        NarrativeStyle(), PromptConfig(True, True, True, False, 0, True)
+        NarrativeStyle(), PromptConfig(True, True, True, True, True, 0, True, True)
     )
     maze_solver = MazeSolver(model, pg, maze, PreambleLocation.SYSTEM)
     maze_solver.step()

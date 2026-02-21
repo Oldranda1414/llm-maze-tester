@@ -57,6 +57,7 @@ def load_config() -> ExperimentConfig:
         provide_spacial_awerness_hint=True,
         provide_color_hint=True,
         provide_repetition_hint=True,
+        provide_avoid_dead_end=True,
         provide_steps_summary=0,
         provide_possible_moves=False,
         provide_cot_reminder=True,

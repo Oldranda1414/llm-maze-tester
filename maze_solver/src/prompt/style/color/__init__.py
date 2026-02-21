@@ -16,6 +16,7 @@ class ColorStyle(NarrativeStyle):
         provide_spacial_awerness_hint: bool,
         provide_color_hint: bool,
         provide_repetition_hint: bool,
+        provide_avoid_dead_end: bool,
     ) -> str:
         preamble = super().preamble(
             maze,
@@ -23,6 +24,7 @@ class ColorStyle(NarrativeStyle):
             provide_spacial_awerness_hint,
             provide_color_hint,
             provide_repetition_hint,
+            provide_avoid_dead_end,
         )
         return preamble + prompts.color_explanation if provide_color_hint else preamble
 

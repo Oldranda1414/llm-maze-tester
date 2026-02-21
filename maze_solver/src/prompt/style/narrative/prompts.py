@@ -54,6 +54,10 @@ If you decide to move south, the user will then provide information regarding wh
 The info on the corridor due North refers to the cell you have just moved out of, so you have already explored that direction.
 """
 
+avoid_dead_end_hint = """
+Always avoid dead ends. If the exit is visible it will always be told you by the user, so don't explore directions once you find out they lead to a dead end as they have no chances of being usefull.
+"""
+
 # ---- step prompt ----
 
 direction = Template("Due ${direction} ")

@@ -18,7 +18,7 @@ def run():
     # )
     maze = _hard_3x3_mazes()[0]
     pg = PromptGenerator(
-        ColorStyle(), PromptConfig(True, True, True, True, 0, True, True)
+        ColorStyle(), PromptConfig(True, True, True, True, True, 0, True, True)
     )
     print(pg.get_preamble(maze))
 
@@ -45,7 +45,8 @@ def many_maze():
     sight_depth = 3
     mazes = create_dataset(10, 3, sight_depth).mazes
     pg = PromptGenerator(
-        NarrativeStyle(), PromptConfig(False, False, False, False, None, False, False)
+        NarrativeStyle(),
+        PromptConfig(False, False, False, False, False, None, False, False),
     )
     for maze in mazes:
         print(pg.get_preamble(maze))

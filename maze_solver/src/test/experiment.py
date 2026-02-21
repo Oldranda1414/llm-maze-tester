@@ -12,7 +12,8 @@ def run() -> None:
         ExperimentConfig(
             [random_model()],
             PromptGenerator(
-                EmptyStyle(), PromptConfig(True, True, True, False, 0, True)
+                EmptyStyle(),
+                PromptConfig(False, False, False, False, False, None, False, False),
             ),
             PreambleLocation.SYSTEM,
             [3],

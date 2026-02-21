@@ -16,6 +16,7 @@ class PromptGenerator:
             self.config.provide_spacial_awerness_hint,
             self.config.provide_color_hint,
             self.config.provide_repetition_hint,
+            self.config.provide_avoid_dead_end,
         )
 
     def step_prompt(self, maze: Maze) -> str:
