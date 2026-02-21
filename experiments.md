@@ -714,9 +714,17 @@ total execution time: 20:07:25
 solved: 8 / 10
 perc solved: 80.00
 
-## add spacial awareness hint
+## add spacial awareness hint (2026-02-20_14:40:32)
 
 Repeat the experiment in (2026-01-30_12:00:50), but add a spacial awareness hint
+
+### Results
+
+Adding the spacial awareness hint seems to not have changed the outcome
+
+## add avoid dead end hints
+
+Given the results from (2026-02-20_14:40:32), the experiment is repeated providing an additional hint to avoid dead ends.
 
 ## Summary table
 
