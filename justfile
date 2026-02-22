@@ -46,6 +46,13 @@ visualize:
 copy:
   rsync -avz -e ssh lrandacio@137.204.72.12:/home/lrandacio/llm-maze-tester/results .
 
+# THESIS
+
+# Generate the images for the thesis
+[no-exit-message]
+generate:
+  uv --project maze_solver run maze_solver/src/generate_main.py
+
 # UV
 
 # Add package to project dependencies
