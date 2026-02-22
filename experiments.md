@@ -738,6 +738,11 @@ This test is to see if the removal of the colored tiles actually makes a differe
 This test is still done with 10 attempts at the hard maze.
 Since the dead end hint showed no improvements, it is removed.
 
+## TODO remove no repetation hint
+
+Maybe the reason the model has a hard time solving the hard maze is it refuses to move north once coming from it, because of the
+no repetition hint?
+
 ## Summary table
 
 | Date   | Hit Rate (3×3) | Hit Rate (4×4) | Hit Rate (5×5) | Hit Rate (6×6) | Overall Hit Rate |
