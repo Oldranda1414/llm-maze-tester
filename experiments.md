@@ -720,11 +720,23 @@ Repeat the experiment in (2026-01-30_12:00:50), but add a spacial awareness hint
 
 ### Results
 
-Adding the spacial awareness hint seems to not have changed the outcome
+Adding the spacial awareness hint seems to not have changed the outcome, as the accuracy is the same (8/10).
+Although mean steps for solved mazes seems to have lowered.
 
-## add avoid dead end hints
+## add avoid dead end hints (2026-02-21_16:57:58)
 
 Given the results from (2026-02-20_14:40:32), the experiment is repeated providing an additional hint to avoid dead ends.
+
+### Results
+
+Adding the hint seems to not have changed the outcome, as the accuracy is the same (8/10).
+Although mean steps for solved mazes seems to have lowered.
+
+## remove color tiles ()
+
+This test is to see if the removal of the colored tiles actually makes a difference in performance with respect to 2026-02-20_14:40:32
+This test is still done with 10 attempts at the hard maze.
+Since the dead end hint showed no improvements, it is removed.
 
 ## Summary table
 

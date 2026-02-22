@@ -13,7 +13,7 @@ from prompt import PromptGenerator
 from prompt.config import PromptConfig
 
 from maze.factory import create_dataset
-from prompt.style.color import ColorStyle
+from prompt.style.narrative import NarrativeStyle
 from solver import PreambleLocation
 
 
@@ -55,14 +55,14 @@ def load_config() -> ExperimentConfig:
     prompt_config = PromptConfig(
         provide_legal_output_hint=True,
         provide_spacial_awerness_hint=True,
-        provide_color_hint=True,
+        provide_color_hint=False,
         provide_repetition_hint=True,
-        provide_avoid_dead_end=True,
+        provide_avoid_dead_end=False,
         provide_steps_summary=0,
         provide_possible_moves=False,
         provide_cot_reminder=True,
     )
-    prompt_style = ColorStyle()
+    prompt_style = NarrativeStyle()
     preamble_location = PreambleLocation.SYSTEM
     maze_sizes = [3]
     iterations = 10
@@ -77,7 +77,7 @@ def load_config() -> ExperimentConfig:
         provide_history=provide_history,
         quiet=quiet,
         # n_colors=_calculate_n_colors,
-        mazes=_maze_to_list(_hard_3x3_mazes()[0], 10),
+        mazes=_maze_to_list(_hard_3x3_mazes(False)[0], 10),
     )
 
 
@@ -85,10 +85,14 @@ def _calculate_n_colors(maze_size: int) -> int:
     return min(round(maze_size * maze_size / 2), len(CellColor))
 
 
-def _hard_3x3_mazes():
-    colored_cells_number = 5
-    colored_cells = random_colored_cells(1, 3, colored_cells_number)[0]
-    mazes = create_dataset(10, 3, colored_cells=[colored_cells] * 10).mazes
+def _hard_3x3_mazes(with_colored_cells: bool = True):
+    mazes = None
+    if with_colored_cells:
+        colored_cells_number = 5
+        colored_cells = random_colored_cells(1, 3, colored_cells_number)[0]
+        mazes = create_dataset(10, 3, colored_cells=[colored_cells] * 10).mazes
+    else:
+        mazes = create_dataset(10, 3).mazes
     indexes = [4]
     return [maze for i, maze in enumerate(mazes) if i in indexes]
 
