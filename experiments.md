@@ -732,16 +732,40 @@ Given the results from (2026-02-20_14:40:32), the experiment is repeated providi
 Adding the hint seems to not have changed the outcome, as the accuracy is the same (8/10).
 Although mean steps for solved mazes seems to have lowered.
 
-## remove color tiles ()
+## remove color tiles (2026-02-22_13:45:23)
 
 This test is to see if the removal of the colored tiles actually makes a difference in performance with respect to 2026-02-20_14:40:32
 This test is still done with 10 attempts at the hard maze.
 Since the dead end hint showed no improvements, it is removed.
 
-## TODO remove no repetation hint
+### Results
+
+The removal of the colored tiles seems to have reduced the effectiveness of the model (7/10) and raised the mean steps for solved (~30)
+This seems to mean that the colored tiles are helpful to the model and for this reason they should be used.
+
+### stats
+
+=== Maze size: 3 ===
+mean illegal directions: 6.20
+perc illegal directions: 10.08
+mean illegal responses: 1.00
+perc illegal responses: 1.14
+mean total steps (for solved): 35.71
+mean decisions (for solved): 29.29
+mean execution time (for solved): 01:40:29
+mean step execution time (for solved): 00:02:44
+total execution time: 33:33:17
+solved: 7 / 10
+perc solved: 70.00
+
+## remove no repetation hint ()
 
 Maybe the reason the model has a hard time solving the hard maze is it refuses to move north once coming from it, because of the
 no repetition hint?
+
+## TODO add more tiles ()
+
+Given the dropping effectiveness in (2026-02-22_13:45:23), maybe having more colored tiles would help the model. This test adds all colored tiles (8) to see if this helps the model.
 
 ## Summary table
 
