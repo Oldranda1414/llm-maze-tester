@@ -9,8 +9,9 @@ from maze.core.navigation import exit_direction
 
 def selection_example(path: str):
     maze_sizes = [3, 4, 5]
+    maze_starts = [((1, 0), (0, 0)), ((2, 2), (3, 0)), ((0, 0), (1, 2))]
 
-    mazes = generate_mazes(maze_sizes)
+    mazes = generate_mazes(maze_sizes, maze_starts)
     _, axes = plt.subplots(3, 2, figsize=(8, 12))
 
     for idx, maze in enumerate(mazes):
@@ -24,12 +25,17 @@ def selection_example(path: str):
     plt.savefig(f"{path}/selection_example.png", bbox_inches="tight", dpi=150)
 
 
-def generate_mazes(maze_sizes: list[int]) -> list[Maze]:
+def generate_mazes(
+    maze_sizes: list[int], starts: list[tuple[tuple[int, int], tuple[int, int]]]
+) -> list[Maze]:
     mazes: list[Maze] = []
-    for maze_size in maze_sizes:
+    for maze_size, start_tuple in zip(maze_sizes, starts):
         filters = [is_trivial, _is_non_trivial]
-        for filter in filters:
-            maze = cast(LatticeMaze, create_maze(size=maze_size, maze_filter=filter))
+        for filter, start in zip(filters, start_tuple):
+            maze = cast(
+                LatticeMaze,
+                create_maze(size=maze_size, start=start, maze_filter=filter),
+            )
             maze._set_path(maze.solution)
             last_move = exit_direction(maze.target, maze.size)
             maze.move(last_move)
