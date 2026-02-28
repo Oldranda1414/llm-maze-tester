@@ -41,7 +41,7 @@ class NarrativeStyle(PromptStyle):
         facts = extract_facts(direction, maze)
         base = prompts.direction.substitute(direction=str(direction))
 
-        if facts.exit_distance and facts.exit_distance < maze.sight_depth:
+        if facts.exit_distance and facts.exit_distance <= maze.sight_depth:
             return base + prompts.exit_prompt
 
         if facts.is_exit:
