@@ -3,7 +3,7 @@ from typing import Callable
 
 from experiment import Experiment, experiment_list
 from run.git import current_hash
-from stats.output import print_experiment_stats, print_experiment_comparison
+from stats.output import print_experiment_stats
 from stats.stats import STATS
 
 
@@ -44,12 +44,8 @@ def default(dates: list[str]):
             )
         print_experiment_stats(experiment, STATS)
     else:
-        for date in dates:
-            if date not in experiment_list():
-                print(f"Provided date ({date}) is not a valid experiment date")
-                print_experiment_list()
-                return
-        print_experiment_comparison([Experiment(date) for date in dates])
+        print("Provide one and only one valid experiment date to print stats")
+        help()
 
 
 def commands() -> dict[str, Callable]:

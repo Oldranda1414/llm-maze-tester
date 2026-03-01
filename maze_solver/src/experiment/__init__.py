@@ -9,6 +9,7 @@ class Experiment:
         base_path = "results"
         experiment_path = os.path.join(base_path, date)
 
+        self.date: str = date
         self.git_hash: str | None = None
         self.runs: dict[str, list[Run]] = defaultdict(list)
 
@@ -35,7 +36,7 @@ class Experiment:
                 self.runs[model_name].append(run)
 
 
-def experiment_list():
+def experiment_list() -> list[str]:
     experiments = [
         d for d in os.listdir("results") if os.path.isdir(os.path.join("results", d))
     ]
