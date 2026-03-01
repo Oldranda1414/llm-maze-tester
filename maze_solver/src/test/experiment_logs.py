@@ -16,15 +16,12 @@ def run() -> None:
     for experiment in e_list:
         path = log_path(experiment.date)
         with open(path, "a", encoding="utf-8") as f:
-            print("openend file")
             print_fn = get_print_fn(f)
             try:
                 print_fn(f"git_hash:{experiment.git_hash}\n")
                 print_fn("--------STATS---------")
                 print_experiment_stats(experiment, STATS, print_fn, False)
-                print("getting config")
                 config = get_config(experiment)
-                print("got config")
                 if config:
                     print_fn("--------CONFIG---------")
                     print_fn(config)
@@ -38,12 +35,9 @@ def run() -> None:
 
 def load_experiments() -> list[Experiment]:
     failed_loades = []
-    print("loading experiments")
     e_name_list = experiment_list()
-    print("loaded experiment name list")
     e_list = []
     for experiment_date in e_name_list:
-        print("load experiment:", experiment_date)
         try:
             experiment = Experiment(experiment_date)
             e_list.append(experiment)
@@ -67,7 +61,7 @@ def log_path(experiment_date: str) -> str:
 
 
 def get_config(experiment: Experiment) -> str | None:
-    clone_path = "../temp_clone/llm-maze-tester"
+    clone_path = "../../../../temp_clone/llm-maze-tester"
     script_dir = Path(__file__).resolve().parent
     workdir = script_dir / clone_path
 
