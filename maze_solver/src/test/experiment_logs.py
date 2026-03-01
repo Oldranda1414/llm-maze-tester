@@ -18,16 +18,13 @@ def run() -> None:
         with open(path, "a", encoding="utf-8") as f:
             print_fn = get_print_fn(f)
             try:
-                print_fn(f"git_hash:{experiment.git_hash}\n")
-                print_fn("--------STATS---------")
-                print_experiment_stats(experiment, STATS, print_fn, False)
                 config = get_config(experiment)
                 if config:
+                    print_fn(f"git_hash:{experiment.git_hash}\n")
+                    print_fn("--------STATS---------")
+                    print_experiment_stats(experiment, STATS, print_fn, False)
                     print_fn("--------CONFIG---------")
                     print_fn(config)
-                else:
-                    print_fn("--------CONFIG---------")
-                    print_fn("--------NO CONFIG FOUND---------")
             except Exception as e:
                 print_fn("exception occurred")
                 print_fn(f"Error: {e}")
