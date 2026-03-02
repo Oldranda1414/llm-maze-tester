@@ -76,13 +76,14 @@ def load_config() -> ExperimentConfig:
         iterations=iterations,
         provide_history=provide_history,
         quiet=quiet,
-        # n_colors=_calculate_n_colors,
-        mazes=_maze_to_list(_hard_3x3_mazes(False)[0], 10),
+        n_colors=_calculate_n_colors,
+        # mazes=_maze_to_list(_hard_3x3_mazes(False)[0], 10),
     )
 
 
 def _calculate_n_colors(maze_size: int) -> int:
-    return min(round(maze_size * maze_size / 2), len(CellColor))
+    return 8
+    # return min(round(maze_size * maze_size / 2), len(CellColor))
 
 
 def _hard_3x3_mazes(with_colored_cells: bool = True):

@@ -758,14 +758,25 @@ total execution time: 33:33:17
 solved: 7 / 10
 perc solved: 70.00
 
-## remove no repetation hint ()
+## remove no repetation hint (2026-02-25_19:15:41)
 
 Maybe the reason the model has a hard time solving the hard maze is it refuses to move north once coming from it, because of the
 no repetition hint?
 
-## TODO add more tiles ()
+### stats
 
-Given the dropping effectiveness in (2026-02-22_13:45:23), maybe having more colored tiles would help the model. This test adds all colored tiles (8) to see if this helps the model.
+=== Maze size: 3 ===
+mean illegal directions: 4.30
+perc illegal directions: 5.36
+mean illegal responses: 0.00
+perc illegal responses: 0.00
+mean total steps (for solved): 49.00
+mean decisions (for solved): 46.00
+mean execution time (for solved): 02:25:27
+mean step execution time (for solved): 00:02:42
+total execution time: 43:33:01
+solved: 4 / 10
+perc solved: 40.00
 
 ## Summary table
 
