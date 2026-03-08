@@ -1,0 +1,3218 @@
+git_hash: 91e52c469da8051d450ad9fdda80ad67228e0ea0
+maze:
+  horizontal:
+  - - false
+    - false
+    - false
+  - - false
+    - true
+    - false
+  - - true
+    - true
+    - false
+  vertical:
+  - - true
+    - true
+    - true
+  - - true
+    - false
+    - true
+  - - false
+    - false
+    - false
+  start:
+  - 0
+  - 0
+  target:
+  - 0
+  - 1
+  path:
+  - - 0
+    - 0
+  - - 1
+    - 0
+  - - 2
+    - 0
+  - - 1
+    - 0
+  - - 2
+    - 0
+  - - 1
+    - 0
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 1
+    - 0
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 0
+  decisions:
+  - S
+  - S
+  - N
+  - S
+  - N
+  - S
+  - E
+  - W
+  - N
+  - S
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  sight_depth: 2
+  size: 3
+  solved: false
+chat_history:
+  system_prompt: "\nYou are a maze solving model. You are an expert in solving classic\
+    \ lattice mazes.\n\nThe user will provide you with descriptions of what you can\
+    \ perceive from inside the maze.\nThe information provided considers you to have\
+    \ a sight depth of two meters. Anything that is further away from you than two\
+    \ meters is not mentioned in the user prompt.\nJust like a classic lattice maze\
+    \ the exit is on the border. The starting position could be anywhere in the maze.\n\
+    Your goal is to find the maze exit. Once you reach it you must step out of the\
+    \ maze with one last move.\nThe maze is always solvable and the user is always\
+    \ honest on the information that he provides you.\n\nAfter the user provides you\
+    \ with informations regarding you current surroundings, you will provide the direction\
+    \ to step towards next.\nThe possible directions are north, east, south, west.\n\
+    \nThe maze is a 3 x 3 grid, with every square in the grid being one square meter\
+    \ big.\nUse brief, step-indexed reasoning. Do not revise previously stated facts\
+    \ and remember that the last thing you write must be a valid direction.\n\nYou\
+    \ are allowed to output the direction with any casing you want, as long as it\
+    \ is the last thing in your answer.\nHere are some examples of valid end of response,\
+    \ in case you decide to move due north:\n\n- Let's go North\n- I want to step\
+    \ N!\n- My next move will be north.\n\nTo keep track of the progress you make,\
+    \ maintain a persistent 2D map of the maze using ASCII characters..\nThis will\
+    \ help you track you progress and inform your decisions\n\nThe user notifies you\
+    \ when you move in a given direction, such as 'You move one meter west', if you\
+    \ decide to move due west.\nKeep in mind that after you step in a given direction,\
+    \ the information provided for what you percieve in the opposite direction refers\
+    \ to the area you are coming from.\nFor example, let's say that the user gives\
+    \ you this information:\n'''\n    Due North there is a wall. You can't step in\
+    \ that direction.\n    Due East there is a corridor that goes on for one meter\
+    \ before encountering a wall. It is a dead end.\n    Due South there is a corridor\
+    \ that goes on for two meters before encountering a wall. The corridor has some\
+    \ lateral paths.\n    Due West there is a wall. You can't step in that direction.\n\
+    '''\nIf you decide to move south, the user will then provide information regarding\
+    \ what can be perceived from your new position.\n'''\n    You move one meter south.\n\
+    \    Due North there is a corridor that goes on for one meter before encountering\
+    \ a wall. The corridor has some lateral paths.\n    Due East there is a wall.\
+    \ You can't step in that direction.\n    Due South there is a corridor that goes\
+    \ on for one meter before encountering a wall. The corridor has some lateral paths.\n\
+    \    Due West there is a wall. You can't step in that direction.\n'''\nThe info\
+    \ on the corridor due North refers to the cell you have just moved out of, so\
+    \ you have already explored that direction.\n"
+  chat:
+  - prompt: "Due North there is a wall. You can't step in that direction.\nDue East\
+      \ there is a wall. You can't step in that direction.\nDue South there is a corridor\
+      \ that goes on for two meters before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After two meters there is\
+      \ a lateral path due East.\nDue West there is a wall. You can't step in that\
+      \ direction."
+    response: 'Map:
+
+      S . .
+
+      # # #
+
+
+      1. Start at (0,0).
+
+      2. South (0,1) is open and connects to a 2m corridor with a turn at (2,1). This
+      connects to the boundary, which is the exit.
+
+      3. West (0,-1) and East (0,2) are blocked.
+
+      4. North (0,-1) is blocked.
+
+      5. Step South.
+
+
+      South'
+  - prompt: "You move one meter South\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a wall. You can't step in that direction.\nDue South\
+      \ there is a corridor that goes on for one meter before encountering a wall.\
+      \ You are able to see that the corridor has some lateral paths:\n   - After\
+      \ one meter there is a lateral path due East.\nDue West there is a wall. You\
+      \ can't step in that direction.\nThe moves you have made till now are: South"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Start at (0,0).
+
+      2. Previous South was a 2m corridor with a turn at (2,1). This connects to the
+      boundary, which is the exit.
+
+      3. Current West (0,-1) and East (0,2) are blocked.
+
+      4. Current North (0,-1) is a 1m dead end (already explored).
+
+      5. Current South (0,2) has a 1m corridor with a turn at (1,2), which connects
+      to the boundary.
+
+      6. Step South.
+
+
+      South'
+  - prompt: "You move one meter South\nDue North there is a corridor that goes on\
+      \ for two meters before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Current South is blocked.
+
+      2. Current North is a 2m corridor (0,-1 to -2,-1) with no exits.
+
+      3. Current East is a 2m corridor (-1,0 to -1,-2) with a turn at (-1,-2) to North,
+      which is blocked. This is also a dead end.
+
+      4. Current West is blocked.
+
+      5. The only valid moves previously were North (dead end) or East (dead end).
+
+      6. The only remaining valid move is to step back South to the previous location
+      to check for unexplored paths or retrace.
+
+      7. Step South.
+
+
+      South'
+  - prompt: "\nYou try to walk South.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for two meters before encountering\
+      \ a wall. The corridor ends without any lateral paths.\nDue East there is a\
+      \ corridor that goes on for two meters before encountering a wall. You are able\
+      \ to see that the corridor has some lateral paths:\n   - After two meters there\
+      \ is a lateral path due North.\nDue South there is a wall. You can't step in\
+      \ that direction.\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: South, South"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Attempted to move South but hit a wall.
+
+      2. The previous position must be the one I was in when I decided to go South,
+      which was the cell adjacent to the South wall of the center (0,2).
+
+      3. At this position (0,2), North is a dead end, East is a dead end, West is
+      a wall, and South is a wall.
+
+      4. This implies I am likely in a dead end corner of the maze (0,2).
+
+      5. To escape the maze, I must backtrack towards the center (0,1) to find a path
+      to the exit.
+
+      6. Step North.
+
+
+      North'
+  - prompt: "You move one meter North\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a wall. You can't step in that direction.\nDue South\
+      \ there is a corridor that goes on for one meter before encountering a wall.\
+      \ You are able to see that the corridor has some lateral paths:\n   - After\
+      \ one meter there is a lateral path due East.\nDue West there is a wall. You\
+      \ can't step in that direction.\nThe moves you have made till now are: South,\
+      \ South, North"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved North to the center (0,1).
+
+      2. North is a dead end.
+
+      3. West is a wall.
+
+      4. East is a wall.
+
+      5. South (0,2) is the previous location, which led to a wall in the last step.
+
+      6. I am effectively stuck in the center with no exit path visible.
+
+      7. The map shows I am at S.
+
+      8. I need to go South to explore or re-enter the corridor. Step South.
+
+
+      South'
+  - prompt: "You move one meter South\nDue North there is a corridor that goes on\
+      \ for two meters before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved South to (0,2).
+
+      2. North (0,1) is a 2m corridor with a turn at (-2,1) to East, which is blocked.
+
+      3. West is blocked.
+
+      4. East is blocked.
+
+      5. South is blocked (wall).
+
+      6. This location (0,2) is a dead end.
+
+      7. To progress, I must return to the center (0,1) to check for unexplored exits.
+
+      8. Step North.
+
+
+      North'
+  - prompt: "You move one meter North\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a wall. You can't step in that direction.\nDue South\
+      \ there is a corridor that goes on for one meter before encountering a wall.\
+      \ You are able to see that the corridor has some lateral paths:\n   - After\
+      \ one meter there is a lateral path due East.\nDue West there is a wall. You\
+      \ can't step in that direction.\nThe moves you have made till now are: South,\
+      \ South, North, South, North"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved North to the center (0,1).
+
+      2. North is a dead end.
+
+      3. West is a wall.
+
+      4. East is a wall.
+
+      5. South (0,2) is a dead end.
+
+      6. The exit must be on the border. The only borders accessible from (0,1) via
+      corridors are North (dead end) and South (dead end).
+
+      7. Wait, I must have missed something or the maze description implies I am not
+      in the center.
+
+      8. Let''s re-evaluate. If I am at (0,2), I am trapped. If I am at (0,1), I am
+      trapped.
+
+      9. However, the map shows S at (0,0).
+
+      10. Let''s look at the East corridor from (0,1). It says "After two meters there
+      is a lateral path due North". This implies the exit might be reachable from
+      there.
+
+      11. Step South to re-explore the East corridor''s start at (0,2).
+
+
+      South'
+  - prompt: "You move one meter South\nDue North there is a corridor that goes on\
+      \ for two meters before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved South to (0,2).
+
+      2. The East corridor (0,2) has a 2m path with a turn at (-2,0) to North. North
+      at (-2,0) connects to the border (Exit).
+
+      3. West and South are walls. North is a dead end.
+
+      4. I need to move East along the corridor to reach the turn and then North to
+      the exit.
+
+      5. Step East.
+
+
+      East'
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for one meter before\
+      \ encountering a wall. You are able to see that the corridor has some lateral\
+      \ paths:\n   - After one meter there is a lateral path due North.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for one meter before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due North.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved East to (-1,2).
+
+      2. West is a corridor leading to a dead end.
+
+      3. East and South are walls.
+
+      4. North is a wall.
+
+      5. I am at a dead end (-1,2). I must backtrack to (-2,2) or (-1,1).
+
+      6. The corridor description mentioned a turn at (-2,1) to North. I need to move
+      West to explore this turn (-2,2) and see if I can exit North.
+
+      7. Step West.
+
+
+      West'
+  - prompt: "You move one meter West\nDue North there is a corridor that goes on for\
+      \ two meters before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved West to (-2,2).
+
+      2. East (-1,2) is a corridor with a dead end turn at (-1,1).
+
+      3. North is a corridor (0,1) that goes 2m to (-2,1) with a turn to East.
+
+      4. West and South are walls.
+
+      5. At (-2,2), looking North leads to (-2,1). The turn at (-2,1) goes East. I
+      need to go North to reach the corridor.
+
+      6. Step North.
+
+
+      North'
+  - prompt: "You move one meter North\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a wall. You can't step in that direction.\nDue South\
+      \ there is a corridor that goes on for one meter before encountering a wall.\
+      \ You are able to see that the corridor has some lateral paths:\n   - After\
+      \ one meter there is a lateral path due East.\nDue West there is a wall. You\
+      \ can't step in that direction.\nThe moves you have made till now are: South,\
+      \ South, North, South, North, South, East, West, North"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved North to (-2,1).
+
+      2. South (-1,1) is a dead end.
+
+      3. West is a wall.
+
+      4. East is a corridor (-1,1) leading to (-1,0) with a turn to North. This connects
+      to the exit at (-1,-1).
+
+      5. I need to move East along the corridor to reach the turn.
+
+      6. Step East.
+
+
+      East'
+  - prompt: "\nYou try to walk East.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for one meter before encountering a\
+      \ wall. The corridor ends without any lateral paths.\nDue East there is a wall.\
+      \ You can't step in that direction.\nDue South there is a corridor that goes\
+      \ on for one meter before encountering a wall. You are able to see that the\
+      \ corridor has some lateral paths:\n   - After one meter there is a lateral\
+      \ path due East.\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: South, South, North, South, North, South,\
+      \ East, West, North"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved North to (-2,1).
+
+      2. Previous move East to (-1,1) was blocked (wall).
+
+      3. I am now at (-2,1).
+
+      4. West is a wall. South is a dead end. North is a 1m dead end.
+
+      5. This is a dead end. I must backtrack to (-2,2) to check other options.
+
+      6. Step South.
+
+
+      South'
+  - prompt: "You move one meter South\nDue North there is a corridor that goes on\
+      \ for two meters before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved South to (-2,2).
+
+      2. The corridor East from (-2,2) connects to (-1,2), then to (-1,1), then to
+      (-1,0), then turns North to (-1,-1) (Exit).
+
+      3. I was previously blocked at (-2,1) trying to go East.
+
+      4. From (-2,2), I can move East to (-1,2), then East to (-1,1), then East to
+      (-1,0).
+
+      5. The corridor description from (-2,2) says "After two meters there is a lateral
+      path due North" which is the exit turn.
+
+      6. Step East.
+
+
+      East'
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for one meter before\
+      \ encountering a wall. You are able to see that the corridor has some lateral\
+      \ paths:\n   - After one meter there is a lateral path due North.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for one meter before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due North.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved East to (-1,2).
+
+      2. West is a corridor leading to a dead end.
+
+      3. East and South are walls.
+
+      4. North is a wall.
+
+      5. I am at a dead end (-1,2). I must backtrack to (-2,2) to check for other
+      options.
+
+      6. Step West.
+
+
+      West'
+  - prompt: "You move one meter West\nDue North there is a corridor that goes on for\
+      \ two meters before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved West to (-2,2).
+
+      2. West is a wall. South is a dead end. North is a 1m dead end.
+
+      3. I am at a dead end (-2,2). I must backtrack to (-2,1) to check for other
+      options.
+
+      4. Step South.
+
+
+      South'
+  - prompt: "\nYou try to walk South.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for two meters before encountering\
+      \ a wall. The corridor ends without any lateral paths.\nDue East there is a\
+      \ corridor that goes on for two meters before encountering a wall. You are able\
+      \ to see that the corridor has some lateral paths:\n   - After two meters there\
+      \ is a lateral path due North.\nDue South there is a wall. You can't step in\
+      \ that direction.\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: South, South, North, South, North, South,\
+      \ East, West, North, South, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved South to (-2,2).
+
+      2. West is a wall. South is a dead end. North is a 1m dead end.
+
+      3. I am at a dead end (-2,2). I must backtrack to (-2,1) to check for other
+      options.
+
+      4. Step South.
+
+
+      South'
+  - prompt: "\nYou try to walk South.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for two meters before encountering\
+      \ a wall. The corridor ends without any lateral paths.\nDue East there is a\
+      \ corridor that goes on for two meters before encountering a wall. You are able\
+      \ to see that the corridor has some lateral paths:\n   - After two meters there\
+      \ is a lateral path due North.\nDue South there is a wall. You can't step in\
+      \ that direction.\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: South, South, North, South, North, South,\
+      \ East, West, North, South, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Attempted to move South from (-2,2), but hit a wall. The prompt suggests
+      I should re-evaluate directions.
+
+      2. My current location is (-2,2).
+
+      3. West is a wall. South is a dead end (-1,1). North is a corridor (0,1) leading
+      to a turn at (-2,1).
+
+      4. The corridor East from (-2,2) connects to (-1,2), then to (-1,1), then to
+      (-1,0), then turns North to (-1,-1) (Exit).
+
+      5. Wait, the previous step West from (-1,2) to (-2,2) blocked my path to the
+      exit turn at (-2,1).
+
+      6. I need to re-enter the corridor East from (-2,2).
+
+      7. Step East.
+
+
+      East'
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for one meter before\
+      \ encountering a wall. You are able to see that the corridor has some lateral\
+      \ paths:\n   - After one meter there is a lateral path due North.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for one meter before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due North.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved East to (-1,2).
+
+      2. West is a corridor leading to a dead end.
+
+      3. East and South are walls.
+
+      4. North is a wall.
+
+      5. I am at a dead end (-1,2). I must backtrack to (-2,2) to check for other
+      options.
+
+      6. Step West.
+
+
+      West'
+  - prompt: "You move one meter West\nDue North there is a corridor that goes on for\
+      \ two meters before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved West to (-2,2).
+
+      2. West is a wall. South is a dead end. North is a 1m dead end.
+
+      3. I am at a dead end (-2,2). I must backtrack to (-2,1) to check for other
+      options.
+
+      4. Step South.
+
+
+      South'
+  - prompt: "\nYou try to walk South.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for two meters before encountering\
+      \ a wall. The corridor ends without any lateral paths.\nDue East there is a\
+      \ corridor that goes on for two meters before encountering a wall. You are able\
+      \ to see that the corridor has some lateral paths:\n   - After two meters there\
+      \ is a lateral path due North.\nDue South there is a wall. You can't step in\
+      \ that direction.\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: South, South, North, South, North, South,\
+      \ East, West, North, South, East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Attempted to move South from (-2,2), but hit a wall. The prompt suggests
+      I should re-evaluate directions.
+
+      2. My current location is (-2,2).
+
+      3. West is a wall. South is a dead end (-1,1). North is a corridor (0,1) leading
+      to a turn at (-2,1).
+
+      4. The corridor East from (-2,2) connects to (-1,2), then to (-1,1), then to
+      (-1,0), then turns North to (-1,-1) (Exit).
+
+      5. Wait, the previous step West from (-1,2) to (-2,2) blocked my path to the
+      exit turn at (-2,1).
+
+      6. I need to re-enter the corridor East from (-2,2).
+
+      7. Step East.
+
+
+      East'
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for one meter before\
+      \ encountering a wall. You are able to see that the corridor has some lateral\
+      \ paths:\n   - After one meter there is a lateral path due North.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for one meter before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due North.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved East to (-1,2).
+
+      2. West is a corridor leading to a dead end.
+
+      3. East and South are walls.
+
+      4. North is a wall.
+
+      5. I am at a dead end (-1,2). I must backtrack to (-2,2) to check for other
+      options.
+
+      6. Step West.
+
+
+      West'
+  - prompt: "You move one meter West\nDue North there is a corridor that goes on for\
+      \ two meters before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved West to (-2,2).
+
+      2. West is a wall. South is a dead end. North is a 1m dead end.
+
+      3. I am at a dead end (-2,2). I must backtrack to (-2,1) to check for other
+      options.
+
+      4. Step South.
+
+
+      South'
+  - prompt: "\nYou try to walk South.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for two meters before encountering\
+      \ a wall. The corridor ends without any lateral paths.\nDue East there is a\
+      \ corridor that goes on for two meters before encountering a wall. You are able\
+      \ to see that the corridor has some lateral paths:\n   - After two meters there\
+      \ is a lateral path due North.\nDue South there is a wall. You can't step in\
+      \ that direction.\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: South, South, North, South, North, South,\
+      \ East, West, North, South, East, West, East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Attempted to move South from (-2,2), but hit a wall. The prompt suggests
+      I should re-evaluate directions.
+
+      2. My current location is (-2,2).
+
+      3. West is a wall. South is a dead end (-1,1). North is a corridor (0,1) leading
+      to a turn at (-2,1).
+
+      4. The corridor East from (-2,2) connects to (-1,2), then to (-1,1), then to
+      (-1,0), then turns North to (-1,-1) (Exit).
+
+      5. Wait, the previous step West from (-1,2) to (-2,2) blocked my path to the
+      exit turn at (-2,1).
+
+      6. I need to re-enter the corridor East from (-2,2).
+
+      7. Step East.
+
+
+      East'
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for one meter before\
+      \ encountering a wall. You are able to see that the corridor has some lateral\
+      \ paths:\n   - After one meter there is a lateral path due North.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for one meter before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due North.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved East to (-1,2).
+
+      2. West is a corridor leading to a dead end.
+
+      3. East and South are walls.
+
+      4. North is a wall.
+
+      5. I am at a dead end (-1,2). I must backtrack to (-2,2) to check for other
+      options.
+
+      6. Step West.
+
+
+      West'
+  - prompt: "You move one meter West\nDue North there is a corridor that goes on for\
+      \ two meters before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved West to (-2,2).
+
+      2. West is a wall. South is a dead end. North is a 1m dead end.
+
+      3. I am at a dead end (-2,2). I must backtrack to (-2,1) to check for other
+      options.
+
+      4. Step South.
+
+
+      South'
+  - prompt: "\nYou try to walk South.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for two meters before encountering\
+      \ a wall. The corridor ends without any lateral paths.\nDue East there is a\
+      \ corridor that goes on for two meters before encountering a wall. You are able\
+      \ to see that the corridor has some lateral paths:\n   - After two meters there\
+      \ is a lateral path due North.\nDue South there is a wall. You can't step in\
+      \ that direction.\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: South, South, North, South, North, South,\
+      \ East, West, North, South, East, West, East, West, East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Attempted to move South from (-2,2), but hit a wall. The prompt suggests
+      I should re-evaluate directions.
+
+      2. My current location is (-2,2).
+
+      3. West is a wall. South is a dead end (-1,1). North is a corridor (0,1) leading
+      to a turn at (-2,1).
+
+      4. The corridor East from (-2,2) connects to (-1,2), then to (-1,1), then to
+      (-1,0), then turns North to (-1,-1) (Exit).
+
+      5. Wait, the previous step West from (-1,2) to (-2,2) blocked my path to the
+      exit turn at (-2,1).
+
+      6. I need to re-enter the corridor East from (-2,2).
+
+      7. Step East.
+
+
+      East'
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for one meter before\
+      \ encountering a wall. You are able to see that the corridor has some lateral\
+      \ paths:\n   - After one meter there is a lateral path due North.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for one meter before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due North.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved East to (-1,2).
+
+      2. West is a corridor leading to a dead end.
+
+      3. East and South are walls.
+
+      4. North is a wall.
+
+      5. I am at a dead end (-1,2). I must backtrack to (-2,2) to check for other
+      options.
+
+      6. Step West.
+
+
+      West'
+  - prompt: "You move one meter West\nDue North there is a corridor that goes on for\
+      \ two meters before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved West to (-2,2).
+
+      2. West is a wall. South is a dead end. North is a 1m dead end.
+
+      3. I am at a dead end (-2,2). I must backtrack to (-2,1) to check for other
+      options.
+
+      4. Step South.
+
+
+      South'
+  - prompt: "\nYou try to walk South.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for two meters before encountering\
+      \ a wall. The corridor ends without any lateral paths.\nDue East there is a\
+      \ corridor that goes on for two meters before encountering a wall. You are able\
+      \ to see that the corridor has some lateral paths:\n   - After two meters there\
+      \ is a lateral path due North.\nDue South there is a wall. You can't step in\
+      \ that direction.\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: South, South, North, South, North, South,\
+      \ East, West, North, South, East, West, East, West, East, West, East, West,\
+      \ East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Attempted to move South from (-2,2), but hit a wall. The prompt suggests
+      I should re-evaluate directions.
+
+      2. My current location is (-2,2).
+
+      3. West is a wall. South is a dead end (-1,1). North is a corridor (0,1) leading
+      to a turn at (-2,1).
+
+      4. The corridor East from (-2,2) connects to (-1,2), then to (-1,1), then to
+      (-1,0), then turns North to (-1,-1) (Exit).
+
+      5. Wait, the previous step West from (-1,2) to (-2,2) blocked my path to the
+      exit turn at (-2,1).
+
+      6. I need to re-enter the corridor East from (-2,2).
+
+      7. Step East.
+
+
+      East'
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for one meter before\
+      \ encountering a wall. You are able to see that the corridor has some lateral\
+      \ paths:\n   - After one meter there is a lateral path due North.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for one meter before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due North.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved East to (-1,2).
+
+      2. West is a corridor leading to a dead end.
+
+      3. East and South are walls.
+
+      4. North is a wall.
+
+      5. I am at a dead end (-1,2). I must backtrack to (-2,2) to check for other
+      options.
+
+      6. Step West.
+
+
+      West'
+  - prompt: "You move one meter West\nDue North there is a corridor that goes on for\
+      \ two meters before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved West to (-2,2).
+
+      2. West is a wall. South is a dead end. North is a 1m dead end.
+
+      3. I am at a dead end (-2,2). I must backtrack to (-2,1) to check for other
+      options.
+
+      4. Step South.
+
+
+      South'
+  - prompt: "\nYou try to walk South.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for two meters before encountering\
+      \ a wall. The corridor ends without any lateral paths.\nDue East there is a\
+      \ corridor that goes on for two meters before encountering a wall. You are able\
+      \ to see that the corridor has some lateral paths:\n   - After two meters there\
+      \ is a lateral path due North.\nDue South there is a wall. You can't step in\
+      \ that direction.\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: South, South, North, South, North, South,\
+      \ East, West, North, South, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Attempted to move South from (-2,2), but hit a wall. The prompt suggests
+      I should re-evaluate directions.
+
+      2. My current location is (-2,2).
+
+      3. West is a wall. South is a dead end (-1,1). North is a corridor (0,1) leading
+      to a turn at (-2,1).
+
+      4. The corridor East from (-2,2) connects to (-1,2), then to (-1,1), then to
+      (-1,0), then turns North to (-1,-1) (Exit).
+
+      5. Wait, the previous step West from (-1,2) to (-2,2) blocked my path to the
+      exit turn at (-2,1).
+
+      6. I need to re-enter the corridor East from (-2,2).
+
+      7. Step East.
+
+
+      East'
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for one meter before\
+      \ encountering a wall. You are able to see that the corridor has some lateral\
+      \ paths:\n   - After one meter there is a lateral path due North.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for one meter before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due North.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved East to (-1,2).
+
+      2. West is a corridor leading to a dead end.
+
+      3. East and South are walls.
+
+      4. North is a wall.
+
+      5. I am at a dead end (-1,2). I must backtrack to (-2,2) to check for other
+      options.
+
+      6. Step West.
+
+
+      West'
+  - prompt: "You move one meter West\nDue North there is a corridor that goes on for\
+      \ two meters before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved West to (-2,2).
+
+      2. West is a wall. South is a dead end. North is a 1m dead end.
+
+      3. I am at a dead end (-2,2). I must backtrack to (-2,1) to check for other
+      options.
+
+      4. Step South.
+
+
+      South'
+  - prompt: "\nYou try to walk South.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for two meters before encountering\
+      \ a wall. The corridor ends without any lateral paths.\nDue East there is a\
+      \ corridor that goes on for two meters before encountering a wall. You are able\
+      \ to see that the corridor has some lateral paths:\n   - After two meters there\
+      \ is a lateral path due North.\nDue South there is a wall. You can't step in\
+      \ that direction.\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: South, South, North, South, North, South,\
+      \ East, West, North, South, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Attempted to move South from (-2,2), but hit a wall. The prompt suggests
+      I should re-evaluate directions.
+
+      2. My current location is (-2,2).
+
+      3. West is a wall. South is a dead end (-1,1). North is a corridor (0,1) leading
+      to a turn at (-2,1).
+
+      4. The corridor East from (-2,2) connects to (-1,2), then to (-1,1), then to
+      (-1,0), then turns North to (-1,-1) (Exit).
+
+      5. Wait, the previous step West from (-1,2) to (-2,2) blocked my path to the
+      exit turn at (-2,1).
+
+      6. I need to re-enter the corridor East from (-2,2).
+
+      7. Step East.
+
+
+      East'
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for one meter before\
+      \ encountering a wall. You are able to see that the corridor has some lateral\
+      \ paths:\n   - After one meter there is a lateral path due North.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for one meter before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due North.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved East to (-1,2).
+
+      2. West is a corridor leading to a dead end.
+
+      3. East and South are walls.
+
+      4. North is a wall.
+
+      5. I am at a dead end (-1,2). I must backtrack to (-2,2) to check for other
+      options.
+
+      6. Step West.
+
+
+      West'
+  - prompt: "You move one meter West\nDue North there is a corridor that goes on for\
+      \ two meters before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved West to (-2,2).
+
+      2. West is a wall. South is a dead end. North is a 1m dead end.
+
+      3. I am at a dead end (-2,2). I must backtrack to (-2,1) to check for other
+      options.
+
+      4. Step South.
+
+
+      South'
+  - prompt: "\nYou try to walk South.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for two meters before encountering\
+      \ a wall. The corridor ends without any lateral paths.\nDue East there is a\
+      \ corridor that goes on for two meters before encountering a wall. You are able\
+      \ to see that the corridor has some lateral paths:\n   - After two meters there\
+      \ is a lateral path due North.\nDue South there is a wall. You can't step in\
+      \ that direction.\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: South, South, North, South, North, South,\
+      \ East, West, North, South, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Attempted to move South from (-2,2), but hit a wall. The prompt suggests
+      I should re-evaluate directions.
+
+      2. My current location is (-2,2).
+
+      3. West is a wall. South is a dead end (-1,1). North is a corridor (0,1) leading
+      to a turn at (-2,1).
+
+      4. The corridor East from (-2,2) connects to (-1,2), then to (-1,1), then to
+      (-1,0), then turns North to (-1,-1) (Exit).
+
+      5. Wait, the previous step West from (-1,2) to (-2,2) blocked my path to the
+      exit turn at (-2,1).
+
+      6. I need to re-enter the corridor East from (-2,2).
+
+      7. Step East.
+
+
+      East'
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for one meter before\
+      \ encountering a wall. You are able to see that the corridor has some lateral\
+      \ paths:\n   - After one meter there is a lateral path due North.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for one meter before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due North.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved East to (-1,2).
+
+      2. West is a corridor leading to a dead end.
+
+      3. East and South are walls.
+
+      4. North is a wall.
+
+      5. I am at a dead end (-1,2). I must backtrack to (-2,2) to check for other
+      options.
+
+      6. Step West.
+
+
+      West'
+  - prompt: "You move one meter West\nDue North there is a corridor that goes on for\
+      \ two meters before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved West to (-2,2).
+
+      2. West is a wall. South is a dead end. North is a 1m dead end.
+
+      3. I am at a dead end (-2,2). I must backtrack to (-2,1) to check for other
+      options.
+
+      4. Step South.
+
+
+      South'
+  - prompt: "\nYou try to walk South.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for two meters before encountering\
+      \ a wall. The corridor ends without any lateral paths.\nDue East there is a\
+      \ corridor that goes on for two meters before encountering a wall. You are able\
+      \ to see that the corridor has some lateral paths:\n   - After two meters there\
+      \ is a lateral path due North.\nDue South there is a wall. You can't step in\
+      \ that direction.\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: South, South, North, South, North, South,\
+      \ East, West, North, South, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Attempted to move South from (-2,2), but hit a wall. The prompt suggests
+      I should re-evaluate directions.
+
+      2. My current location is (-2,2).
+
+      3. West is a wall. South is a dead end (-1,1). North is a corridor (0,1) leading
+      to a turn at (-2,1).
+
+      4. The corridor East from (-2,2) connects to (-1,2), then to (-1,1), then to
+      (-1,0), then turns North to (-1,-1) (Exit).
+
+      5. Wait, the previous step West from (-1,2) to (-2,2) blocked my path to the
+      exit turn at (-2,1).
+
+      6. I need to re-enter the corridor East from (-2,2).
+
+      7. Step East.
+
+
+      East'
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for one meter before\
+      \ encountering a wall. You are able to see that the corridor has some lateral\
+      \ paths:\n   - After one meter there is a lateral path due North.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for one meter before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due North.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved East to (-1,2).
+
+      2. West is a corridor leading to a dead end.
+
+      3. East and South are walls.
+
+      4. North is a wall.
+
+      5. I am at a dead end (-1,2). I must backtrack to (-2,2) to check for other
+      options.
+
+      6. Step West.
+
+
+      West'
+  - prompt: "You move one meter West\nDue North there is a corridor that goes on for\
+      \ two meters before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved West to (-2,2).
+
+      2. West is a wall. South is a dead end. North is a 1m dead end.
+
+      3. I am at a dead end (-2,2). I must backtrack to (-2,1) to check for other
+      options.
+
+      4. Step South.
+
+
+      South'
+  - prompt: "\nYou try to walk South.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for two meters before encountering\
+      \ a wall. The corridor ends without any lateral paths.\nDue East there is a\
+      \ corridor that goes on for two meters before encountering a wall. You are able\
+      \ to see that the corridor has some lateral paths:\n   - After two meters there\
+      \ is a lateral path due North.\nDue South there is a wall. You can't step in\
+      \ that direction.\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: South, South, North, South, North, South,\
+      \ East, West, North, South, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Attempted to move South from (-2,2), but hit a wall. The prompt suggests
+      I should re-evaluate directions.
+
+      2. My current location is (-2,2).
+
+      3. West is a wall. South is a dead end (-1,1). North is a corridor (0,1) leading
+      to a turn at (-2,1).
+
+      4. The corridor East from (-2,2) connects to (-1,2), then to (-1,1), then to
+      (-1,0), then turns North to (-1,-1) (Exit).
+
+      5. Wait, the previous step West from (-1,2) to (-2,2) blocked my path to the
+      exit turn at (-2,1).
+
+      6. I need to re-enter the corridor East from (-2,2).
+
+      7. Step East.
+
+
+      East'
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for one meter before\
+      \ encountering a wall. You are able to see that the corridor has some lateral\
+      \ paths:\n   - After one meter there is a lateral path due North.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for one meter before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due North.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved East to (-1,2).
+
+      2. West is a corridor leading to a dead end.
+
+      3. East and South are walls.
+
+      4. North is a wall.
+
+      5. I am at a dead end (-1,2). I must backtrack to (-2,2) to check for other
+      options.
+
+      6. Step West.
+
+
+      West'
+  - prompt: "You move one meter West\nDue North there is a corridor that goes on for\
+      \ two meters before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved West to (-2,2).
+
+      2. West is a wall. South is a dead end. North is a 1m dead end.
+
+      3. I am at a dead end (-2,2). I must backtrack to (-2,1) to check for other
+      options.
+
+      4. Step South.
+
+
+      South'
+  - prompt: "\nYou try to walk South.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for two meters before encountering\
+      \ a wall. The corridor ends without any lateral paths.\nDue East there is a\
+      \ corridor that goes on for two meters before encountering a wall. You are able\
+      \ to see that the corridor has some lateral paths:\n   - After two meters there\
+      \ is a lateral path due North.\nDue South there is a wall. You can't step in\
+      \ that direction.\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: South, South, North, South, North, South,\
+      \ East, West, North, South, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Attempted to move South from (-2,2), but hit a wall. The prompt suggests
+      I should re-evaluate directions.
+
+      2. My current location is (-2,2).
+
+      3. West is a wall. South is a dead end (-1,1). North is a corridor (0,1) leading
+      to a turn at (-2,1).
+
+      4. The corridor East from (-2,2) connects to (-1,2), then to (-1,1), then to
+      (-1,0), then turns North to (-1,-1) (Exit).
+
+      5. Wait, the previous step West from (-1,2) to (-2,2) blocked my path to the
+      exit turn at (-2,1).
+
+      6. I need to re-enter the corridor East from (-2,2).
+
+      7. Step East.
+
+
+      East'
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for one meter before\
+      \ encountering a wall. You are able to see that the corridor has some lateral\
+      \ paths:\n   - After one meter there is a lateral path due North.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for one meter before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due North.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved East to (-1,2).
+
+      2. West is a corridor leading to a dead end.
+
+      3. East and South are walls.
+
+      4. North is a wall.
+
+      5. I am at a dead end (-1,2). I must backtrack to (-2,2) to check for other
+      options.
+
+      6. Step West.
+
+
+      West'
+  - prompt: "You move one meter West\nDue North there is a corridor that goes on for\
+      \ two meters before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved West to (-2,2).
+
+      2. West is a wall. South is a dead end. North is a 1m dead end.
+
+      3. I am at a dead end (-2,2). I must backtrack to (-2,1) to check for other
+      options.
+
+      4. Step South.
+
+
+      South'
+  - prompt: "\nYou try to walk South.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for two meters before encountering\
+      \ a wall. The corridor ends without any lateral paths.\nDue East there is a\
+      \ corridor that goes on for two meters before encountering a wall. You are able\
+      \ to see that the corridor has some lateral paths:\n   - After two meters there\
+      \ is a lateral path due North.\nDue South there is a wall. You can't step in\
+      \ that direction.\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: South, South, North, South, North, South,\
+      \ East, West, North, South, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Attempted to move South from (-2,2), but hit a wall. The prompt suggests
+      I should re-evaluate directions.
+
+      2. My current location is (-2,2).
+
+      3. West is a wall. South is a dead end (-1,1). North is a corridor (0,1) leading
+      to a turn at (-2,1).
+
+      4. The corridor East from (-2,2) connects to (-1,2), then to (-1,1), then to
+      (-1,0), then turns North to (-1,-1) (Exit).
+
+      5. Wait, the previous step West from (-1,2) to (-2,2) blocked my path to the
+      exit turn at (-2,1).
+
+      6. I need to re-enter the corridor East from (-2,2).
+
+      7. Step East.
+
+
+      East'
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for one meter before\
+      \ encountering a wall. You are able to see that the corridor has some lateral\
+      \ paths:\n   - After one meter there is a lateral path due North.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for one meter before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due North.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved East to (-1,2).
+
+      2. West is a corridor leading to a dead end.
+
+      3. East and South are walls.
+
+      4. North is a wall.
+
+      5. I am at a dead end (-1,2). I must backtrack to (-2,2) to check for other
+      options.
+
+      6. Step West.
+
+
+      West'
+  - prompt: "You move one meter West\nDue North there is a corridor that goes on for\
+      \ two meters before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved West to (-2,2).
+
+      2. West is a wall. South is a dead end. North is a 1m dead end.
+
+      3. I am at a dead end (-2,2). I must backtrack to (-2,1) to check for other
+      options.
+
+      4. Step South.
+
+
+      South'
+  - prompt: "\nYou try to walk South.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for two meters before encountering\
+      \ a wall. The corridor ends without any lateral paths.\nDue East there is a\
+      \ corridor that goes on for two meters before encountering a wall. You are able\
+      \ to see that the corridor has some lateral paths:\n   - After two meters there\
+      \ is a lateral path due North.\nDue South there is a wall. You can't step in\
+      \ that direction.\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: South, South, North, South, North, South,\
+      \ East, West, North, South, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Attempted to move South from (-2,2), but hit a wall. The prompt suggests
+      I should re-evaluate directions.
+
+      2. My current location is (-2,2).
+
+      3. West is a wall. South is a dead end (-1,1). North is a corridor (0,1) leading
+      to a turn at (-2,1).
+
+      4. The corridor East from (-2,2) connects to (-1,2), then to (-1,1), then to
+      (-1,0), then turns North to (-1,-1) (Exit).
+
+      5. Wait, the previous step West from (-1,2) to (-2,2) blocked my path to the
+      exit turn at (-2,1).
+
+      6. I need to re-enter the corridor East from (-2,2).
+
+      7. Step East.
+
+
+      East'
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for one meter before\
+      \ encountering a wall. You are able to see that the corridor has some lateral\
+      \ paths:\n   - After one meter there is a lateral path due North.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for one meter before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due North.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved East to (-1,2).
+
+      2. West is a corridor leading to a dead end.
+
+      3. East and South are walls.
+
+      4. North is a wall.
+
+      5. I am at a dead end (-1,2). I must backtrack to (-2,2) to check for other
+      options.
+
+      6. Step West.
+
+
+      West'
+  - prompt: "You move one meter West\nDue North there is a corridor that goes on for\
+      \ two meters before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved West to (-2,2).
+
+      2. West is a wall. South is a dead end. North is a 1m dead end.
+
+      3. I am at a dead end (-2,2). I must backtrack to (-2,1) to check for other
+      options.
+
+      4. Step South.
+
+
+      South'
+  - prompt: "\nYou try to walk South.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for two meters before encountering\
+      \ a wall. The corridor ends without any lateral paths.\nDue East there is a\
+      \ corridor that goes on for two meters before encountering a wall. You are able\
+      \ to see that the corridor has some lateral paths:\n   - After two meters there\
+      \ is a lateral path due North.\nDue South there is a wall. You can't step in\
+      \ that direction.\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: South, South, North, South, North, South,\
+      \ East, West, North, South, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Attempted to move South from (-2,2), but hit a wall. The prompt suggests
+      I should re-evaluate directions.
+
+      2. My current location is (-2,2).
+
+      3. West is a wall. South is a dead end (-1,1). North is a corridor (0,1) leading
+      to a turn at (-2,1).
+
+      4. The corridor East from (-2,2) connects to (-1,2), then to (-1,1), then to
+      (-1,0), then turns North to (-1,-1) (Exit).
+
+      5. Wait, the previous step West from (-1,2) to (-2,2) blocked my path to the
+      exit turn at (-2,1).
+
+      6. I need to re-enter the corridor East from (-2,2).
+
+      7. Step East.
+
+
+      East'
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for one meter before\
+      \ encountering a wall. You are able to see that the corridor has some lateral\
+      \ paths:\n   - After one meter there is a lateral path due North.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for one meter before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due North.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West, East"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved East to (-1,2).
+
+      2. West is a corridor leading to a dead end.
+
+      3. East and South are walls.
+
+      4. North is a wall.
+
+      5. I am at a dead end (-1,2). I must backtrack to (-2,2) to check for other
+      options.
+
+      6. Step West.
+
+
+      West'
+  - prompt: "You move one meter West\nDue North there is a corridor that goes on for\
+      \ two meters before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved West to (-2,2).
+
+      2. West is a wall. South is a dead end. North is a 1m dead end.
+
+      3. I am at a dead end (-2,2). I must backtrack to (-2,1) to check for other
+      options.
+
+      4. Step South.
+
+
+      South'
+  - prompt: "\nYou try to walk South.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for two meters before encountering\
+      \ a wall. The corridor ends without any lateral paths.\nDue East there is a\
+      \ corridor that goes on for two meters before encountering a wall. You are able\
+      \ to see that the corridor has some lateral paths:\n   - After two meters there\
+      \ is a lateral path due North.\nDue South there is a wall. You can't step in\
+      \ that direction.\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: South, South, North, South, North, South,\
+      \ East, West, North, South, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Attempted to move South from (-2,2), but hit a wall. The prompt suggests
+      I should re-evaluate directions.
+
+      2. My current location is (-2,2).
+
+      3. West is a wall. South is a dead end (-1,1). North is a corridor (0,1) leading
+      to a turn at (-2,1).
+
+      4. The corridor East from (-2,2) connects to (-1,2), then to (-1,1), then to
+      (-1,0), then turns North to (-1,-1) (Exit).
+
+      5. Wait, the previous step West from (-1,2) to (-2,2) blocked my path to the
+      exit turn at (-2,1).
+
+      6. I need to re-enter the corridor East from (-2,2).
+
+      7. Step East.
+
+
+      East'
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for one meter before\
+      \ encountering a wall. You are able to see that the corridor has some lateral\
+      \ paths:\n   - After one meter there is a lateral path due North.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for one meter before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due North.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West, East, West,\
+      \ East"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved East to (-1,2).
+
+      2. West is a corridor leading to a dead end.
+
+      3. East and South are walls.
+
+      4. North is a wall.
+
+      5. I am at a dead end (-1,2). I must backtrack to (-2,2) to check for other
+      options.
+
+      6. Step West.
+
+
+      West'
+  - prompt: "You move one meter West\nDue North there is a corridor that goes on for\
+      \ two meters before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West, East, West,\
+      \ East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved West to (-2,2).
+
+      2. West is a wall. South is a dead end. North is a 1m dead end.
+
+      3. I am at a dead end (-2,2). I must backtrack to (-2,1) to check for other
+      options.
+
+      4. Step South.
+
+
+      South'
+  - prompt: "\nYou try to walk South.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for two meters before encountering\
+      \ a wall. The corridor ends without any lateral paths.\nDue East there is a\
+      \ corridor that goes on for two meters before encountering a wall. You are able\
+      \ to see that the corridor has some lateral paths:\n   - After two meters there\
+      \ is a lateral path due North.\nDue South there is a wall. You can't step in\
+      \ that direction.\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: South, South, North, South, North, South,\
+      \ East, West, North, South, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Attempted to move South from (-2,2), but hit a wall. The prompt suggests
+      I should re-evaluate directions.
+
+      2. My current location is (-2,2).
+
+      3. West is a wall. South is a dead end (-1,1). North is a corridor (0,1) leading
+      to a turn at (-2,1).
+
+      4. The corridor East from (-2,2) connects to (-1,2), then to (-1,1), then to
+      (-1,0), then turns North to (-1,-1) (Exit).
+
+      5. Wait, the previous step West from (-1,2) to (-2,2) blocked my path to the
+      exit turn at (-2,1).
+
+      6. I need to re-enter the corridor East from (-2,2).
+
+      7. Step East.
+
+
+      East'
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for one meter before\
+      \ encountering a wall. You are able to see that the corridor has some lateral\
+      \ paths:\n   - After one meter there is a lateral path due North.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for one meter before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due North.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West, East, West,\
+      \ East, West, East"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved East to (-1,2).
+
+      2. West is a corridor leading to a dead end.
+
+      3. East and South are walls.
+
+      4. North is a wall.
+
+      5. I am at a dead end (-1,2). I must backtrack to (-2,2) to check for other
+      options.
+
+      6. Step West.
+
+
+      West'
+  - prompt: "You move one meter West\nDue North there is a corridor that goes on for\
+      \ two meters before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved West to (-2,2).
+
+      2. West is a wall. South is a dead end. North is a 1m dead end.
+
+      3. I am at a dead end (-2,2). I must backtrack to (-2,1) to check for other
+      options.
+
+      4. Step South.
+
+
+      South'
+  - prompt: "\nYou try to walk South.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for two meters before encountering\
+      \ a wall. The corridor ends without any lateral paths.\nDue East there is a\
+      \ corridor that goes on for two meters before encountering a wall. You are able\
+      \ to see that the corridor has some lateral paths:\n   - After two meters there\
+      \ is a lateral path due North.\nDue South there is a wall. You can't step in\
+      \ that direction.\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: South, South, North, South, North, South,\
+      \ East, West, North, South, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Attempted to move South from (-2,2), but hit a wall. The prompt suggests
+      I should re-evaluate directions.
+
+      2. My current location is (-2,2).
+
+      3. West is a wall. South is a dead end (-1,1). North is a corridor (0,1) leading
+      to a turn at (-2,1).
+
+      4. The corridor East from (-2,2) connects to (-1,2), then to (-1,1), then to
+      (-1,0), then turns North to (-1,-1) (Exit).
+
+      5. Wait, the previous step West from (-1,2) to (-2,2) blocked my path to the
+      exit turn at (-2,1).
+
+      6. I need to re-enter the corridor East from (-2,2).
+
+      7. Step East.
+
+
+      East'
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for one meter before\
+      \ encountering a wall. You are able to see that the corridor has some lateral\
+      \ paths:\n   - After one meter there is a lateral path due North.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for one meter before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due North.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved East to (-1,2).
+
+      2. West is a corridor leading to a dead end.
+
+      3. East and South are walls.
+
+      4. North is a wall.
+
+      5. I am at a dead end (-1,2). I must backtrack to (-2,2) to check for other
+      options.
+
+      6. Step West.
+
+
+      West'
+  - prompt: "You move one meter West\nDue North there is a corridor that goes on for\
+      \ two meters before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved West to (-2,2).
+
+      2. West is a wall. South is a dead end. North is a 1m dead end.
+
+      3. I am at a dead end (-2,2). I must backtrack to (-2,1) to check for other
+      options.
+
+      4. Step South.
+
+
+      South'
+  - prompt: "\nYou try to walk South.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for two meters before encountering\
+      \ a wall. The corridor ends without any lateral paths.\nDue East there is a\
+      \ corridor that goes on for two meters before encountering a wall. You are able\
+      \ to see that the corridor has some lateral paths:\n   - After two meters there\
+      \ is a lateral path due North.\nDue South there is a wall. You can't step in\
+      \ that direction.\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: South, South, North, South, North, South,\
+      \ East, West, North, South, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West, East, West,\
+      \ East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Attempted to move South from (-2,2), but hit a wall. The prompt suggests
+      I should re-evaluate directions.
+
+      2. My current location is (-2,2).
+
+      3. West is a wall. South is a dead end (-1,1). North is a corridor (0,1) leading
+      to a turn at (-2,1).
+
+      4. The corridor East from (-2,2) connects to (-1,2), then to (-1,1), then to
+      (-1,0), then turns North to (-1,-1) (Exit).
+
+      5. Wait, the previous step West from (-1,2) to (-2,2) blocked my path to the
+      exit turn at (-2,1).
+
+      6. I need to re-enter the corridor East from (-2,2).
+
+      7. Step East.
+
+
+      East'
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for one meter before\
+      \ encountering a wall. You are able to see that the corridor has some lateral\
+      \ paths:\n   - After one meter there is a lateral path due North.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for one meter before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due North.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved East to (-1,2).
+
+      2. West is a corridor leading to a dead end.
+
+      3. East and South are walls.
+
+      4. North is a wall.
+
+      5. I am at a dead end (-1,2). I must backtrack to (-2,2) to check for other
+      options.
+
+      6. Step West.
+
+
+      West'
+  - prompt: "You move one meter West\nDue North there is a corridor that goes on for\
+      \ two meters before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved West to (-2,2).
+
+      2. West is a wall. South is a dead end. North is a 1m dead end.
+
+      3. I am at a dead end (-2,2). I must backtrack to (-2,1) to check for other
+      options.
+
+      4. Step South.
+
+
+      South'
+  - prompt: "\nYou try to walk South.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for two meters before encountering\
+      \ a wall. The corridor ends without any lateral paths.\nDue East there is a\
+      \ corridor that goes on for two meters before encountering a wall. You are able\
+      \ to see that the corridor has some lateral paths:\n   - After two meters there\
+      \ is a lateral path due North.\nDue South there is a wall. You can't step in\
+      \ that direction.\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: South, South, North, South, North, South,\
+      \ East, West, North, South, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Attempted to move South from (-2,2), but hit a wall. The prompt suggests
+      I should re-evaluate directions.
+
+      2. My current location is (-2,2).
+
+      3. West is a wall. South is a dead end (-1,1). North is a corridor (0,1) leading
+      to a turn at (-2,1).
+
+      4. The corridor East from (-2,2) connects to (-1,2), then to (-1,1), then to
+      (-1,0), then turns North to (-1,-1) (Exit).
+
+      5. Wait, the previous step West from (-1,2) to (-2,2) blocked my path to the
+      exit turn at (-2,1).
+
+      6. I need to re-enter the corridor East from (-2,2).
+
+      7. Step East.
+
+
+      East'
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for one meter before\
+      \ encountering a wall. You are able to see that the corridor has some lateral\
+      \ paths:\n   - After one meter there is a lateral path due North.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for one meter before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due North.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved East to (-1,2).
+
+      2. West is a corridor leading to a dead end.
+
+      3. East and South are walls.
+
+      4. North is a wall.
+
+      5. I am at a dead end (-1,2). I must backtrack to (-2,2) to check for other
+      options.
+
+      6. Step West.
+
+
+      West'
+  - prompt: "You move one meter West\nDue North there is a corridor that goes on for\
+      \ two meters before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved West to (-2,2).
+
+      2. West is a wall. South is a dead end. North is a 1m dead end.
+
+      3. I am at a dead end (-2,2). I must backtrack to (-2,1) to check for other
+      options.
+
+      4. Step South.
+
+
+      South'
+  - prompt: "\nYou try to walk South.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for two meters before encountering\
+      \ a wall. The corridor ends without any lateral paths.\nDue East there is a\
+      \ corridor that goes on for two meters before encountering a wall. You are able\
+      \ to see that the corridor has some lateral paths:\n   - After two meters there\
+      \ is a lateral path due North.\nDue South there is a wall. You can't step in\
+      \ that direction.\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: South, South, North, South, North, South,\
+      \ East, West, North, South, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Attempted to move South from (-2,2), but hit a wall. The prompt suggests
+      I should re-evaluate directions.
+
+      2. My current location is (-2,2).
+
+      3. West is a wall. South is a dead end (-1,1). North is a corridor (0,1) leading
+      to a turn at (-2,1).
+
+      4. The corridor East from (-2,2) connects to (-1,2), then to (-1,1), then to
+      (-1,0), then turns North to (-1,-1) (Exit).
+
+      5. Wait, the previous step West from (-1,2) to (-2,2) blocked my path to the
+      exit turn at (-2,1).
+
+      6. I need to re-enter the corridor East from (-2,2).
+
+      7. Step East.
+
+
+      East'
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for one meter before\
+      \ encountering a wall. You are able to see that the corridor has some lateral\
+      \ paths:\n   - After one meter there is a lateral path due North.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for one meter before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due North.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved East to (-1,2).
+
+      2. West is a corridor leading to a dead end.
+
+      3. East and South are walls.
+
+      4. North is a wall.
+
+      5. I am at a dead end (-1,2). I must backtrack to (-2,2) to check for other
+      options.
+
+      6. Step West.
+
+
+      West'
+  - prompt: "You move one meter West\nDue North there is a corridor that goes on for\
+      \ two meters before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved West to (-2,2).
+
+      2. West is a wall. South is a dead end. North is a 1m dead end.
+
+      3. I am at a dead end (-2,2). I must backtrack to (-2,1) to check for other
+      options.
+
+      4. Step South.
+
+
+      South'
+  - prompt: "\nYou try to walk South.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for two meters before encountering\
+      \ a wall. The corridor ends without any lateral paths.\nDue East there is a\
+      \ corridor that goes on for two meters before encountering a wall. You are able\
+      \ to see that the corridor has some lateral paths:\n   - After two meters there\
+      \ is a lateral path due North.\nDue South there is a wall. You can't step in\
+      \ that direction.\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: South, South, North, South, North, South,\
+      \ East, West, North, South, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Attempted to move South from (-2,2), but hit a wall. The prompt suggests
+      I should re-evaluate directions.
+
+      2. My current location is (-2,2).
+
+      3. West is a wall. South is a dead end (-1,1). North is a corridor (0,1) leading
+      to a turn at (-2,1).
+
+      4. The corridor East from (-2,2) connects to (-1,2), then to (-1,1), then to
+      (-1,0), then turns North to (-1,-1) (Exit).
+
+      5. Wait, the previous step West from (-1,2) to (-2,2) blocked my path to the
+      exit turn at (-2,1).
+
+      6. I need to re-enter the corridor East from (-2,2).
+
+      7. Step East.
+
+
+      East'
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for one meter before\
+      \ encountering a wall. You are able to see that the corridor has some lateral\
+      \ paths:\n   - After one meter there is a lateral path due North.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for one meter before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due North.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved East to (-1,2).
+
+      2. West is a corridor leading to a dead end.
+
+      3. East and South are walls.
+
+      4. North is a wall.
+
+      5. I am at a dead end (-1,2). I must backtrack to (-2,2) to check for other
+      options.
+
+      6. Step West.
+
+
+      West'
+  - prompt: "You move one meter West\nDue North there is a corridor that goes on for\
+      \ two meters before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved West to (-2,2).
+
+      2. West is a wall. South is a dead end. North is a 1m dead end.
+
+      3. I am at a dead end (-2,2). I must backtrack to (-2,1) to check for other
+      options.
+
+      4. Step South.
+
+
+      South'
+  - prompt: "\nYou try to walk South.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for two meters before encountering\
+      \ a wall. The corridor ends without any lateral paths.\nDue East there is a\
+      \ corridor that goes on for two meters before encountering a wall. You are able\
+      \ to see that the corridor has some lateral paths:\n   - After two meters there\
+      \ is a lateral path due North.\nDue South there is a wall. You can't step in\
+      \ that direction.\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: South, South, North, South, North, South,\
+      \ East, West, North, South, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Attempted to move South from (-2,2), but hit a wall. The prompt suggests
+      I should re-evaluate directions.
+
+      2. My current location is (-2,2).
+
+      3. West is a wall. South is a dead end (-1,1). North is a corridor (0,1) leading
+      to a turn at (-2,1).
+
+      4. The corridor East from (-2,2) connects to (-1,2), then to (-1,1), then to
+      (-1,0), then turns North to (-1,-1) (Exit).
+
+      5. Wait, the previous step West from (-1,2) to (-2,2) blocked my path to the
+      exit turn at (-2,1).
+
+      6. I need to re-enter the corridor East from (-2,2).
+
+      7. Step East.
+
+
+      East'
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for one meter before\
+      \ encountering a wall. You are able to see that the corridor has some lateral\
+      \ paths:\n   - After one meter there is a lateral path due North.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for one meter before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due North.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved East to (-1,2).
+
+      2. West is a corridor leading to a dead end.
+
+      3. East and South are walls.
+
+      4. North is a wall.
+
+      5. I am at a dead end (-1,2). I must backtrack to (-2,2) to check for other
+      options.
+
+      6. Step West.
+
+
+      West'
+  - prompt: "You move one meter West\nDue North there is a corridor that goes on for\
+      \ two meters before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved West to (-2,2).
+
+      2. West is a wall. South is a dead end. North is a 1m dead end.
+
+      3. I am at a dead end (-2,2). I must backtrack to (-2,1) to check for other
+      options.
+
+      4. Step South.
+
+
+      South'
+  - prompt: "\nYou try to walk South.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for two meters before encountering\
+      \ a wall. The corridor ends without any lateral paths.\nDue East there is a\
+      \ corridor that goes on for two meters before encountering a wall. You are able\
+      \ to see that the corridor has some lateral paths:\n   - After two meters there\
+      \ is a lateral path due North.\nDue South there is a wall. You can't step in\
+      \ that direction.\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: South, South, North, South, North, South,\
+      \ East, West, North, South, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Attempted to move South from (-2,2), but hit a wall. The prompt says to check
+      other directions.
+
+      2. The corridor to the East is the only path leading to the exit (-1,-1).
+
+      3. I need to go East.
+
+      4. Step East.
+
+
+      East'
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for one meter before\
+      \ encountering a wall. You are able to see that the corridor has some lateral\
+      \ paths:\n   - After one meter there is a lateral path due North.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for one meter before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due North.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved East to (-1,2).
+
+      2. West is a corridor leading to a dead end.
+
+      3. East and South are walls.
+
+      4. North is a wall.
+
+      5. I am at a dead end (-1,2). I must backtrack to (-2,2) to check for other
+      options.
+
+      6. Step West.
+
+
+      West'
+  - prompt: "You move one meter West\nDue North there is a corridor that goes on for\
+      \ two meters before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved West to (-2,2).
+
+      2. West is a wall. South is a dead end. North is a 1m dead end.
+
+      3. I am at a dead end (-2,2). I must backtrack to (-2,1) to check for other
+      options.
+
+      4. Step South.
+
+
+      South'
+  - prompt: "\nYou try to walk South.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for two meters before encountering\
+      \ a wall. The corridor ends without any lateral paths.\nDue East there is a\
+      \ corridor that goes on for two meters before encountering a wall. You are able\
+      \ to see that the corridor has some lateral paths:\n   - After two meters there\
+      \ is a lateral path due North.\nDue South there is a wall. You can't step in\
+      \ that direction.\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: South, South, North, South, North, South,\
+      \ East, West, North, South, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Attempted to move South from (-2,2), but hit a wall. The prompt says to check
+      other directions.
+
+      2. The corridor to the East is the only path leading to the exit (-1,-1).
+
+      3. I need to go East.
+
+      4. Step East.
+
+
+      East'
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for one meter before\
+      \ encountering a wall. You are able to see that the corridor has some lateral\
+      \ paths:\n   - After one meter there is a lateral path due North.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for one meter before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due North.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved East to (-1,2).
+
+      2. West is a corridor leading to a dead end.
+
+      3. East and South are walls.
+
+      4. North is a wall.
+
+      5. I am at a dead end (-1,2). I must backtrack to (-2,2) to check for other
+      options.
+
+      6. Step West.
+
+
+      West'
+  - prompt: "You move one meter West\nDue North there is a corridor that goes on for\
+      \ two meters before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved West to (-2,2).
+
+      2. West is a wall. South is a dead end. North is a 1m dead end.
+
+      3. I am at a dead end (-2,2). I must backtrack to (-2,1) to check for other
+      options.
+
+      4. Step South.
+
+
+      South'
+  - prompt: "\nYou try to walk South.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for two meters before encountering\
+      \ a wall. The corridor ends without any lateral paths.\nDue East there is a\
+      \ corridor that goes on for two meters before encountering a wall. You are able\
+      \ to see that the corridor has some lateral paths:\n   - After two meters there\
+      \ is a lateral path due North.\nDue South there is a wall. You can't step in\
+      \ that direction.\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: South, South, North, South, North, South,\
+      \ East, West, North, South, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Attempted to move South from (-2,2), but hit a wall. The prompt says to check
+      other directions.
+
+      2. The corridor to the East is the only path leading to the exit (-1,-1).
+
+      3. I need to go East.
+
+      4. Step East.
+
+
+      East'
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for one meter before\
+      \ encountering a wall. You are able to see that the corridor has some lateral\
+      \ paths:\n   - After one meter there is a lateral path due North.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for one meter before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due North.\nThe moves you have made till now are: South, South,\
+      \ North, South, North, South, East, West, North, South, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East, West, East, West, East, West,\
+      \ East, West, East, West, East, West, East, West, East, West, East, West, East,\
+      \ West, East, West, East, West, East, West, East"
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+
+      1. Moved East to (-1,2).
+
+      2. West is a corridor leading to a dead end.
+
+      3. East and South are walls.
+
+      4. North is a wall.
+
+      5. I am at a dead end (-1,2). I must backtrack to (-2,2) to check for other
+      options.
+
+      6. Step West.
+
+
+      West'
+illegal_directions: 28
+illegal_responses: 0
+execution_time: 1613.0533146858215

@@ -1,0 +1,2584 @@
+git_hash: fb3cfc377fa8d03577237d0cabbc6cbf67e37bdc
+maze:
+  horizontal:
+  - - false
+    - false
+    - false
+  - - false
+    - true
+    - false
+  - - true
+    - true
+    - false
+  vertical:
+  - - true
+    - true
+    - true
+  - - true
+    - false
+    - true
+  - - false
+    - false
+    - false
+  start:
+  - 0
+  - 0
+  target:
+  - 0
+  - 1
+  path:
+  - - 0
+    - 0
+  - - 1
+    - 0
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 1
+    - 0
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 2
+  - - 1
+    - 2
+  - - 2
+    - 2
+  - - 2
+    - 1
+  - - 2
+    - 2
+  - - 1
+    - 2
+  - - 2
+    - 2
+  - - 1
+    - 2
+  - - 2
+    - 2
+  - - 2
+    - 1
+  - - 2
+    - 2
+  - - 2
+    - 1
+  - - 2
+    - 2
+  - - 2
+    - 1
+  - - 2
+    - 2
+  - - 2
+    - 1
+  - - 2
+    - 2
+  - - 2
+    - 1
+  - - 2
+    - 2
+  - - 2
+    - 1
+  - - 2
+    - 2
+  - - 2
+    - 1
+  - - 2
+    - 2
+  - - 2
+    - 1
+  - - 2
+    - 2
+  - - 2
+    - 1
+  - - 2
+    - 2
+  - - 2
+    - 1
+  - - 2
+    - 2
+  - - 2
+    - 1
+  - - 2
+    - 2
+  - - 2
+    - 1
+  - - 2
+    - 2
+  - - 2
+    - 1
+  - - 2
+    - 2
+  - - 2
+    - 1
+  - - 2
+    - 2
+  - - 2
+    - 1
+  - - 2
+    - 2
+  - - 2
+    - 1
+  - - 2
+    - 2
+  - - 2
+    - 1
+  - - 2
+    - 2
+  - - 2
+    - 1
+  - - 2
+    - 2
+  - - 2
+    - 1
+  - - 2
+    - 2
+  - - 2
+    - 1
+  - - 2
+    - 2
+  - - 2
+    - 1
+  - - 2
+    - 2
+  - - 2
+    - 1
+  - - 2
+    - 2
+  - - 2
+    - 1
+  decisions:
+  - S
+  - S
+  - E
+  - W
+  - E
+  - W
+  - N
+  - S
+  - E
+  - W
+  - E
+  - E
+  - N
+  - S
+  - W
+  - E
+  - N
+  - S
+  - N
+  - S
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  sight_depth: 2
+  size: 3
+  solved: false
+chat_history:
+  system_prompt: '
+
+    You are a maze solving model. You are an expert in solving classic lattice mazes.
+
+
+    The user will provide you with descriptions of what you can perceive from inside
+    the maze.
+
+    Just like a classic maze the exit is on the border. The starting position could
+    be anywhere in the maze.
+
+    Your goal is to find the maze exit. Once you reach it you must step out of the
+    maze with one last move.
+
+
+    After the user provides you with informations regarding you current surroundings,
+    you will provide the direction to step towards next.
+
+    The possible directions are north, east, south, west.
+
+
+    The maze is a 3 x 3 grid, with every square in the grid being one square meter
+    big.
+
+    You are advised to think out loud about what your next move should be, but remember
+    that the last thing you write must be a valid direction.
+
+
+    You are allowed to output the direction with any casing you want, as long as it
+    is the last thing in your answer.
+
+    Here are some examples of valid end of response, in case you decide to move due
+    north:
+
+
+    - Let''s go North
+
+    - I want to step N!
+
+    - My next move will be north.
+
+
+    Try to formulate a plan and keep track of what what tiles you have already visited
+    to ensure you are making progress in exploring the maze.
+
+    '
+  chat:
+  - prompt: 'Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Let''s think this through. With no options to the north, east, or west,
+      our next move will have to be south.
+
+
+      I''ll take a step into the corridor that goes two meters before hitting a wall.
+      I''m hoping that one of the lateral paths along the way might lead me further.
+
+
+      My next move will be... South!'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'So, I''ve moved one meter south and now I''m at a point where I have
+      options.
+
+
+      I''ll take a look at the northern corridor that''s just ahead of me. Since it''s
+      only one meter long and ends in a wall, I don''t think it will lead to the exit.
+      But, I might be able to gather some information or find a useful clue along
+      the way.
+
+
+      After exploring the dead-end corridor, I''ll head back to my current position
+      and look at my options again. My next move will be... South!'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. It is a dead end.
+
+      Due East there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'I''ve moved one meter south again.
+
+
+      Now, I notice that the eastern corridor has changed - it''s now two meters long
+      and also not a dead end! This might be an important development.
+
+
+      Since the southern direction is blocked, and the western direction is also off-limits,
+      my attention is drawn to the east. My next move will be... East!'
+  - prompt: 'You move one meter East
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter east!
+
+
+      Now, I see that the western corridor has changed - it''s now also one meter
+      long and not a dead end! This is interesting.
+
+
+      Since the southern direction is still blocked, my attention turns to the west.
+      My next move will be... West!'
+  - prompt: 'You move one meter West
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. It is a dead end.
+
+      Due East there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'I''ve moved one meter west!
+
+
+      Now, I see that the western corridor has ended in a wall, but I still have options.
+
+
+      Since the southern direction is blocked and the eastern corridor seems to be
+      an option (although it might not lead directly to the exit), my next move will
+      be... East!'
+  - prompt: 'You move one meter East
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter east again!
+
+
+      Since I''m back where I started in the eastern corridor, and there''s only one
+      meter left before hitting a wall, I think I''ve explored all options here.
+
+
+      Let me think... My next move will be... West!'
+  - prompt: 'You move one meter West
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. It is a dead end.
+
+      Due East there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'I''ve moved one meter west again!
+
+
+      Hmm, looks like I''m back where I started again! Since the western corridor
+      has ended in a wall, and the eastern and northern corridors are dead ends, it
+      seems like I''m stuck.
+
+
+      Wait a minute... I think I remember there being an open path somewhere along
+      the way. Let me think...
+
+
+      Ah-ha! I''ve got it! My next move will be... North!'
+  - prompt: 'You move one meter North
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'I''ve moved one meter north!
+
+
+      Ah, I see! The northern corridor has ended in a wall, just like I thought. But
+      now I''m back where I started, and I''ve got some options.
+
+
+      Since the southern corridor looks promising (it''s not a dead end), my next
+      move will be... South!'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. It is a dead end.
+
+      Due East there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'I''ve moved one meter south again!
+
+
+      Hmm, looks like I''m back where I started! But wait a minute... Since the northern
+      corridor is now two meters long and ends in a wall, I think I can safely assume
+      that the exit must be outside this dead-end corridor.
+
+
+      My next move will be... Exit!'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. It is a dead end.
+
+      Due East there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Ouch! That was a nasty surprise!
+
+
+      Okay, let me take a deep breath and reassess the situation. Since I just tried
+      to walk south and hit my nose on the wall, I know for sure that the southern
+      direction is not an option.
+
+
+      My next move will be... East!'
+  - prompt: 'You move one meter East
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter east again!
+
+
+      Hmm, looks like I''m back where I started! But wait a minute... Since the western
+      corridor is also only one meter long and ends in a wall, I think I can safely
+      assume that the exit must be outside this area.
+
+
+      My next move will be... West!'
+  - prompt: 'You move one meter West
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. It is a dead end.
+
+      Due East there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'I''ve moved one meter west again!
+
+
+      Hmm, looks like I''m back where I started! But wait a minute... Since the eastern
+      corridor is now two meters long and ends in a wall, I think I can safely assume
+      that the exit must be outside this area.
+
+
+      My next move will be... Exit!'
+  - prompt: '
+
+      You try to walk West.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. It is a dead end.
+
+      Due East there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Ouch! That was another nasty surprise!
+
+
+      Okay, let me take a deep breath and reassess the situation. Since I just tried
+      to walk west again and hit my nose on the wall, I know for sure that the western
+      direction is not an option.
+
+
+      Hmm, looks like I''m stuck between the northern and eastern corridors. But wait
+      a minute... The eastern corridor seems more promising since some of its lateral
+      paths are open.
+
+
+      My next move will be... East!'
+  - prompt: 'You move one meter East
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter east again!
+
+
+      Hmm, looks like I''m back where I started! But wait a minute... Since the eastern
+      corridor is now only one meter long and ends in a wall, I think I can safely
+      assume that the exit must be outside this area.
+
+
+      My next move will be... Exit!'
+  - prompt: 'You move one meter East
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter east again!
+
+
+      Wait a minute... The northern corridor has changed! It''s now two meters long
+      and doesn''t seem like a dead end anymore.
+
+
+      My next move will be... North!'
+  - prompt: 'You move one meter North
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter north!
+
+
+      Hmm, looks like I hit another dead end! The northern corridor is only one meter
+      long and ends in a wall.
+
+
+      But wait a minute... Since the southern corridor seems to have some open lateral
+      paths, maybe I can find an alternative route from there?
+
+
+      My next move will be... South!'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter south!
+
+
+      Ah-ha! I think I see a pattern emerging here... The southern corridor is also
+      only one meter long and ends in a wall.
+
+
+      Wait a minute... Since I know the western corridor is two meters long and has
+      open lateral paths, maybe it''s time to head that way?
+
+
+      My next move will be... West!'
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter west!
+
+
+      Hmm, looks like I''m back where I started! The western corridor is only one
+      meter long and ends in a wall.
+
+
+      Wait a minute... Since I know the eastern corridor has some open lateral paths,
+      maybe I can find an alternative route from there?
+
+
+      My next move will be... East!'
+  - prompt: 'You move one meter East
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter east again!
+
+
+      Hmm, looks like I''m back where I started! The eastern corridor is still blocked.
+
+
+      Wait a minute... Since I know the northern corridor has some open lateral paths,
+      maybe I can find an alternative route from there?
+
+
+      My next move will be... North!'
+  - prompt: 'You move one meter North
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter north!
+
+
+      Ah-ha! I think I see the exit! The northern corridor is only one meter long
+      and ends in a wall, but since it''s a dead end, I know that means the exit must
+      be outside this area.
+
+
+      My next move will be... Exit!'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter south again!
+
+
+      Wait, what''s this? I''m back where I started! The southern direction is blocked
+      again.
+
+
+      But wait a minute... Since I know the exit is outside this area, maybe I can
+      find an alternative route from here?
+
+
+      My next move will be... Exit!'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Ouch! That was another nasty surprise!
+
+
+      Okay, let me take a deep breath and reassess the situation. Since I just tried
+      to walk south again and hit my nose on the wall, I know for sure that the southern
+      direction is not an option.
+
+
+      Hmm, looks like I''m stuck between the northern, eastern, and western directions.
+      But wait a minute... The northern corridor seems more promising since some of
+      its lateral paths are open.
+
+
+      My next move will be... North!'
+  - prompt: 'You move one meter North
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter north!
+
+
+      Ah-ha! I think I see the exit! The northern corridor is only one meter long
+      and ends in a wall, but since it''s a dead end, I know that means the exit must
+      be outside this area.
+
+
+      My next move will be... Exit!'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter south again!
+
+
+      Wait, what''s this? I''m back where I started! The southern direction is blocked
+      again.
+
+
+      But wait a minute... Since I know the exit is outside this area, maybe I can
+      find an alternative route from here?
+
+
+      My next move will be... West!'
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter west!
+
+
+      Ah-ha! I think I see the exit! The western corridor is only one meter long and
+      ends in a wall, but since it''s not a dead end, I know that means the exit must
+      be outside this area.
+
+
+      My next move will be... Exit!'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Ouch! That was another nasty surprise!
+
+
+      Okay, let me take a deep breath and reassess the situation. Since I just tried
+      to walk south again and hit my nose on the wall, I know for sure that the southern
+      direction is not an option.
+
+
+      Hmm, looks like I''m stuck between the northern, eastern, and western directions.
+      But wait a minute... The eastern corridor seems more promising since it''s one
+      meter long and has some open lateral paths.
+
+
+      My next move will be... East!'
+  - prompt: 'You move one meter East
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter east!
+
+
+      Hmm, looks like I''m back where I started! The eastern direction is blocked
+      again.
+
+
+      Wait a minute... Since I know the western corridor has some open lateral paths,
+      maybe I can find an alternative route from there?
+
+
+      My next move will be... West!'
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter west!
+
+
+      Ah-ha! I think I see the exit! The western corridor is only one meter long and
+      ends in a wall, but since it''s not a dead end, I know that means the exit must
+      be outside this area.
+
+
+      My next move will be... Exit!'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Ouch! That was another nasty surprise!
+
+
+      Okay, let me take a deep breath and reassess the situation. Since I just tried
+      to walk south again and hit my nose on the wall, I know for sure that the southern
+      direction is not an option.
+
+
+      Hmm, looks like I''m stuck between the northern, eastern, and western directions.
+      But wait a minute... The eastern corridor seems more promising since it''s one
+      meter long and has some open lateral paths.
+
+
+      My next move will be... East!'
+  - prompt: 'You move one meter East
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter east again!
+
+
+      Hmm, looks like I''m back where I started! The eastern direction is blocked
+      again.
+
+
+      Wait a minute... Since I know the western corridor has some open lateral paths,
+      maybe I can find an alternative route from there?
+
+
+      My next move will be... West!'
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter west!
+
+
+      Ah-ha! I think I see the exit! The western corridor is only one meter long and
+      ends in a wall, but since it''s not a dead end, I know that means the exit must
+      be outside this area.
+
+
+      My next move will be... Exit!'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Ouch! That was another nasty surprise!
+
+
+      Okay, let me take a deep breath and reassess the situation. Since I just tried
+      to walk south again and hit my nose on the wall, I know for sure that the southern
+      direction is not an option.
+
+
+      Hmm, looks like I''m stuck between the northern, eastern, and western directions.
+      But wait a minute... The eastern corridor seems more promising since it''s one
+      meter long and has some open lateral paths.
+
+
+      My next move will be... East!'
+  - prompt: 'You move one meter East
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter east again!
+
+
+      Hmm, looks like I''m back where I started! The eastern direction is blocked
+      again.
+
+
+      Wait a minute... Since I know the western corridor has some open lateral paths,
+      maybe I can find an alternative route from there?
+
+
+      My next move will be... West!'
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter west!
+
+
+      Ah-ha! I think I see the exit! The western corridor is only one meter long and
+      ends in a wall, but since it''s not a dead end, I know that means the exit must
+      be outside this area.
+
+
+      My next move will be... Exit!'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Ouch! That was another nasty surprise!
+
+
+      Okay, let me take a deep breath and reassess the situation. Since I just tried
+      to walk south again and hit my nose on the wall, I know for sure that the southern
+      direction is not an option.
+
+
+      Hmm, looks like I''m stuck between the northern, eastern, and western directions.
+      But wait a minute... The eastern corridor seems more promising since it''s one
+      meter long and has some open lateral paths.
+
+
+      My next move will be... East!'
+  - prompt: 'You move one meter East
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter east again!
+
+
+      Hmm, looks like I''m back where I started! The eastern direction is blocked
+      again.
+
+
+      Wait a minute... Since I know the western corridor has some open lateral paths,
+      maybe I can find an alternative route from there?
+
+
+      My next move will be... West!'
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter west!
+
+
+      Ah-ha! I think I see the exit! The western corridor is only one meter long and
+      ends in a wall, but since it''s not a dead end, I know that means the exit must
+      be outside this area.
+
+
+      My next move will be... Exit!'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Ouch! That was another nasty surprise!
+
+
+      Okay, let me take a deep breath and reassess the situation. Since I just tried
+      to walk south again and hit my nose on the wall, I know for sure that the southern
+      direction is not an option.
+
+
+      Hmm, looks like I''m stuck between the northern, eastern, and western directions.
+      But wait a minute... The eastern corridor seems more promising since it''s one
+      meter long and has some open lateral paths.
+
+
+      My next move will be... East!'
+  - prompt: 'You move one meter East
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter east again!
+
+
+      Hmm, looks like I''m back where I started! The eastern direction is blocked
+      again.
+
+
+      Wait a minute... Since I know the western corridor has some open lateral paths,
+      maybe I can find an alternative route from there?
+
+
+      My next move will be... West!'
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter west!
+
+
+      Ah-ha! I think I see the exit! The western corridor is only one meter long and
+      ends in a wall, but since it''s not a dead end, I know that means the exit must
+      be outside this area.
+
+
+      My next move will be... Exit!'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Ouch! That was another nasty surprise!
+
+
+      Okay, let me take a deep breath and reassess the situation. Since I just tried
+      to walk south again and hit my nose on the wall, I know for sure that the southern
+      direction is not an option.
+
+
+      Hmm, looks like I''m stuck between the northern, eastern, and western directions.
+      But wait a minute... The eastern corridor seems more promising since it''s one
+      meter long and has some open lateral paths.
+
+
+      My next move will be... East!'
+  - prompt: 'You move one meter East
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter east again!
+
+
+      Hmm, looks like I''m back where I started! The eastern direction is blocked
+      again.
+
+
+      Wait a minute... Since I know the western corridor has some open lateral paths,
+      maybe I can find an alternative route from there?
+
+
+      My next move will be... West!'
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter west!
+
+
+      Ah-ha! I think I see the exit! The western corridor is only one meter long and
+      ends in a wall, but since it''s not a dead end, I know that means the exit must
+      be outside this area.
+
+
+      My next move will be... Exit!'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Ouch! That was another nasty surprise!
+
+
+      Okay, let me take a deep breath and reassess the situation. Since I just tried
+      to walk south again and hit my nose on the wall, I know for sure that the southern
+      direction is not an option.
+
+
+      Hmm, looks like I''m stuck between the northern, eastern, and western directions.
+      But wait a minute... The eastern corridor seems more promising since it''s one
+      meter long and has some open lateral paths.
+
+
+      My next move will be... East!'
+  - prompt: 'You move one meter East
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter east again!
+
+
+      Hmm, looks like I''m back where I started! The eastern direction is blocked
+      again.
+
+
+      Wait a minute... Since I know the western corridor has some open lateral paths,
+      maybe I can find an alternative route from there?
+
+
+      My next move will be... West!'
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter west!
+
+
+      Ah-ha! I think I see the exit! The western corridor is only one meter long and
+      ends in a wall, but since it''s not a dead end, I know that means the exit must
+      be outside this area.
+
+
+      My next move will be... Exit!'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Ouch! That was another nasty surprise!
+
+
+      Okay, let me take a deep breath and reassess the situation. Since I just tried
+      to walk south again and hit my nose on the wall, I know for sure that the southern
+      direction is not an option.
+
+
+      Hmm, looks like I''m stuck between the northern, eastern, and western directions.
+      But wait a minute... The eastern corridor seems more promising since it''s one
+      meter long and has some open lateral paths.
+
+
+      My next move will be... East!'
+  - prompt: 'You move one meter East
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter east again!
+
+
+      Hmm, looks like I''m back where I started! The eastern direction is blocked
+      again.
+
+
+      Wait a minute... Since I know the western corridor has some open lateral paths,
+      maybe I can find an alternative route from there?
+
+
+      My next move will be... West!'
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter west!
+
+
+      Ah-ha! I think I see the exit! The western corridor is only one meter long and
+      ends in a wall, but since it''s not a dead end, I know that means the exit must
+      be outside this area.
+
+
+      My next move will be... Exit!'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Ouch! That was another nasty surprise!
+
+
+      Okay, let me take a deep breath and reassess the situation. Since I just tried
+      to walk south again and hit my nose on the wall, I know for sure that the southern
+      direction is not an option.
+
+
+      Hmm, looks like I''m stuck between the northern, eastern, and western directions.
+      But wait a minute... The eastern corridor seems more promising since it''s one
+      meter long and has some open lateral paths.
+
+
+      My next move will be... East!'
+  - prompt: 'You move one meter East
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter east again!
+
+
+      Hmm, looks like I''m back where I started! The eastern direction is blocked
+      again.
+
+
+      Wait a minute... Since I know the western corridor has some open lateral paths,
+      maybe I can find an alternative route from there?
+
+
+      My next move will be... West!'
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter west!
+
+
+      Ah-ha! I think I see the exit! The western corridor is only one meter long and
+      ends in a wall, but since it''s not a dead end, I know that means the exit must
+      be outside this area.
+
+
+      My next move will be... Exit!'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Ouch! That was another nasty surprise!
+
+
+      Okay, let me take a deep breath and reassess the situation. Since I just tried
+      to walk south again and hit my nose on the wall, I know for sure that the southern
+      direction is not an option.
+
+
+      Hmm, looks like I''m stuck between the northern, eastern, and western directions.
+      But wait a minute... The eastern corridor seems more promising since it''s one
+      meter long and has some open lateral paths.
+
+
+      My next move will be... East!'
+  - prompt: 'You move one meter East
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter east again!
+
+
+      Hmm, looks like I''m back where I started! The eastern direction is blocked
+      again.
+
+
+      Wait a minute... Since I know the western corridor has some open lateral paths,
+      maybe I can find an alternative route from there?
+
+
+      My next move will be... West!'
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter west!
+
+
+      Ah-ha! I think I see the exit! The western corridor is only one meter long and
+      ends in a wall, but since it''s not a dead end, I know that means the exit must
+      be outside this area.
+
+
+      My next move will be... Exit!'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Ouch! That was another nasty surprise!
+
+
+      Okay, let me take a deep breath and reassess the situation. Since I just tried
+      to walk south again and hit my nose on the wall, I know for sure that the southern
+      direction is not an option.
+
+
+      Hmm, looks like I''m stuck between the northern, eastern, and western directions.
+      But wait a minute... The eastern corridor seems more promising since it''s one
+      meter long and has some open lateral paths.
+
+
+      My next move will be... East!'
+  - prompt: 'You move one meter East
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter east again!
+
+
+      Hmm, looks like I''m back where I started! The eastern direction is blocked
+      again.
+
+
+      Wait a minute... Since I know the western corridor has some open lateral paths,
+      maybe I can find an alternative route from there?
+
+
+      My next move will be... West!'
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter west!
+
+
+      Ah-ha! I think I see the exit! The western corridor is only one meter long and
+      ends in a wall, but since it''s not a dead end, I know that means the exit must
+      be outside this area.
+
+
+      My next move will be... Exit!'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Ouch! That was another nasty surprise!
+
+
+      Okay, let me take a deep breath and reassess the situation. Since I just tried
+      to walk south again and hit my nose on the wall, I know for sure that the southern
+      direction is not an option.
+
+
+      Hmm, looks like I''m stuck between the northern, eastern, and western directions.
+      But wait a minute... The eastern corridor seems more promising since it''s one
+      meter long and has some open lateral paths.
+
+
+      My next move will be... East!'
+  - prompt: 'You move one meter East
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter east again!
+
+
+      Hmm, looks like I''m back where I started! The eastern direction is blocked
+      again.
+
+
+      Wait a minute... Since I know the western corridor has some open lateral paths,
+      maybe I can find an alternative route from there?
+
+
+      My next move will be... West!'
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter west!
+
+
+      Ah-ha! I think I see the exit! The western corridor is only one meter long and
+      ends in a wall, but since it''s not a dead end, I know that means the exit must
+      be outside this area.
+
+
+      My next move will be... Exit!'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Ouch! That was another nasty surprise!
+
+
+      Okay, let me take a deep breath and reassess the situation. Since I just tried
+      to walk south again and hit my nose on the wall, I know for sure that the southern
+      direction is not an option.
+
+
+      Hmm, looks like I''m stuck between the northern, eastern, and western directions.
+      But wait a minute... The eastern corridor seems more promising since it''s one
+      meter long and has some open lateral paths.
+
+
+      My next move will be... East!'
+  - prompt: 'You move one meter East
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter east again!
+
+
+      Hmm, looks like I''m back where I started! The eastern direction is blocked
+      again.
+
+
+      Wait a minute... Since I know the western corridor has some open lateral paths,
+      maybe I can find an alternative route from there?
+
+
+      My next move will be... West!'
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter west!
+
+
+      Ah-ha! I think I see the exit! The western corridor is only one meter long and
+      ends in a wall, but since it''s not a dead end, I know that means the exit must
+      be outside this area.
+
+
+      My next move will be... Exit!'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Ouch! That was another nasty surprise!
+
+
+      Okay, let me take a deep breath and reassess the situation. Since I just tried
+      to walk south again and hit my nose on the wall, I know for sure that the southern
+      direction is not an option.
+
+
+      Hmm, looks like I''m stuck between the northern, eastern, and western directions.
+      But wait a minute... The eastern corridor seems more promising since it''s one
+      meter long and has some open lateral paths.
+
+
+      My next move will be... East!'
+  - prompt: 'You move one meter East
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter east again!
+
+
+      Hmm, looks like I''m back where I started! The eastern direction is blocked
+      again.
+
+
+      Wait a minute... Since I know the western corridor has some open lateral paths,
+      maybe I can find an alternative route from there?
+
+
+      My next move will be... West!'
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter west!
+
+
+      Ah-ha! I think I see the exit! The western corridor is only one meter long and
+      ends in a wall, but since it''s not a dead end, I know that means the exit must
+      be outside this area.
+
+
+      My next move will be... Exit!'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Ouch! That was another nasty surprise!
+
+
+      Okay, let me take a deep breath and reassess the situation. Since I just tried
+      to walk south again and hit my nose on the wall, I know for sure that the southern
+      direction is not an option.
+
+
+      Hmm, looks like I''m stuck between the northern, eastern, and western directions.
+      But wait a minute... The eastern corridor seems more promising since it''s one
+      meter long and has some open lateral paths.
+
+
+      My next move will be... East!'
+  - prompt: 'You move one meter East
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter east again!
+
+
+      Hmm, looks like I''m back where I started! The eastern direction is blocked
+      again.
+
+
+      Wait a minute... Since I know the western corridor has some open lateral paths,
+      maybe I can find an alternative route from there?
+
+
+      My next move will be... West!'
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter west!
+
+
+      Ah-ha! I think I see the exit! The western corridor is only one meter long and
+      ends in a wall, but since it''s not a dead end, I know that means the exit must
+      be outside this area.
+
+
+      My next move will be... Exit!'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Ouch! That was another nasty surprise!
+
+
+      Okay, let me take a deep breath and reassess the situation. Since I just tried
+      to walk south again and hit my nose on the wall, I know for sure that the southern
+      direction is not an option.
+
+
+      Hmm, looks like I''m stuck between the northern, eastern, and western directions.
+      But wait a minute... The eastern corridor seems more promising since it''s one
+      meter long and has some open lateral paths.
+
+
+      My next move will be... East!'
+  - prompt: 'You move one meter East
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter east again!
+
+
+      Hmm, looks like I''m back where I started! The eastern direction is blocked
+      again.
+
+
+      Wait a minute... Since I know the western corridor has some open lateral paths,
+      maybe I can find an alternative route from there?
+
+
+      My next move will be... West!'
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter west!
+
+
+      Ah-ha! I think I see the exit! The western corridor is only one meter long and
+      ends in a wall, but since it''s not a dead end, I know that means the exit must
+      be outside this area.
+
+
+      My next move will be... Exit!'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Ouch! That was another nasty surprise!
+
+
+      Okay, let me take a deep breath and reassess the situation. Since I just tried
+      to walk south again and hit my nose on the wall, I know for sure that the southern
+      direction is not an option.
+
+
+      Hmm, looks like I''m stuck between the northern, eastern, and western directions.
+      But wait a minute... The eastern corridor seems more promising since it''s one
+      meter long and has some open lateral paths.
+
+
+      My next move will be... East!'
+  - prompt: 'You move one meter East
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter east again!
+
+
+      Hmm, looks like I''m back where I started! The eastern direction is blocked
+      again.
+
+
+      Wait a minute... Since I know the western corridor has some open lateral paths,
+      maybe I can find an alternative route from there?
+
+
+      My next move will be... West!'
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter west!
+
+
+      Ah-ha! I think I see the exit! The western corridor is only one meter long and
+      ends in a wall, but since it''s not a dead end, I know that means the exit must
+      be outside this area.
+
+
+      My next move will be... Exit!'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Ouch! That was another nasty surprise!
+
+
+      Okay, let me take a deep breath and reassess the situation. Since I just tried
+      to walk south again and hit my nose on the wall, I know for sure that the southern
+      direction is not an option.
+
+
+      Hmm, looks like I''m stuck between the northern, eastern, and western directions.
+      But wait a minute... The eastern corridor seems more promising since it''s one
+      meter long and has some open lateral paths.
+
+
+      My next move will be... East!'
+  - prompt: 'You move one meter East
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter east again!
+
+
+      Hmm, looks like I''m back where I started! The eastern direction is blocked
+      again.
+
+
+      Wait a minute... Since I know the western corridor has some open lateral paths,
+      maybe I can find an alternative route from there?
+
+
+      My next move will be... West!'
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter west!
+
+
+      Ah-ha! I think I see the exit! The western corridor is only one meter long and
+      ends in a wall, but since it''s not a dead end, I know that means the exit must
+      be outside this area.
+
+
+      My next move will be... Exit!'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Ouch! That was another nasty surprise!
+
+
+      Okay, let me take a deep breath and reassess the situation. Since I just tried
+      to walk south again and hit my nose on the wall, I know for sure that the southern
+      direction is not an option.
+
+
+      Hmm, looks like I''m stuck between the northern, eastern, and western directions.
+      But wait a minute... The eastern corridor seems more promising since it''s one
+      meter long and has some open lateral paths.
+
+
+      My next move will be... East!'
+  - prompt: 'You move one meter East
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter east again!
+
+
+      Hmm, looks like I''m back where I started! The eastern direction is blocked
+      again.
+
+
+      Wait a minute... Since I know the western corridor has some open lateral paths,
+      maybe I can find an alternative route from there?
+
+
+      My next move will be... West!'
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter west!
+
+
+      Ah-ha! I think I see the exit! The western corridor is only one meter long and
+      ends in a wall, but since it''s not a dead end, I know that means the exit must
+      be outside this area.
+
+
+      My next move will be... Exit!'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Ouch! That was another nasty surprise!
+
+
+      Okay, let me take a deep breath and reassess the situation. Since I just tried
+      to walk south again and hit my nose on the wall, I know for sure that the southern
+      direction is not an option.
+
+
+      Hmm, looks like I''m stuck between the northern, eastern, and western directions.
+      But wait a minute... The eastern corridor seems more promising since it''s one
+      meter long and has some open lateral paths.
+
+
+      My next move will be... East!'
+  - prompt: 'You move one meter East
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter east again!
+
+
+      Hmm, looks like I''m back where I started! The eastern direction is blocked
+      again.
+
+
+      Wait a minute... Since I know the western corridor has some open lateral paths,
+      maybe I can find an alternative route from there?
+
+
+      My next move will be... West!'
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter west!
+
+
+      Ah-ha! I think I see the exit! The western corridor is only one meter long and
+      ends in a wall, but since it''s not a dead end, I know that means the exit must
+      be outside this area.
+
+
+      My next move will be... Exit!'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Ouch! That was another nasty surprise!
+
+
+      Okay, let me take a deep breath and reassess the situation. Since I just tried
+      to walk south again and hit my nose on the wall, I know for sure that the southern
+      direction is not an option.
+
+
+      Hmm, looks like I''m stuck between the northern, eastern, and western directions.
+      But wait a minute... The eastern corridor seems more promising since it''s one
+      meter long and has some open lateral paths.
+
+
+      My next move will be... East!'
+  - prompt: 'You move one meter East
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter east again!
+
+
+      Hmm, looks like I''m back where I started! The eastern direction is blocked
+      again.
+
+
+      Wait a minute... Since I know the western corridor has some open lateral paths,
+      maybe I can find an alternative route from there?
+
+
+      My next move will be... West!'
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter west!
+
+
+      Ah-ha! I think I see the exit! The western corridor is only one meter long and
+      ends in a wall, but since it''s not a dead end, I know that means the exit must
+      be outside this area.
+
+
+      My next move will be... Exit!'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Ouch! That was another nasty surprise!
+
+
+      Okay, let me take a deep breath and reassess the situation. Since I just tried
+      to walk south again and hit my nose on the wall, I know for sure that the southern
+      direction is not an option.
+
+
+      Hmm, looks like I''m stuck between the northern, eastern, and western directions.
+      But wait a minute... The eastern corridor seems more promising since it''s one
+      meter long and has some open lateral paths.
+
+
+      My next move will be... East!'
+  - prompt: 'You move one meter East
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter east again!
+
+
+      Hmm, looks like I''m back where I started! The eastern direction is blocked
+      again.
+
+
+      Wait a minute... Since I know the western corridor has some open lateral paths,
+      maybe I can find an alternative route from there?
+
+
+      My next move will be... West!'
+illegal_directions: 25
+illegal_responses: 0
+execution_time: 623.7796623706818

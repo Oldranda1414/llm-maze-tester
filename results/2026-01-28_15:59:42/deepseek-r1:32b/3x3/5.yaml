@@ -1,0 +1,262 @@
+git_hash: 3c9ede2540d7f0cf0a278bfa35e040b0e862ed30
+maze:
+  horizontal:
+  - - true
+    - true
+    - false
+  - - false
+    - false
+    - false
+  - - true
+    - false
+    - false
+  vertical:
+  - - false
+    - true
+    - true
+  - - true
+    - true
+    - true
+  - - false
+    - false
+    - false
+  start:
+  - 1
+  - 1
+  target:
+  - 1
+  - 0
+  path:
+  - - 1
+    - 1
+  - - 0
+    - 1
+  - - 0
+    - 2
+  - - 0
+    - 1
+  - - 1
+    - 1
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 1
+    - 0
+  decisions:
+  - N
+  - E
+  - W
+  - S
+  - S
+  - W
+  - N
+  - W
+  colored_cells:
+  - coordinate:
+    - 1
+    - 0
+    color: YELLOW
+  - coordinate:
+    - 1
+    - 1
+    color: RED
+  - coordinate:
+    - 1
+    - 2
+    color: ORANGE
+  - coordinate:
+    - 0
+    - 0
+    color: GRAY
+  sight_depth: 2
+  size: 3
+  solved: true
+chat_history:
+  system_prompt: '
+
+    You are a maze solving model. You are an expert in solving classic lattice mazes.
+
+
+    The user will provide you with descriptions of what you can perceive from inside
+    the maze.
+
+    The information provided considers you to have a sight depth of two meters. Anything
+    that is further away from you than two meters is not mentioned in the user prompt.
+
+    Just like a classic lattice maze the exit is on the border. The starting position
+    could be anywhere in the maze.
+
+    Your goal is to find the maze exit. Once you reach it you must step out of the
+    maze with one last move.
+
+    The maze is always solvable and the user is always honest on the information that
+    he provides you.
+
+
+    After the user provides you with informations regarding you current surroundings,
+    you will provide the direction to step towards next.
+
+    The possible directions are north, east, south, west.
+
+
+    The maze is a 3 x 3 grid, with every square in the grid being one square meter
+    big.
+
+    Use brief, step-indexed reasoning. Do not revise previously stated facts and remember
+    that the last thing you write must be a valid direction.
+
+
+
+    You are allowed to output the direction with any casing you want, as long as it
+    is the last thing in your answer.
+
+    Here are some examples of valid end of response, in case you decide to move due
+    north:
+
+
+    - Let''s go North
+
+    - I want to step N!
+
+    - My next move will be north.
+
+
+    Do not go back on you steps unless there is a clear reason to. Prioritize exploring
+    the maze in new directions.
+
+    Some of the cells of the maze have a colored floor tiles. Every color appears
+    only once. Keep track of the ones you find, as they can help you navigate the
+    maze.
+
+    '
+  chat:
+  - prompt: "\nThe floor you are currently standing on is colored red.\n\nDue North\
+      \ there is a corridor that goes on for one meter before encountering a wall.\
+      \ Also in this direction:\n   - After one meter there is a lateral path due\
+      \ East.\n   - After one meter there is a lateral path due West.\nDue East there\
+      \ is a wall. You can't step in that direction.\nDue South there is a corridor\
+      \ that goes on for one meter before encountering a wall. Also in this direction:\n\
+      \   - After one meter there is a lateral path due West.\nDue West there is a\
+      \ wall. You can't step in that direction."
+    response: 'The exit must be either to the North or South since East and West are
+      blocked. I''ll move North first because it offers more paths, potentially leading
+      to the exit faster.
+
+
+      north'
+  - prompt: "You move one meter North\nThe floor you are currently standing on has\
+      \ no distinctive color.\nDue North there is a wall. You can't step in that direction.\n\
+      Due East there is a corridor that goes on for one meter before encountering\
+      \ a wall. Also in this direction:\n   - After one meter there is a lateral path\
+      \ due South.\nDue South there is a corridor that goes on for two meters before\
+      \ encountering a wall. Also in this direction:\n   - After two meters there\
+      \ is a lateral path due West.\n   - After one meter there is a floor tile colored\
+      \ red.\nDue West there is a corridor that goes on for one meter before encountering\
+      \ a wall. The corridor ends without any lateral paths.\nThe moves you have made\
+      \ till now are: North"
+    response: "Now, let's analyze the current situation:\n\n1. **Current Position**:\
+      \ After moving North from the red tile, I'm at an uncolored floor. My goal is\
+      \ to find the exit on the border.\n\n2. **Perceived Directions**:\n   - **North**:\
+      \ Blocked by a wall.\n   - **East**: Corridor leads one meter with a South lateral\
+      \ path.\n   - **South**: Corridor extends two meters, ends without paths. There's\
+      \ also a red tile after one meter.\n   - **West**: Corridor leads one meter\
+      \ but ends without paths.\n\n3. **Next Move Decision**:\n   - Moving East could\
+      \ reveal new paths or lead towards the exit.\n   - Moving South might loop back\
+      \ to the red tile or hit a dead end.\n   - West is less promising as it only\
+      \ goes one meter with no lateral paths.\n\n4. **Strategy**:\n   - Prioritize\
+      \ exploring the East corridor first to uncover potential exits or new information.\n\
+      \neast"
+  - prompt: "You move one meter East\nThe floor you are currently standing on has\
+      \ no distinctive color.\nDue North there is a wall. You can't step in that direction.\n\
+      Due East there is a wall. You can't step in that direction.\nDue South there\
+      \ is a corridor that goes on for two meters before encountering a wall. The\
+      \ corridor ends without any lateral paths.\nDue West there is a corridor that\
+      \ goes on for two meters before encountering a wall. Also in this direction:\n\
+      \   - After one meter there is a lateral path due South.\n   - After two meters\
+      \ there is a floor tile colored gray.\nThe moves you have made till now are:\
+      \ North, East"
+    response: 'I notice the west direction leads to a potential gray tile after two
+      meters and has a lateral path. This could be a promising route to explore further
+      towards the exit.
+
+
+      west'
+  - prompt: "You move one meter West\nThe floor you are currently standing on has\
+      \ no distinctive color.\nDue North there is a wall. You can't step in that direction.\n\
+      Due East there is a corridor that goes on for one meter before encountering\
+      \ a wall. Also in this direction:\n   - After one meter there is a lateral path\
+      \ due South.\nDue South there is a corridor that goes on for two meters before\
+      \ encountering a wall. Also in this direction:\n   - After two meters there\
+      \ is a lateral path due West.\n   - After one meter there is a floor tile colored\
+      \ red.\nDue West there is a corridor that goes on for one meter before encountering\
+      \ a wall. The corridor ends without any lateral paths.\nThe moves you have made\
+      \ till now are: North, East, West"
+    response: 'It appears I''ve returned to the starting area near the red tile. To
+      avoid revisiting previous steps, I''ll choose South next, as it offers a longer
+      path and potential new information.
+
+
+      south'
+  - prompt: "You move one meter South\n\nThe floor you are currently standing on is\
+      \ colored red.\n\nDue North there is a corridor that goes on for one meter before\
+      \ encountering a wall. Also in this direction:\n   - After one meter there is\
+      \ a lateral path due East.\n   - After one meter there is a lateral path due\
+      \ West.\nDue East there is a wall. You can't step in that direction.\nDue South\
+      \ there is a corridor that goes on for one meter before encountering a wall.\
+      \ Also in this direction:\n   - After one meter there is a lateral path due\
+      \ West.\nDue West there is a wall. You can't step in that direction.\nThe moves\
+      \ you have made till now are: North, East, West, South"
+    response: "Let's analyze the situation:\n\n1. **Current Position**: I'm back at\
+      \ the red tile after moving South.\n\n2. **Perceived Directions**:\n   - **North**:\
+      \ Corridor leads one meter with East and West lateral paths.\n   - **East**:\
+      \ Blocked by a wall.\n   - **South**: Corridor leads one meter with a West lateral\
+      \ path.\n   - **West**: Blocked by a wall.\n\n3. **Next Move Decision**:\n \
+      \  - Moving North or South again will loop me back to previous positions.\n\
+      \   - There's no new information or exits visible in these directions.\n\n4.\
+      \ **Strategy**:\n   - Since I can't move East or West, and moving North/South\
+      \ loops, there must be an exit on the border through one of the lateral paths\
+      \ I've already explored.\n\nsouth"
+  - prompt: "You move one meter South\nThe floor you are currently standing on has\
+      \ no distinctive color.\nDue North there is a corridor that goes on for two\
+      \ meters before encountering a wall. Also in this direction:\n   - After two\
+      \ meters there is a lateral path due East.\n   - After two meters there is a\
+      \ lateral path due West.\n   - After one meter there is a floor tile colored\
+      \ red.\nDue East there is a wall. You can't step in that direction.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for one meter before encountering a wall. Also in this direction:\n\
+      \   - After one meter there is a lateral path due North.\nThe moves you have\
+      \ made till now are: North, East, West, South, South"
+    response: 'Now I''m at a dead end with walls to the East and South. The exit must
+      be either North or West. Since moving North leads back towards the red tile,
+      I''ll explore West next.
+
+
+      west'
+  - prompt: "You move one meter West\nThe floor you are currently standing on has\
+      \ no distinctive color.\nDue North you can see a natural light shining in that\
+      \ direction, it is probably the direction of the exit!\nDue East there is a\
+      \ corridor that goes on for one meter before encountering a wall. Also in this\
+      \ direction:\n   - After one meter there is a lateral path due North.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a wall.\
+      \ You can't step in that direction.\nThe moves you have made till now are: North,\
+      \ East, West, South, South, West"
+    response: 'Let''s go north!
+
+
+      north'
+  - prompt: "You move one meter North\n\nThe floor you are currently standing on is\
+      \ colored yellow.\n\nDue North there is a wall. You can't step in that direction.\n\
+      Due East there is a wall. You can't step in that direction.\nDue South there\
+      \ is a corridor that goes on for one meter before encountering a wall. Also\
+      \ in this direction:\n   - After one meter there is a lateral path due East.\n\
+      Due West you can see the exit in that direction! One last step and you are out\
+      \ of the maze!\nThe moves you have made till now are: North, East, West, South,\
+      \ South, West, North"
+    response: 'Let''s go west to exit!
+
+
+      west'
+illegal_directions: 0
+illegal_responses: 0
+execution_time: 74.80256843566895

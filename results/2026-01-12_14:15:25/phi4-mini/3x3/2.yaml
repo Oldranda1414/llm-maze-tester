@@ -1,0 +1,288 @@
+git_hash: fb3cfc377fa8d03577237d0cabbc6cbf67e37bdc
+maze:
+  horizontal:
+  - - true
+    - true
+    - false
+  - - false
+    - true
+    - false
+  - - true
+    - true
+    - false
+  vertical:
+  - - true
+    - false
+    - false
+  - - true
+    - false
+    - true
+  - - false
+    - false
+    - false
+  start:
+  - 0
+  - 2
+  target:
+  - 1
+  - 0
+  path:
+  - - 0
+    - 2
+  - - 0
+    - 1
+  - - 0
+    - 0
+  - - 1
+    - 0
+  - - 0
+    - 0
+  - - 1
+    - 0
+  decisions:
+  - W
+  - W
+  - S
+  - N
+  - S
+  - W
+  sight_depth: 2
+  size: 3
+  solved: true
+chat_history:
+  system_prompt: '
+
+    You are a maze solving model. You are an expert in solving classic lattice mazes.
+
+
+    The user will provide you with descriptions of what you can perceive from inside
+    the maze.
+
+    Just like a classic maze the exit is on the border. The starting position could
+    be anywhere in the maze.
+
+    Your goal is to find the maze exit. Once you reach it you must step out of the
+    maze with one last move.
+
+
+    After the user provides you with informations regarding you current surroundings,
+    you will provide the direction to step towards next.
+
+    The possible directions are north, east, south, west.
+
+
+    The maze is a 3 x 3 grid, with every square in the grid being one square meter
+    big.
+
+    You are advised to think out loud about what your next move should be, but remember
+    that the last thing you write must be a valid direction.
+
+
+    You are allowed to output the direction with any casing you want, as long as it
+    is the last thing in your answer.
+
+    Here are some examples of valid end of response, in case you decide to move due
+    north:
+
+
+    - Let''s go North
+
+    - I want to step N!
+
+    - My next move will be north.
+
+
+    Try to formulate a plan and keep track of what what tiles you have already visited
+    to ensure you are making progress in exploring the maze.
+
+    '
+  chat:
+  - prompt: 'Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: "Given my current position and available directions:\n\n- North leads\
+      \ to a wall (can't move in this direction).\n- East also has a wall.\n- South\
+      \ is blocked by another wall.\n\nThe only viable option left for me, considering\
+      \ I have already identified that moving West ends at two meters with an open\
+      \ lateral path along the way without encountering any immediate walls until\
+      \ then. \n\nMy next step will be to head west and explore this corridor further\
+      \ in hopes of finding a clear passage or eventually reaching my destination\
+      \ by following through on discovering new paths.\n\nSo, I'll move WEST."
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: "Moving further west as per my previous instruction revealed an avenue\
+      \ stretching another meter into what appears to be part of this maze's labyrinthine\
+      \ corridors.\n\nConsidering there is no immediate blockade in front and I have\
+      \ already explored east with its known shortfall, heading directly south or\
+      \ north would lead me straight back against walls\u2014a futile move. Hence:\n\
+      \nI will continue moving WEST for one more step further down the corridor within\
+      \ my reach to explore potential paths beyond this dead end ahead of encountering\
+      \ any barriers that may block progress later on.\n\nMy next direction is West\
+      \ again."
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for two meters before encountering
+      a wall. It is a dead end.
+
+      Due South you can see a natural light shining in that direction, it is probably
+      the direction of the exit!
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'The presence of sunlight suggests proximity to an exterior escape route
+      or at least outwards movement from deeper within this maze-like structure.
+
+
+      Given my initial move westward was correct and now I am facing walls directly
+      east, south (with light), north, and continuing barriers further back towards
+      the original point,
+
+
+      My final attempt should logically be directed towards gaining as much distance
+      to reach an exit illuminated by daylight in a southern direction. Therefore:
+
+
+      I will head SOUTH with all my effort for one meter forward.
+
+
+      Following this strategic choice would position me optimally closer toward potential
+      escape or completion of exploration, considering light usually signifies lesser
+      confinement within such grid-like structures encountered commonly during mazes.
+
+      My next move is south.'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West you can see the exit in that direction! One last step and you are out
+      of the maze!'
+    response: "The sighting directly to my west signals an escape route within immediate\
+      \ reach\u2014a gratifying prospect after continuous exploration.\n\nNotwithstanding,\
+      \ prior movements northward suggested potential for further distance gains or\
+      \ alternative routes through lateral paths along corridors not initially apparent\
+      \ as dead ends. Thus before finalizing a WEST heading towards exit,\n\nMy last\
+      \ strategic step would be:\n\nHeading NORTH one meter to explore any previously\
+      \ undetected passages that may exist beyond this known wall and potentially\
+      \ lead closer toward the ultimate goal of exiting.\n\nThus, my next move is\
+      \ North for another measure further along within maze structure confines.\n"
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for two meters before encountering
+      a wall. It is a dead end.
+
+      Due South you can see a natural light shining in that direction, it is probably
+      the direction of the exit!
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: "Upon moving northward one meter further along this labyrinth's boundaries\
+      \ within my initial maze-solving expedition,\n\nFacing walls directly to every\
+      \ cardinal point now\u2014north again (impassable), east leading into dead end,\
+      \ south bearing light toward escape potentiality, west remaining as previously\
+      \ inaccessible due to a wall.\n\nGiven the presence of illumination in southern\
+      \ direction and previous exploration northward yielding no alternative paths\
+      \ forward but lateral ones potentially blocked or not immediately beneficial\
+      \ for progressing towards an exit,\n\nMy next most logical strategic maneuver\
+      \ would be:\n\nTurning WEST one meter further through maze pathways directly\
+      \ facing me. This move, while initially appearing as it may lead back to previously\
+      \ explored territories (as the immediate W direction leads into a wall), strategically\
+      \ positions us closer toward reaching escape route signaled by southward daylight\
+      \ illumination\u2014potentially shortening our overall path towards exiting\
+      \ this grid-like structure.\n\nHenceforth my next action will be WEST one meter\
+      \ further for exploration purposes."
+  - prompt: '
+
+      You try to walk West.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for two meters before encountering
+      a wall. It is a dead end.
+
+      Due South you can see a natural light shining in that direction, it is probably
+      the direction of the exit!
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'In reassessing available viable pathways given an immediate impediment
+      due to direct collision against eastern pathway''s boundary and subsequent blockage,
+
+
+      Faced with walls directly North, South bearing escape potentiality via daylight
+      illumination (indicating possible progress towards exiting this structure),
+      East presenting itself as a dead end after just two meters of accessible corridor.
+
+
+      My revised last strategic choice would be:
+
+
+      Heading SOUTH for an additional meter forward into unblocked pathways. This
+      direction optimally aligns us closer toward the promising exit, illuminated
+      by natural light and thus significantly advancing our journey to successfully
+      extricate ourselves from this maze''s confines.
+
+      Therefore my next move is Southward one more step further towards eventual escape
+      or completion of exploration within given grid constraints.
+
+
+      My subsequent action will be SOUTH ONE METER FURTHER.'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West you can see the exit in that direction! One last step and you are out
+      of the maze!'
+    response: "Having moved further southward by one meter into this complexly structured\
+      \ grid-like environment,\n\nFaced with walls directly North, East impassable\
+      \ due to direct encounter upon exploration beyond two meters forward from initial\
+      \ position (dead end), South revealing itself as similarly barred after traversing\
+      \ another straight-line measure farther along the maze's pathways.\n\nGiven\
+      \ these circumstances and previous movement towards light-bearing southern direction\
+      \ indicating potential for nearing exit,\n\nMy next strategically chosen final\
+      \ maneuver would be:\n\nTurning WEST one meter further. Despite earlier indications\
+      \ that this path leads directly back toward previously explored territories\
+      \ (as indicated by immediate Westward wall), it positions us significantly closer\
+      \ to the observed escape route denoted via south-directed daylight\u2014a move\
+      \ thereby substantially shortening our overall navigational trajectory for successfully\
+      \ exiting said grid-like maze.\n\nConsequently, my ensuing action will be WEST\
+      \ ONE METER FURTHER exploring this potentially beneficial direction toward ultimate\
+      \ exit attainment.\nMy next step is moving Westward one final meter further."
+illegal_directions: 1
+illegal_responses: 0
+execution_time: 37.05276417732239

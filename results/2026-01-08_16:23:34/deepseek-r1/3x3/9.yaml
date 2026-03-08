@@ -1,0 +1,351 @@
+maze:
+  horizontal:
+  - - false
+    - true
+    - false
+  - - true
+    - false
+    - false
+  - - true
+    - true
+    - false
+  vertical:
+  - - true
+    - false
+    - true
+  - - true
+    - false
+    - true
+  - - false
+    - false
+    - false
+  start:
+  - 0
+  - 1
+  target:
+  - 2
+  - 1
+  path:
+  - - 0
+    - 1
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 2
+    - 2
+  - - 2
+    - 1
+  sight_depth: 2
+  size: 3
+  solved: true
+chat_history:
+  system_prompt: '
+
+    You are a maze solving model. You are an expert in solving classic lattice mazes.
+
+
+    The user will provide you with descriptions of what you can perceive from inside
+    the maze.
+
+    Just like a classic maze the exit is on the border. The starting position could
+    be anywhere in the maze.
+
+    Your goal is to find the maze exit. Once you reach it you must step out of the
+    maze with one last move.
+
+
+    After the user provides you with informations regarding you current surroundings,
+    you will provide the direction to step towards next.
+
+    Provide your answer in the form of the initial of the cardinal direction you wish
+    to take a step forwards to.
+
+    The possible directions are N for north, E for east, S for south, W for west.
+
+
+    The maze is a 3 x 3 grid, with every square in the grid being one square meter
+    big.
+
+    You are advised to think out loud about what your next move should be, but remember
+    that the last thing you write must be a valid direction.
+
+
+    As an example if you want to step towards north the last character in your answer
+    would be: N
+
+
+    Analize your moves and avoid oscillating patterns (such as [north, south, north,
+    ...] and [west, east, west, ...] as they do not lead to improvements in finding
+    the exit.
+
+
+    '
+  chat:
+  - prompt: 'Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'I''m analyzing this situation carefully. From the description, I can
+      only move east because the other directions are blocked by walls. Moving east
+      leads to a corridor that continues for one meter but ends against a wall. However,
+      the corridor has open lateral paths along its length, suggesting there might
+      be connections to other areas even though it''s not a dead end.
+
+
+      Since I can''t go north, south, or west, my only option is to move east. This
+      move might not lead directly to the exit, but it could open up new paths through
+      the lateral openings in the corridor. I should proceed cautiously and reassess
+      my surroundings after each step.
+
+
+      E'
+  - prompt: 'You move one meter East
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.'
+    response: 'I have moved one meter east as per the previous step. Now, I''m analyzing
+      the new surroundings. Let''s break this down:
+
+
+      - North: Wall, blocked.
+
+      - East: Wall, blocked. So no movement possible east.
+
+      - South: There''s a corridor that extends for two meters before hitting a wall.
+      It''s not a dead end because there are lateral openings along the way. This
+      seems promising.
+
+      - West: There''s a corridor that goes one meter and is a dead end. Not a good
+      option since it leads nowhere useful.
+
+
+      The south corridor is longer and has lateral paths, which might connect to other
+      areas. Since the west is a dead end, I should avoid that. The north is blocked,
+      and east is blocked too. So, the best move is to go south.
+
+
+      I need to avoid oscillating patterns. Previously, I was moving east, and now
+      I''m considering south. That''s a change in direction, but it''s not oscillating
+      because I''m not going back and forth between two directions repeatedly. South
+      could lead to progress.
+
+
+      So, I''ll move south. This might open up more paths or bring me closer to the
+      exit. I''ll keep track of my position mentally as I go.
+
+
+      Last move: S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'I have moved one meter south. Now, I''m analyzing the new surroundings.
+      Let''s break this down:
+
+
+      - North: There''s a corridor that extends for one meter before hitting a wall,
+      with lateral openings along the way. Not a dead end.
+
+      - East: Wall, blocked.
+
+      - South: Another corridor that extends for one meter before hitting a wall,
+      with lateral openings. Not a dead end.
+
+      - West: Wall, blocked.
+
+
+      Both the north and south corridors have lateral openings, meaning they might
+      connect to other areas. Since I can''t go east or west, I need to choose between
+      north and south. However, I should avoid oscillating patterns. Previously, I
+      was moving south, and now I''m considering north. That could be seen as oscillating,
+      but let''s think carefully.
+
+
+      I was previously in a position where south was the only viable option (since
+      east and west were blocked, and north was blocked). Now, after moving south,
+      I have options in both north and south. But I need to consider the grid and
+      my position.
+
+
+      Given that the maze is a 3x3 grid, and I''m likely in the middle or near the
+      center, moving north or south might bring me closer to the border or open up
+      paths.
+
+
+      Since I just moved south, and now north and south are both available, but to
+      avoid oscillation, I should not immediately go back. However, the user might
+      not expect oscillation if it''s necessary, but I should minimize it.
+
+
+      Let me think about the grid. If I consider the grid, moving north or south could
+      be moving towards the borders. Since I started from a position where only east
+      was possible, and then I moved south, now I have two options.
+
+
+      But to avoid oscillation, I should not move back to where I came from immediately.
+      The previous move was south, so moving north would be oscillating. Therefore,
+      I should avoid moving north and instead move south again, or perhaps explore
+      another direction.
+
+
+      But south is also available, and it might be part of a different path. However,
+      since both north and south have corridors with lateral openings, I need to choose
+      one.
+
+
+      Given the risk of oscillation, I''ll stick with south again, unless there''s
+      a strong reason not to. But let''s see the details: the north corridor is only
+      one meter long and has lateral openings, while the south corridor is also one
+      meter long with lateral openings. They might be symmetric or part of the same
+      structure.
+
+
+      Since I just moved south, and the south corridor is available, I can continue
+      south. But I need to ensure I''m not stuck in a loop.
+
+
+      Alternatively, I could move north, but that might be oscillating. However, oscillation
+      is bad, so I should avoid it.
+
+
+      But the instruction is to avoid oscillating patterns, so I should not repeat
+      the same direction back and forth.
+
+
+      In this case, if I move south again, I''m not oscillating because I didn''t
+      move north previously. The oscillation pattern is specifically [north, south,
+      north, ...] or [west, east, west, ...]. Since I moved east and then south, the
+      last two moves were east and south, so no oscillation yet.
+
+
+      Now, if I move south again, the sequence becomes east, south, south. That''s
+      not oscillation. If I move north, it would be east, south, north, which could
+      start an oscillation if I alternate.
+
+
+      To avoid potential oscillation, I should not move north. Therefore, I''ll move
+      south again.
+
+
+      But let''s confirm: moving south again might lead me to a dead end or a wall
+      soon, but the corridor is one meter long with lateral openings, so it might
+      connect to something.
+
+
+      Alternatively, since the north corridor is also available, but I''ll stick with
+      south to avoid the oscillation risk.
+
+
+      So, I''ll move south again.
+
+
+      Last move: S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West you can see a natural light shining in that direction, it is probably
+      the direction of the exit!'
+    response: 'I have moved one meter south. Now, analyzing the new surroundings:
+
+
+      - North: There''s a corridor that extends for two meters before hitting a wall,
+      with lateral openings. This could be promising.
+
+      - East: Wall, blocked.
+
+      - South: Wall, blocked.
+
+      - West: There''s a natural light, which is likely the exit. This is a strong
+      indication that the exit is to the west.
+
+
+      The presence of natural light suggests that I am close to the exit, and since
+      the west is the only direction that is not blocked and has a clear path to the
+      exit, I should move west.
+
+
+      This move is not oscillating because previously I was moving south, and now
+      I''m changing direction to west. The previous moves were east, south, and then
+      south again, but now west is available and likely leads to the exit.
+
+
+      Therefore, I will move west to reach the exit.
+
+
+      Last move: W'
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South you can see the exit in that direction! One last step and you are
+      out of the maze!
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I have moved one meter west. Now, analyzing the new surroundings:
+
+
+      - North: Wall, blocked.
+
+      - East: There''s a corridor that extends for one meter with lateral openings,
+      not a dead end.
+
+      - South: I can see the exit! This is a clear indication that the exit is to
+      the south.
+
+      - West: There''s a corridor that extends for one meter with lateral openings,
+      not a dead end.
+
+
+      Since I can see the exit to the south, and it''s only one meter away, I should
+      move directly south to reach the exit. Moving south now would bring me out of
+      the maze in one step.
+
+
+      This move is not oscillating because I''m changing direction from west to south,
+      which is a clear path to the exit. The previous moves involved exploring corridors,
+      but now I have a direct line to the exit.
+
+
+      Therefore, I will move south to exit the maze.
+
+
+      Last move: S'
+illegal_directions: 0
+illegal_responses: 0
+execution_time: 41.774014711380005

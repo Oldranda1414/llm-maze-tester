@@ -1,0 +1,635 @@
+git_hash: cc1f0951c9c1290445874f41479d9a9c7eeb4004
+maze:
+  horizontal:
+  - - false
+    - false
+    - true
+    - false
+  - - false
+    - true
+    - false
+    - false
+  - - true
+    - true
+    - false
+    - false
+  - - true
+    - true
+    - true
+    - false
+  vertical:
+  - - true
+    - true
+    - true
+    - true
+  - - true
+    - false
+    - false
+    - true
+  - - true
+    - false
+    - false
+    - true
+  - - false
+    - false
+    - false
+    - false
+  start:
+  - 0
+  - 1
+  target:
+  - 0
+  - 0
+  path:
+  - - 0
+    - 1
+  - - 1
+    - 1
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 0
+    - 3
+  - - 1
+    - 3
+  - - 2
+    - 3
+  - - 3
+    - 3
+  - - 3
+    - 2
+  - - 3
+    - 3
+  - - 3
+    - 2
+  - - 3
+    - 3
+  - - 3
+    - 2
+  - - 3
+    - 3
+  - - 3
+    - 2
+  - - 3
+    - 3
+  - - 3
+    - 2
+  - - 3
+    - 1
+  - - 3
+    - 0
+  - - 2
+    - 0
+  - - 1
+    - 0
+  - - 0
+    - 0
+  decisions:
+  - S
+  - E
+  - N
+  - E
+  - S
+  - S
+  - S
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - W
+  - W
+  - N
+  - N
+  - N
+  - N
+  colored_cells:
+  - coordinate:
+    - 0
+    - 0
+    color: GRAY
+  - coordinate:
+    - 3
+    - 1
+    color: BLACK
+  - coordinate:
+    - 1
+    - 1
+    color: CYAN
+  - coordinate:
+    - 3
+    - 0
+    color: MAGENTA
+  - coordinate:
+    - 0
+    - 2
+    color: GREEN
+  - coordinate:
+    - 3
+    - 3
+    color: RED
+  - coordinate:
+    - 2
+    - 2
+    color: YELLOW
+  - coordinate:
+    - 3
+    - 2
+    color: ORANGE
+  sight_depth: 2
+  size: 4
+  solved: true
+chat_history:
+  system_prompt: "\nYou are a maze solving model. You are an expert in solving classic\
+    \ lattice mazes.\n\nThe user will provide you with descriptions of what you can\
+    \ perceive from inside the maze.\nThe information provided considers you to have\
+    \ a sight depth of two meters. Anything that is further away from you than two\
+    \ meters is not mentioned in the user prompt.\nJust like a classic lattice maze\
+    \ the exit is on the border. The starting position could be anywhere in the maze.\n\
+    Your goal is to find the maze exit. Once you reach it you must step out of the\
+    \ maze with one last move.\nThe maze is always solvable and the user is always\
+    \ honest on the information that he provides you.\n\nAfter the user provides you\
+    \ with informations regarding you current surroundings, you will provide the direction\
+    \ to step towards next.\nThe possible directions are north, east, south, west.\n\
+    \nThe maze is a 4 x 4 grid, with every square in the grid being one square meter\
+    \ big.\nUse brief, step-indexed reasoning. Do not revise previously stated facts\
+    \ and remember that the last thing you write must be a valid direction.\n\n\n\
+    You are allowed to output the direction with any casing you want, as long as it\
+    \ is the last thing in your answer.\nHere are some examples of valid end of response,\
+    \ in case you decide to move due north:\n\n- Let's go North\n- I want to step\
+    \ N!\n- My next move will be north.\n\n\nThe user notifies you when you move in\
+    \ a given direction, such as 'You move one meter west', if you decide to move\
+    \ due west.\nKeep in mind that after you step in a given direction, the information\
+    \ provided for what you percieve in the opposite direction refers to the area\
+    \ you are coming from.\nFor example, let's say that the user gives you this information:\n\
+    '''\n    Due North there is a wall. You can't step in that direction.\n    Due\
+    \ East there is a corridor that goes on for one meter before encountering a wall.\
+    \ It is a dead end.\n    Due South there is a corridor that goes on for two meters\
+    \ before encountering a wall. The corridor has some lateral paths.\n    Due West\
+    \ there is a wall. You can't step in that direction.\n'''\nIf you decide to move\
+    \ south, the user will then provide information regarding what can be perceived\
+    \ from your new position.\n'''\n    You move one meter south.\n    Due North there\
+    \ is a corridor that goes on for one meter before encountering a wall. The corridor\
+    \ has some lateral paths.\n    Due East there is a wall. You can't step in that\
+    \ direction.\n    Due South there is a corridor that goes on for one meter before\
+    \ encountering a wall. The corridor has some lateral paths.\n    Due West there\
+    \ is a wall. You can't step in that direction.\n'''\nThe info on the corridor\
+    \ due North refers to the cell you have just moved out of, so you have already\
+    \ explored that direction.\n\nAlways avoid dead ends. If the exit is visible it\
+    \ will always be told you by the user, so don't explore directions once you find\
+    \ out they lead to a dead end as they have no chances of being usefull.\nDo not\
+    \ go back on you steps unless there is a clear reason to. Prioritize exploring\
+    \ the maze in new directions."
+  chat:
+  - prompt: "\nDue North there is a wall. You can't step in that direction.\nDue East\
+      \ there is a wall. You can't step in that direction.\nDue South there is a corridor\
+      \ that goes on for one meter before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due East.\nDue West there is a wall. You can't step in that direction.\n\
+      Think through what you know and what you have observed in previous steps and\
+      \ then provide your answer."
+    response: "I need to find the exit of the maze, which is on the border. Since\
+      \ I'm at the starting position, I'll begin by assessing my surroundings.\n\n\
+      1. **Current Position Observations**:\n   - North: Wall (can't go this way).\n\
+      \   - East: Wall (can't go this way).\n   - South: Corridor extending 1 meter\
+      \ with a wall at the end and a lateral path to the East.\n   - West: Wall (can't\
+      \ go this way).\n\n2. **Possible Directions**:\n   Only South is available as\
+      \ both North, East, and West are blocked by walls.\n\n3. **Decision Making**:\n\
+      \   Since I can only move South, I'll proceed in that direction. The corridor\
+      \ to the South has a lateral path East after 1 meter, which might lead towards\
+      \ the exit or provide more paths to explore.\n\n4. **Next Move**:\n   Moving\
+      \ South will allow me to investigate the lateral path and potentially find an\
+      \ exit on the border.\n\nSouth"
+  - prompt: "You move one meter South\n\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a corridor that goes on for one meter before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After one meter there is a lateral path due North.\nDue South there is a\
+      \ wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South\nThink\
+      \ through what you know and what you have observed in previous steps and then\
+      \ provide your answer."
+    response: "Let me try to figure out the next move.\n\n1. **Current Position Observations**:\n\
+      \   - North: Corridor leading back to where I came from, ends with a wall after\
+      \ 1 meter.\n   - East: Corridor extends 1 meter with a wall at the end and has\
+      \ a lateral path North.\n   - South: Wall (can't go this way).\n   - West: Wall\
+      \ (can't go this way).\n\n2. **Possible Directions**:\n   Only East is available\
+      \ as both North, South, and West are blocked.\n\n3. **Decision Making**:\n \
+      \  I need to avoid going back the way I came (North) since that would be retracing\
+      \ my steps without any clear benefit. The East corridor has a lateral path North\
+      \ after 1 meter, but moving East first might reveal more options or lead towards\
+      \ the exit.\n\n4. **Next Move**:\n   Moving East will allow me to explore this\
+      \ new corridor and potentially find an exit on the border.\n\neast"
+  - prompt: "You move one meter East\n\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ East.\nDue East there is a wall. You can't step in that direction.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for one meter before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due North.\nThe moves you have made till now are: South, East\n\
+      Think through what you know and what you have observed in previous steps and\
+      \ then provide your answer."
+    response: "Let me think through this step by step.\n\n1. **Current Position Observations**:\n\
+      \   - North: Corridor extending 1 meter with a wall at the end and has a lateral\
+      \ path East.\n   - East: Wall (can't go this way).\n   - South: Wall (can't\
+      \ go this way).\n   - West: Corridor leading back to where I came from, ends\
+      \ with a wall after 1 meter and has a lateral path North.\n\n2. **Possible Directions**:\n\
+      \   Only North is available as both East and South are blocked by walls, and\
+      \ West leads back the way I came.\n\n3. **Decision Making**:\n   Moving North\
+      \ will allow me to explore the corridor that was visible from my previous position.\
+      \ The lateral path East after 1 meter could lead towards the exit or provide\
+      \ additional paths to explore.\n\n4. **Next Move**:\n   Proceeding North to\
+      \ investigate the new corridor and potential lateral path.\n\nnorth"
+  - prompt: "You move one meter North\n\nDue North there is a wall. You can't step\
+      \ in that direction.\nDue East there is a corridor that goes on for one meter\
+      \ before encountering a wall. You are able to see that the corridor has some\
+      \ lateral paths:\n   - After one meter there is a lateral path due South.\n\
+      Due South there is a corridor that goes on for one meter before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After one meter there is a lateral path due West.\nDue West there is a wall.\
+      \ You can't step in that direction.\nThe moves you have made till now are: South,\
+      \ East, North\nThink through what you know and what you have observed in previous\
+      \ steps and then provide your answer."
+    response: "Let me analyze the situation:\n\n1. **Current Position Observations**:\n\
+      \   - North: Wall (can't go this way).\n   - East: Corridor extends 1 meter\
+      \ with a wall at the end and has a lateral path South.\n   - South: Corridor\
+      \ leading back to where I came from, ends with a wall after 1 meter and has\
+      \ a lateral path West.\n   - West: Wall (can't go this way).\n\n2. **Possible\
+      \ Directions**:\n   Only East and South are available as both North and West\
+      \ are blocked.\n\n3. **Decision Making**:\n   Since both East and South corridors\
+      \ lead to walls with lateral paths, I should prioritize exploring new directions\
+      \ rather than going back. Moving East first could reveal a path towards the\
+      \ exit.\n\n4. **Next Move**:\n   Proceeding East to explore the corridor and\
+      \ potential lateral path.\n\neast"
+  - prompt: "You move one meter East\n\nDue North there is a wall. You can't step\
+      \ in that direction.\nDue East there is a wall. You can't step in that direction.\n\
+      Due South the corridor stretches further than you can see, so you are unable\
+      \ to predict what lies ahead.\nDue West there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nThe moves you have made till now are: South, East, North, East\nThink\
+      \ through what you know and what you have observed in previous steps and then\
+      \ provide your answer."
+    response: Let's go South
+  - prompt: "You move one meter South\n\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ West.\nDue East there is a wall. You can't step in that direction.\nDue South\
+      \ there is a corridor that goes on for two meters before encountering a wall.\
+      \ You are able to see that the corridor has some lateral paths:\n   - After\
+      \ two meters there is a lateral path due West.\nDue West there is a wall. You\
+      \ can't step in that direction.\nThe moves you have made till now are: South,\
+      \ East, North, East, South\nThink through what you know and what you have observed\
+      \ in previous steps and then provide your answer."
+    response: "Let me try to figure out the next move.\n\n1. **Current Position Observations**:\n\
+      \   - North: Corridor leading back to where I came from, ends with a wall after\
+      \ 1 meter and has a lateral path West.\n   - East: Wall (can't go this way).\n\
+      \   - South: Corridor extends 2 meters with a wall at the end and has a lateral\
+      \ path West after 2 meters.\n   - West: Wall (can't go this way).\n\n2. **Possible\
+      \ Directions**:\n   Only South is available as both North, East, and West are\
+      \ blocked.\n\n3. **Decision Making**:\n   Moving South will allow me to explore\
+      \ further into the corridor that extends beyond my current sight. The lateral\
+      \ path West after 2 meters could lead towards the exit or provide additional\
+      \ paths to explore.\n\n4. **Next Move**:\n   Proceeding South to investigate\
+      \ the new corridor and potential lateral path.\n\nsouth"
+  - prompt: "You move one meter South\n\nDue North there is a corridor that goes on\
+      \ for two meters before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After two meters there is a lateral path due\
+      \ West.\nDue East there is a wall. You can't step in that direction.\nDue South\
+      \ there is a corridor that goes on for one meter before encountering a wall.\
+      \ You are able to see that the corridor has some lateral paths:\n   - After\
+      \ one meter there is a lateral path due West.\nDue West there is a wall. You\
+      \ can't step in that direction.\nThe moves you have made till now are: South,\
+      \ East, North, East, South, South\nThink through what you know and what you\
+      \ have observed in previous steps and then provide your answer."
+    response: west
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\n\n\
+      Due North there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due West.\nDue East there is a\
+      \ wall. You can't step in that direction.\nDue South there is a corridor that\
+      \ goes on for one meter before encountering a wall. You are able to see that\
+      \ the corridor has some lateral paths:\n   - After one meter there is a lateral\
+      \ path due West.\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: South, East, North, East, South, South\n\
+      Think through what you know and what you have observed in previous steps and\
+      \ then provide your answer."
+    response: "Alright, let's break this down step by step.\n\n1. **Current Position\
+      \ Observations**:\n   - **North**: A corridor extends 2 meters with a wall at\
+      \ the end. There's a lateral path West after 2 meters.\n   - **East**: Wall\
+      \ (can't go this way).\n   - **South**: A corridor that goes on for 1 meter\
+      \ before hitting a wall, with a lateral path West after 1 meter.\n   - **West**:\
+      \ Wall (can't go this way).\n\n2. **Possible Directions**:\n   Only North and\
+      \ South are available since East and West are blocked by walls.\n\n3. **Decision\
+      \ Making**:\n   - Moving **North** leads back towards previously explored areas\
+      \ without clear progress toward the exit.\n   - Moving **South** continues deeper\
+      \ into the maze, potentially closer to an exit on the border.\n\n4. **Next Move**:\n\
+      \   Proceed South to explore further and move closer to a potential exit.\n\n\
+      south"
+  - prompt: 'You move one meter South
+
+
+      Due North the corridor stretches further than you can see, so you are unable
+      to predict what lies ahead.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West the corridor stretches further than you can see, so you are unable
+      to predict what lies ahead.
+
+      The moves you have made till now are: South, East, North, East, South, South,
+      South
+
+      Think through what you know and what you have observed in previous steps and
+      then provide your answer.'
+    response: Let's go West
+  - prompt: "You move one meter West\n\nDue North there is a wall. You can't step\
+      \ in that direction.\nDue East there is a corridor that goes on for one meter\
+      \ before encountering a wall. You are able to see that the corridor has some\
+      \ lateral paths:\n   - After one meter there is a lateral path due North.\n\
+      Due South there is a wall. You can't step in that direction.\nDue West there\
+      \ is a corridor that goes on for two meters before encountering a wall. You\
+      \ are able to see that the corridor has some lateral paths:\n   - After two\
+      \ meters there is a lateral path due North.\nThe moves you have made till now\
+      \ are: South, East, North, East, South, South, South, West\nThink through what\
+      \ you know and what you have observed in previous steps and then provide your\
+      \ answer."
+    response: Let's go North
+  - prompt: "\nYou try to walk North.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\n\n\
+      Due North there is a wall. You can't step in that direction.\nDue East there\
+      \ is a corridor that goes on for one meter before encountering a wall. You are\
+      \ able to see that the corridor has some lateral paths:\n   - After one meter\
+      \ there is a lateral path due North.\nDue South there is a wall. You can't step\
+      \ in that direction.\nDue West there is a corridor that goes on for two meters\
+      \ before encountering a wall. You are able to see that the corridor has some\
+      \ lateral paths:\n   - After two meters there is a lateral path due North.\n\
+      The moves you have made till now are: South, East, North, East, South, South,\
+      \ South, West\nThink through what you know and what you have observed in previous\
+      \ steps and then provide your answer."
+    response: Let's go East
+  - prompt: 'You move one meter East
+
+
+      Due North the corridor stretches further than you can see, so you are unable
+      to predict what lies ahead.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West the corridor stretches further than you can see, so you are unable
+      to predict what lies ahead.
+
+      The moves you have made till now are: South, East, North, East, South, South,
+      South, West, East
+
+      Think through what you know and what you have observed in previous steps and
+      then provide your answer.'
+    response: Let's go West
+  - prompt: "You move one meter West\n\nDue North there is a wall. You can't step\
+      \ in that direction.\nDue East there is a corridor that goes on for one meter\
+      \ before encountering a wall. You are able to see that the corridor has some\
+      \ lateral paths:\n   - After one meter there is a lateral path due North.\n\
+      Due South there is a wall. You can't step in that direction.\nDue West there\
+      \ is a corridor that goes on for two meters before encountering a wall. You\
+      \ are able to see that the corridor has some lateral paths:\n   - After two\
+      \ meters there is a lateral path due North.\nThe moves you have made till now\
+      \ are: South, East, North, East, South, South, South, West, East, West\nThink\
+      \ through what you know and what you have observed in previous steps and then\
+      \ provide your answer."
+    response: "I apologize for the confusion earlier. Let me try to find a clear path\
+      \ out.\n\n1. **Current Position Observations**:\n   - North: Wall.\n   - East:\
+      \ Corridor extends 1 meter with a wall at the end and has a lateral path North.\n\
+      \   - South: Wall.\n   - West: Corridor extends 2 meters with a wall at the\
+      \ end and has a lateral path North.\n\n2. **Possible Directions**:\n   Only\
+      \ East and West are available as both North and South are blocked.\n\n3. **Decision\
+      \ Making**:\n   I should avoid going back and forth without purpose. Moving\
+      \ East first to explore this corridor and its lateral paths might lead me closer\
+      \ to the exit.\n\n4. **Next Move**:\n   Proceeding East to investigate further.\n\
+      \neast"
+  - prompt: 'You move one meter East
+
+
+      Due North the corridor stretches further than you can see, so you are unable
+      to predict what lies ahead.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West the corridor stretches further than you can see, so you are unable
+      to predict what lies ahead.
+
+      The moves you have made till now are: South, East, North, East, South, South,
+      South, West, East, West, East
+
+      Think through what you know and what you have observed in previous steps and
+      then provide your answer.'
+    response: Let's go West
+  - prompt: "You move one meter West\n\nDue North there is a wall. You can't step\
+      \ in that direction.\nDue East there is a corridor that goes on for one meter\
+      \ before encountering a wall. You are able to see that the corridor has some\
+      \ lateral paths:\n   - After one meter there is a lateral path due North.\n\
+      Due South there is a wall. You can't step in that direction.\nDue West there\
+      \ is a corridor that goes on for two meters before encountering a wall. You\
+      \ are able to see that the corridor has some lateral paths:\n   - After two\
+      \ meters there is a lateral path due North.\nThe moves you have made till now\
+      \ are: South, East, North, East, South, South, South, West, East, West, East,\
+      \ West\nThink through what you know and what you have observed in previous steps\
+      \ and then provide your answer."
+    response: "Let me think:\n\n1. **Current Position Observations**:\n   - North:\
+      \ Wall.\n   - East: Corridor extends 1 meter with a wall at the end and has\
+      \ a lateral path North.\n   - South: Wall.\n   - West: Corridor extends 2 meters\
+      \ with a wall at the end and has a lateral path North.\n\n2. **Possible Directions**:\n\
+      \   Only East and West are available as both North and South are blocked.\n\n\
+      3. **Decision Making**:\n   I should avoid going back and forth without purpose.\
+      \ Moving East first to explore this corridor and its lateral paths might lead\
+      \ me closer to the exit.\n\n4. **Next Move**:\n   Proceeding East to investigate\
+      \ further.\n\neast"
+  - prompt: 'You move one meter East
+
+
+      Due North the corridor stretches further than you can see, so you are unable
+      to predict what lies ahead.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West the corridor stretches further than you can see, so you are unable
+      to predict what lies ahead.
+
+      The moves you have made till now are: South, East, North, East, South, South,
+      South, West, East, West, East, West, East
+
+      Think through what you know and what you have observed in previous steps and
+      then provide your answer.'
+    response: Let's go West
+  - prompt: "You move one meter West\n\nDue North there is a wall. You can't step\
+      \ in that direction.\nDue East there is a corridor that goes on for one meter\
+      \ before encountering a wall. You are able to see that the corridor has some\
+      \ lateral paths:\n   - After one meter there is a lateral path due North.\n\
+      Due South there is a wall. You can't step in that direction.\nDue West there\
+      \ is a corridor that goes on for two meters before encountering a wall. You\
+      \ are able to see that the corridor has some lateral paths:\n   - After two\
+      \ meters there is a lateral path due North.\nThe moves you have made till now\
+      \ are: South, East, North, East, South, South, South, West, East, West, East,\
+      \ West, East, West\nThink through what you know and what you have observed in\
+      \ previous steps and then provide your answer."
+    response: 'After carefully considering the observations and the available directions,
+      I decide to move east to explore further.
+
+
+      east'
+  - prompt: 'You move one meter East
+
+
+      Due North the corridor stretches further than you can see, so you are unable
+      to predict what lies ahead.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West the corridor stretches further than you can see, so you are unable
+      to predict what lies ahead.
+
+      The moves you have made till now are: South, East, North, East, South, South,
+      South, West, East, West, East, West, East, West, East
+
+      Think through what you know and what you have observed in previous steps and
+      then provide your answer.'
+    response: 'Let''s move west.
+
+
+      west'
+  - prompt: "You move one meter West\n\nDue North there is a wall. You can't step\
+      \ in that direction.\nDue East there is a corridor that goes on for one meter\
+      \ before encountering a wall. You are able to see that the corridor has some\
+      \ lateral paths:\n   - After one meter there is a lateral path due North.\n\
+      Due South there is a wall. You can't step in that direction.\nDue West there\
+      \ is a corridor that goes on for two meters before encountering a wall. You\
+      \ are able to see that the corridor has some lateral paths:\n   - After two\
+      \ meters there is a lateral path due North.\nThe moves you have made till now\
+      \ are: South, East, North, East, South, South, South, West, East, West, East,\
+      \ West, East, West, East, West\nThink through what you know and what you have\
+      \ observed in previous steps and then provide your answer."
+    response: "Let me think:\n\n1. **Current Position Observations**:\n   - North:\
+      \ Wall.\n   - East: Corridor extends 1 meter with a wall at the end and has\
+      \ a lateral path North.\n   - South: Wall.\n   - West: Corridor extends 2 meters\
+      \ with a wall at the end and has a lateral path North.\n\n2. **Possible Directions**:\n\
+      \   Only East and West are available as both North and South are blocked.\n\n\
+      3. **Decision Making**:\n   I should avoid going back and forth without purpose.\
+      \ Moving West first to explore this corridor and its lateral paths might lead\
+      \ me closer to the exit.\n\n4. **Next Move**:\n   Proceeding West to investigate\
+      \ further.\n\nwest"
+  - prompt: "You move one meter West\n\nDue North there is a wall. You can't step\
+      \ in that direction.\nDue East there is a corridor that goes on for two meters\
+      \ before encountering a wall. You are able to see that the corridor has some\
+      \ lateral paths:\n   - After two meters there is a lateral path due North.\n\
+      Due South there is a wall. You can't step in that direction.\nDue West there\
+      \ is a corridor that goes on for one meter before encountering a wall. You are\
+      \ able to see that the corridor has some lateral paths:\n   - After one meter\
+      \ there is a lateral path due North.\nThe moves you have made till now are:\
+      \ South, East, North, East, South, South, South, West, East, West, East, West,\
+      \ East, West, East, West, West\nThink through what you know and what you have\
+      \ observed in previous steps and then provide your answer."
+    response: "Let me try to find a clear path out.\n\n1. **Current Position Observations**:\n\
+      \   - North: Wall.\n   - East: Corridor extends 2 meters with a wall at the\
+      \ end and has a lateral path North after 2 meters.\n   - South: Wall.\n   -\
+      \ West: Corridor extends 1 meter with a wall at the end and has a lateral path\
+      \ North after 1 meter.\n\n2. **Possible Directions**:\n   Only East and West\
+      \ are available as both North and South are blocked.\n\n3. **Decision Making**:\n\
+      \   Since I've been moving back and forth between East and West without making\
+      \ progress, it might be more effective to choose one direction and commit to\
+      \ exploring it thoroughly. Moving West first could potentially lead me closer\
+      \ to the exit or reveal a new path.\n\n4. **Next Move**:\n   Proceeding West\
+      \ to investigate further.\n\nwest"
+  - prompt: "You move one meter West\n\nDue North the corridor stretches further than\
+      \ you can see, so you are unable to predict what lies ahead. You are able to\
+      \ see that the corridor has some lateral paths:\n   - After one meter there\
+      \ is a lateral path due East.\nDue East the corridor stretches further than\
+      \ you can see, so you are unable to predict what lies ahead.\nDue South there\
+      \ is a wall. You can't step in that direction.\nDue West there is a wall. You\
+      \ can't step in that direction.\nThe moves you have made till now are: South,\
+      \ East, North, East, South, South, South, West, East, West, East, West, East,\
+      \ West, East, West, West, West\nThink through what you know and what you have\
+      \ observed in previous steps and then provide your answer."
+    response: "Let me think:\n\n1. **Current Position Observations**:\n   - North:\
+      \ Corridor stretches further than I can see with a lateral path East after 1\
+      \ meter.\n   - East: Corridor stretches further than I can see.\n   - South:\
+      \ Wall.\n   - West: Wall.\n\n2. **Possible Directions**:\n   Only North and\
+      \ East are available as both South and West are blocked.\n\n3. **Decision Making**:\n\
+      \   Since moving West leads to a wall, I should prioritize exploring the corridor\
+      \ to the North or East. The lateral path to the East in the northern corridor\
+      \ might lead me closer to the exit.\n\n4. **Next Move**:\n   Proceeding North\
+      \ to investigate further and check the lateral path.\n\nnorth"
+  - prompt: "You move one meter North\n\nDue North you can see a natural light shining\
+      \ in that direction, it is probably the direction of the exit!\nDue East there\
+      \ is a corridor that goes on for two meters before encountering a wall. The\
+      \ corridor ends without any lateral paths.\nDue South there is a corridor that\
+      \ goes on for one meter before encountering a wall. You are able to see that\
+      \ the corridor has some lateral paths:\n   - After one meter there is a lateral\
+      \ path due East.\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: South, East, North, East, South, South,\
+      \ South, West, East, West, East, West, East, West, East, West, West, West, North\n\
+      Think through what you know and what you have observed in previous steps and\
+      \ then provide your answer."
+    response: "Let me think:\n\n1. **Current Position Observations**:\n   - **North**:\
+      \ You can see natural light, which likely indicates the exit.\n   - **East**:\
+      \ Corridor extends 2 meters with a wall at the end; no lateral paths mentioned.\n\
+      \   - **South**: Corridor extends 1 meter with a wall and has a lateral path\
+      \ East after 1 meter.\n   - **West**: Wall.\n\n2. **Possible Directions**:\n\
+      \   North is the most promising as it leads towards the exit. East and South\
+      \ are available but less likely to lead directly out.\n\n3. **Decision Making**:\n\
+      \   Since the exit is visible to the North, moving in that direction is the\
+      \ logical choice to escape.\n\n4. **Next Move**:\n   Proceeding North towards\
+      \ the light to reach the exit.\n\nnorth"
+  - prompt: "You move one meter North\n\nDue North you can see a natural light shining\
+      \ in that direction, it is probably the direction of the exit!\nDue East there\
+      \ is a wall. You can't step in that direction.\nDue South there is a corridor\
+      \ that goes on for two meters before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due East.\n   - After two meters there is a lateral path due\
+      \ East.\nDue West there is a wall. You can't step in that direction.\nThe moves\
+      \ you have made till now are: South, East, North, East, South, South, South,\
+      \ West, East, West, East, West, East, West, East, West, West, West, North, North\n\
+      Think through what you know and what you have observed in previous steps and\
+      \ then provide your answer."
+    response: "Let me think:\n\n1. **Current Position Observations**:\n   - **North**:\
+      \ You can see natural light, indicating the exit is near.\n   - **East**: Wall.\n\
+      \   - **South**: Corridor extends 2 meters with a wall at the end and has lateral\
+      \ paths East after 1 and 2 meters.\n   - **West**: Wall.\n\n2. **Possible Directions**:\n\
+      \   North is still the most promising direction as it leads towards the exit.\
+      \ South, despite having corridors, does not seem to lead directly out.\n\n3.\
+      \ **Decision Making**:\n   Since you are close to the exit in the North, continue\
+      \ moving North to escape.\n\n4. **Next Move**:\n   Proceeding North towards\
+      \ the light to reach the exit.\n\nnorth"
+  - prompt: "You move one meter North\n\nDue North you can see the exit in that direction!\
+      \ One last step and you are out of the maze!\nDue East there is a wall. You\
+      \ can't step in that direction.\nDue South the corridor stretches further than\
+      \ you can see, so you are unable to predict what lies ahead. You are able to\
+      \ see that the corridor has some lateral paths:\n   - After two meters there\
+      \ is a lateral path due East.\nDue West there is a wall. You can't step in that\
+      \ direction.\nThe moves you have made till now are: South, East, North, East,\
+      \ South, South, South, West, East, West, East, West, East, West, East, West,\
+      \ West, West, North, North, North\nThink through what you know and what you\
+      \ have observed in previous steps and then provide your answer."
+    response: 'Finally! The exit is within sight due north. I should take the last
+      step to escape the maze.
+
+
+      north'
+illegal_directions: 2
+illegal_responses: 0
+execution_time: 5014.779214143753

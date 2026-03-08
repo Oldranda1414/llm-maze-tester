@@ -1,0 +1,259 @@
+maze:
+  horizontal:
+  - - true
+    - false
+    - false
+  - - false
+    - true
+    - false
+  - - true
+    - true
+    - false
+  vertical:
+  - - true
+    - true
+    - true
+  - - false
+    - false
+    - true
+  - - false
+    - false
+    - false
+  start:
+  - 1
+  - 0
+  target:
+  - 1
+  - 2
+  path:
+  - - 1
+    - 0
+  - - 0
+    - 0
+  - - 0
+    - 1
+  - - 1
+    - 1
+  - - 1
+    - 2
+  sight_depth: 2
+  size: 3
+  solved: true
+chat_history:
+  system_prompt: '
+
+    You are a maze solving model. You are an expert in solving classic lattice mazes.
+
+
+    The user will provide you with descriptions of what you can perceive from inside
+    the maze.
+
+    Just like a classic maze the exit is on the border. The starting position could
+    be anywhere in the maze.
+
+    Your goal is to find the maze exit. Once you reach it you must step out of the
+    maze with one last move.
+
+
+    After the user provides you with informations regarding you current surroundings,
+    you will provide the direction to step towards next.
+
+    The possible directions are north, east, south, west.
+
+
+    The maze is a 3 x 3 grid, with every square in the grid being one square meter
+    big.
+
+    You are advised to think out loud about what your next move should be, but remember
+    that the last thing you write must be a valid direction.
+
+
+    You are allowed to output the direction with any casing you want, as long as it
+    is the last thing in your answer.
+
+    Here are some examples of valid end of response, in case you decide to move due
+    north:
+
+
+    - Let''s go North
+
+    - I want to step N!
+
+    - My next move will be north.
+
+
+    Try to formulate a plan and keep track of what what tiles you have already visited
+    to ensure you are making progress in exploring the maze.
+
+    '
+  chat:
+  - prompt: 'Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Okay, let''s analyze this carefully. The user has provided a description
+      of the current surroundings in the maze. From the description, it seems like
+      the starting position is somewhere in the maze, and the user has examined all
+      four directions.
+
+
+      Breaking down the information:
+
+      - Due North: There''s a corridor that extends for one meter before hitting a
+      wall. Importantly, there are lateral paths open along this corridor, meaning
+      it''s not a dead end and there might be multiple paths to explore.
+
+      - Due East, South, and West: All blocked by walls, so those directions are impassable.
+
+
+      This suggests that the starting position is likely in a part of the maze where
+      the north direction leads into a corridor with potential branching paths. Since
+      the other directions are blocked, the only viable move is to head north to explore
+      this corridor.
+
+
+      The user mentioned that lateral paths are open along the way, which implies
+      that the path might have junctions or opportunities to change direction soon.
+      I should consider marking this square as visited and planning to explore the
+      north corridor first, keeping track of visited squares to avoid cycles.
+
+
+      Given that the exit is on the border, moving north might bring us closer to
+      the edge or lead to areas with more open paths. Since the other directions are
+      blocked, focusing on the north corridor is the logical first step.
+
+
+      I''ll proceed by moving north to explore this corridor, as it''s the only accessible
+      direction. This might lead to dead ends or further corridors, but it''s the
+      only path forward at this point.
+
+      </think>
+
+      North'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Okay, I''ve moved North. Now, let''s analyze this new position.
+
+
+      From here, I can''t go North or West because there are walls. But there are
+      two corridors to explore: East and South.
+
+
+      The East corridor goes on for one meter and has open lateral paths, but it doesn''t
+      specify if it leads directly to the exit or not.
+
+
+      The South corridor goes on for one meter and is a dead end. Since it''s a dead
+      end, I probably shouldn''t go that way unless I have to, because it might waste
+      time.
+
+
+      So, my best bet is to go East, explore that corridor, and see where it leads.
+      That seems like the most promising direction to find progress towards the exit.
+
+
+      Therefore, my next move should be East.'
+  - prompt: 'You move one meter East
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Okay, I''ve moved East. Let''s analyze this new position carefully.
+
+
+      From here, I can''t go East or North because there are walls. That leaves me
+      with two corridors: South and West.
+
+
+      Both corridors go on for one meter and are not dead ends, as there are lateral
+      paths open along the way. This suggests there might be branching paths or multiple
+      ways to explore.
+
+
+      Since the exit is on the border, I need to be methodical. I should explore one
+      corridor fully before backtracking if necessary. Let''s choose to go South first,
+      as it''s the first corridor mentioned.
+
+
+      Therefore, my next move should be South.'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East you can see a natural light shining in that direction, it is probably
+      the direction of the exit!
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'I''ve moved South. Now, from here, I can see that East has a natural
+      light, which is likely the exit. Since the exit is on the border, and East shows
+      signs of being the way out, I should move in that direction.
+
+
+      But I need to confirm if this is the best move. Let me think step by step.
+
+
+      First, I can''t go South or West because there are walls. North leads to a corridor,
+      but it''s not clear if it''s the fastest way to the exit.
+
+
+      The East direction has a natural light, which is a strong indicator that I''m
+      close to the exit. The exit is on the border, so moving East could potentially
+      lead me directly to it.
+
+
+      Since the goal is to find the exit, and this is a clear sign, I should prioritize
+      moving East.
+
+
+      Therefore, my next move is East.'
+  - prompt: 'You move one meter East
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East you can see the exit in that direction! One last step and you are out
+      of the maze!
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I can see the exit to the East! This is a clear indication that moving
+      East will lead me out of the maze. Since the exit is on the border and I''m
+      now one step away from it, I should proceed directly to East.
+
+
+      Therefore, my final move is East.'
+illegal_directions: 0
+illegal_responses: 0
+execution_time: 22.725228548049927

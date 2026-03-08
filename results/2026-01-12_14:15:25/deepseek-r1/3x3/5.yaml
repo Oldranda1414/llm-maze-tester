@@ -1,0 +1,513 @@
+git_hash: fb3cfc377fa8d03577237d0cabbc6cbf67e37bdc
+maze:
+  horizontal:
+  - - true
+    - true
+    - false
+  - - false
+    - false
+    - false
+  - - true
+    - false
+    - false
+  vertical:
+  - - false
+    - true
+    - true
+  - - true
+    - true
+    - true
+  - - false
+    - false
+    - false
+  start:
+  - 1
+  - 1
+  target:
+  - 1
+  - 0
+  path:
+  - - 1
+    - 1
+  - - 0
+    - 1
+  - - 1
+    - 1
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 1
+    - 0
+  decisions:
+  - N
+  - S
+  - S
+  - W
+  - N
+  - W
+  sight_depth: 2
+  size: 3
+  solved: true
+chat_history:
+  system_prompt: '
+
+    You are a maze solving model. You are an expert in solving classic lattice mazes.
+
+
+    The user will provide you with descriptions of what you can perceive from inside
+    the maze.
+
+    Just like a classic maze the exit is on the border. The starting position could
+    be anywhere in the maze.
+
+    Your goal is to find the maze exit. Once you reach it you must step out of the
+    maze with one last move.
+
+
+    After the user provides you with informations regarding you current surroundings,
+    you will provide the direction to step towards next.
+
+    The possible directions are north, east, south, west.
+
+
+    The maze is a 3 x 3 grid, with every square in the grid being one square meter
+    big.
+
+    You are advised to think out loud about what your next move should be, but remember
+    that the last thing you write must be a valid direction.
+
+
+    You are allowed to output the direction with any casing you want, as long as it
+    is the last thing in your answer.
+
+    Here are some examples of valid end of response, in case you decide to move due
+    north:
+
+
+    - Let''s go North
+
+    - I want to step N!
+
+    - My next move will be north.
+
+
+    Try to formulate a plan and keep track of what what tiles you have already visited
+    to ensure you are making progress in exploring the maze.
+
+    '
+  chat:
+  - prompt: 'Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: "I'm starting to get a clear picture of this maze. From the description,\
+      \ I'm in a central position because I have corridors to the north and south,\
+      \ and walls to the east and west. That means I'm probably in the middle of the\
+      \ 3x3 grid, which is tile (2,2) if we number rows and columns from 1 to 3, with\
+      \ (1,1) being the top-left corner.\n\nLet me sketch out the grid to keep track:\n\
+      \n- Row 1: (1,1), (1,2), (1,3)\n- Row 2: (2,1), (2,2), (2,3)\n- Row 3: (3,1),\
+      \ (3,2), (3,3)\n\nI'm at (2,2). The exit is on the border, so it could be any\
+      \ of the edges: row 1, row 3, column 1, or column 3.\n\nNow, looking at the\
+      \ directions:\n\n- Due North: A corridor that goes one meter before a wall,\
+      \ with lateral paths open. Since it's a one-meter corridor, it leads to (2,3)\
+      \ or something? Wait, no. In a 3x3 grid, moving north from (2,2) would take\
+      \ me to (1,2). But the corridor goes one meter before a wall. That might imply\
+      \ that from (2,2), moving north, I'm not directly at the wall, but there's a\
+      \ path.\n\nI need to interpret this carefully. The description says \"due north\
+      \ there is a corridor that goes on for one meter before encountering a wall.\"\
+      \ So, from my current position, if I face north, I can move one meter into the\
+      \ corridor, but then I hit a wall. That means the corridor extends to the next\
+      \ tile in that direction.\n\nSimilarly for south.\n\nBut the grid is small,\
+      \ only 3x3, so each tile is one meter, so moving one step should take me to\
+      \ adjacent tiles.\n\nAssume that \"due north\" means the direction towards increasing\
+      \ row number or decreasing row number? Typically in grids, north might mean\
+      \ up or down depending on convention.\n\nIn standard computer graphics, often\
+      \ y-axis increases downward, so north might be up, decreasing row.\n\nBut in\
+      \ maze descriptions, it can vary. Let's define: let's say row 1 is top, row\
+      \ 3 is bottom. So moving north decreases row number, south increases row number.\n\
+      \nFrom (2,2):\n\n- North: to (1,2)\n- South: to (3,2)\n- East: to (2,3)\n- West:\
+      \ to (2,1)\n\nThe user said:\n\n- Due North: corridor goes one meter before\
+      \ wall. So from (2,2), moving north to (1,2), and there's a corridor there,\
+      \ meaning (1,2) is accessible, and it leads to a wall after one meter? But (1,2)\
+      \ is one tile, so moving to (1,2) is one meter, and if there's a wall after\
+      \ that, it might mean that from (1,2), I can't go further north, but in a 3x3\
+      \ grid, (1,2) is the top edge, so if I try to go north from (1,2), I hit the\
+      \ border wall.\n\nThe description says: \"Due North there is a corridor that\
+      \ goes on for one meter before encountering a wall.\" And \"the corridor ends\
+      \ with a wall.\"\n\nAlso, \"some of the lateral paths along the way are open.\"\
+      \ So it's not a dead end.\n\nSimilarly for south.\n\nFor north: from (2,2),\
+      \ there is a corridor to (1,2), and moving north from there hits a wall. But\
+      \ (1,2) is on the border, so if I'm at (2,2), moving north should take me directly\
+      \ to (1,2), and since (1,2) is the top edge, I might not be able to go beyond\
+      \ it.\n\nPerhaps the corridor description means that from (2,2), the path to\
+      \ the north is not blocked, and it leads to (1,2), but (1,2) itself might have\
+      \ connections.\n\nI should think of the maze as having walls between tiles,\
+      \ not on the tiles themselves.\n\nMaybe it's better to think that the \"due\
+      \ north\" direction refers to the adjacent tile in that direction.\n\nSo, from\
+      \ (2,2):\n\n- Due North: the tile to the north is (1,2), and it is accessible,\
+      \ and from there, the corridor continues or something.\n\nThe description says:\
+      \ \"there is a corridor that goes on for one meter before encountering a wall.\"\
+      \ So, when I move north from (2,2), I enter a corridor that is one meter long,\
+      \ ending at a wall. But in a grid, moving from (2,2) to (1,2) is one meter,\
+      \ so if the corridor is one meter long, that might mean (1,2) is part of the\
+      \ corridor, and beyond (1,2) is a wall.\n\nBut (1,2) is on the border, so if\
+      \ I try to move north from (1,2), I would hit the exit or wall, but the exit\
+      \ is on the border, so perhaps (1,2) is not the exit, or it is.\n\nThe exit\
+      \ is on the border, but not necessarily every border tile is exit. The exit\
+      \ is one specific tile on the border.\n\nAlso, the corridor has lateral paths\
+      \ open, so there are connections to other tiles.\n\nLet's parse the north description:\
+      \ \"Due North there is a corridor that goes on for one meter before encountering\
+      \ a wall.\"\n\nI think \"corridor\" here might refer to the passage in that\
+      \ direction, and \"goes on for one meter\" means that the passage extends one\
+      \ meter, so from (2,2), moving north, I can go to (1,2), and that's it, or perhaps\
+      \ further, but it says it ends with a wall after one meter.\n\nBut in a 3x3\
+      \ grid, tiles are one meter, so moving to (1,2) is one meter, and if there's\
+      \ a wall beyond, but (1,2) is the northernmost, so beyond (1,2) is out of bounds.\n\
+      \nPerhaps the corridor is within the same row or something.\n\nAnother way:\
+      \ maybe the \"corridor\" is the path, and \"goes on for one meter\" means that\
+      \ from the current position, the path extends one tile in that direction.\n\n\
+      So for north, from (2,2), the north corridor allows me to move to (1,2), and\
+      \ (1,2) is accessible, but I cannot move further north from (1,2) because it's\
+      \ the border.\n\nSimilarly for south.\n\nBut the user also said \"some of the\
+      \ lateral paths along the way are open,\" so even though the direct corridor\
+      \ is short, there are connections to other directions.\n\nLet's list what I\
+      \ can and cannot do.\n\nFrom the user's input:\n\n- Due East: wall, cannot go.\n\
+      - Due West: wall, cannot go.\n\nSo from (2,2), east and west are blocked, so\
+      \ I can only go north or south.\n\nNorth: corridor, can go, but only one meter,\
+      \ so to (1,2).\n\nSouth: corridor, can go, one meter, to (3,2).\n\nAnd lateral\
+      \ paths are open, meaning that from (1,2) and (3,2), there might be connections\
+      \ to other tiles.\n\nBut since east and west are walls from (2,2), perhaps the\
+      \ lateral paths are to the east or west, but from (1,2), if I can go east or\
+      \ west, but the user didn't specify from (1,2), only from the current position.\n\
+      \nThe user is describing the current surroundings from (2,2), so the directions\
+      \ are relative to (2,2).\n\nSo, from (2,2):\n\n- North: can move to (1,2), and\
+      \ there's a corridor that extends one meter to a wall, so (1,2) is accessible,\
+      \ and it's the end of that corridor.\n\n- South: similarly, can move to (3,2).\n\
+      \n- East and West: walls, cannot go.\n\nNow, the \"lateral paths along the way\
+      \ are open\" probably means that while moving in the north-south direction,\
+      \ there are side passages, but in this case, since it's a 3x3 grid, and I'm\
+      \ in the center, moving north to (1,2), which is adjacent, and lateral might\
+      \ mean east or west from there.\n\nBut from (2,2), east and west are walls,\
+      \ so perhaps from (1,2), the east and west are open, but I need to explore that.\n\
+      \nAlso, the exit is on the border. Possible exits are (1,1), (1,2), (1,3), (2,1),\
+      \ (2,3), (3,1), (3,2), (3,3), but (2,1) and (2,3) are on the border since they\
+      \ are on the left and right edges.\n\nAll tiles on row 1, row 3, column 1, column\
+      \ 3 are border tiles.\n\nBut the exit is one specific tile.\n\nNow, my current\
+      \ position is (2,2), and I can go north to (1,2) or south to (3,2).\n\nSince\
+      \ the grid is small, I should explore one direction and see what I can find.\n\
+      \nAlso, I need to keep track of visited tiles to avoid loops.\n\nI haven't visited\
+      \ any tiles yet, so both (1,2) and (3,2) are unvisited.\n\nNow, which one to\
+      \ choose? I should pick one and go.\n\nBut let's think about the lateral paths.\
+      \ The user said for north corridor, \"some of the lateral paths along the way\
+      \ are open.\" Since the corridor is only one meter long, \"along the way\" might\
+      \ mean from (2,2) to (1,2), so perhaps there are lateral paths from (2,2) itself,\
+      \ but (2,2) is the current position, so from there, east and west are walls,\
+      \ so no lateral paths from here.\n\n\"Lateral paths\" probably refer to the\
+      \ corridors themselves or the tiles adjacent.\n\nPerhaps \"lateral paths\" mean\
+      \ that while in the north corridor, I can go sideways to other tiles.\n\nBut\
+      \ from (2,2) to (1,2) is a direct move, and (1,2) is a tile.\n\nAssume that\
+      \ moving to (1,2) is one step, and from (1,2), I can explore.\n\nSimilarly for\
+      \ south.\n\nNow, the corridor description says \"goes on for one meter before\
+      \ encountering a wall,\" so from (2,2), moving north, I can go to (1,2), and\
+      \ at (1,2), I hit a wall if I try to go further north, but since it's the border,\
+      \ that makes sense.\n\nAlso, \"some of the lateral paths along the way are open\"\
+      \ \u2014 since the corridor is short, \"along the way\" might be just from (2,2)\
+      \ to (1,2), so perhaps from (1,2), there are connections to other directions.\n\
+      \nBut I don't know yet.\n\nSimilarly for south.\n\nSince I can only go north\
+      \ or south from here, and east and west are blocked, I should choose one.\n\n\
+      Let me choose to go north first, to (1,2).\n\nThen, from there, I can explore.\n\
+      \nBut (1,2) is on the border, so it might be the exit, but probably not, since\
+      \ the user didn't say it's the exit, and there's more to explore.\n\nThe user\
+      \ didn't specify if (1,2) is the exit or not.\n\nSimilarly for (3,2).\n\nBut\
+      \ the exit is on the border, so it could be (1,2) or (1,1) or (1,3) etc.\n\n\
+      But from (2,2), I can only reach (1,2) or (3,2) directly.\n\nNow, to be efficient,\
+      \ I should go to a tile that might have more connections or is closer to the\
+      \ exit.\n\nBut I don't know where the exit is.\n\nSince the maze is small, I\
+      \ can just pick one direction.\n\nLet's go north to (1,2).\n\nThen, from (1,2),\
+      \ I can describe the surroundings, but the user will provide that later.\n\n\
+      For now, I need to output the direction.\n\nSo, my next move is north.\n\nBut\
+      \ let's confirm the grid orientation.\n\nI assumed row 1 is north, row 3 is\
+      \ south.\n\nBut sometimes in mazes, row 1 might be south, but I think for consistency,\
+      \ let's keep row 1 as top, north.\n\nSo, from (2,2) to (1,2) is north.\n\nYes.\n\
+      \nAlso, the user said for north: corridor goes one meter to wall, so (1,2) is\
+      \ that tile.\n\nSimilarly for south.\n\nNow, I should keep track of visited\
+      \ tiles.\n\nCurrent position: (2,2)\n\nUnvisited: all except (2,2)\n\nAfter\
+      \ moving to (1,2), I'll have visited (2,2) and (1,2).\n\nThen from (1,2), I\
+      \ can explore east or west, since north is blocked (border or wall).\n\nFrom\
+      \ (1,2), moving north: since it's row 1, probably wall or exit.\n\nBut let's\
+      \ not jump ahead.\n\nFor now, I think I should go north.\n\nBut the user might\
+      \ expect me to choose based on the description.\n\nAnother thing: the corridor\
+      \ has lateral paths open, so perhaps from (1,2), I can go to other tiles.\n\n\
+      But for now, I need to output the direction.\n\nSo, I'll go north.\n\nBut let's\
+      \ think about the south direction.\n\nSouth to (3,2) might be similar.\n\nBut\
+      \ no reason to prefer one over the other.\n\nPerhaps I should go to the one\
+      \ that is not the exit, but I don't know.\n\nSince the exit is on the border,\
+      \ and I'm in the center, I need to reach a border tile.\n\n(1,2) and (3,2) are\
+      \ both border tiles.\n\nAlso, (2,1) and (2,3) are border tiles, but I can't\
+      \ reach them directly from (2,2) because east and west are walls.\n\nSo, from\
+      \ (2,2), I can only reach (1,2) and (3,2) directly.\n\nThen, from (1,2), I can\
+      \ go east or west to (1,1) or (1,3), assuming no walls.\n\nSimilarly from (3,2).\n\
+      \nSo, to reach the other border tiles, I need to go through the lateral paths.\n\
+      \nBut from the description, lateral paths are open, so probably I can go to\
+      \ them.\n\nBut for now, I'll go north to (1,2).\n\nThen, from there, I can explore.\n\
+      \nSo, my next move is north.\n</think>\nI'm at the starting position, which\
+      \ appears to be the center of a 3x3 grid, tile (2,2). From here, I can only\
+      \ move north or south because the east and west directions are blocked by walls.\
+      \ The north corridor leads to tile (1,2), and the south corridor leads to tile\
+      \ (3,2). Since the grid is small and I need to explore the borders, I'll start\
+      \ by moving north to (1,2) to investigate that area first.\n\nLet's go North."
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.'
+    response: 'Okay, let''s analyze this new situation. I''m now at tile (1,2), which
+      is on the north border of the grid. From here, the directions are:
+
+
+      - Due North: Wall, cannot go.
+
+      - Due East: A corridor that goes two meters before a wall, with lateral paths
+      open. This means I can move east to (1,3) or possibly further, but since it''s
+      a 3x3 grid, moving east from (1,2) should take me to (1,3), and the corridor
+      continues from there.
+
+      - Due South: A corridor that goes two meters before a wall, with lateral paths
+      open. Since I''m at (1,2), moving south would take me to (2,2) or beyond.
+
+      - Due West: A corridor that goes one meter before a wall and is a dead end.
+      So from (1,2), moving west would take me to (1,1), and that''s the end.
+
+
+      Since I''m at (1,2), and the exit is on the border, it''s possible that (1,2)
+      itself is the exit, but I need to confirm. However, the user didn''t explicitly
+      say it''s the exit, so I''ll assume it''s not and continue exploring.
+
+
+      I need to keep track of visited tiles. Previously, I was at (2,2) and moved
+      north to (1,2). So now, visited tiles are (2,2) and (1,2).
+
+
+      Now, the possible moves from (1,2) are east, south, and west. West is a dead
+      end, so I shouldn''t go there. East has a corridor that goes two meters, which
+      might lead me out of the grid or to another tile, but in a 3x3, it should only
+      go to (1,3). South allows me to go back to (2,2) or further.
+
+
+      Since the east corridor is two meters long, it might not be a direct path to
+      the exit, but it could lead to (1,3), which is another border tile. Similarly,
+      south might lead me back to the center.
+
+
+      To avoid loops, I should not go back to (2,2) immediately if possible. But since
+      I just came from there, I might need to revisit it later.
+
+
+      Let''s consider the east direction first, as it leads to an unvisited tile (1,3).
+      The corridor goes two meters, but in a 3x3 grid, moving east from (1,2) to (1,3)
+      is one meter, so the corridor might extend beyond the grid or there might be
+      a mistake in my assumption. But based on the description, I''ll treat it as
+      a valid corridor.
+
+
+      Alternatively, the south corridor goes two meters, which from (1,2) south would
+      go to (2,2) and then to (3,2). But (2,2) is already visited, so I might loop.
+
+
+      Given that, I''ll choose to go east to (1,3), as it''s unvisited and might lead
+      to the exit.
+
+
+      But wait, the east corridor is described as going two meters before a wall.
+      In a 3x3 grid, moving east from (1,2) to (1,3) is one meter, so perhaps the
+      corridor continues or there''s a mistake. But I''ll proceed with the given information.
+
+
+      So, my next move is east.
+
+
+      Due East there is a corridor that goes on for one meter to (1,3), and it''s
+      not a dead end, so I''ll go there.'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Okay, let''s analyze this new position. I''m now at tile (2,2), which
+      is the center of the 3x3 grid. From here, the directions are:
+
+
+      - Due North: A corridor that goes one meter before a wall, with lateral paths
+      open. This means I can move north to (1,2).
+
+      - Due East: Wall, cannot go.
+
+      - Due South: A corridor that goes one meter before a wall, with lateral paths
+      open. This means I can move south to (3,2).
+
+      - Due West: Wall, cannot go.
+
+
+      Previously, I was at (1,2) and moved south to (2,2). So now, visited tiles are
+      (1,2) and (2,2).
+
+
+      Now, the only unvisited tiles are (3,2) to the south and (1,2) to the north,
+      but (1,2) was already visited. The exit is on the border, so the possible exit
+      tiles are (1,2), (1,3), (1,1), (3,2), (3,3), (3,1), (2,1), and (2,3). Since
+      (1,2) and (2,2) are visited, the unvisited border tiles are (1,3), (1,1), (3,2),
+      (3,3), (3,1), and (2,1), (2,3).
+
+
+      From (2,2), I can go north to (1,2) or south to (3,2). But (1,2) was already
+      visited, and it''s on the border, but I didn''t exit there, so maybe it''s not
+      the exit, or perhaps I need to check if I missed it. Since I just came from
+      (1,2), I should avoid going back immediately to prevent looping, but I need
+      to explore other directions.
+
+
+      The south direction to (3,2) is unvisited and on the border, so it could be
+      the exit. Similarly, east and west are walls, so I can''t go there.
+
+
+      I should try to move south to (3,2) first, as it''s unvisited and on the border.
+      If that doesn''t lead to the exit, I can come back and explore north again or
+      other directions, but since east and west are walls, I might be limited.
+
+
+      So, my next move is south.
+
+
+      Let''s go South.'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Okay, let''s analyze this new position. I''m now at tile (3,2), which
+      is on the south border of the 3x3 grid. From here, the directions are:
+
+
+      - Due North: A corridor that goes two meters before a wall, with lateral paths
+      open. This means I can move north to (2,2) or (1,2).
+
+      - Due East: Wall, cannot go.
+
+      - Due South: Wall, cannot go.
+
+      - Due West: A corridor that goes one meter before a wall, with lateral paths
+      open. This means I can move west to (3,1).
+
+
+      Previously, I was at (2,2) and moved south to (3,2). So now, visited tiles are
+      (2,2) and (3,2).
+
+
+      Now, the only unvisited tiles are (1,2), (1,1), (1,3), (2,1), (2,3), (3,1),
+      and (3,3). The exit is on the border, so the possible exit tiles are (1,2),
+      (1,3), (1,1), (3,2), (3,3), (3,1), (2,1), and (2,3). Since (3,2) is visited,
+      the unvisited border tiles are (1,2), (1,3), (1,1), (3,3), (3,1), and (2,1),
+      (2,3).
+
+
+      From (3,2), I can go north to (2,2) or west to (3,1). But (2,2) was already
+      visited, so I might loop if I go back there. The west direction to (3,1) is
+      unvisited and on the border, so it could be the exit.
+
+
+      I should try to move west to (3,1) first, as it''s unvisited and on the border.
+      If that doesn''t lead to the exit, I can revisit this tile and explore north
+      again.
+
+
+      So, my next move is west.'
+  - prompt: 'You move one meter West
+
+      Due North you can see a natural light shining in that direction, it is probably
+      the direction of the exit!
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'I can see natural light to the north, which suggests that direction
+      might lead to the exit. Since the exit is on the border and I''m currently at
+      (3,1) (based on the previous move), moving north would take me to (2,1). From
+      there, I should be closer to the exit.
+
+
+      Let me confirm the grid positions:
+
+      - Starting from the initial move, I was at (1,2), then moved south to (2,2),
+      then south to (3,2), then west to (3,1).
+
+
+      Now, from (3,1):
+
+      - Due North: Could be (2,1)
+
+      - Due East: Could be (3,2), but that''s already visited and has walls or restrictions.
+
+      - Due South: Wall
+
+      - Due West: Wall
+
+
+      Since I can see light to the north, and it''s likely the exit, I should move
+      north to (2,1). If (2,1) is on the border, it could be the exit or lead to it.
+
+
+      I''ll move north.'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West you can see the exit in that direction! One last step and you are out
+      of the maze!'
+    response: I can see the exit to the west! One last step will take me out. Let's
+      go West.
+illegal_directions: 0
+illegal_responses: 0
+execution_time: 138.3460931777954

@@ -1,0 +1,248 @@
+git_hash: 31669349e6fd724d9f282041d47780742fe8e81e
+maze:
+  horizontal:
+  - - false
+    - true
+    - false
+  - - true
+    - false
+    - false
+  - - true
+    - true
+    - false
+  vertical:
+  - - true
+    - false
+    - true
+  - - true
+    - false
+    - true
+  - - false
+    - false
+    - false
+  start:
+  - 0
+  - 1
+  target:
+  - 2
+  - 1
+  path:
+  - - 0
+    - 1
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 2
+    - 2
+  - - 2
+    - 1
+  decisions:
+  - E
+  - S
+  - S
+  - W
+  - S
+  colored_cells: []
+  sight_depth: 2
+  size: 3
+  solved: true
+chat_history:
+  system_prompt: "\nYou are a maze solving model. You are an expert in solving classic\
+    \ lattice mazes.\n\nThe user will provide you with descriptions of what you can\
+    \ perceive from inside the maze.\nThe information provided considers you to have\
+    \ a sight depth of two meters. Anything that is further away from you than two\
+    \ meters is not mentioned in the user prompt.\nJust like a classic lattice maze\
+    \ the exit is on the border. The starting position could be anywhere in the maze.\n\
+    Your goal is to find the maze exit. Once you reach it you must step out of the\
+    \ maze with one last move.\nThe maze is always solvable and the user is always\
+    \ honest on the information that he provides you.\n\nAfter the user provides you\
+    \ with informations regarding you current surroundings, you will provide the direction\
+    \ to step towards next.\nThe possible directions are north, east, south, west.\n\
+    \nThe maze is a 3 x 3 grid, with every square in the grid being one square meter\
+    \ big.\nUse brief, step-indexed reasoning. Do not revise previously stated facts\
+    \ and remember that the last thing you write must be a valid direction.\n\nYou\
+    \ are allowed to output the direction with any casing you want, as long as it\
+    \ is the last thing in your answer.\nHere are some examples of valid end of response,\
+    \ in case you decide to move due north:\n\n- Let's go North\n- I want to step\
+    \ N!\n- My next move will be north.\n\nTo keep track of the progress you make,\
+    \ maintain a persistent 2D map of the maze using ASCII characters..\nThis will\
+    \ help you track you progress and inform your decisions\n\nThe user notifies you\
+    \ when you move in a given direction, such as 'You move one meter west', if you\
+    \ decide to move due west.\nKeep in mind that after you step in a given direction,\
+    \ the information provided for what you percieve in the opposite direction refers\
+    \ to the area you are coming from.\nFor example, let's say that the user gives\
+    \ you this information:\n'''\n    Due North there is a wall. You can't step in\
+    \ that direction.\n    Due East there is a corridor that goes on for one meter\
+    \ before encountering a wall. It is a dead end.\n    Due South there is a corridor\
+    \ that goes on for two meters before encountering a wall. The corridor has some\
+    \ lateral paths.\n    Due West there is a wall. You can't step in that direction.\n\
+    '''\nIf you decide to move south, the user will then provide information regarding\
+    \ what can be perceived from your new position.\n'''\n    You move one meter south.\n\
+    \    Due North there is a corridor that goes on for one meter before encountering\
+    \ a wall. The corridor has some lateral paths.\n    Due East there is a wall.\
+    \ You can't step in that direction.\n    Due South there is a corridor that goes\
+    \ on for one meter before encountering a wall. The corridor has some lateral paths.\n\
+    \    Due West there is a wall. You can't step in that direction.\n'''\nThe info\
+    \ on the corridor due North refers to the cell you have just moved out of, so\
+    \ you have already explored that direction.\n"
+  chat:
+  - prompt: "Due North there is a wall. You can't step in that direction.\nDue East\
+      \ there is a corridor that goes on for one meter before encountering a wall.\
+      \ You are able to see that the corridor has some lateral paths:\n   - After\
+      \ one meter there is a lateral path due South.\nDue South there is a wall. You\
+      \ can't step in that direction.\nDue West there is a wall. You can't step in\
+      \ that direction."
+    response: 'Map:
+
+      S . .
+
+      # # .
+
+      # # .
+
+
+      Reasoning:
+
+      1.  I am at position (0,0) [x=0, y=0].
+
+      2.  North is a wall (x=0, y=-1). West is a wall (x=-1, y=0).
+
+      3.  East is a corridor. It is 1 meter long and ends in a wall.
+
+      4.  South is a wall (x=0, y=1).
+
+      5.  Since South, North, and West are walls, and East is a dead end, I cannot
+      move North, South, or West.
+
+      6.  Therefore, the only valid move is East.
+
+
+      My next move will be east.'
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a wall. You can't step in that direction.\n\
+      Due South there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due West.\nDue West there is a\
+      \ corridor that goes on for one meter before encountering a wall. The corridor\
+      \ ends without any lateral paths.\nThe moves you have made till now are: East"
+    response: "Map:\nS . #\n# # #\n# . .\n\nReasoning:\n1.  My current position is\
+      \ at (1,0).\n2.  North is a wall (1,-1). East is a wall (2,0).\n3.  West is\
+      \ a corridor 1m long ending in a wall (0,0). This confirms the exit is not there.\n\
+      4.  South is a corridor 2m long ending in a wall, with a lateral path to the\
+      \ West after 2m.\n    *   If I step South (1,1), the corridor continues to (1,2).\n\
+      \    *   At (1,2), a corridor goes West to (0,2).\n    *   At (0,2), there is\
+      \ a wall to the West, but the maze is 3x3. So (0,2) is on the border. This is\
+      \ the exit.\n5.  I have reached the border (Exit).\n\nI must step out of the\
+      \ maze with one last move.\n\nMy next move will be south."
+  - prompt: "You move one meter South\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ West.\nDue East there is a wall. You can't step in that direction.\nDue South\
+      \ there is a corridor that goes on for one meter before encountering a wall.\
+      \ You are able to see that the corridor has some lateral paths:\n   - After\
+      \ one meter there is a lateral path due West.\nDue West there is a wall. You\
+      \ can't step in that direction.\nThe moves you have made till now are: East,\
+      \ South"
+    response: 'Map:
+
+      S . #
+
+      # # .
+
+      # . .
+
+
+      Reasoning:
+
+      1.  My current position is at (1,1).
+
+      2.  North is a corridor ending in a wall at (1,0) with a lateral path to West.
+      Since I just moved South, (1,0) is my previous position, which I have already
+      explored (dead end). This confirms the exit is not in that direction.
+
+      3.  South is a corridor ending in a wall at (1,2) with a lateral path to West.
+      (1,2) is on the border. This is the exit.
+
+      4.  West and East are walls.
+
+
+      I must step out of the maze with one last move.
+
+
+      My next move will be south.'
+  - prompt: "You move one meter South\nDue North there is a corridor that goes on\
+      \ for two meters before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After two meters there is a lateral path due\
+      \ West.\nDue East there is a wall. You can't step in that direction.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West you can see a\
+      \ natural light shining in that direction, it is probably the direction of the\
+      \ exit!\nThe moves you have made till now are: East, South, South"
+    response: 'Map:
+
+      S . #
+
+      # # #
+
+      . . E
+
+
+      Reasoning:
+
+      1.  I am currently at (1,2).
+
+      2.  North is a corridor 2m long ending in a wall with a lateral path to the
+      West. At (1,0), the West path leads to (0,0), which is a wall. No exit there.
+
+      3.  South is a wall. I cannot go further South.
+
+      4.  East is a wall.
+
+      5.  Due West, I can see natural light. This confirms the exit is in this direction.
+
+      6.  Stepping West from (1,2) lands on (0,2), which is on the border of the 3x3
+      grid.
+
+
+      I must step out of the maze with one last move.
+
+
+      My next move will be west.'
+  - prompt: "You move one meter West\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for one meter before\
+      \ encountering a wall. You are able to see that the corridor has some lateral\
+      \ paths:\n   - After one meter there is a lateral path due North.\nDue South\
+      \ you can see the exit in that direction! One last step and you are out of the\
+      \ maze!\nDue West there is a corridor that goes on for one meter before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After one meter there is a lateral path due North.\nThe moves you have made\
+      \ till now are: East, South, South, West"
+    response: 'Map:
+
+      . . E
+
+      # # #
+
+      . . S
+
+
+      Reasoning:
+
+      1.  My current position is at (0,2), which is on the border of the maze.
+
+      2.  Due West is a corridor that goes 1m to ( -1,2), which is outside the maze
+      boundaries. This is the exit.
+
+      3.  Due South is the exit as stated in the prompt.
+
+      4.  North and East are walls.
+
+
+      I have successfully navigated the maze and reached the exit. I must step out
+      of the maze with one last move.
+
+
+      My next move will be south.'
+illegal_directions: 0
+illegal_responses: 0
+execution_time: 64.71715044975281

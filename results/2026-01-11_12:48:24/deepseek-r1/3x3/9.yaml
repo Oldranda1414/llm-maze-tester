@@ -1,0 +1,620 @@
+maze:
+  horizontal:
+  - - false
+    - true
+    - false
+  - - true
+    - false
+    - false
+  - - true
+    - true
+    - false
+  vertical:
+  - - true
+    - false
+    - true
+  - - true
+    - false
+    - true
+  - - false
+    - false
+    - false
+  start:
+  - 0
+  - 1
+  target:
+  - 2
+  - 1
+  path:
+  - - 0
+    - 1
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 2
+    - 2
+  - - 2
+    - 1
+  sight_depth: 2
+  size: 3
+  solved: true
+chat_history:
+  system_prompt: '
+
+    You are a maze solving model. You are an expert in solving classic lattice mazes.
+
+
+    The user will provide you with descriptions of what you can perceive from inside
+    the maze.
+
+    Just like a classic maze the exit is on the border. The starting position could
+    be anywhere in the maze.
+
+    Your goal is to find the maze exit. Once you reach it you must step out of the
+    maze with one last move.
+
+
+    After the user provides you with informations regarding you current surroundings,
+    you will provide the direction to step towards next.
+
+    The possible directions are north, east, south, west.
+
+
+    The maze is a 3 x 3 grid, with every square in the grid being one square meter
+    big.
+
+    You are advised to think out loud about what your next move should be, but remember
+    that the last thing you write must be a valid direction.
+
+
+    You are allowed to output the direction with any casing you want, as long as it
+    is the last thing in your answer.
+
+    Here are some examples of valid end of response, in case you decide to move due
+    north:
+
+
+    - Let''s go North
+
+    - I want to step N!
+
+    - My next move will be north.
+
+
+    Try to formulate a plan and keep track of what what tiles you have already visited
+    to ensure you are making progress in exploring the maze.
+
+    '
+  chat:
+  - prompt: 'Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: "Alright, let me break this down step by step. The maze is a 3x3 grid,\
+      \ and I need to find the exit, which is somewhere on the border. I'll keep track\
+      \ of visited positions to avoid loops and make progress.\n\nFirst, the user's\
+      \ description:  \n- **North**: Wall, blocked.  \n- **East**: A corridor that\
+      \ extends for one meter but ends with a wall. However, it mentions lateral paths\
+      \ are open, meaning there might be openings nearby but not directly accessible\
+      \ from here.  \n- **South**: Wall, blocked.  \n- **West**: Wall, blocked.  \n\
+      \nSince only East is open, I must move that way. The corridor goes for one meter,\
+      \ so it's a short path. The lateral paths being open suggests that from this\
+      \ East corridor, I might be close to other areas, but I need to explore carefully.\n\
+      \n**Plan:**  \n1. Move East to the first tile.  \n2. From there, I'll reassess\
+      \ the surroundings to see if the lateral paths (if any) are accessible or if\
+      \ I can find new open directions.  \n3. Keep track of visited tiles to prevent\
+      \ revisiting and looping.  \n\n**Reasoning:**  \n- Starting position unknown,\
+      \ but all directions except East are blocked. So, East is the only viable move.\
+      \  \n- Moving East might lead to a dead end or a new path, but the lateral paths\
+      \ being open hints that there might be multiple corridors converging here. \
+      \ \n- This move is necessary to progress; staying put won't help.  \n\nNext\
+      \ move: East."
+  - prompt: 'You move one meter East
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.'
+    response: "Alright, let's analyze this step by step. I've moved east once, and\
+      \ now I'm in a new position. Let me summarize what I know so far and plan my\
+      \ next move.\n\n### Current Situation:\n- **Grid Size**: 3x3, so there are only\
+      \ 9 tiles total. The exit is on the border, meaning it's likely on one of the\
+      \ edges.\n- **Visited Tiles**: I started from an unknown position, then moved\
+      \ east. Since I don't have a map, I'll keep track mentally. Let's assume the\
+      \ grid is labeled as follows for clarity:\n\n```\n(1,1) | (1,2) | (1,3)\n---------------------\n\
+      (2,1) | (2,2) | (2,3)\n---------------------\n(3,1) | (3,2) | (3,3)\n```\n\n\
+      - **Movement**: I moved east from my starting point (unknown) to this new tile.\
+      \ Let's say I was at tile (x,y) and moved to (x,y+1). Since the grid is small,\
+      \ I need to be careful not to revisit tiles.\n\n### Current Perceptions:\n-\
+      \ **North**: Wall \u2013 blocked.\n- **East**: Wall \u2013 blocked.\n- **South**:\
+      \ Corridor that goes for two meters, ends with a wall, but lateral paths are\
+      \ open (not a dead end).\n- **West**: Corridor that goes for one meter, ends\
+      \ with a wall, and it's a dead end.\n\n### Analysis:\n1. **South Direction**:\
+      \ This corridor goes two meters south. Since it's not a dead end, there might\
+      \ be openings or paths beyond the immediate corridor. This could be a promising\
+      \ direction to explore, as it might lead to more open areas or closer to the\
+      \ exit.\n\n2. **West Direction**: This corridor is a dead end, meaning it leads\
+      \ to a dead end with no further progress. Since it's a dead end, I shouldn't\
+      \ go this way because it would waste time and lead to a loop.\n\n3. **North\
+      \ and East**: Both are walls, so no movement possible in those directions.\n\
+      \n### Plan:\n- **Next Move**: I should move south because it offers a longer\
+      \ corridor with lateral paths open. This increases the chances of finding the\
+      \ exit or accessing new areas. The west direction is a dead end, so avoid that.\n\
+      \n- **Tracking Visited Tiles**: Since I don't have a map, I'll mentally note\
+      \ that I've been in the current tile and the one I moved from. I need to ensure\
+      \ I don't revisit tiles to avoid cycles.\n\n- **Goal**: Find the exit on the\
+      \ border. Moving south might bring me closer to the bottom edge, which could\
+      \ be where the exit is.\n\n### Decision:\nMove south one meter to explore the\
+      \ corridor and check for lateral paths or the exit.\n\n**Next Move**: South."
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: "Alright, let's break this down. I've moved south once, and now I'm\
+      \ in a new position. Here's what I know and how I'll proceed.\n\n### Current\
+      \ Situation:\n- **Grid Size**: 3x3, so only 9 tiles total. The exit is on the\
+      \ border, so it must be on one of the edges.\n- **Visited Tiles**: I started\
+      \ from an unknown position, moved east once, then south once. I need to keep\
+      \ track to avoid loops. Let's mentally map this:\n  - Assume the grid is labeled\
+      \ as follows for clarity:\n    ```\n    (1,1) | (1,2) | (1,3)\n    ---------------------\n\
+      \    (2,1) | (2,2) | (2,3)\n    ---------------------\n    (3,1) | (3,2) | (3,3)\n\
+      \    ```\n  - My path so far:\n    - Start: Unknown, but I moved east to (x,y+1),\
+      \ then south to (x,y+2).\n    - Since the grid is small, I'll need to infer\
+      \ positions based on walls and open paths.\n\n### Current Perceptions:\n- **North**:\
+      \ Corridor that goes one meter, ends with a wall, but lateral paths are open\
+      \ (not a dead end).\n- **East**: Wall, blocked.\n- **South**: Corridor that\
+      \ goes one meter, ends with a wall, lateral paths open (not a dead end).\n-\
+      \ **West**: Wall, blocked.\n\n### Analysis:\n1. **North Direction**: There's\
+      \ a short corridor to the north, but it's only one meter long and ends in a\
+      \ wall. However, lateral paths are open, meaning there might be side passages\
+      \ or openings nearby. This could be a way to access new areas, but it's a dead\
+      \ end in the north direction itself.\n\n2. **South Direction**: Similar to north,\
+      \ there's a one-meter corridor south that ends in a wall but has lateral paths\
+      \ open. This suggests that moving south might not lead directly to the exit,\
+      \ but there could be side paths to explore.\n\n3. **East and West**: Both are\
+      \ blocked by walls, so no movement possible in those directions.\n\n### Plan:\n\
+      - **Next Move**: I should explore the lateral paths from here, since both north\
+      \ and south corridors have open lateral paths. The fact that lateral paths are\
+      \ mentioned in both directions suggests that I might be in a corridor that connects\
+      \ to side areas, which could be where the exit is.\n\n- **Avoiding Loops**:\
+      \ Since I've only moved east and south so far, I should try to move north or\
+      \ south again to explore the corridors, but I need to be cautious not to revisit\
+      \ tiles. The lateral paths might lead to unexplored areas.\n\n- **Goal**: Find\
+      \ the exit on the border. Moving north or south might bring me closer to the\
+      \ top or bottom edge, which could be where the exit is.\n\n### Decision:\nI'll\
+      \ move north to explore the corridor and check for lateral paths or the exit.\n\
+      \n**Next Move**: North."
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.'
+    response: "Alright, let's analyze this step by step. I've moved north once, and\
+      \ now I'm in a new position. Here's what I know and how I'll proceed.\n\n###\
+      \ Current Situation:\n- **Grid Size**: 3x3, so only 9 tiles total. The exit\
+      \ is on the border, so it must be on one of the edges.\n- **Visited Tiles**:\
+      \ I started from an unknown position, moved east once, then south once, and\
+      \ now north once. I need to keep track to avoid loops. Let's mentally map this:\n\
+      \  - Assume the grid is labeled as follows for clarity:\n    ```\n    (1,1)\
+      \ | (1,2) | (1,3)\n    ---------------------\n    (2,1) | (2,2) | (2,3)\n  \
+      \  ---------------------\n    (3,1) | (3,2) | (3,3)\n    ```\n  - My path so\
+      \ far:\n    - Start: Unknown, but I moved east to (x,y+1), then south to (x,y+2),\
+      \ then north to (x,y+1) again? Wait, that would be backtracking. Let's double-check.\n\
+      \nActually, moving south from (x,y+2) to (x,y+1) would be one step south. Then\
+      \ moving north from (x,y+1) would be back to (x,y). But that tile might have\
+      \ been visited before? I need to be more careful.\n\nSince the grid is small,\
+      \ I should infer positions based on walls and open paths.\n\n### Current Perceptions:\n\
+      - **North**: Wall, blocked.\n- **East**: Wall, blocked.\n- **South**: Corridor\
+      \ that goes two meters, ends with a wall, lateral paths open (not a dead end).\n\
+      - **West**: Corridor that goes one meter, dead end.\n\n### Analysis:\n1. **North\
+      \ and East**: Both blocked by walls, so no movement possible in those directions.\n\
+      2. **South**: There's a two-meter corridor to the south. Since it's not a dead\
+      \ end, there might be openings or paths beyond. This could be a promising direction\
+      \ to explore, as it might lead to more open areas or closer to the exit.\n3.\
+      \ **West**: This corridor is a dead end, meaning it leads to a dead end with\
+      \ no further progress. I shouldn't go this way because it would waste time and\
+      \ lead to a loop.\n\n### Plan:\n- **Next Move**: I should move south to explore\
+      \ the corridor and check for lateral paths or the exit. The south corridor is\
+      \ longer and has open lateral paths, which increases the chances of finding\
+      \ the exit or accessing new areas.\n\n- **Avoiding Loops**: I need to be cautious\
+      \ not to revisit tiles. Since I've been in this position before (after moving\
+      \ south and then north), I might be looping. But the corridor descriptions suggest\
+      \ that the area might be different, so I'll proceed with caution.\n\n- **Goal**:\
+      \ Find the exit on the border. Moving south might bring me closer to the bottom\
+      \ edge, which could be where the exit is.\n\n### Decision:\nI'll move south\
+      \ one meter to explore the corridor and check for lateral paths or the exit.\n\
+      \n**Next Move**: South."
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: "Alright, let's analyze this carefully. I've moved south again, and\
+      \ now I'm in a position where I have two corridor options: north and south,\
+      \ both with open lateral paths, but east and west are blocked. The grid is small,\
+      \ so I need to be strategic.\n\n### Current Situation:\n- **Grid Size**: 3x3,\
+      \ so only 9 tiles total. The exit must be on the border, so it's likely on one\
+      \ of the edges.\n- **Visited Tiles**: I've been moving east, south, north, and\
+      \ south again. Let's mentally map this:\n  - Assume the grid is labeled as follows\
+      \ for clarity:\n    ```\n    (1,1) | (1,2) | (1,3)\n    ---------------------\n\
+      \    (2,1) | (2,2) | (2,3)\n    ---------------------\n    (3,1) | (3,2) | (3,3)\n\
+      \    ```\n  - My path so far:\n    - Start: Unknown, but I moved east to (x,y+1),\
+      \ then south to (x,y+2), then north to (x,y+1), then south to (x,y+2) again.\
+      \ Wait, that would mean I'm back to the same tile I was in after the first south\
+      \ move. That suggests I'm looping.\n\nThis is a problem. I need to avoid revisiting\
+      \ tiles to make progress. But the corridor descriptions are consistent, so maybe\
+      \ I'm in a corridor that connects to multiple areas.\n\n### Current Perceptions:\n\
+      - **North**: Corridor that goes one meter, ends with a wall, but lateral paths\
+      \ are open (not a dead end).\n- **East**: Wall, blocked.\n- **South**: Corridor\
+      \ that goes one meter, ends with a wall, lateral paths open (not a dead end).\n\
+      - **West**: Wall, blocked.\n\n### Analysis:\n1. **Looping Risk**: Moving south\
+      \ again brings me back to a tile I've been in before. This means I'm not making\
+      \ progress and might be stuck in a cycle. I need to explore the lateral paths\
+      \ or try a different direction.\n\n2. **Lateral Paths**: Both north and south\
+      \ corridors have open lateral paths. This suggests that the exit might be accessible\
+      \ through these side paths, not directly through the main corridors.\n\n3. **Blocked\
+      \ Directions**: East and west are walls, so no movement possible there.\n\n\
+      ### Plan:\n- **Next Move**: Since moving south or north again might lead to\
+      \ looping, I should consider moving into the lateral paths. However, the user\
+      \ only provides the four cardinal directions (north, east, south, west), so\
+      \ I can't directly move into lateral paths unless they are part of the corridor.\n\
+      \nBut wait, the description says \"some of the lateral paths along the way are\
+      \ open.\" This might mean that from here, I can move into adjacent areas by\
+      \ going north or south, but the lateral paths aren't directly accessible from\
+      \ the current tile. I need to move into the corridor and then explore the lateral\
+      \ paths from there.\n\nHowever, the user only provides the directions for the\
+      \ four cardinal directions, so I must choose one of them. The lateral paths\
+      \ aren't directly selectable, but the open lateral paths might be accessible\
+      \ by moving into the corridor and then turning.\n\nBut in this case, moving\
+      \ north or south would take me into the corridor, and from there, I might be\
+      \ able to access the lateral paths. But the current tile only allows north and\
+      \ south corridors.\n\nGiven the looping issue, I should try to move into a direction\
+      \ that hasn't been fully explored. Since I've only moved east and south initially,\
+      \ and then north and south, perhaps I should try to move east or west, but they\
+      \ are blocked.\n\nWait, east is blocked, so that's not an option. West is also\
+      \ blocked. So I'm stuck between north and south, which are looping.\n\nBut the\
+      \ lateral paths might be the key. The user's description mentions \"lateral\
+      \ paths\" are open, so perhaps I need to move into the corridor and then, from\
+      \ there, access the lateral paths. But the user only provides the four cardinal\
+      \ directions, so I must choose one of them.\n\nPerhaps the lateral paths are\
+      \ not directly accessible, but by moving into the corridor, I can turn and access\
+      \ them. But in this system, I can only move one meter at a time in the cardinal\
+      \ directions.\n\nGiven the constraints, I need to break the loop. Maybe I should\
+      \ try to move north or south again, but that might not help.\n\nAlternatively,\
+      \ perhaps I need to reconsider the grid layout. Since the grid is 3x3, and I've\
+      \ moved east, south, north, south, maybe I'm in a position where the lateral\
+      \ paths are in a different direction.\n\nBut the user only provides the four\
+      \ cardinal directions, so I must choose one.\n\n### Decision:\nSince moving\
+      \ south or north leads to a loop, and the lateral paths are open, I should try\
+      \ to move into the corridor and then, from there, access the lateral paths.\
+      \ But since I can't directly move into lateral paths, I need to move into the\
+      \ corridor and then turn.\n\nBut the user only allows me to choose one cardinal\
+      \ direction. So I must choose one.\n\nGiven that, I'll move north again, hoping\
+      \ that from there, I can access the lateral paths or a different area.\n\n**Next\
+      \ Move**: North."
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.'
+    response: "### Current Situation:\n- **Grid Size**: 3x3, so only 9 tiles total.\
+      \ The exit must be on the border, so it's likely on one of the edges.\n- **Visited\
+      \ Tiles**: I've been moving east, south, north, south, north again. Let's mentally\
+      \ map this:\n  - Assume the grid is labeled as follows for clarity:\n    ```\n\
+      \    (1,1) | (1,2) | (1,3)\n    ---------------------\n    (2,1) | (2,2) | (2,3)\n\
+      \    ---------------------\n    (3,1) | (3,2) | (3,3)\n    ```\n  - My path\
+      \ so far:\n    - Start: Unknown, but I moved east to (x,y+1), then south to\
+      \ (x,y+2), then north to (x,y+1), then south to (x,y+2), then north to (x,y+1)\
+      \ again. This is clearly looping between two tiles.\n\nThis is inefficient and\
+      \ not making progress. I need to break out of this loop and explore new areas.\n\
+      \n### Current Perceptions:\n- **North**: Wall, blocked.\n- **East**: Wall, blocked.\n\
+      - **South**: Corridor that goes two meters, ends with a wall, lateral paths\
+      \ open (not a dead end).\n- **West**: Corridor that goes one meter, dead end.\n\
+      \n### Analysis:\n1. **Looping Problem**: Moving north and south repeatedly is\
+      \ not helping. I need to find a way to access the lateral paths or try a different\
+      \ approach.\n2. **Lateral Paths**: The south corridor has open lateral paths.\
+      \ This might be the key to finding the exit, but I need to move into the corridor\
+      \ to access them.\n3. **Blocked Directions**: East and north are walls, so no\
+      \ movement possible there. West is a dead end, so it won't help.\n\n### Plan:\n\
+      - **Next Move**: Since moving south is the only direction that might lead to\
+      \ new areas (due to the open lateral paths), I should move south again. Although\
+      \ it might seem repetitive, the corridor is longer and has more potential for\
+      \ exploration. From there, I can turn and access the lateral paths.\n\n**Next\
+      \ Move**: South."
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: '### Current Situation:
+
+      - **Grid Size**: 3x3, so only 9 tiles total. The exit must be on the border,
+      so it''s likely on one of the edges.
+
+      - **Visited Tiles**: I''ve been moving east, south, north, south, north, south
+      again. This is clearly a loop between two tiles, and I''m not making progress.
+      I need to break this cycle.
+
+
+      ### Current Perceptions:
+
+      - **North**: Corridor that goes one meter, ends with a wall, but lateral paths
+      are open (not a dead end).
+
+      - **East**: Wall, blocked.
+
+      - **South**: Corridor that goes one meter, ends with a wall, lateral paths open
+      (not a dead end).
+
+      - **West**: Wall, blocked.
+
+
+      ### Analysis:
+
+      1. **Looping Problem**: I''m stuck moving between the north and south corridors,
+      which are essentially the same tile from different perspectives. This isn''t
+      helping me explore new areas.
+
+      2. **Lateral Paths**: Both the north and south corridors have open lateral paths.
+      This suggests that the exit might be accessible through these side paths, but
+      I need to move into the corridors to reach them.
+
+      3. **Blocked Directions**: East and west are walls, so no movement possible
+      there.
+
+
+      ### Plan:
+
+      - **Next Move**: I need to break the loop. Since moving north or south again
+      will just keep me in the same cycle, I should try to move into a direction that
+      hasn''t been fully explored. But all directions are either corridors or walls.
+      However, the lateral paths might be accessible by moving into the corridor and
+      then turning, but I can only move one meter at a time in the cardinal directions.
+
+
+      Given that the grid is small and I''ve only been in two tiles, there must be
+      unexplored areas. But the user only provides the four cardinal directions, so
+      I must choose one.
+
+
+      Perhaps I need to move into one of the corridors and then, from there, access
+      the lateral paths. But since I can''t directly move into lateral paths, I''ll
+      have to move into the corridor and then turn.
+
+
+      But the user only allows me to choose one cardinal direction at a time. So I
+      must choose one.
+
+
+      Since moving east or west is blocked, and north and south are looping, I have
+      to choose between north or south. But both lead to the same tile.
+
+
+      Wait, maybe I misinterpreted the grid. In a 3x3 grid, moving east, south, north,
+      south might not be looping if the grid is not symmetric. But the descriptions
+      are consistent, so perhaps I am indeed looping.
+
+
+      But there''s a way out: the lateral paths. The user''s description says "some
+      of the lateral paths along the way are open." This might mean that from here,
+      I can move into adjacent areas by going north or south, but the lateral paths
+      aren''t directly accessible from the current tile. I need to move into the corridor
+      and then, from there, turn to access the lateral paths.
+
+
+      But in this system, I can only move one meter at a time in the cardinal directions.
+      So I need to move into the corridor first.
+
+
+      Given that, I should move into one of the corridors, say north, and then from
+      there, try to access the lateral paths. But the user only allows me to choose
+      one direction at a time.
+
+
+      Alternatively, perhaps the lateral paths are not part of the main corridors
+      but are adjacent. But the user doesn''t provide lateral directions, only cardinal.
+
+
+      I think I need to accept that moving north or south is the only option, but
+      I should try to do it in a way that breaks the loop. Maybe I should move south
+      first, and then from there, access the lateral paths.
+
+
+      But the user only provides the current tile''s directions, so I have to choose
+      one.
+
+
+      ### Decision:
+
+      I''m stuck in a loop, but I must choose a direction. Since the south corridor
+      is longer (2 meters) and has lateral paths, I''ll move south again, hoping that
+      from there I can access the lateral paths or a different area.
+
+
+      **Next Move**: South.'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West you can see a natural light shining in that direction, it is probably
+      the direction of the exit!'
+    response: 'I have moved south one meter, and now I''m at a new position. Let''s
+      analyze the information step by step to determine the best next move.
+
+
+      ### Current Situation:
+
+      - **Grid Size**: 3x3, so only 9 tiles total. The exit must be on the border,
+      so it''s likely on one of the edges.
+
+      - **Visited Tiles**: I''ve been moving east, south, north, south, north, south,
+      and now south again. This seems like I''m still in a loop, but the corridor
+      descriptions have changed slightly. Previously, the north corridor was one meter,
+      but now it''s two meters. This suggests I might be in a different part of the
+      maze or the corridor has a longer path.
+
+
+      ### Current Perceptions:
+
+      - **North**: Corridor that goes two meters, ends with a wall, lateral paths
+      open (not a dead end).
+
+      - **East**: Wall, blocked.
+
+      - **South**: Wall, blocked.
+
+      - **West**: Natural light, likely the exit.
+
+
+      ### Analysis:
+
+      1. **West Direction**: The west direction has natural light, which is a strong
+      indicator that this is the exit. Natural light suggests an open area or an opening
+      towards the outside. Since the exit is probably on the border, west might be
+      the direction leading out.
+
+      2. **Blocked Directions**: East and south are walls, so no movement possible
+      there. North is a corridor but might lead to a dead end or loop.
+
+      3. **Looping Issue**: I''m still in a cycle of moving north and south, but the
+      corridor lengths have changed. This might mean I''m exploring different branches,
+      but the west direction is clearly promising.
+
+
+      ### Plan:
+
+      - **Next Move**: Since west has natural light and is likely the exit, I should
+      move west. Even though the corridor descriptions haven''t explicitly said west
+      is an exit, the natural light is a clear sign. In maze navigation, following
+      sensory cues like light can be a good strategy, especially if other directions
+      are blocked or looping.
+
+
+      **Next Move**: West.'
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South you can see the exit in that direction! One last step and you are
+      out of the maze!
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: '### Current Situation:
+
+      - **Grid Size**: 3x3, so only 9 tiles total. The exit must be on the border,
+      so it''s likely on one of the edges.
+
+      - **Visited Tiles**: I''ve been moving east, south, north, south, north, south,
+      north, south, and now west. This path has been inefficient, but I''m finally
+      getting closer to the exit.
+
+
+      ### Current Perceptions:
+
+      - **North**: Wall, blocked.
+
+      - **East**: Corridor that goes one meter, ends with a wall, lateral paths open
+      (not a dead end).
+
+      - **South**: The exit is visible! Just one more step south to be out of the
+      maze.
+
+      - **West**: Corridor that goes one meter, ends with a wall, lateral paths open
+      (not a dead end).
+
+
+      ### Analysis:
+
+      1. **Exit Location**: The south direction clearly shows the exit. Since the
+      exit is on the border, and south is open, this must be the way out. No need
+      to explore further in other directions.
+
+      2. **Looping and Progress**: I''ve been stuck in loops before, but now I have
+      a clear path to the exit. Moving south should end this.
+
+      3. **Other Directions**: North is blocked, east and west have corridors with
+      lateral paths, but they are not leading directly to the exit. Since the goal
+      is to reach the exit, I should prioritize the direct path.
+
+
+      ### Plan:
+
+      - **Next Move**: Move south to exit the maze. This is the only valid direction
+      that leads to the exit, and it''s the last step.
+
+
+      **Next Move**: South.'
+illegal_directions: 0
+illegal_responses: 0
+execution_time: 162.2707405090332

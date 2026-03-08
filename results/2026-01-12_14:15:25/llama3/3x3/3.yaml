@@ -1,0 +1,204 @@
+git_hash: fb3cfc377fa8d03577237d0cabbc6cbf67e37bdc
+maze:
+  horizontal:
+  - - false
+    - true
+    - false
+  - - false
+    - false
+    - false
+  - - true
+    - true
+    - false
+  vertical:
+  - - true
+    - true
+    - true
+  - - true
+    - false
+    - true
+  - - false
+    - false
+    - false
+  start:
+  - 0
+  - 0
+  target:
+  - 2
+  - 1
+  path:
+  - - 0
+    - 0
+  - - 1
+    - 0
+  - - 2
+    - 0
+  - - 2
+    - 1
+  decisions:
+  - S
+  - S
+  - E
+  - S
+  sight_depth: 2
+  size: 3
+  solved: true
+chat_history:
+  system_prompt: '
+
+    You are a maze solving model. You are an expert in solving classic lattice mazes.
+
+
+    The user will provide you with descriptions of what you can perceive from inside
+    the maze.
+
+    Just like a classic maze the exit is on the border. The starting position could
+    be anywhere in the maze.
+
+    Your goal is to find the maze exit. Once you reach it you must step out of the
+    maze with one last move.
+
+
+    After the user provides you with informations regarding you current surroundings,
+    you will provide the direction to step towards next.
+
+    The possible directions are north, east, south, west.
+
+
+    The maze is a 3 x 3 grid, with every square in the grid being one square meter
+    big.
+
+    You are advised to think out loud about what your next move should be, but remember
+    that the last thing you write must be a valid direction.
+
+
+    You are allowed to output the direction with any casing you want, as long as it
+    is the last thing in your answer.
+
+    Here are some examples of valid end of response, in case you decide to move due
+    north:
+
+
+    - Let''s go North
+
+    - I want to step N!
+
+    - My next move will be north.
+
+
+    Try to formulate a plan and keep track of what what tiles you have already visited
+    to ensure you are making progress in exploring the maze.
+
+    '
+  chat:
+  - prompt: 'Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Let''s think about this... We can rule out north, east, and west since
+      they''re all blocked by walls. That leaves us with south as an option.
+
+
+      The corridor to the south doesn''t seem like it would lead anywhere, but we
+      know some of the lateral paths along the way are open, which means there might
+      be other options further down the corridor.
+
+
+      For now, let''s head south and explore that corridor a bit. We can reassess
+      our situation once we get further in.
+
+
+      Next move will be South!'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'We''ve moved one meter south and now we have more information.
+
+
+      Let''s focus on the corridor to our north. It''s a dead end, so that''s not
+      a viable option. The east path is still blocked by a wall, as before.
+
+
+      The south corridor still looks like it might have some options further down
+      the way. And then there''s the new information about the north corridor: it''s
+      only one meter long and ends in a wall.
+
+
+      Given this new information, I think our best bet is to explore the lateral paths
+      that we noticed were open along the south corridor. We might find something
+      useful or even discover a new exit.
+
+
+      Next move will be South!'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. It is a dead end.
+
+      Due East you can see a natural light shining in that direction, it is probably
+      the direction of the exit!
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Exciting developments! We''ve moved another meter south and now we
+      have some crucial information.
+
+
+      The north corridor is still a dead end, but it''s getting longer. The east path
+      is where the excitement happens - we see natural light shining in that direction,
+      which means it''s probably the way out!
+
+
+      Since we know the exit is likely to be eastward, our next move should be to
+      head towards that direction.
+
+
+      Next move will be East!'
+  - prompt: 'You move one meter East
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South you can see the exit in that direction! One last step and you are
+      out of the maze!
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'We''ve moved one meter east and we''re getting close to the exit!
+
+
+      The north path is still blocked by a wall, but that''s not our concern anymore.
+      The east corridor might seem like a dead end at first, but like before, we know
+      there are open lateral paths, so it''s not a complete dead end.
+
+
+      And then, oh joy! We see the exit in the south direction, just one step away!
+
+
+      There''s no need to explore further or take any more steps. It''s time to make
+      our final move and step out of the maze with one last step south.
+
+
+      Let''s go South!'
+illegal_directions: 0
+illegal_responses: 0
+execution_time: 12.460101127624512

@@ -1,0 +1,167 @@
+git_hash: fb3cfc377fa8d03577237d0cabbc6cbf67e37bdc
+maze:
+  horizontal:
+  - - true
+    - true
+    - false
+  - - false
+    - false
+    - false
+  - - true
+    - false
+    - false
+  vertical:
+  - - false
+    - true
+    - true
+  - - true
+    - true
+    - true
+  - - false
+    - false
+    - false
+  start:
+  - 1
+  - 1
+  target:
+  - 1
+  - 0
+  path:
+  - - 1
+    - 1
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 1
+    - 0
+  decisions:
+  - S
+  - W
+  - N
+  - W
+  sight_depth: 2
+  size: 3
+  solved: true
+chat_history:
+  system_prompt: '
+
+    You are a maze solving model. You are an expert in solving classic lattice mazes.
+
+
+    The user will provide you with descriptions of what you can perceive from inside
+    the maze.
+
+    Just like a classic maze the exit is on the border. The starting position could
+    be anywhere in the maze.
+
+    Your goal is to find the maze exit. Once you reach it you must step out of the
+    maze with one last move.
+
+
+    After the user provides you with informations regarding you current surroundings,
+    you will provide the direction to step towards next.
+
+    The possible directions are north, east, south, west.
+
+
+    The maze is a 3 x 3 grid, with every square in the grid being one square meter
+    big.
+
+    You are advised to think out loud about what your next move should be, but remember
+    that the last thing you write must be a valid direction.
+
+
+    You are allowed to output the direction with any casing you want, as long as it
+    is the last thing in your answer.
+
+    Here are some examples of valid end of response, in case you decide to move due
+    north:
+
+
+    - Let''s go North
+
+    - I want to step N!
+
+    - My next move will be north.
+
+
+    Try to formulate a plan and keep track of what what tiles you have already visited
+    to ensure you are making progress in exploring the maze.
+
+    '
+  chat:
+  - prompt: 'Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: "Based on your description and ensuring I make progress while avoiding\
+      \ walls:\n\n- North: There\u2019s an obstacle after one meter\n- East & South,\
+      \ as well as West have walls\n\nSince all directions either hit immediate obstacles\
+      \ or are blocked by walls at this point (North would be a dead end), it seems\
+      \ like I've encountered barriers along every direction.\n\nNext logical step\
+      \ is to explore other lateral paths within the current corridor if accessible.\
+      \ So:\n\nMy next move will be south."
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: "Moving south immediately hits another barrier and doesn't give any\
+      \ new pathways.\n\nSince moving South wasn't viable:\n\nGiven:\n- North: Corridor\
+      \ 2 meters long (lateral openings)\n- East & West have walls\n- South is blocked\n\
+      \nNext step logically considering previous exploration might be in the east\
+      \ direction along the main corridor if there are lateral paths open as mentioned.\
+      \ \n\nMy next move will go west for one meter to explore further within that\
+      \ path, hoping there's an accessible route beyond it.\n\nWest"
+  - prompt: 'You move one meter West
+
+      Due North you can see a natural light shining in that direction, it is probably
+      the direction of the exit!
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: "Given this new information:\n- North: Natural light indicating exit\n\
+      - East, south & west have walls or limited access.\n\nSince the natural lighting\
+      \ indicates an immediate route to escape:\n\nMy next move will be north for\
+      \ one meter towards escaping through where I perceive there's daylight signaling\
+      \ our way out of the maze! \n\nNorth"
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West you can see the exit in that direction! One last step and you are out
+      of the maze!'
+    response: "Given this situation:\n- North is blocked\n- East & South have walls/corridors\
+      \ with limited access \n- Due west indicates an immediate escape\n\nSince directly\
+      \ escaping to east/south/west options hit barriers, logically moving:\n\nMy\
+      \ next move will be West for one meter!\n\nWest  (to exit the maze!)"
+illegal_directions: 0
+illegal_responses: 0
+execution_time: 20.99967050552368

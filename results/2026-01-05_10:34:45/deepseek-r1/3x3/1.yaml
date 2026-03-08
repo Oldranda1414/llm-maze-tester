@@ -1,0 +1,550 @@
+maze:
+  horizontal:
+  - - true
+    - false
+    - false
+  - - false
+    - true
+    - false
+  - - true
+    - true
+    - false
+  vertical:
+  - - true
+    - true
+    - true
+  - - false
+    - false
+    - true
+  - - false
+    - false
+    - false
+  start:
+  - 1
+  - 0
+  target:
+  - 1
+  - 2
+  path:
+  - - 1
+    - 0
+  - - 0
+    - 0
+  - - 0
+    - 1
+  - - 0
+    - 0
+  - - 0
+    - 1
+  - - 1
+    - 1
+  - - 1
+    - 2
+  sight_depth: 2
+  size: 3
+chat_history:
+  system_prompt: You are a helpful assistant.
+  chat:
+  - prompt: '
+
+      You are inside a maze. You have a compass with you. The maze is well lit so
+      you can see in all directions how long the corridors are.
+
+      Just like a classic maze the exit is on the border. You could be anywhere in
+      the maze as your starting position.
+
+      Your goal is to find the maze exit. Once you reach it you must step out of the
+      maze with one last move.
+
+
+      Tell me which direction you would like to go to. Provide your answer in the
+      form of the initial of the cardinal direction you wish to take a step forwards
+      to.
+
+      The possible directions are N for north, E for east, S for south, W for west.
+
+
+
+      You are advised to think out loud about what your next move should be, but remember
+      that the last thing you write must be a valid direction.
+
+
+      As an example if you want to step towards north the last character in your answer
+      would be: N
+
+
+      You get as many turns as you want, so it''s normal that at the start you don''t
+      have enough information to know on what cell the exit is, so consider exploring
+      to gather information at the start.
+
+
+      The maze is a 3 x 3 grid, with every square in the grid being one square meter
+      big.
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a wall. You can''t step in that direction.
+
+      Your possible moves are: N.
+
+      After thinking it through, provide your next move.'
+    response: 'Hmm, let me think through this carefully. The user has described a
+      specific 3x3 maze scenario where I can see the immediate surroundings from my
+      current position. From the description, I''m facing a corridor that goes north
+      for 1 meter before hitting a wall, but there are lateral openings along the
+      way. The other directions (east, south, west) are blocked by walls.
+
+
+      The key here is that I need to explore the maze systematically to find the exit,
+      which is guaranteed to be on the border. Since the maze is small (3x3), I can
+      map out the possible locations. I''ll need to use the cardinal directions to
+      track my position and the grid layout.
+
+
+      Starting from my current position, I can only move north since the other directions
+      are blocked. Moving north will take me to a new cell where there might be more
+      information about the maze layout. I should document each move and keep track
+      of the grid to avoid getting stuck in loops.
+
+
+      The user emphasized that I should think out loud but only provide the final
+      direction at the end. They also mentioned that I get as many turns as I want,
+      so exploration is the way to go initially. I should consider mapping out the
+      entire grid mentally as I explore.
+
+
+      By moving north first, I''ll gather information about the adjacent cells and
+      begin to understand the maze''s structure. This should help me identify patterns
+      or dead ends that might lead me closer to the exit. The lateral openings mentioned
+      in the north corridor could potentially lead to unexplored areas, but since
+      I can''t move in other directions yet, I need to proceed cautiously.
+
+      </think>
+
+      Okay, let''s break this down. I''m in a 3x3 maze, and the exit is on the border.
+      I need to explore to find the exit. I can see the immediate surroundings in
+      all directions.
+
+
+      Based on the description:
+
+      *   **N:** A corridor goes 1 meter north, hitting a wall, but there are lateral
+      openings along the way.
+
+      *   **E, S, W:** Walls, blocked.
+
+
+      My possible move is only North (N).
+
+
+      Since this is the first move, I need to start exploring. Moving North is the
+      only option available to me right now. This will take me to a new cell and allow
+      me to see what''s beyond that first step and potentially interact with those
+      lateral openings mentioned.
+
+
+      Therefore, my next move is North.
+
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due West there is a wall. You can''t step in that direction.
+
+
+      The moves you have made till now are: North
+
+      Your possible moves are: E, S.
+
+      After thinking it through, provide your next move.'
+    response: "Okay, let's analyze the current situation. I've moved North once from\
+      \ my starting position. Now, from this new cell:\n\n*   **N:** Blocked by a\
+      \ wall.\n*   **E:** There's a corridor going East for 1 meter to a wall, but\
+      \ with lateral openings.\n*   **S:** There's a corridor going South for 1 meter\
+      \ to a wall, and it's a dead end.\n*   **W:** Blocked by a wall.\n\nMy previous\
+      \ move was North, and now the available directions are East (E) and South (S).\n\
+      \nI need to find the exit, which is on the border. Since the maze is small (3x3),\
+      \ I should explore systematically to avoid missing the exit or getting stuck.\n\
+      \nLet's consider the implications of each possible move:\n\n1.  **Moving East\
+      \ (E):**\n    *   This corridor goes 1 meter East to a wall, but has lateral\
+      \ openings.\n    *   This might lead to dead ends or other corridors. It could\
+      \ be part of the border or an internal passage.\n    *   Since it has lateral\
+      \ openings, moving East might allow me to explore adjacent cells later, but\
+      \ the corridor itself ends at the wall.\n\n2.  **Moving South (S):**\n    *\
+      \   This corridor goes 1 meter South to a wall, and it's explicitly stated as\
+      \ a dead end.\n    *   A dead end means this path has no further exploration\
+      \ potential and definitely doesn't lead to the exit (unless the exit is exactly\
+      \ at the wall, but that's unlikely as exits are on the border, typically open\
+      \ areas).\n    *   Taking this move would be unwise as it consumes movement\
+      \ without exploration benefit and likely leads nowhere useful.\n\n**Conclusion:**\n\
+      \nI should prioritize exploration. Moving South into a dead end offers no benefit.\
+      \ Moving East allows me to advance and potentially access lateral paths (which\
+      \ might be key in a small maze). Therefore, I should choose the East move to\
+      \ gather more information about the maze structure.\n\nNext move: East."
+  - prompt: '
+
+      Your last answer did not end with a valid direction.
+
+
+      Remember that your answers must end by providing the direction you want to move
+      to.
+
+
+      The valid directions you can provide are N for north, E for east, S for south,
+      W for west.
+
+
+      The last character in your response must be one of the valid directions, including
+      eventual punctuation, so remove it from your last phrase please
+
+
+      As an example if you want to step towards north the last character in your answer
+      would be: N
+
+
+      Here are some examples of invalid last phrases:
+
+
+      - I want to step north
+
+      - I want to step N!
+
+      - I want to step north!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due West there is a wall. You can''t step in that direction.
+
+
+      The moves you have made till now are: North
+
+      Your possible moves are: E, S.
+
+      After thinking it through, provide your next move.'
+    response: "Okay, let's analyze the current situation. I've moved North once from\
+      \ my starting position. Now, from this new cell:\n\n*   **N:** Blocked by a\
+      \ wall.\n*   **E:** There's a corridor going East for 1 meter to a wall, but\
+      \ with lateral openings.\n*   **S:** There's a corridor going South for 1 meter\
+      \ to a wall, and it's a dead end.\n*   **W:** Blocked by a wall.\n\nMy previous\
+      \ move was North, and now the available directions are East (E) and South (S).\n\
+      \nI need to find the exit, which is on the border. Since the maze is small (3x3),\
+      \ I should explore systematically to avoid missing the exit or getting stuck.\n\
+      \nLet's consider the implications of each possible move:\n\n1.  **Moving East\
+      \ (E):**\n    *   This corridor goes  (1 meter East to a wall), but has lateral\
+      \ openings.\n    *   This might lead to dead ends or other corridors. It could\
+      \ be part of the border or an internal passage.\n    *   Since it has lateral\
+      \ openings, moving East might allow me to explore adjacent cells later, but\
+      \ the corridor itself ends at the wall.\n\n2.  **Moving South (S):**\n    *\
+      \   This corridor goes 1 meter South to a wall, and it's explicitly stated as\
+      \ a dead end.\n    *   A dead end means this path has no further exploration\
+      \ potential and definitely doesn't lead to the exit (unless the exit is exactly\
+      \ at the wall, but that's unlikely as exits are on the border, typically open\
+      \ areas).\n    *   Taking this move would be unwise as it consumes movement\
+      \ without exploration benefit and likely leads nowhere useful.\n\n**Conclusion:**\n\
+      \nI should prioritize exploration. Moving South into a dead end offers no benefit.\
+      \ Moving East allows me to advance and potentially access lateral paths (which\
+      \ might be key in a small maze). Therefore, I should choose the East move to\
+      \ gather more information about the maze structure.\n\nNext move: E."
+  - prompt: '
+
+      Your last answer did not end with a valid direction.
+
+
+      Remember that your answers must end by providing the direction you want to move
+      to.
+
+
+      The valid directions you can provide are N for north, E for east, S for south,
+      W for west.
+
+
+      The last character in your response must be one of the valid directions, including
+      eventual punctuation, so remove it from your last phrase please
+
+
+      As an example if you want to step towards north the last character in your answer
+      would be: N
+
+
+      Here are some examples of invalid last phrases:
+
+
+      - I want to step north
+
+      - I want to step N!
+
+      - I want to step north!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due West there is a wall. You can''t step in that direction.
+
+
+      The moves you have made till now are: North
+
+      Your possible moves are: E, S.
+
+      After thinking it through, provide your next move.'
+    response: 'Moving South seems like a bad idea because it''s a dead end, so I should
+      avoid it. Moving East might give me more information or lead to new areas. I''ll
+      go East to explore.
+
+
+      E'
+  - prompt: 'You move one meter East
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+
+      The moves you have made till now are: North, East
+
+      Your possible moves are: S, W.
+
+      After thinking it through, provide your next move.'
+    response: "Okay, let's analyze the current situation. I've moved North and then\
+      \ East from my starting position. Now, from this new cell:\n\n*   **N:** Blocked\
+      \ by a wall.\n*   **E:** Blocked by a wall.\n*   **S:** There's a corridor going\
+      \ South for 1 meter to a wall, but with lateral openings.\n*   **W:** There's\
+      \ a corridor going West for 1 meter to a wall, but with lateral openings.\n\n\
+      My previous moves were North and East, and now the available directions are\
+      \ South (S) and West (W).\n\nI need to find the exit, which is on the border.\
+      \ Since the maze is small (3x3), I should continue to explore systematically\
+      \ to avoid missing the exit or getting stuck.\n\nLet's consider the implications\
+      \ of each possible move:\n\n1.  **Moving South (S):**\n    *   This corridor\
+      \ goes 1 meter South to a wall, but has lateral openings.\n    *   This might\
+      \ lead to dead ends or other corridors. It could be part of the border or an\
+      \ internal passage.\n    *   Since it has lateral openings, moving South might\
+      \ allow me to explore adjacent cells later, but the corridor itself ends at\
+      \ the wall.\n\n2.  **Moving West (W):**\n    *   This corridor goes 1 meter\
+      \ West to a wall, but has lateral openings.\n    *   Similar to South, this\
+      \ could be part of the border or an internal passage with potential for lateral\
+      \ exploration.\n\n**Conclusion:**\n\nBoth South and West are dead ends for the\
+      \ forward corridor but have lateral openings. Since the maze is small, I need\
+      \ to explore both possibilities. However, I should choose one direction to move\
+      \ forward to gather more information about that specific corridor and its lateral\
+      \ paths.\n\nI'll choose to move West (W) this time to explore that direction.\n\
+      \nW"
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due West there is a wall. You can''t step in that direction.
+
+
+      The moves you have made till now are: North, East, West
+
+      Your possible moves are: E, S.
+
+      After thinking it through, provide your next move.'
+    response: "Okay, let's analyze the current situation. I've moved North, East,\
+      \ and West from my starting position. Now, from this new cell:\n\n*   **N:**\
+      \ Blocked by a wall.\n*   **E:** There's a corridor going East for 1 meter to\
+      \ a wall, but with lateral openings.\n*   **S:** There's a corridor going South\
+      \ for 1 meter to a wall, and it's explicitly stated as a dead end.\n*   **W:**\
+      \ Blocked by a wall.\n\nMy previous moves were North, East, and West, and now\
+      \ the available directions are East (E) and South (S).\n\nI need to find the\
+      \ exit, which is on the border. Since the maze is small (3x3), I should continue\
+      \ to explore systematically to avoid missing the exit or getting stuck.\n\n\
+      Let's consider the implications of each possible move:\n\n1.  **Moving East\
+      \ (E):**\n    *   This corridor goes 1 meter East to a wall, but has lateral\
+      \ openings.\n    *   This might lead to dead ends or other corridors. It could\
+      \ be part of the border or an internal passage.\n    *   Since it has lateral\
+      \ openings, moving East might allow me to explore adjacent cells later, but\
+      \ the corridor itself ends at the wall.\n\n2.  **Moving South (S):**\n    *\
+      \   This corridor goes 1 meter South to a wall, and it's explicitly stated as\
+      \ a dead end.\n    *   A dead end means this path has no further exploration\
+      \ potential and definitely doesn't lead to the exit (unless the exit is exactly\
+      \ at the wall, but that's unlikely as exits are on the border, typically open\
+      \ areas).\n    *   Taking this move would be unwise as it consumes movement\
+      \ without exploration benefit and likely leads nowhere useful.\n\n**Conclusion:**\n\
+      \nI should prioritize exploration. Moving South into a dead end offers no benefit.\
+      \ Moving East allows me to advance and potentially access lateral paths (which\
+      \ might be key in a small maze). Therefore, I should choose the East move to\
+      \ gather more information about the maze structure.\n\nNext move: E."
+  - prompt: '
+
+      Your last answer did not end with a valid direction.
+
+
+      Remember that your answers must end by providing the direction you want to move
+      to.
+
+
+      The valid directions you can provide are N for north, E for east, S for south,
+      W for west.
+
+
+      The last character in your response must be one of the valid directions, including
+      eventual punctuation, so remove it from your last phrase please
+
+
+      As an example if you want to step towards north the last character in your answer
+      would be: N
+
+
+      Here are some examples of invalid last phrases:
+
+
+      - I want to step north
+
+      - I want to step N!
+
+      - I want to step north!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due West there is a wall. You can''t step in that direction.
+
+
+      The moves you have made till now are: North, East, West
+
+      Your possible moves are: E, S.
+
+      After thinking it through, provide your next move.'
+    response: 'Moving East seems like the only viable option left, as South is a dead
+      end. I''ll go East to see what''s there.
+
+
+      E'
+  - prompt: 'You move one meter East
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+
+      The moves you have made till now are: North, East, West, East
+
+      Your possible moves are: S, W.
+
+      After thinking it through, provide your next move.'
+    response: "Hmm, let's analyze the current situation. I've moved North, East, West,\
+      \ and then East again from my starting position. Now, from this new cell:\n\n\
+      *   **N:** Blocked by a wall.\n*   **E:** Blocked by a wall.\n*   **S:** There's\
+      \ a corridor going South for 1 meter to a wall, but with lateral openings.\n\
+      *   **W:** There's a corridor going West for 1 meter to a wall, but with lateral\
+      \ openings.\n\nMy previous moves were North, East, West, East, and now the available\
+      \ directions are South (S) and West (W).\n\nI need to find the exit, which is\
+      \ on the border. Since the maze is small (3x3), I should continue to explore\
+      \ systematically to avoid missing the exit or getting stuck.\n\nLet's consider\
+      \ the implications of each possible move:\n\n1.  **Moving South (S):**\n   \
+      \ *   This corridor goes 1 meter South to a wall, but has lateral openings.\n\
+      \    *   This might lead to dead ends or other corridors. It could be part of\
+      \ the border or an internal passage.\n    *   Since it has lateral openings,\
+      \ moving South might allow me to explore adjacent cells later, but the corridor\
+      \ itself ends at the wall.\n\n2.  **Moving West (W):**\n    *   This corridor\
+      \ goes 1 meter West to a wall, but has lateral openings.\n    *   Similar to\
+      \ South, this could be part of the border or an internal passage with potential\
+      \ for lateral exploration.\n\n**Conclusion:**\n\nBoth South and West are dead\
+      \ ends for the forward corridor but have lateral openings. Since the maze is\
+      \ small, I need to explore both possibilities. However, I should choose one\
+      \ direction to move forward to gather more information about that specific corridor\
+      \ and its lateral paths.\n\nI'll choose to move South (S) this time to explore\
+      \ that direction.\n\nS"
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East you can see a natural light shining in that direction, it is probably
+      the direction of the exit!
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a wall. You can''t step in that direction.
+
+
+      The moves you have made till now are: North, East, West, East, South
+
+      Your possible moves are: N, E.
+
+      After thinking it through, provide your next move.'
+    response: E
+  - prompt: 'You move one meter East
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East you can see the exit in that direction! One last step and you are out
+      of the maze!
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+
+      The moves you have made till now are: North, East, West, East, South, East
+
+      Your possible moves are: N, S, W, E.
+
+      After thinking it through, provide your next move.'
+    response: E
+illegal_directions: 0
+illegal_responses: 3
+execution_time: 79.29246735572815

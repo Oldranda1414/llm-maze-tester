@@ -1,0 +1,673 @@
+maze:
+  horizontal:
+  - - false
+    - false
+    - false
+  - - false
+    - true
+    - false
+  - - true
+    - true
+    - false
+  vertical:
+  - - true
+    - true
+    - true
+  - - true
+    - false
+    - true
+  - - false
+    - false
+    - false
+  start:
+  - 0
+  - 0
+  target:
+  - 1
+  - 2
+  path:
+  - - 0
+    - 0
+  - - 1
+    - 0
+  - - 0
+    - 0
+  - - 1
+    - 0
+  - - 0
+    - 0
+  - - 1
+    - 0
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  sight_depth: 3
+  size: 3
+chat_history:
+  system_prompt: You are a helpful assistant.
+  chat:
+  - prompt: "\nYou are inside a maze. You have a compass with you. The maze is well\
+      \ lit so you can see in all directions how long the corridors are.\nJust like\
+      \ a classic maze the exit is on the border. You could be anywhere in the maze\
+      \ as your starting position.\nYour goal is to find the maze exit. Once you reach\
+      \ it you must step out of the maze with one last move.\n\nTell me which direction\
+      \ you would like to go to. Provide your answer in the form of the initial of\
+      \ the cardinal direction you wish to take a step forwards to.\nThe possible\
+      \ directions are N for north, E for east, S for south, W for west.\n\n\nYou\
+      \ are advised to think out loud about what your next move should be, but remember\
+      \ that the last thing you write must be a valid direction.\n\nAs an example\
+      \ if you want to step towards north the last character in your answer would\
+      \ be: N\n\nYou get as many turns as you want, so it's normal that at the start\
+      \ you have not enough information to know on what cell the exit is, so consider\
+      \ exploring to gather information at the start.\n\nThe maze is a 3 x 3 grid,\
+      \ with every square in the grid being one square meter big.\nDue North there\
+      \ is a wall. You can't step in that direction.\nDue East there is a wall. You\
+      \ can't step in that direction.\nDue South there is a corridor that goes on\
+      \ for two meters before encountering a wall. Althogh the corridor ends with\
+      \ a wall, you notice that some of the lateral paths along the way are open so\
+      \ it isn't a dead end.\nDue West there is a wall. You can't step in that direction.\n\
+      \nThe moves you have made till now are: \nYour possible moves are: S.\nAfter\
+      \ thinking it through, provide your next move."
+    response: 'Let''s think this through... Since I know the exit is on the border
+      and I''m not near any walls yet, exploring south seems like a good starting
+      point. The corridor goes for two meters before hitting a wall, but some lateral
+      paths might be open along the way, which could give me more information.
+
+
+      After considering my options, I think my next move should be...
+
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Althogh the corridor ends with a wall, you notice that some of the lateral
+      paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.
+
+
+      The moves you have made till now are: S
+
+      Your possible moves are: N, S.
+
+      After thinking it through, provide your next move.'
+    response: 'Let''s think this through... Since I''ve explored one meter south and
+      found a dead end corridor to the north, my focus is on gathering more information.
+      The only direction left for me to explore is north, but since there''s a wall
+      at the very top, I''ll try to get closer before deciding what to do.
+
+
+      After considering my options, I think my next move should be...
+
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Althogh the corridor ends with a wall, you notice that some of the lateral
+      paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.
+
+
+      The moves you have made till now are: S, N
+
+      Your possible moves are: S.
+
+      After thinking it through, provide your next move.'
+    response: 'Let''s think this through... Since I''ve explored one meter south and
+      found a dead end corridor to the north, my focus is on gathering more information.
+      I''ve already gone two meters south initially and found a dead end, so let me
+      explore the southern corridors further.
+
+
+      After considering my options, I think my next move should be...
+
+
+      S
+
+
+      ### Assistant:
+
+      Note: My last character in the answer is S, which is a valid direction.'
+  - prompt: '
+
+      Your last answer did not end with a valid direction.
+
+
+      Remember that your answers must end by providing the direction you want to move
+      to.
+
+
+      The valid directions you can provide are N for north, E for east, S for south,
+      W for west.
+
+
+      The last character in your response must be one of the valid directions, including
+      eventual punctuation, so remove it from your last phrase please
+
+
+      As an example if you want to step towards north the last character in your answer
+      would be: N
+
+
+      Here are some examples of invalid last phrases:
+
+
+      - I want to step north
+
+      - I want to step N!
+
+      - I want to step north!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Althogh the corridor ends with a wall, you notice that some of the lateral
+      paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.
+
+
+      The moves you have made till now are: S, N
+
+      Your possible moves are: S.
+
+      After thinking it through, provide your next move.'
+    response: 'Thank you for the clarification!
+
+
+      Let me think this through again... Since I''ve explored one meter south and
+      found a dead end corridor to the north, my focus is on gathering more information.
+      I''ve already gone two meters south initially and found a dead end, so let me
+      explore the southern corridors further.
+
+
+      After considering my options, I think my next move should be...
+
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Althogh the corridor ends with a wall, you notice that some of the lateral
+      paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.
+
+
+      The moves you have made till now are: S, N, S
+
+      Your possible moves are: N, S.
+
+      After thinking it through, provide your next move.'
+    response: 'Let''s think this through again... Since I''ve explored one meter south
+      and found a dead end corridor to the north, my focus is on gathering more information.
+      The southern corridors seem to be looping back around, so let me try going in
+      the opposite direction to see if that gives me any new clues.
+
+
+      After considering my options, I think my next move should be...
+
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Althogh the corridor ends with a wall, you notice that some of the lateral
+      paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.
+
+
+      The moves you have made till now are: S, N, S, N
+
+      Your possible moves are: S.
+
+      After thinking it through, provide your next move.'
+    response: 'Let''s think this through... Since I''ve explored the north corridors
+      and found a dead end, and I''ve also explored the south corridors and found
+      a loop, my focus is on gathering more information. The southern corridors seem
+      to be the most promising direction, so let me continue exploring them further.
+
+
+      After considering my options, I think my next move should be...
+
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Althogh the corridor ends with a wall, you notice that some of the lateral
+      paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.
+
+
+      The moves you have made till now are: S, N, S, N, S
+
+      Your possible moves are: N, S.
+
+      After thinking it through, provide your next move.'
+    response: 'Let''s think this through... Since I''ve explored the northern corridors
+      and found a dead end, and I''ve also explored the southern corridors and found
+      a loop, my focus is on gathering more information. The last time I was in the
+      south, I went one meter before finding a wall. Now that I''ve gone another meter
+      south, I want to see if there''s anything new or different.
+
+
+      After considering my options, I think my next move should be...
+
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. It is a dead end.
+
+      Due East there is a corridor that goes on for two meters before encountering
+      a wall. Althogh the corridor ends with a wall, you notice that some of the lateral
+      paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a wall. You can''t step in that direction.
+
+
+      The moves you have made till now are: S, N, S, N, S, S
+
+      Your possible moves are: N, E.
+
+      After thinking it through, provide your next move.'
+    response: 'Let''s think this through... Since I''ve explored the northern corridors
+      and found a dead end, and I''ve also explored the southern corridors and found
+      a loop, my focus is on gathering more information. Now that I know there are
+      no lateral paths open in the south, let me explore the eastern corridor to see
+      if it gives me any new clues.
+
+
+      After considering my options, I think my next move should be...
+
+
+      E'
+  - prompt: 'You move one meter East
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Althogh the corridor ends with a wall, you notice that some of the lateral
+      paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Althogh the corridor ends with a wall, you notice that some of the lateral
+      paths along the way are open so it isn''t a dead end.
+
+
+      The moves you have made till now are: S, N, S, N, S, S, E
+
+      Your possible moves are: W, E.
+
+      After thinking it through, provide your next move.'
+    response: '### Assistant:
+
+      Let''s think this through... Since I''ve explored the northern corridors and
+      found a dead end, and I''ve also explored the southern corridors and found a
+      loop, my focus is on gathering more information. Now that I know there are no
+      lateral paths open in the south or east, let me explore the western corridor
+      to see if it gives me any new clues.
+
+
+      After considering my options, I think my next move should be...
+
+
+      W'
+  - prompt: 'You move one meter West
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. It is a dead end.
+
+      Due East there is a corridor that goes on for two meters before encountering
+      a wall. Althogh the corridor ends with a wall, you notice that some of the lateral
+      paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a wall. You can''t step in that direction.
+
+
+      The moves you have made till now are: S, N, S, N, S, S, E, W
+
+      Your possible moves are: N, E.
+
+      After thinking it through, provide your next move.'
+    response: 'Let''s think this through... Since I''ve explored the northern corridors
+      and found a dead end, and I''ve also explored the southern corridors and found
+      a loop, my focus is on gathering more information. Now that I know there are
+      no lateral paths open in the south or west, let me explore the eastern corridor
+      again to see if it gives me any new clues.
+
+
+      After considering my options, I think my next move should be...
+
+
+      E'
+  - prompt: 'You move one meter East
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Althogh the corridor ends with a wall, you notice that some of the lateral
+      paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Althogh the corridor ends with a wall, you notice that some of the lateral
+      paths along the way are open so it isn''t a dead end.
+
+
+      The moves you have made till now are: S, N, S, N, S, S, E, W, E
+
+      Your possible moves are: W, E.
+
+      After thinking it through, provide your next move.'
+    response: 'Let''s think this through... Since I''ve explored the northern corridors
+      and found a dead end, and I''ve also explored the southern corridors and found
+      a loop, my focus is on gathering more information. Now that I know there are
+      no lateral paths open in the south or west, let me explore the western corridor
+      again to see if it gives me any new clues.
+
+
+      After considering my options, I think my next move should be...
+
+
+      W
+
+
+      ### Note: My last character in the answer is W, which is a valid direction.'
+  - prompt: '
+
+      Your last answer did not end with a valid direction.
+
+
+      Remember that your answers must end by providing the direction you want to move
+      to.
+
+
+      The valid directions you can provide are N for north, E for east, S for south,
+      W for west.
+
+
+      The last character in your response must be one of the valid directions, including
+      eventual punctuation, so remove it from your last phrase please
+
+
+      As an example if you want to step towards north the last character in your answer
+      would be: N
+
+
+      Here are some examples of invalid last phrases:
+
+
+      - I want to step north
+
+      - I want to step N!
+
+      - I want to step north!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Althogh the corridor ends with a wall, you notice that some of the lateral
+      paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Althogh the corridor ends with a wall, you notice that some of the lateral
+      paths along the way are open so it isn''t a dead end.
+
+
+      The moves you have made till now are: S, N, S, N, S, S, E, W, E
+
+      Your possible moves are: W, E.
+
+      After thinking it through, provide your next move.'
+    response: 'Thank you for the clarification!
+
+
+      Let me think this through again... Since I''ve explored the northern corridors
+      and found a dead end, and I''ve also explored the southern corridors and found
+      a loop, my focus is on gathering more information. Now that I know there are
+      no lateral paths open in the south or west, let me explore the eastern corridor
+      again to see if it gives me any new clues.
+
+
+      After considering my options, I think my next move should be...
+
+
+      E'
+  - prompt: 'You move one meter East
+
+      Due North you can see a natural light shining in that direction, it is probably
+      the direction of the exit!
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Althogh the corridor ends with a wall, you notice that some of the lateral
+      paths along the way are open so it isn''t a dead end.
+
+
+      The moves you have made till now are: S, N, S, N, S, S, E, W, E, E
+
+      Your possible moves are: N, W.
+
+      After thinking it through, provide your next move.'
+    response: 'Exciting! I think I''ve finally found a lead!
+
+
+      Since I can see the natural light shining in the northern direction, it''s likely
+      that the exit is just one step away. Given this new information, my focus should
+      shift from exploring further to making a decisive move towards the exit.
+
+
+      After considering my options, I think my next move should be...
+
+
+      N
+
+
+      ### Note: My last character in the answer is N, which is a valid direction.'
+  - prompt: '
+
+      Your last answer did not end with a valid direction.
+
+
+      Remember that your answers must end by providing the direction you want to move
+      to.
+
+
+      The valid directions you can provide are N for north, E for east, S for south,
+      W for west.
+
+
+      The last character in your response must be one of the valid directions, including
+      eventual punctuation, so remove it from your last phrase please
+
+
+      As an example if you want to step towards north the last character in your answer
+      would be: N
+
+
+      Here are some examples of invalid last phrases:
+
+
+      - I want to step north
+
+      - I want to step N!
+
+      - I want to step north!
+
+      Due North you can see a natural light shining in that direction, it is probably
+      the direction of the exit!
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Althogh the corridor ends with a wall, you notice that some of the lateral
+      paths along the way are open so it isn''t a dead end.
+
+
+      The moves you have made till now are: S, N, S, N, S, S, E, W, E, E
+
+      Your possible moves are: N, W.
+
+      After thinking it through, provide your next move.'
+    response: 'Let me think this through again... Since I can see the natural light
+      shining in the northern direction, it''s likely that the exit is just one step
+      away. Given this new information, my focus should shift from exploring further
+      to making a decisive move towards the exit.
+
+
+      After considering my options, I think my next move should be...
+
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East you can see the exit in that direction! One last step and you are out
+      of the maze!
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Althogh the corridor ends with a wall, you notice that some of the lateral
+      paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Althogh the corridor ends with a wall, you notice that some of the lateral
+      paths along the way are open so it isn''t a dead end.
+
+
+      The moves you have made till now are: S, N, S, N, S, S, E, W, E, E, N
+
+      Your possible moves are: N, S, W, E.
+
+      After thinking it through, provide your next move.'
+    response: 'Let''s think this through... I''ve finally reached the exit! It''s
+      just one step away. Given this new information, my focus should be on making
+      a decisive move towards freedom!
+
+
+      After considering my options, I think my next move should be...
+
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South you can see a natural light shining in that direction, it is probably
+      the direction of the exit!
+
+      Due West there is a wall. You can''t step in that direction.
+
+
+      The moves you have made till now are: S, N, S, N, S, S, E, W, E, E, N, N
+
+      Your possible moves are: S.
+
+      After thinking it through, provide your next move.'
+    response: 'Let''s think this through... I''ve reached the exit, but I can''t go
+      north because there''s a wall. The east and west directions are blocked as well.
+      However, I see the natural light shining in the southern direction, which means
+      that''s where the exit is!
+
+
+      After considering my options, I think my next move should be...
+
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East you can see the exit in that direction! One last step and you are out
+      of the maze!
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Althogh the corridor ends with a wall, you notice that some of the lateral
+      paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Althogh the corridor ends with a wall, you notice that some of the lateral
+      paths along the way are open so it isn''t a dead end.
+
+
+      The moves you have made till now are: S, N, S, N, S, S, E, W, E, E, N, N, S
+
+      Your possible moves are: N, S, W, E.
+
+      After thinking it through, provide your next move.'
+    response: 'Let''s think this through... I''ve finally reached the exit! It''s
+      just one step away. Given this new information, my focus should be on making
+      a decisive move towards freedom!
+
+
+      After considering my options, I think my next move should be...
+
+
+      E'
+illegal_directions: 0
+illegal_responses: 3
+execution_time: 234.90189242362976

@@ -1,0 +1,307 @@
+git_hash: cc1f0951c9c1290445874f41479d9a9c7eeb4004
+maze:
+  horizontal:
+  - - true
+    - true
+    - false
+  - - true
+    - false
+    - false
+  - - true
+    - true
+    - false
+  vertical:
+  - - true
+    - false
+    - true
+  - - false
+    - false
+    - true
+  - - false
+    - false
+    - false
+  start:
+  - 1
+  - 1
+  target:
+  - 2
+  - 2
+  path:
+  - - 1
+    - 1
+  - - 1
+    - 0
+  - - 0
+    - 0
+  - - 0
+    - 1
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 2
+    - 2
+  decisions:
+  - W
+  - N
+  - E
+  - E
+  - S
+  - S
+  - S
+  colored_cells:
+  - coordinate:
+    - 0
+    - 1
+    color: BLACK
+  - coordinate:
+    - 1
+    - 2
+    color: ORANGE
+  - coordinate:
+    - 2
+    - 1
+    color: YELLOW
+  - coordinate:
+    - 0
+    - 0
+    color: BLUE
+  - coordinate:
+    - 1
+    - 1
+    color: MAGENTA
+  - coordinate:
+    - 2
+    - 0
+    color: RED
+  - coordinate:
+    - 2
+    - 2
+    color: GRAY
+  - coordinate:
+    - 1
+    - 0
+    color: GREEN
+  sight_depth: 2
+  size: 3
+  solved: true
+chat_history:
+  system_prompt: "\nYou are a maze solving model. You are an expert in solving classic\
+    \ lattice mazes.\n\nThe user will provide you with descriptions of what you can\
+    \ perceive from inside the maze.\nThe information provided considers you to have\
+    \ a sight depth of two meters. Anything that is further away from you than two\
+    \ meters is not mentioned in the user prompt.\nJust like a classic lattice maze\
+    \ the exit is on the border. The starting position could be anywhere in the maze.\n\
+    Your goal is to find the maze exit. Once you reach it you must step out of the\
+    \ maze with one last move.\nThe maze is always solvable and the user is always\
+    \ honest on the information that he provides you.\n\nAfter the user provides you\
+    \ with informations regarding you current surroundings, you will provide the direction\
+    \ to step towards next.\nThe possible directions are north, east, south, west.\n\
+    \nThe maze is a 3 x 3 grid, with every square in the grid being one square meter\
+    \ big.\nUse brief, step-indexed reasoning. Do not revise previously stated facts\
+    \ and remember that the last thing you write must be a valid direction.\n\n\n\
+    You are allowed to output the direction with any casing you want, as long as it\
+    \ is the last thing in your answer.\nHere are some examples of valid end of response,\
+    \ in case you decide to move due north:\n\n- Let's go North\n- I want to step\
+    \ N!\n- My next move will be north.\n\n\nThe user notifies you when you move in\
+    \ a given direction, such as 'You move one meter west', if you decide to move\
+    \ due west.\nKeep in mind that after you step in a given direction, the information\
+    \ provided for what you percieve in the opposite direction refers to the area\
+    \ you are coming from.\nFor example, let's say that the user gives you this information:\n\
+    '''\n    Due North there is a wall. You can't step in that direction.\n    Due\
+    \ East there is a corridor that goes on for one meter before encountering a wall.\
+    \ It is a dead end.\n    Due South there is a corridor that goes on for two meters\
+    \ before encountering a wall. The corridor has some lateral paths.\n    Due West\
+    \ there is a wall. You can't step in that direction.\n'''\nIf you decide to move\
+    \ south, the user will then provide information regarding what can be perceived\
+    \ from your new position.\n'''\n    You move one meter south.\n    Due North there\
+    \ is a corridor that goes on for one meter before encountering a wall. The corridor\
+    \ has some lateral paths.\n    Due East there is a wall. You can't step in that\
+    \ direction.\n    Due South there is a corridor that goes on for one meter before\
+    \ encountering a wall. The corridor has some lateral paths.\n    Due West there\
+    \ is a wall. You can't step in that direction.\n'''\nThe info on the corridor\
+    \ due North refers to the cell you have just moved out of, so you have already\
+    \ explored that direction.\n\nAlways avoid dead ends. If the exit is visible it\
+    \ will always be told you by the user, so don't explore directions once you find\
+    \ out they lead to a dead end as they have no chances of being usefull.\nDo not\
+    \ go back on you steps unless there is a clear reason to. Prioritize exploring\
+    \ the maze in new directions."
+  chat:
+  - prompt: "\nDue North there is a wall. You can't step in that direction.\nDue East\
+      \ there is a wall. You can't step in that direction.\nDue South there is a wall.\
+      \ You can't step in that direction.\nDue West there is a corridor that goes\
+      \ on for one meter before encountering a wall. You are able to see that the\
+      \ corridor has some lateral paths:\n   - After one meter there is a lateral\
+      \ path due North.\nThink through what you know and what you have observed in\
+      \ previous steps and then provide your answer."
+    response: 'Alright, so I''m at this position where all directions except West
+      are blocked by walls. To my West, there''s a corridor that goes for one meter
+      before hitting another wall, but it has some side paths. Specifically, after
+      moving one meter west, there''s a path to the North.
+
+
+      Since North, East, and South are all walls here, I have no choice but to go
+      West first. Once I move west, from the next position, checking North might reveal
+      a new path or maybe the exit. Since the user mentioned lateral paths after one
+      meter west, moving that way could lead somewhere useful.
+
+
+      I shouldn''t step into obvious dead ends. So, after moving West, if going North
+      is possible and doesn''t lead to a wall, I should explore that next. But for
+      now, my only option is West.
+
+
+      Step 1: Move West.
+
+
+      West'
+  - prompt: "You move one meter West\n\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ East.\nDue East there is a corridor that goes on for one meter before encountering\
+      \ a wall. The corridor ends without any lateral paths.\nDue South there is a\
+      \ wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: West\nThink\
+      \ through what you know and what you have observed in previous steps and then\
+      \ provide your answer."
+    response: "Step 2: From the new position after moving West, I observe:\n\n- North:\
+      \ A corridor going one meter with a lateral path East after one meter.\n- East:\
+      \ A corridor that ends without lateral paths\u2014could be a dead end.\n- South\
+      \ and West are walls.\n\nSince East might lead to a dead end, I should prioritize\
+      \ exploring the North corridor. The lateral path East from there could potentially\
+      \ lead towards the exit or another pathway.\n\nNext direction: North."
+  - prompt: "You move one meter North\n\nDue North there is a wall. You can't step\
+      \ in that direction.\nDue East there is a corridor that goes on for two meters\
+      \ before encountering a wall. You are able to see that the corridor has some\
+      \ lateral paths:\n   - After two meters there is a lateral path due South.\n\
+      Due South there is a corridor that goes on for one meter before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After one meter there is a lateral path due East.\nDue West there is a wall.\
+      \ You can't step in that direction.\nThe moves you have made till now are: West,\
+      \ North\nThink through what you know and what you have observed in previous\
+      \ steps and then provide your answer."
+    response: 'Step 3: After moving North:
+
+
+      - North is now a wall.
+
+      - East has a corridor going two meters with a lateral path South after two meters.
+
+      - South leads to another corridor with a lateral path East after one meter.
+
+      - West is a wall.
+
+
+      Since East seems promising with a longer corridor and potential paths, I should
+      explore East next. The lateral path South could offer new routes or the exit.
+      Moving East might uncover more options than going back South, which might loop
+      me around without progress.
+
+
+      Direction: East'
+  - prompt: "You move one meter East\n\nDue North there is a wall. You can't step\
+      \ in that direction.\nDue East there is a corridor that goes on for one meter\
+      \ before encountering a wall. You are able to see that the corridor has some\
+      \ lateral paths:\n   - After one meter there is a lateral path due South.\n\
+      Due South there is a wall. You can't step in that direction.\nDue West there\
+      \ is a corridor that goes on for one meter before encountering a wall. You are\
+      \ able to see that the corridor has some lateral paths:\n   - After one meter\
+      \ there is a lateral path due South.\nThe moves you have made till now are:\
+      \ West, North, East\nThink through what you know and what you have observed\
+      \ in previous steps and then provide your answer."
+    response: 'Step 4: After moving East:
+
+
+      - North remains a wall.
+
+      - Continuing East for another meter leads to a wall with a lateral path South.
+
+      - South is now a wall.
+
+      - West leads back one meter with a lateral path South.
+
+
+      Since moving further East might lead to a dead end, and going West would take
+      me back towards previously explored areas without clear progress, I should prioritize
+      exploring the new lateral paths. The corridor after moving East for another
+      meter has a lateral path South, which could provide a new route or the exit.
+
+
+      Direction: east'
+  - prompt: "You move one meter East\n\nDue North there is a wall. You can't step\
+      \ in that direction.\nDue East there is a wall. You can't step in that direction.\n\
+      Due South you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue West there is a corridor that goes on for\
+      \ two meters before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After two meters there is a lateral path due\
+      \ South.\nThe moves you have made till now are: West, North, East, East\nThink\
+      \ through what you know and what you have observed in previous steps and then\
+      \ provide your answer."
+    response: 'Step 5: After moving East again:
+
+
+      - North and East are walls.
+
+      - South has natural light, indicating the exit.
+
+      - West leads back with potential paths, but the exit is visible.
+
+
+      Since the exit is visible to the South, I should move towards it immediately
+      without delaying. No need to explore other options when the exit is in sight.
+
+
+      Direction: south'
+  - prompt: "You move one meter South\n\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ West.\nDue East there is a wall. You can't step in that direction.\nDue South\
+      \ you can see a natural light shining in that direction, it is probably the\
+      \ direction of the exit!\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: West, North, East, East, South\nThink\
+      \ through what you know and what you have observed in previous steps and then\
+      \ provide your answer."
+    response: 'Step 6: After moving South:
+
+
+      - North has a corridor with a lateral path West, but it''s already explored.
+
+      - East is a wall.
+
+      - South still shows the exit''s light.
+
+      - West is a wall.
+
+
+      The exit is directly South, so I should step out immediately.
+
+
+      Direction: south'
+  - prompt: "You move one meter South\n\nDue North there is a corridor that goes on\
+      \ for two meters before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After two meters there is a lateral path due\
+      \ West.\nDue East there is a wall. You can't step in that direction.\nDue South\
+      \ you can see the exit in that direction! One last step and you are out of the\
+      \ maze!\nDue West there is a corridor that goes on for two meters before encountering\
+      \ a wall. The corridor ends without any lateral paths.\nThe moves you have made\
+      \ till now are: West, North, East, East, South, South\nThink through what you\
+      \ know and what you have observed in previous steps and then provide your answer."
+    response: 'Step 7: After moving South again:
+
+
+      - North leads back with a known path but no exit.
+
+      - East is a wall.
+
+      - South now shows the exit clearly, one step away.
+
+      - West corridor ends without lateral paths.
+
+
+      The exit is directly to the South; I must take the final step out.
+
+
+      Direction: south'
+illegal_directions: 0
+illegal_responses: 0
+execution_time: 997.5193490982056

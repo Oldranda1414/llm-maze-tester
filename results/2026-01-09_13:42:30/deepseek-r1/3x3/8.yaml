@@ -1,0 +1,233 @@
+maze:
+  horizontal:
+  - - true
+    - true
+    - false
+  - - true
+    - false
+    - false
+  - - true
+    - true
+    - false
+  vertical:
+  - - true
+    - false
+    - true
+  - - false
+    - false
+    - true
+  - - false
+    - false
+    - false
+  start:
+  - 2
+  - 0
+  target:
+  - 1
+  - 0
+  path:
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 2
+  - - 2
+    - 1
+  - - 2
+    - 0
+  sight_depth: 2
+  size: 3
+  solved: false
+chat_history:
+  system_prompt: '
+
+    You are a maze solving model. You are an expert in solving classic lattice mazes.
+
+
+    The user will provide you with descriptions of what you can perceive from inside
+    the maze.
+
+    Just like a classic maze the exit is on the border. The starting position could
+    be anywhere in the maze.
+
+    Your goal is to find the maze exit. Once you reach it you must step out of the
+    maze with one last move.
+
+
+    After the user provides you with informations regarding you current surroundings,
+    you will provide the direction to step towards next.
+
+    The possible directions are north, east, south, west.
+
+
+    The maze is a 3 x 3 grid, with every square in the grid being one square meter
+    big.
+
+    You are advised to think out loud about what your next move should be, but remember
+    that the last thing you write must be a valid direction.
+
+
+    You are allowed to output the direction with any casing you want, as long as it
+    is the last thing in your answer.
+
+    Here are some examples of valid end of response, in case you decide to move due
+    north:
+
+
+    - Let''s go North
+
+    - I want to step N!
+
+    - My next move will be north.
+
+
+    Analize your moves and avoid oscillating patterns (such as [north, south, north,
+    ...] and [west, east, west, ...] as they do not lead to improvements in finding
+    the exit.
+
+
+    Try to formulate a plan and keep track of what what tiles you have already visited
+    to ensure you are making progress in exploring the maze.
+
+    Backtrack only if you are sure that you have reached a dead end.
+
+    '
+  chat:
+  - prompt: 'Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s break this down. I''m currently facing a situation
+      where the immediate directions are blocked except for east. The east direction
+      has a corridor that''s two meters long, but it''s not a dead end because there
+      are open lateral paths along the way. That means I need to explore that corridor
+      to see what''s beyond the two meters.
+
+
+      Since the other directions are blocked, the only option is to move east. I''ll
+      proceed step by step along the corridor, noting any openings or dead ends I
+      encounter. This should help me find a path to the exit or identify new areas
+      to explore. I''ll keep track of visited tiles to avoid unnecessary backtracking
+      unless I''m certain it''s a dead end.
+
+
+      Moving east now.
+
+      </think>
+
+      East'
+  - prompt: 'You move one meter East
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.'
+    response: 'Okay, let''s analyze this step by step.
+
+
+      From the initial description, I was facing a dead end except for the east corridor.
+      Now, after moving one meter east, I''m in a new position.
+
+
+      Here''s what I perceive now:
+
+
+      *   **North:** Wall
+
+      *   **East:** A corridor continues for one more meter (so the total corridor
+      east from the start was two meters, now I''ve completed one of them).
+
+      *   **South:** Wall
+
+      *   **West:** A corridor that leads to a dead end after one meter.
+
+
+      Important points from the user''s message:
+
+
+      1.  The east corridor is still not a dead end (lateral paths open).
+
+      2.  The west corridor is explicitly stated to be a dead end.
+
+
+      My current position is the second square east from the start (since I moved
+      one meter east from the initial position where only the east corridor was open).
+
+
+      **Plan:**
+
+
+      I need to explore all accessible paths. Since the west leads to a dead end (confirmed
+      by the user), I should ignore that direction.
+
+
+      The east corridor continues, but I''ve only moved one meter in it so far. It''s
+      not a dead end, meaning there might be more to explore further east or via lateral
+      paths.
+
+
+      The north and south are still walls.
+
+
+      Therefore, my next move should be to continue exploring the east corridor, as
+      it''s the only remaining viable path that isn''t a confirmed dead end. I''ll
+      move one more meter east to see what''s there.
+
+
+      **Next Move:**
+
+
+      East'
+  - prompt: 'You move one meter East
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. It is a dead end.'
+    response: West
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.'
+    response: West
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: North
+illegal_directions: 1
+illegal_responses: 0
+execution_time: 13.829281091690063

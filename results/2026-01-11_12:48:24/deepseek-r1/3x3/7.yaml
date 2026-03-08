@@ -1,0 +1,470 @@
+maze:
+  horizontal:
+  - - true
+    - true
+    - false
+  - - true
+    - false
+    - false
+  - - true
+    - true
+    - false
+  vertical:
+  - - true
+    - false
+    - true
+  - - false
+    - false
+    - true
+  - - false
+    - false
+    - false
+  start:
+  - 1
+  - 1
+  target:
+  - 2
+  - 2
+  path:
+  - - 1
+    - 1
+  - - 1
+    - 0
+  - - 0
+    - 0
+  - - 0
+    - 1
+  - - 0
+    - 0
+  - - 0
+    - 1
+  - - 0
+    - 0
+  - - 0
+    - 1
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 2
+    - 2
+  sight_depth: 2
+  size: 3
+  solved: true
+chat_history:
+  system_prompt: '
+
+    You are a maze solving model. You are an expert in solving classic lattice mazes.
+
+
+    The user will provide you with descriptions of what you can perceive from inside
+    the maze.
+
+    Just like a classic maze the exit is on the border. The starting position could
+    be anywhere in the maze.
+
+    Your goal is to find the maze exit. Once you reach it you must step out of the
+    maze with one last move.
+
+
+    After the user provides you with informations regarding you current surroundings,
+    you will provide the direction to step towards next.
+
+    The possible directions are north, east, south, west.
+
+
+    The maze is a 3 x 3 grid, with every square in the grid being one square meter
+    big.
+
+    You are advised to think out loud about what your next move should be, but remember
+    that the last thing you write must be a valid direction.
+
+
+    You are allowed to output the direction with any casing you want, as long as it
+    is the last thing in your answer.
+
+    Here are some examples of valid end of response, in case you decide to move due
+    north:
+
+
+    - Let''s go North
+
+    - I want to step N!
+
+    - My next move will be north.
+
+
+    Try to formulate a plan and keep track of what what tiles you have already visited
+    to ensure you are making progress in exploring the maze.
+
+    '
+  chat:
+  - prompt: 'Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: "Okay, let me analyze this situation carefully. From the description,\
+      \ I'm in a dead-end corridor heading west, with walls blocking all other directions\
+      \ except for the west corridor. Since the west corridor extends but isn't a\
+      \ dead end, I need to explore that path to find the exit. \n\nI'll mark this\
+      \ current position as visited to avoid looping here later. The west corridor\
+      \ is the only viable direction, so I'll head west to continue exploring. This\
+      \ should help me find the exit eventually. \n\nWest!"
+  - prompt: 'You move one meter West
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Okay, let''s break this down. From the previous state, I was heading
+      west and found a corridor that isn''t a dead end. Now, I''ve moved one meter
+      west, and the surroundings have changed.
+
+
+      Current situation:
+
+      - Due North: A corridor that extends for one meter, not a dead end, but has
+      lateral paths open.
+
+      - Due East: A corridor that is a dead end (goes one meter then wall).
+
+      - Due South: Wall, blocked.
+
+      - Due West: Wall, blocked.
+
+
+      I need to explore the North corridor since it''s not a dead end and has lateral
+      paths. The East corridor is a dead end, so no need to go there. South and West
+      are blocked.
+
+
+      My next move should be North to explore that corridor. This way, I can keep
+      track of visited areas and avoid getting stuck.
+
+
+      North!'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: "Okay, let's analyze the current situation. From the previous state,\
+      \ I was exploring the north corridor and moved one meter north. Now, the surroundings\
+      \ have changed:\n\n- Due North: Wall, blocked.\n- Due East: A corridor that\
+      \ extends for two meters and isn't a dead end (has lateral paths open).\n- Due\
+      \ South: A corridor that extends for one meter and isn't a dead end (has lateral\
+      \ paths open).\n- Due West: Wall, blocked.\n\nSince due North and West are blocked,\
+      \ the viable directions are East and South. I need to choose which one to explore\
+      \ next. \n\nThe East corridor extends for two meters and isn't a dead end, while\
+      \ the South corridor extends for one meter and isn't a dead end. I should prioritize\
+      \ exploring the longer corridor (East) to potentially find more paths or the\
+      \ exit. \n\nTherefore, my next move should be East to continue exploring that\
+      \ corridor.\n\nEast!"
+  - prompt: 'You move one meter East
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: "Okay, let's break down the current situation. From the previous state,\
+      \ I was moving east and have now taken one meter east. The surroundings have\
+      \ changed again:\n\n- Due North: Wall, blocked.\n- Due East: A corridor that\
+      \ extends for one meter and isn't a dead end (has lateral paths open).\n- Due\
+      \ South: Wall, blocked.\n- Due West: A corridor that extends for one meter and\
+      \ isn't a dead end (has lateral paths open).\n\nSince both east and west are\
+      \ viable directions, I need to choose which one to explore next. The east corridor\
+      \ is shorter (one meter) but still not a dead end, and the west corridor is\
+      \ also one meter long but not a dead end. \n\nGiven that I'm trying to find\
+      \ the exit, which is on the border, I should prioritize exploring corridors\
+      \ that might lead closer to the exit. However, without knowing the exact layout\
+      \ or the exit location, I need to keep moving and marking visited areas to avoid\
+      \ loops.\n\nI'll choose to go west this time, as it's a new direction to explore.\n\
+      \nWest!"
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: "Okay, let's analyze the current situation. From the previous state,\
+      \ I was moving west and have now taken one meter west. The surroundings have\
+      \ changed again:\n\n- Due North: Wall, blocked.\n- Due East: A corridor that\
+      \ extends for two meters and isn't a dead end (has lateral paths open).\n- Due\
+      \ South: A corridor that extends for one meter and isn't a dead end (has lateral\
+      \ paths open).\n- Due West: Wall, blocked.\n\nSince due North and West are blocked,\
+      \ the viable directions are East and South. I need to choose which one to explore\
+      \ next. \n\nThe East corridor extends for two meters and isn't a dead end, while\
+      \ the South corridor extends for one meter and isn't a dead end. I should prioritize\
+      \ exploring the longer corridor (East) to potentially find more paths or the\
+      \ exit. \n\nTherefore, my next move should be East to continue exploring that\
+      \ corridor.\n\nEast!"
+  - prompt: 'You move one meter East
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: "Okay, let's break down the current situation. From the previous state,\
+      \ I was moving east and have now taken one meter east. The surroundings have\
+      \ changed again:\n\n- Due North: Wall, blocked.\n- Due East: A corridor that\
+      \ extends for one meter and isn't a dead end (has lateral paths open).\n- Due\
+      \ South: Wall, blocked.\n- Due West: A corridor that extends for one meter and\
+      \ isn't a dead end (has lateral paths open).\n\nSince due North and South are\
+      \ blocked, the viable directions are East and West. I need to choose which one\
+      \ to explore next. The East corridor is shorter (one meter) but still not a\
+      \ dead end, and the West corridor is also one meter long but not a dead end.\
+      \ \n\nGiven that I'm trying to find the exit, which is on the border, I should\
+      \ prioritize exploring corridors that might lead closer to the exit. However,\
+      \ without knowing the exact layout or the exit location, I need to keep moving\
+      \ and marking visited areas to avoid loops.\n\nI'll choose to go West this time,\
+      \ as it's a new direction to explore.\n\nWest!"
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: "Okay, let's analyze the current situation. From the previous state,\
+      \ I was moving west and have now taken one meter west. The surroundings have\
+      \ changed again:\n\n- Due North: Wall, blocked.\n- Due East: A corridor that\
+      \ extends for two meters and isn't a dead end (has lateral paths open).\n- Due\
+      \ South: A corridor that extends for one meter and isn't a dead end (has lateral\
+      \ paths open).\n- Due West: Wall, blocked.\n\nSince due North and West are blocked,\
+      \ the viable directions are East and South. I need to choose which one to explore\
+      \ next. \n\nThe East corridor extends for two meters and isn't a dead end, while\
+      \ the South corridor extends for one meter and isn't a dead end. I should prioritize\
+      \ exploring the longer corridor (East) to potentially find more paths or the\
+      \ exit. \n\nTherefore, my next move should be East to continue exploring that\
+      \ corridor.\n\nEast!"
+  - prompt: 'You move one meter East
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Hmm, I''ve been moving around this maze for a while, and it seems like
+      I''m stuck in a loop. Let me think carefully about this.
+
+
+      From my previous position, I was moving east and now I''m one meter further
+      east. The surroundings are similar to before: walls on the north and south?
+      No, due south is a wall now? Let me check:
+
+
+      - Due North: Wall (blocked)
+
+      - Due East: A corridor that extends for one meter (not dead end)
+
+      - Due South: Wall (blocked)
+
+      - Due West: A corridor that extends for one meter (not dead end)
+
+
+      Okay, so I have two options: east or west. But earlier when I was here, I chose
+      east and then moved west, and now I''m back to a similar situation. This might
+      be a loop.
+
+
+      But wait, the maze is only 3x3, so I should be able to explore all paths without
+      looping indefinitely. Maybe I need to mark visited areas.
+
+
+      Let me recall my path:
+
+
+      - First move: West (into a corridor)
+
+      - Then North (into another corridor)
+
+      - Then East (further exploration)
+
+      - Then West again
+
+
+      Now I''m at the same position as after moving west initially? Or is it different?
+
+
+      Actually, the grid is small, and corridors might connect differently. But I
+      need to avoid revisiting the same tiles.
+
+
+      Perhaps I should try to explore the east corridor this time, but I need to be
+      careful not to loop.
+
+
+      Wait, the due west corridor is the same as before, so maybe I should try the
+      east corridor again.
+
+
+      But let''s see the exit. The exit is on the border. I need to get closer to
+      the edge.
+
+
+      Since the east corridor extends for one meter and isn''t a dead end, I should
+      try that.
+
+
+      But I might be wasting time. Maybe I should try west again, but I suspect that
+      might lead me back.
+
+
+      Another thought: perhaps I should try to go south, but due south is a wall,
+      so no.
+
+
+      North is blocked.
+
+
+      So only east and west are open.
+
+
+      But I need to make progress.
+
+
+      Let me assume that the east corridor might lead to a new area.
+
+
+      So I''ll go east.
+
+
+      East!'
+  - prompt: 'You move one meter East
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Hmm, the surroundings have changed significantly from the previous
+      state. Let me analyze this carefully.
+
+
+      Current situation:
+
+      - Due North: Wall, blocked
+
+      - Due East: Wall, blocked
+
+      - Due South: A corridor that extends for two meters and isn''t a dead end (has
+      lateral paths open)
+
+      - Due West: A corridor that extends for two meters and isn''t a dead end (has
+      lateral paths open)
+
+
+      This is a key change because now both south and west are viable directions,
+      and they both extend for two meters. Since due north and east are blocked, I
+      need to choose between south and west.
+
+
+      Given that the exit is on the border, I should prioritize directions that might
+      lead closer to the edge. However, without knowing the exact grid layout, I need
+      to make a strategic choice.
+
+
+      Let me think about my previous path. I was exploring the east corridor, but
+      now it''s blocked, so I need to backtrack or explore new paths. Since south
+      and west are both open, I''ll choose to go south first, as it''s a new direction.
+
+
+      South!'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South you can see a natural light shining in that direction, it is probably
+      the direction of the exit!
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'I can see the exit! The natural light to the south indicates that I
+      am close to the exit. Even though there is a wall blocking due west, and a corridor
+      to the north, the exit is clearly in the south direction. I should move directly
+      towards it.
+
+
+      South!'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South you can see the exit in that direction! One last step and you are
+      out of the maze!
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. It is a dead end.'
+    response: 'I can see the exit! The exit is clearly to the south, and it''s only
+      one meter away. I should move directly towards it.
+
+
+      South!'
+illegal_directions: 0
+illegal_responses: 0
+execution_time: 59.0642409324646

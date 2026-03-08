@@ -1,0 +1,697 @@
+git_hash: 1a459c2a66ed41d58bbe36d2cc9dae7897078403
+maze:
+  horizontal:
+  - - false
+    - true
+    - false
+  - - true
+    - false
+    - false
+  - - true
+    - true
+    - false
+  vertical:
+  - - true
+    - false
+    - true
+  - - false
+    - true
+    - true
+  - - false
+    - false
+    - false
+  start:
+  - 0
+  - 2
+  target:
+  - 0
+  - 0
+  path:
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 2
+    - 2
+  - - 1
+    - 2
+  - - 2
+    - 2
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 1
+    - 1
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 1
+    - 1
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 1
+    - 1
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 1
+    - 1
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 1
+    - 1
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 1
+    - 1
+  - - 2
+    - 1
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 1
+    - 1
+  - - 1
+    - 0
+  - - 0
+    - 0
+  decisions:
+  - S
+  - S
+  - N
+  - S
+  - W
+  - W
+  - E
+  - N
+  - S
+  - W
+  - E
+  - N
+  - S
+  - W
+  - E
+  - N
+  - S
+  - W
+  - E
+  - N
+  - S
+  - W
+  - E
+  - N
+  - S
+  - W
+  - E
+  - N
+  - S
+  - W
+  - E
+  - N
+  - W
+  - N
+  - N
+  colored_cells:
+  - coordinate:
+    - 0
+    - 0
+    color: GRAY
+  - coordinate:
+    - 2
+    - 0
+    color: BLACK
+  - coordinate:
+    - 0
+    - 2
+    color: CYAN
+  - coordinate:
+    - 2
+    - 2
+    color: WHITE
+  - coordinate:
+    - 1
+    - 0
+    color: MAGENTA
+  sight_depth: 2
+  size: 3
+  solved: true
+chat_history:
+  system_prompt: '
+
+    You are a maze solving model. You are an expert in solving classic lattice mazes.
+
+
+    The user will provide you with descriptions of what you can perceive from inside
+    the maze.
+
+    The information provided considers you to have a sight depth of two meters. Anything
+    that is further away from you than two meters is not mentioned in the user prompt.
+
+    Just like a classic lattice maze the exit is on the border. The starting position
+    could be anywhere in the maze.
+
+    Your goal is to find the maze exit. Once you reach it you must step out of the
+    maze with one last move.
+
+    The maze is always solvable and the user is always honest on the information that
+    he provides you.
+
+
+    After the user provides you with informations regarding you current surroundings,
+    you will provide the direction to step towards next.
+
+    The possible directions are north, east, south, west.
+
+
+    The maze is a 3 x 3 grid, with every square in the grid being one square meter
+    big.
+
+    Use brief, step-indexed reasoning. Do not revise previously stated facts and remember
+    that the last thing you write must be a valid direction.
+
+
+
+    You are allowed to output the direction with any casing you want, as long as it
+    is the last thing in your answer.
+
+    Here are some examples of valid end of response, in case you decide to move due
+    north:
+
+
+    - Let''s go North
+
+    - I want to step N!
+
+    - My next move will be north.
+
+
+    Do not go back on you steps unless there is a clear reason to. Prioritize exploring
+    the maze in new directions.'
+  chat:
+  - prompt: "\nDue North there is a wall. You can't step in that direction.\nDue East\
+      \ there is a wall. You can't step in that direction.\nDue South there is a corridor\
+      \ that goes on for two meters before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After two meters there is\
+      \ a lateral path due West.\nDue West there is a corridor that goes on for one\
+      \ meter before encountering a wall. The corridor ends without any lateral paths."
+    response: '1. Assessing the current position, I notice walls to the North and
+      East, which means those directions are blocked.
+
+      2. To the South, there''s a corridor extending two meters with a lateral path
+      West after that distance. This seems promising for exploration.
+
+      3. To the West, the corridor ends after one meter without any lateral paths,
+      making it less appealing than heading South.
+
+
+      The best move is to step towards the South to explore the longer corridor and
+      potential lateral paths there.
+
+
+      South'
+  - prompt: "You move one meter South\n\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ West.\nDue East there is a wall. You can't step in that direction.\nDue South\
+      \ there is a corridor that goes on for one meter before encountering a wall.\
+      \ You are able to see that the corridor has some lateral paths:\n   - After\
+      \ one meter there is a lateral path due West.\nDue West there is a wall. You\
+      \ can't step in that direction.\nThe moves you have made till now are: South"
+    response: '1. From my current position, I cannot move North or West as there are
+      walls blocking those directions.
+
+      2. Moving East is also blocked by a wall.
+
+      3. South offers another corridor with a lateral path West after one meter, which
+      could lead to the exit.
+
+
+      My next move will be south.
+
+
+      South'
+  - prompt: "You move one meter South\n\nDue North there is a corridor that goes on\
+      \ for two meters before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After two meters there is a lateral path due\
+      \ West.\nDue East there is a wall. You can't step in that direction.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for two meters before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due North.\nThe moves you have made till now are: South, South"
+    response: Let's go North
+  - prompt: "You move one meter North\n\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ West.\nDue East there is a wall. You can't step in that direction.\nDue South\
+      \ there is a corridor that goes on for one meter before encountering a wall.\
+      \ You are able to see that the corridor has some lateral paths:\n   - After\
+      \ one meter there is a lateral path due West.\nDue West there is a wall. You\
+      \ can't step in that direction.\nThe moves you have made till now are: South,\
+      \ South, North"
+    response: 'Based on my current position:
+
+
+      1. Moving North or West is blocked by walls.
+
+      2. Moving East is also blocked by a wall.
+
+      3. The only viable path is to the South, which leads towards potential exits.
+
+
+      My next move will be south.
+
+
+      South'
+  - prompt: "You move one meter South\n\nDue North there is a corridor that goes on\
+      \ for two meters before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After two meters there is a lateral path due\
+      \ West.\nDue East there is a wall. You can't step in that direction.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for two meters before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due North.\nThe moves you have made till now are: South, South,\
+      \ North, South"
+    response: 'My next move will be west.
+
+
+      West'
+  - prompt: "You move one meter West\n\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ West.\nDue East there is a corridor that goes on for one meter before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After one meter there is a lateral path due North.\nDue South there is a\
+      \ wall. You can't step in that direction.\nDue West there is a corridor that\
+      \ goes on for one meter before encountering a wall. The corridor ends without\
+      \ any lateral paths.\nThe moves you have made till now are: South, South, North,\
+      \ South, West"
+    response: 'My next move will be west.
+
+
+      West'
+  - prompt: "You move one meter West\n\nDue North there is a wall. You can't step\
+      \ in that direction.\nDue East there is a corridor that goes on for two meters\
+      \ before encountering a wall. You are able to see that the corridor has some\
+      \ lateral paths:\n   - After one meter there is a lateral path due North.\n\
+      \   - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, West, West"
+    response: 'My next move will be east.
+
+
+      East'
+  - prompt: "You move one meter East\n\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ West.\nDue East there is a corridor that goes on for one meter before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After one meter there is a lateral path due North.\nDue South there is a\
+      \ wall. You can't step in that direction.\nDue West there is a corridor that\
+      \ goes on for one meter before encountering a wall. The corridor ends without\
+      \ any lateral paths.\nThe moves you have made till now are: South, South, North,\
+      \ South, West, West, East"
+    response: Let's go North
+  - prompt: "You move one meter North\n\nDue North there is a wall. You can't step\
+      \ in that direction.\nDue East there is a wall. You can't step in that direction.\n\
+      Due South there is a corridor that goes on for one meter before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After one meter there is a lateral path due East.\n   - After one meter\
+      \ there is a lateral path due West.\nDue West there is a corridor that goes\
+      \ on for one meter before encountering a wall. You are able to see that the\
+      \ corridor has some lateral paths:\n   - After one meter there is a lateral\
+      \ path due North.\nThe moves you have made till now are: South, South, North,\
+      \ South, West, West, East, North"
+    response: 'My next move will be south.
+
+
+      South'
+  - prompt: "You move one meter South\n\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ West.\nDue East there is a corridor that goes on for one meter before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After one meter there is a lateral path due North.\nDue South there is a\
+      \ wall. You can't step in that direction.\nDue West there is a corridor that\
+      \ goes on for one meter before encountering a wall. The corridor ends without\
+      \ any lateral paths.\nThe moves you have made till now are: South, South, North,\
+      \ South, West, West, East, North, South"
+    response: 'My next move will be west.
+
+
+      West'
+  - prompt: "You move one meter West\n\nDue North there is a wall. You can't step\
+      \ in that direction.\nDue East there is a corridor that goes on for two meters\
+      \ before encountering a wall. You are able to see that the corridor has some\
+      \ lateral paths:\n   - After one meter there is a lateral path due North.\n\
+      \   - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, West, West, East, North, South, West"
+    response: Let's go east
+  - prompt: "You move one meter East\n\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ West.\nDue East there is a corridor that goes on for one meter before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After one meter there is a lateral path due North.\nDue South there is a\
+      \ wall. You can't step in that direction.\nDue West there is a corridor that\
+      \ goes on for one meter before encountering a wall. The corridor ends without\
+      \ any lateral paths.\nThe moves you have made till now are: South, South, North,\
+      \ South, West, West, East, North, South, West, East"
+    response: 'I want to step north.
+
+
+      North'
+  - prompt: "You move one meter North\n\nDue North there is a wall. You can't step\
+      \ in that direction.\nDue East there is a wall. You can't step in that direction.\n\
+      Due South there is a corridor that goes on for one meter before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After one meter there is a lateral path due East.\n   - After one meter\
+      \ there is a lateral path due West.\nDue West there is a corridor that goes\
+      \ on for one meter before encountering a wall. You are able to see that the\
+      \ corridor has some lateral paths:\n   - After one meter there is a lateral\
+      \ path due North.\nThe moves you have made till now are: South, South, North,\
+      \ South, West, West, East, North, South, West, East, North"
+    response: 'My next move will be south.
+
+
+      South'
+  - prompt: "You move one meter South\n\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ West.\nDue East there is a corridor that goes on for one meter before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After one meter there is a lateral path due North.\nDue South there is a\
+      \ wall. You can't step in that direction.\nDue West there is a corridor that\
+      \ goes on for one meter before encountering a wall. The corridor ends without\
+      \ any lateral paths.\nThe moves you have made till now are: South, South, North,\
+      \ South, West, West, East, North, South, West, East, North, South"
+    response: 'My next move will be west.
+
+
+      West'
+  - prompt: "You move one meter West\n\nDue North there is a wall. You can't step\
+      \ in that direction.\nDue East there is a corridor that goes on for two meters\
+      \ before encountering a wall. You are able to see that the corridor has some\
+      \ lateral paths:\n   - After one meter there is a lateral path due North.\n\
+      \   - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, West, West, East, North, South, West, East, North, South, West"
+    response: 'My next move will be east.
+
+
+      East'
+  - prompt: "You move one meter East\n\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ West.\nDue East there is a corridor that goes on for one meter before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After one meter there is a lateral path due North.\nDue South there is a\
+      \ wall. You can't step in that direction.\nDue West there is a corridor that\
+      \ goes on for one meter before encountering a wall. The corridor ends without\
+      \ any lateral paths.\nThe moves you have made till now are: South, South, North,\
+      \ South, West, West, East, North, South, West, East, North, South, West, East"
+    response: 'I want to step north.
+
+
+      North'
+  - prompt: "You move one meter North\n\nDue North there is a wall. You can't step\
+      \ in that direction.\nDue East there is a wall. You can't step in that direction.\n\
+      Due South there is a corridor that goes on for one meter before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After one meter there is a lateral path due East.\n   - After one meter\
+      \ there is a lateral path due West.\nDue West there is a corridor that goes\
+      \ on for one meter before encountering a wall. You are able to see that the\
+      \ corridor has some lateral paths:\n   - After one meter there is a lateral\
+      \ path due North.\nThe moves you have made till now are: South, South, North,\
+      \ South, West, West, East, North, South, West, East, North, South, West, East,\
+      \ North"
+    response: 'My next move will be south.
+
+
+      South'
+  - prompt: "You move one meter South\n\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ West.\nDue East there is a corridor that goes on for one meter before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After one meter there is a lateral path due North.\nDue South there is a\
+      \ wall. You can't step in that direction.\nDue West there is a corridor that\
+      \ goes on for one meter before encountering a wall. The corridor ends without\
+      \ any lateral paths.\nThe moves you have made till now are: South, South, North,\
+      \ South, West, West, East, North, South, West, East, North, South, West, East,\
+      \ North, South"
+    response: 'Let''s go west.
+
+
+      West'
+  - prompt: "You move one meter West\n\nDue North there is a wall. You can't step\
+      \ in that direction.\nDue East there is a corridor that goes on for two meters\
+      \ before encountering a wall. You are able to see that the corridor has some\
+      \ lateral paths:\n   - After one meter there is a lateral path due North.\n\
+      \   - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, West, West, East, North, South, West, East, North, South, West,\
+      \ East, North, South, West"
+    response: 'Let''s go east.
+
+
+      East'
+  - prompt: "You move one meter East\n\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ West.\nDue East there is a corridor that goes on for one meter before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After one meter there is a lateral path due North.\nDue South there is a\
+      \ wall. You can't step in that direction.\nDue West there is a corridor that\
+      \ goes on for one meter before encountering a wall. The corridor ends without\
+      \ any lateral paths.\nThe moves you have made till now are: South, South, North,\
+      \ South, West, West, East, North, South, West, East, North, South, West, East,\
+      \ North, South, West, East"
+    response: 'Let''s go north.
+
+
+      North'
+  - prompt: "You move one meter North\n\nDue North there is a wall. You can't step\
+      \ in that direction.\nDue East there is a wall. You can't step in that direction.\n\
+      Due South there is a corridor that goes on for one meter before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After one meter there is a lateral path due East.\n   - After one meter\
+      \ there is a lateral path due West.\nDue West there is a corridor that goes\
+      \ on for one meter before encountering a wall. You are able to see that the\
+      \ corridor has some lateral paths:\n   - After one meter there is a lateral\
+      \ path due North.\nThe moves you have made till now are: South, South, North,\
+      \ South, West, West, East, North, South, West, East, North, South, West, East,\
+      \ North, South, West, East, North"
+    response: My next move will be south.
+  - prompt: "You move one meter South\n\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ West.\nDue East there is a corridor that goes on for one meter before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After one meter there is a lateral path due North.\nDue South there is a\
+      \ wall. You can't step in that direction.\nDue West there is a corridor that\
+      \ goes on for one meter before encountering a wall. The corridor ends without\
+      \ any lateral paths.\nThe moves you have made till now are: South, South, North,\
+      \ South, West, West, East, North, South, West, East, North, South, West, East,\
+      \ North, South, West, East, North, South"
+    response: Let's go west.
+  - prompt: "You move one meter West\n\nDue North there is a wall. You can't step\
+      \ in that direction.\nDue East there is a corridor that goes on for two meters\
+      \ before encountering a wall. You are able to see that the corridor has some\
+      \ lateral paths:\n   - After one meter there is a lateral path due North.\n\
+      \   - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, West, West, East, North, South, West, East, North, South, West,\
+      \ East, North, South, West, East, North, South, West"
+    response: Let's go east.
+  - prompt: "You move one meter East\n\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ West.\nDue East there is a corridor that goes on for one meter before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After one meter there is a lateral path due North.\nDue South there is a\
+      \ wall. You can't step in that direction.\nDue West there is a corridor that\
+      \ goes on for one meter before encountering a wall. The corridor ends without\
+      \ any lateral paths.\nThe moves you have made till now are: South, South, North,\
+      \ South, West, West, East, North, South, West, East, North, South, West, East,\
+      \ North, South, West, East, North, South, West, East"
+    response: 'My next move will be north.
+
+
+      North'
+  - prompt: "You move one meter North\n\nDue North there is a wall. You can't step\
+      \ in that direction.\nDue East there is a wall. You can't step in that direction.\n\
+      Due South there is a corridor that goes on for one meter before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After one meter there is a lateral path due East.\n   - After one meter\
+      \ there is a lateral path due West.\nDue West there is a corridor that goes\
+      \ on for one meter before encountering a wall. You are able to see that the\
+      \ corridor has some lateral paths:\n   - After one meter there is a lateral\
+      \ path due North.\nThe moves you have made till now are: South, South, North,\
+      \ South, West, West, East, North, South, West, East, North, South, West, East,\
+      \ North, South, West, East, North, South, West, East, North"
+    response: Let's go south.
+  - prompt: "You move one meter South\n\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ West.\nDue East there is a corridor that goes on for one meter before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After one meter there is a lateral path due North.\nDue South there is a\
+      \ wall. You can't step in that direction.\nDue West there is a corridor that\
+      \ goes on for one meter before encountering a wall. The corridor ends without\
+      \ any lateral paths.\nThe moves you have made till now are: South, South, North,\
+      \ South, West, West, East, North, South, West, East, North, South, West, East,\
+      \ North, South, West, East, North, South, West, East, North, South"
+    response: My next move will be west.
+  - prompt: "You move one meter West\n\nDue North there is a wall. You can't step\
+      \ in that direction.\nDue East there is a corridor that goes on for two meters\
+      \ before encountering a wall. You are able to see that the corridor has some\
+      \ lateral paths:\n   - After one meter there is a lateral path due North.\n\
+      \   - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, West, West, East, North, South, West, East, North, South, West,\
+      \ East, North, South, West, East, North, South, West, East, North, South, West"
+    response: Let's go east.
+  - prompt: "You move one meter East\n\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ West.\nDue East there is a corridor that goes on for one meter before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After one meter there is a lateral path due North.\nDue South there is a\
+      \ wall. You can't step in that direction.\nDue West there is a corridor that\
+      \ goes on for one meter before encountering a wall. The corridor ends without\
+      \ any lateral paths.\nThe moves you have made till now are: South, South, North,\
+      \ South, West, West, East, North, South, West, East, North, South, West, East,\
+      \ North, South, West, East, North, South, West, East, North, South, West, East"
+    response: My next move will be north.
+  - prompt: "You move one meter North\n\nDue North there is a wall. You can't step\
+      \ in that direction.\nDue East there is a wall. You can't step in that direction.\n\
+      Due South there is a corridor that goes on for one meter before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After one meter there is a lateral path due East.\n   - After one meter\
+      \ there is a lateral path due West.\nDue West there is a corridor that goes\
+      \ on for one meter before encountering a wall. You are able to see that the\
+      \ corridor has some lateral paths:\n   - After one meter there is a lateral\
+      \ path due North.\nThe moves you have made till now are: South, South, North,\
+      \ South, West, West, East, North, South, West, East, North, South, West, East,\
+      \ North, South, West, East, North, South, West, East, North, South, West, East,\
+      \ North"
+    response: 'My next move will be south.
+
+
+      South'
+  - prompt: "You move one meter South\n\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ West.\nDue East there is a corridor that goes on for one meter before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After one meter there is a lateral path due North.\nDue South there is a\
+      \ wall. You can't step in that direction.\nDue West there is a corridor that\
+      \ goes on for one meter before encountering a wall. The corridor ends without\
+      \ any lateral paths.\nThe moves you have made till now are: South, South, North,\
+      \ South, West, West, East, North, South, West, East, North, South, West, East,\
+      \ North, South, West, East, North, South, West, East, North, South, West, East,\
+      \ North, South"
+    response: Let's go west.
+  - prompt: "You move one meter West\n\nDue North there is a wall. You can't step\
+      \ in that direction.\nDue East there is a corridor that goes on for two meters\
+      \ before encountering a wall. You are able to see that the corridor has some\
+      \ lateral paths:\n   - After one meter there is a lateral path due North.\n\
+      \   - After two meters there is a lateral path due North.\nDue South there is\
+      \ a wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction.\nThe moves you have made till now are: South, South,\
+      \ North, South, West, West, East, North, South, West, East, North, South, West,\
+      \ East, North, South, West, East, North, South, West, East, North, South, West,\
+      \ East, North, South, West"
+    response: My next move will be north.
+  - prompt: "\nYou try to walk North.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\n\n\
+      Due North there is a wall. You can't step in that direction.\nDue East there\
+      \ is a corridor that goes on for two meters before encountering a wall. You\
+      \ are able to see that the corridor has some lateral paths:\n   - After one\
+      \ meter there is a lateral path due North.\n   - After two meters there is a\
+      \ lateral path due North.\nDue South there is a wall. You can't step in that\
+      \ direction.\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: South, South, North, South, West, West,\
+      \ East, North, South, West, East, North, South, West, East, North, South, West,\
+      \ East, North, South, West, East, North, South, West, East, North, South, West"
+    response: Let's go east.
+  - prompt: "You move one meter East\n\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ West.\nDue East there is a corridor that goes on for one meter before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After one meter there is a lateral path due North.\nDue South there is a\
+      \ wall. You can't step in that direction.\nDue West there is a corridor that\
+      \ goes on for one meter before encountering a wall. The corridor ends without\
+      \ any lateral paths.\nThe moves you have made till now are: South, South, North,\
+      \ South, West, West, East, North, South, West, East, North, South, West, East,\
+      \ North, South, West, East, North, South, West, East, North, South, West, East,\
+      \ North, South, West, East"
+    response: Let's go north.
+  - prompt: "You move one meter North\n\nDue North there is a wall. You can't step\
+      \ in that direction.\nDue East there is a wall. You can't step in that direction.\n\
+      Due South there is a corridor that goes on for one meter before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After one meter there is a lateral path due East.\n   - After one meter\
+      \ there is a lateral path due West.\nDue West there is a corridor that goes\
+      \ on for one meter before encountering a wall. You are able to see that the\
+      \ corridor has some lateral paths:\n   - After one meter there is a lateral\
+      \ path due North.\nThe moves you have made till now are: South, South, North,\
+      \ South, West, West, East, North, South, West, East, North, South, West, East,\
+      \ North, South, West, East, North, South, West, East, North, South, West, East,\
+      \ North, South, West, East, North"
+    response: Let's go west.
+  - prompt: "You move one meter West\n\nDue North you can see a natural light shining\
+      \ in that direction, it is probably the direction of the exit!\nDue East there\
+      \ is a corridor that goes on for one meter before encountering a wall. You are\
+      \ able to see that the corridor has some lateral paths:\n   - After one meter\
+      \ there is a lateral path due South.\nDue South there is a wall. You can't step\
+      \ in that direction.\nDue West there is a wall. You can't step in that direction.\n\
+      The moves you have made till now are: South, South, North, South, West, West,\
+      \ East, North, South, West, East, North, South, West, East, North, South, West,\
+      \ East, North, South, West, East, North, South, West, East, North, South, West,\
+      \ East, North, West"
+    response: Let's go north.
+  - prompt: "You move one meter North\n\nDue North you can see the exit in that direction!\
+      \ One last step and you are out of the maze!\nDue East there is a wall. You\
+      \ can't step in that direction.\nDue South there is a corridor that goes on\
+      \ for one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ East.\nDue West there is a wall. You can't step in that direction.\nThe moves\
+      \ you have made till now are: South, South, North, South, West, West, East,\
+      \ North, South, West, East, North, South, West, East, North, South, West, East,\
+      \ North, South, West, East, North, South, West, East, North, South, West, East,\
+      \ North, West, North"
+    response: Let's go north!
+illegal_directions: 1
+illegal_responses: 0
+execution_time: 404.81223368644714

@@ -1,0 +1,197 @@
+git_hash: 31669349e6fd724d9f282041d47780742fe8e81e
+maze:
+  horizontal:
+  - - false
+    - true
+    - false
+  - - false
+    - false
+    - false
+  - - true
+    - true
+    - false
+  vertical:
+  - - true
+    - true
+    - true
+  - - true
+    - false
+    - true
+  - - false
+    - false
+    - false
+  start:
+  - 0
+  - 0
+  target:
+  - 2
+  - 1
+  path:
+  - - 0
+    - 0
+  - - 1
+    - 0
+  - - 2
+    - 0
+  - - 2
+    - 1
+  decisions:
+  - S
+  - S
+  - E
+  - S
+  colored_cells: []
+  sight_depth: 2
+  size: 3
+  solved: true
+chat_history:
+  system_prompt: "\nYou are a maze solving model. You are an expert in solving classic\
+    \ lattice mazes.\n\nThe user will provide you with descriptions of what you can\
+    \ perceive from inside the maze.\nThe information provided considers you to have\
+    \ a sight depth of two meters. Anything that is further away from you than two\
+    \ meters is not mentioned in the user prompt.\nJust like a classic lattice maze\
+    \ the exit is on the border. The starting position could be anywhere in the maze.\n\
+    Your goal is to find the maze exit. Once you reach it you must step out of the\
+    \ maze with one last move.\nThe maze is always solvable and the user is always\
+    \ honest on the information that he provides you.\n\nAfter the user provides you\
+    \ with informations regarding you current surroundings, you will provide the direction\
+    \ to step towards next.\nThe possible directions are north, east, south, west.\n\
+    \nThe maze is a 3 x 3 grid, with every square in the grid being one square meter\
+    \ big.\nUse brief, step-indexed reasoning. Do not revise previously stated facts\
+    \ and remember that the last thing you write must be a valid direction.\n\nYou\
+    \ are allowed to output the direction with any casing you want, as long as it\
+    \ is the last thing in your answer.\nHere are some examples of valid end of response,\
+    \ in case you decide to move due north:\n\n- Let's go North\n- I want to step\
+    \ N!\n- My next move will be north.\n\nTo keep track of the progress you make,\
+    \ maintain a persistent 2D map of the maze using ASCII characters..\nThis will\
+    \ help you track you progress and inform your decisions\n\nThe user notifies you\
+    \ when you move in a given direction, such as 'You move one meter west', if you\
+    \ decide to move due west.\nKeep in mind that after you step in a given direction,\
+    \ the information provided for what you percieve in the opposite direction refers\
+    \ to the area you are coming from.\nFor example, let's say that the user gives\
+    \ you this information:\n'''\n    Due North there is a wall. You can't step in\
+    \ that direction.\n    Due East there is a corridor that goes on for one meter\
+    \ before encountering a wall. It is a dead end.\n    Due South there is a corridor\
+    \ that goes on for two meters before encountering a wall. The corridor has some\
+    \ lateral paths.\n    Due West there is a wall. You can't step in that direction.\n\
+    '''\nIf you decide to move south, the user will then provide information regarding\
+    \ what can be perceived from your new position.\n'''\n    You move one meter south.\n\
+    \    Due North there is a corridor that goes on for one meter before encountering\
+    \ a wall. The corridor has some lateral paths.\n    Due East there is a wall.\
+    \ You can't step in that direction.\n    Due South there is a corridor that goes\
+    \ on for one meter before encountering a wall. The corridor has some lateral paths.\n\
+    \    Due West there is a wall. You can't step in that direction.\n'''\nThe info\
+    \ on the corridor due North refers to the cell you have just moved out of, so\
+    \ you have already explored that direction.\n"
+  chat:
+  - prompt: "Due North there is a wall. You can't step in that direction.\nDue East\
+      \ there is a wall. You can't step in that direction.\nDue South there is a corridor\
+      \ that goes on for two meters before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After two meters there is\
+      \ a lateral path due East.\nDue West there is a wall. You can't step in that\
+      \ direction."
+    response: "[1,1] = X (You)\n[1,0] = W\n[1,2] = W\n[0,1] = W\n[2,1] = W\n\nAnalysis\
+      \ of surroundings:\n- North: Wall (Blocked)\n- East: Wall (Blocked)\n- West:\
+      \ Wall (Blocked)\n- South: Corridor extending 2 meters (Walkable)\n  - At 2\
+      \ meters distance (2,1): Lateral path leading East to (2,2).\n  - (2,2) is one\
+      \ meter outside the sight depth but implies connectivity to the East border.\n\
+      \nConclusion:\nTo reach the exit (East border), I must move South into the corridor.\
+      \ The most direct path to the East border leads towards the East corner.\nStep\
+      \ 1: Move South.\n\nSouth"
+  - prompt: "You move one meter South\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. The corridor ends without any lateral\
+      \ paths.\nDue East there is a wall. You can't step in that direction.\nDue South\
+      \ there is a corridor that goes on for one meter before encountering a wall.\
+      \ You are able to see that the corridor has some lateral paths:\n   - After\
+      \ one meter there is a lateral path due East.\nDue West there is a wall. You\
+      \ can't step in that direction.\nThe moves you have made till now are: South"
+    response: "[1,1] = X (You)\n[2,0] = W\n[2,2] = W\n[0,1] = W\n[1,2] = W\n\nAnalysis\
+      \ of surroundings:\n- North: Corridor (Walkable) - Previous position\n- East:\
+      \ Wall (Blocked)\n- West: Wall (Blocked)\n- South: Corridor extending 1 meter.\n\
+      \  - At 1 meter distance (3,1): Lateral path leading East to (3,2).\n  - (3,2)\
+      \ is adjacent to the East border.\n\nConclusion:\nThe exit is located on the\
+      \ East border. The path leads South to the corridor, then East.\nStep 2: Move\
+      \ South.\n\nSouth"
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. The corridor ends without any lateral paths.
+
+      Due East you can see a natural light shining in that direction, it is probably
+      the direction of the exit!
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a wall. You can''t step in that direction.
+
+      The moves you have made till now are: South, South'
+    response: '[1,1] = X (You)
+
+      [0,1] = W
+
+      [0,0] = W
+
+      [0,2] = W
+
+      [2,2] = W
+
+
+      Analysis of surroundings:
+
+      - North: Corridor extending 2 meters. At (0,1): Lateral path leading East to
+      (0,2). (0,2) connects to the East border.
+
+      - East: Natural light (Exit confirmed).
+
+      - South: Wall (Blocked).
+
+      - West: Wall (Blocked).
+
+
+      Conclusion:
+
+      I have found the exit due East.
+
+      Step 3: Move East to exit the maze.
+
+
+      East'
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for one meter before\
+      \ encountering a wall. You are able to see that the corridor has some lateral\
+      \ paths:\n   - After one meter there is a lateral path due North.\nDue South\
+      \ you can see the exit in that direction! One last step and you are out of the\
+      \ maze!\nDue West there is a corridor that goes on for one meter before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After one meter there is a lateral path due North.\nThe moves you have made\
+      \ till now are: South, South, East"
+    response: '[0,1] = W
+
+      [0,0] = W
+
+      [0,2] = W
+
+      [2,2] = W
+
+
+      Analysis of surroundings:
+
+      - North: Wall (Blocked).
+
+      - East: Corridor (Walkable) - Leads back towards center.
+
+      - South: Exit confirmed (Natural light).
+
+      - West: Corridor (Walkable) - Leads back towards center.
+
+
+      Conclusion:
+
+      The user has confirmed that the exit is due South. This marks the successful
+      completion of the maze. The final action is to step South to leave.
+
+
+      South'
+illegal_directions: 0
+illegal_responses: 0
+execution_time: 42.41028380393982

@@ -1,0 +1,2513 @@
+git_hash: fb3cfc377fa8d03577237d0cabbc6cbf67e37bdc
+maze:
+  horizontal:
+  - - false
+    - false
+    - false
+  - - false
+    - true
+    - false
+  - - true
+    - true
+    - false
+  vertical:
+  - - true
+    - true
+    - true
+  - - true
+    - false
+    - true
+  - - false
+    - false
+    - false
+  start:
+  - 0
+  - 0
+  target:
+  - 0
+  - 1
+  path:
+  - - 0
+    - 0
+  - - 1
+    - 0
+  - - 2
+    - 0
+  - - 1
+    - 0
+  decisions:
+  - S
+  - S
+  - N
+  sight_depth: 2
+  size: 3
+  solved: false
+chat_history:
+  system_prompt: '
+
+    You are a maze solving model. You are an expert in solving classic lattice mazes.
+
+
+    The user will provide you with descriptions of what you can perceive from inside
+    the maze.
+
+    Just like a classic maze the exit is on the border. The starting position could
+    be anywhere in the maze.
+
+    Your goal is to find the maze exit. Once you reach it you must step out of the
+    maze with one last move.
+
+
+    After the user provides you with informations regarding you current surroundings,
+    you will provide the direction to step towards next.
+
+    The possible directions are north, east, south, west.
+
+
+    The maze is a 3 x 3 grid, with every square in the grid being one square meter
+    big.
+
+    You are advised to think out loud about what your next move should be, but remember
+    that the last thing you write must be a valid direction.
+
+
+    You are allowed to output the direction with any casing you want, as long as it
+    is the last thing in your answer.
+
+    Here are some examples of valid end of response, in case you decide to move due
+    north:
+
+
+    - Let''s go North
+
+    - I want to step N!
+
+    - My next move will be north.
+
+
+    Try to formulate a plan and keep track of what what tiles you have already visited
+    to ensure you are making progress in exploring the maze.
+
+    '
+  chat:
+  - prompt: 'Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: "To solve this maze, I'm going to carefully analyze the possible directions\
+      \ and explore each one systematically.\n\nThe first thing we notice is that\
+      \ due north, there's a wall. Since the exit is on the border of the grid, and\
+      \ since moving straight north would lead us into the same dead end due north\
+      \ situation again, let's move east instead. \n\nNow we have to carefully examine\
+      \ our options in each direction: East, South, and West. We see that going east\
+      \ leads to a wall, south leads to an open corridor (not yet fully explored),\
+      \ but west is blocked by another wall.\n\nConsidering this information, my next\
+      \ step would be to explore the corridor on the south side of our current position\
+      \ as it might lead us closer to the exit or offer more options in future steps."
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: "Given that we've successfully moved south one meter and found another\
+      \ dead end, I'm going to reassess our situation. \n\nThe key here is to notice\
+      \ the similarity between the two dead ends: both are at an open corridor after\
+      \ moving south. Since the exit can only be reached by moving through one of\
+      \ these corridors, let's try exploring each one again.\n\nFirst, I'll go back\
+      \ and examine my previous direction for east, which led us into a wall. That\
+      \ means we need to move east from where we currently are (south) instead of\
+      \ south (north). Now we have two options: move east or move west. However, since\
+      \ moving west leads to another dead end with no available lateral paths, it's\
+      \ clear that we should explore the corridor on our left by moving north and\
+      \ then east again for as long as possible without encountering a wall.\n\nMy\
+      \ next step would be to move one meter north from where I am currently facing\
+      \ south (east). This will give us more room to maneuver before making any further\
+      \ decisions about which direction to take."
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: "With this new information, I'm going to recalculate my approach based\
+      \ on the updated options available to me. \n\nGiven that the corridor on the\
+      \ south side of our current position ends with a wall and we have no clear way\
+      \ forward due east or west, let's try exploring the open lateral paths along\
+      \ the corridors instead of continuing directly north.\n\nSince moving north\
+      \ leads us into another dead end, I'll move one meter north to examine the possible\
+      \ directions available in this new position. Given that there is an open corridor\
+      \ on our left and a wall where we tried to go east earlier (due to hitting a\
+      \ wall), let's try going west for now instead of continuing north.\n\nMy next\
+      \ step would be to take one meter west from where I currently am facing south.\
+      \ This will give me another direction to explore without immediately encountering\
+      \ a dead end or walls."
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. It is a dead end.
+
+      Due East there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this information, I''ve re-evaluated our options and noticed some
+      key differences between the two corridors: one has two meters of open path leading
+      up to another dead end (due north), while the other leads to an unblocked corridor
+      with multiple available paths (due east).
+
+
+      Given that we need to explore a possible exit, let''s try moving in the direction
+      that offers more options for future exploration. Since we''ve already tried
+      going west and are faced with a wall there, I''ll move back one meter south
+      to re-examine our previous position on the east side of the grid.
+
+
+      My next step would be to move one meter south from where I currently am facing
+      south (west). This will give me another direction to explore in this new position
+      without immediately encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk West.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. It is a dead end.
+
+      Due East there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: "With this new information, I'm going to reassess our situation and\
+      \ try to find an alternative path forward. \n\nGiven that the corridor on the\
+      \ east side of the grid ends with another wall, let's explore the other options\
+      \ we have available: moving south or north. Since the corridor on the west side\
+      \ is blocked by a wall as well, it seems like moving north would put us in the\
+      \ same dead end situation again.\n\nLet's try going back one meter south from\
+      \ where I currently am facing east (west) to re-examine our previous position\
+      \ and see if we can find an alternative direction. My next step would be to\
+      \ move one meter south from where I currently am facing west (north). This will\
+      \ give me another possible exploration path without immediately encountering\
+      \ a dead end or walls."
+  - prompt: 'You move one meter North
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the west side ends with another wall, let''s try moving east
+      from where I currently am facing south (west) instead of continuing north.
+
+
+      My next step would be to move one meter east from where I currently am facing
+      south (west). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk West.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving west from where I currently am facing north (east) instead
+      of continuing south.
+
+
+      My next step would be to move one meter west from where I currently am facing
+      north (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving west from where I currently am facing north (east) instead
+      of continuing south.
+
+
+      My next step would be to move one meter west from where I currently am facing
+      north (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'With this new information, I''ve re-evaluated our options and noticed
+      that we have two possible directions left to explore: east or west. Given that
+      the corridor on the south side of our current position ends with another dead
+      end, let''s try moving north from where I currently am facing east (west) instead
+      of continuing south.
+
+
+      My next step would be to move one meter north from where I currently am facing
+      west (east). This will give us a new direction to explore without immediately
+      encountering a dead end or walls.'
+illegal_directions: 87
+illegal_responses: 0
+execution_time: 196.36167240142822

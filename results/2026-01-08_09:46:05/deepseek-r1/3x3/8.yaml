@@ -1,0 +1,4333 @@
+maze:
+  horizontal:
+  - - true
+    - true
+    - false
+  - - true
+    - false
+    - false
+  - - true
+    - true
+    - false
+  vertical:
+  - - true
+    - false
+    - true
+  - - false
+    - false
+    - true
+  - - false
+    - false
+    - false
+  start:
+  - 2
+  - 0
+  target:
+  - 1
+  - 0
+  path:
+  - - 2
+    - 0
+  - - 2
+    - 1
+  - - 2
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 0
+    - 1
+  - - 0
+    - 2
+  sight_depth: 2
+  size: 3
+chat_history:
+  system_prompt: '
+
+    You are a maze solving model. You are an expert in solving classic lattice mazes.
+
+
+    The user will provide you with descriptions of what you can perceive from inside
+    the maze.
+
+    Just like a classic maze the exit is on the border. The starting position could
+    be anywhere in the maze.
+
+    Your goal is to find the maze exit. Once you reach it you must step out of the
+    maze with one last move.
+
+
+    After the user provides you with informations regarding you current surroundings,
+    you will provide the direction to step towards next.
+
+    Provide your answer in the form of the initial of the cardinal direction you wish
+    to take a step forwards to.
+
+    The possible directions are N for north, E for east, S for south, W for west.
+
+
+    The maze is a 3 x 3 grid, with every square in the grid being one square meter
+    big.
+
+    You are advised to think out loud about what your next move should be, but remember
+    that the last thing you write must be a valid direction.
+
+
+    As an example if you want to step towards north the last character in your answer
+    would be: N
+
+
+    Analize your moves and avoid oscillating patterns (such as [north, south, north,
+    ...] and [west, east, west, ...] as they do not lead to improvements in finding
+    the exit.
+
+
+    '
+  chat:
+  - prompt: 'Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: "Okay, let me think through this carefully. Looking at the current corridor\
+      \ description, I notice it's a long corridor extending east for two meters before\
+      \ hitting a wall. The fact that lateral paths are open along the way suggests\
+      \ this corridor might connect to other areas, even if they're not directly accessible\
+      \ from here.\n\nConsidering my current position and the blocked directions,\
+      \ the only available path is east. Since the corridor extends for two meters,\
+      \ I should continue in that direction to explore further. \n\nI need to avoid\
+      \ oscillating patterns, so I'll commit to moving east. This might lead to discovering\
+      \ new paths or approaching the exit. The lateral openings could be promising\
+      \ if I eventually reach them, but for now the direct path forward seems most\
+      \ logical.\n\nSo my next move is:\nE"
+  - prompt: 'You move one meter East
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.'
+    response: 'Okay, thinking through this step by step. I''ve moved one meter East,
+      so my position has changed slightly. Now, let''s analyze the new surroundings.
+
+
+      To the North: Wall - Blocked.
+
+      To the East: A corridor that continues for one meter before a wall. There are
+      lateral openings, but it''s still a corridor. Not a dead end, but I can''t go
+      further East here.
+
+      To the South: Wall - Blocked.
+
+      To the West: A corridor that goes one meter and then hits a dead end. So, a
+      short, closed path.
+
+
+      My goal is to find the exit, which is on the border. Given that, I need to consider
+      the available paths.
+
+
+      The East corridor is still open but limited. The West corridor is dead-ended,
+      so that seems like a dead end and probably not the best use of time.
+
+
+      Considering the lateral openings mentioned in the East corridor, maybe I should
+      explore that direction. Even though it''s short, the lateral paths might lead
+      somewhere interesting or closer to the exit.
+
+
+      Alternatively, maybe I should consider if there are other possibilities, but
+      based on the description, the West is clearly a dead end.
+
+
+      To avoid oscillation and make progress, I''ll commit to moving East again. This
+      might be a bit short, but the lateral openings could be promising.
+
+
+      So, my next move is East.'
+  - prompt: 'You move one meter East
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. It is a dead end.'
+    response: 'Alright, let''s analyze this carefully. From my previous position,
+      I moved one meter East, so I''m now closer to the eastern part of the maze.
+      Now, looking at the updated surroundings:
+
+
+      - **North:** There''s a corridor extending for two meters before hitting a wall.
+      Importantly, there are lateral openings along this corridor, meaning it''s not
+      a dead end. This suggests that moving North could potentially lead to more open
+      areas or connections to other parts of the maze.
+
+
+      - **East:** Blocked by a wall. So, I can''t proceed further East here.
+
+
+      - **South:** Also blocked by a wall. No movement possible in that direction.
+
+
+      - **West:** There''s a corridor that goes two meters before ending in a dead
+      end. Since it''s a dead end, this path won''t lead to progress and should be
+      avoided to prevent wasting time.
+
+
+      Given that the goal is to find the exit, which is on the border, I need to prioritize
+      directions that offer more space or potential connections. The North corridor
+      is promising because it extends for two meters and has lateral openings, which
+      might connect to other areas or bring me closer to the exit.
+
+
+      Moving West into the dead end would only lead to a cul-de-sac, which doesn''t
+      help in finding the exit. The South and East directions are blocked, so they''re
+      not options.
+
+
+      Therefore, the best move is to head North, as it provides the most opportunity
+      for exploration and progress.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s analyze this carefully. I''ve moved one meter North,
+      so my position has shifted slightly northward. Now, looking at the updated surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall.
+      Importantly, there are lateral openings along this corridor, meaning it''s not
+      a dead end. This suggests that moving North might lead to more open areas or
+      connections to other parts of the maze.
+
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+
+      - **South:** There''s a corridor extending for one meter before a wall, with
+      lateral openings. Similar to the North direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the exit is on the border, I need to prioritize directions that offer
+      more space or potential connections. Both the North and South corridors extend
+      for one meter and have lateral openings, but the North direction has been consistently
+      open in previous steps, suggesting it might be leading toward the exit or a
+      more promising area.
+
+
+      Moving South might be a possibility, but without more context, the North direction
+      seems more reliable based on the previous pattern. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s analyze this carefully. I''ve moved one meter North,
+      so my position has shifted northward. Now, looking at the updated surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the exit is on the border, I need to prioritize directions that offer
+      more space or potential connections. Both the South and West corridors extend
+      for two meters and have lateral openings, which might lead to the exit or other
+      paths.
+
+
+      Previously, I was moving North, but now North and East are blocked, so I need
+      to choose between South and West. Since both are similar, I should pick one
+      and commit to it to avoid oscillating. Let''s go with South for now.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s break this down. I''ve moved one meter South, so my
+      position is now shifted southward. Now, looking at the updated surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the exit is on the border, I need to prioritize directions that offer
+      more space or potential connections. The North and South corridors both extend
+      for one meter and have lateral openings, but the North direction was previously
+      open in the last observation, suggesting it might be leading toward the exit
+      or a more promising area.
+
+
+      Moving South now might be part of a pattern, but without more context, the North
+      direction seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s reassess the current situation. I''ve moved one meter
+      North, so my position has shifted northward again. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s analyze this carefully. I''ve moved one meter South,
+      so my position has shifted southward again. Now, looking at the updated surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s reassess the current situation. I''ve moved one meter
+      North, so my position has shifted northward again. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s break this down. I''ve moved one meter South, so my
+      position has shifted southward again. Now, looking at the updated surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s analyze this carefully. I''ve moved one meter North,
+      so my position has shifted northward again. Now, looking at the updated surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s break this down carefully. I''ve moved one meter South,
+      so my position has shifted southward again. Now, looking at the updated surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s carefully analyze this situation. I''ve moved one meter
+      North, so my position has shifted northward again. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s carefully analyze this situation. I''ve moved one meter
+      South, so my position has shifted southward again. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s carefully analyze this situation. I''ve moved one meter
+      North, so my position has shifted northward again. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s break this down carefully. I''ve moved one meter South,
+      so my position has shifted southward again. Now, looking at the updated surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s carefully analyze this situation. I''ve moved one meter
+      North, so my position has shifted northward again. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s break this down. I''ve moved one meter South, so my
+      position has shifted southward again. Now, looking at the updated surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s carefully analyze this situation. I''ve moved one meter
+      North, so my position has shifted northward again. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s break this down carefully. I''ve moved one meter South,
+      so my position has shifted southward again. Now, looking at the updated surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s analyze this situation carefully. I''ve moved one meter
+      North, so my position has shifted northward again. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s break this down carefully. I''ve moved one meter South,
+      so my position has shifted southward again. Now, looking at the updated surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s carefully analyze this situation. I''ve moved one meter
+      North, so my position has shifted northward again. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s break this down carefully. I''ve moved one meter South,
+      so my position has shifted southward again. Now, looking at the updated surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s carefully analyze this situation. I''ve moved one meter
+      North, so my position has shifted northward again. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s break this down carefully. I''ve moved one meter South,
+      so my position has shifted southward again. Now, looking at the updated surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s carefully analyze this situation. I''ve moved one meter
+      North, so my position has shifted northward again. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s analyze this situation step by step. I''ve moved one
+      meter South, so my current position is south of the previous point. Now, looking
+      at the updated surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s carefully analyze this situation. I''ve moved one meter
+      North, so my position has shifted northward again. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s break this down carefully. I''ve moved one meter South,
+      so my current position is south of the previous point. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s carefully analyze this situation. I''ve moved one meter
+      North, so my position has shifted northward again. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s analyze this carefully. I''ve moved one meter South,
+      so my current position is south of the previous point. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s break this down carefully. I''ve moved one meter North,
+      so my position has shifted northward again. Now, looking at the updated surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s analyze this situation carefully. I''ve moved one meter
+      South, so my current position is south of the previous point. Now, looking at
+      the updated surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s break this down carefully. I''ve moved one meter North,
+      so my position has shifted northward again. Now, looking at the updated surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s break this down carefully. I''ve moved one meter South,
+      so my current position is south of the previous point. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s break this down carefully. I''ve moved one meter North,
+      so my position has shifted northward again. Now, looking at the updated surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s analyze this situation. I''ve moved one meter South,
+      so my current position is south of the previous point. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s carefully analyze this situation. I''ve moved one meter
+      North, so my position has shifted northward again. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s break this down carefully. I''ve moved one meter South,
+      so my current position is south of the previous point. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s carefully analyze this situation. I''ve moved one meter
+      North, so my position has shifted northward again. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s analyze this situation. I''ve moved one meter South,
+      so my current position is south of the previous point. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s carefully analyze this situation. I''ve moved one meter
+      North, so my position has shifted northward again. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s break this down carefully. I''ve moved one meter South,
+      so my current position is south of the previous point. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s carefully analyze this situation. I''ve moved one meter
+      North, so my position has shifted northward again. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s analyze this situation. I''ve moved one meter South,
+      so my current position is south of the previous point. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s carefully analyze this situation. I''ve moved one meter
+      North, so my position has shifted northward again. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s analyze this situation. I''ve moved one meter South,
+      so my current position is south of the previous point. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s carefully analyze this situation. I''ve moved one meter
+      North, so my position has shifted northward again. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s break this down carefully. I''ve moved one meter South,
+      so my current position is south of the previous point. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s carefully analyze this situation. I''ve moved one meter
+      North, so my position has shifted northward again. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s analyze this situation again. I''ve moved one meter
+      South, so my current position is south of the previous point. Now, looking at
+      the updated surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s carefully analyze this situation. I''ve moved one meter
+      North, so my position has shifted northward again. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s break this down carefully. I''ve moved one meter South,
+      so my current position is south of the previous point. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s analyze this situation again. I''ve moved one meter
+      North, so my position has shifted northward. Now, looking at the updated surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s break this down carefully. I''ve moved one meter South,
+      so my current position is south of the previous point. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s analyze this situation again. I''ve moved one meter
+      North, so my position has shifted northward. Now, looking at the updated surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s carefully analyze this situation. I''ve moved one meter
+      South, so my current position is south of the previous point. Now, looking at
+      the updated surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s break this down carefully. I''ve moved one meter North,
+      so my position has shifted northward. Now, looking at the updated surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s carefully analyze this situation again. I''ve moved
+      one meter South, so my current position is south of the previous point. Now,
+      looking at the updated surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s analyze this situation again. I''ve moved one meter
+      North, so my position has shifted northward. Now, looking at the updated surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s analyze this situation again. I''ve moved one meter
+      South, so my current position is south of the previous point. Now, looking at
+      the updated surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s break this down carefully. I''ve moved one meter North,
+      so my position has shifted northward. Now, looking at the updated surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s carefully analyze this situation again. I''ve moved
+      one meter South, so my current position is south of the previous point. Now,
+      looking at the updated surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s break this down carefully. I''ve moved one meter North,
+      so my position has shifted northward. Now, looking at the updated surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s analyze this situation again. I''ve moved one meter
+      South, so my current position is south of the previous point. Now, looking at
+      the updated surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s break this down carefully. I''ve moved one meter North,
+      so my position has shifted northward. Now, looking at the updated surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s analyze this situation again. I''ve moved one meter
+      South, so my current position is south of the previous point. Now, looking at
+      the updated surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s carefully analyze this situation again. I''ve moved
+      one meter North, so my position has shifted northward. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s carefully analyze this situation again. I''ve moved
+      one meter South, so my current position is south of the previous point. Now,
+      looking at the updated surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s carefully analyze this situation again. I''ve moved
+      one meter North, so my position has shifted northward. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s break this down carefully. I''ve moved one meter South,
+      so my current position is south of the previous point. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s carefully analyze this situation again. I''ve moved
+      one meter North, so my position has shifted northward. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s carefully analyze this situation again. I''ve moved
+      one meter South, so my current position is south of the previous point. Now,
+      looking at the updated surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s break this down carefully. I''ve moved one meter North,
+      so my position has shifted northward. Now, looking at the updated surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s carefully analyze this situation again. I''ve moved
+      one meter South, so my current position is south of the previous point. Now,
+      looking at the updated surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s break this down carefully. I''ve moved one meter North,
+      so my position has shifted northward. Now, looking at the updated surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s carefully analyze this situation again. I''ve moved
+      one meter South, so my current position is south of the previous point. Now,
+      looking at the updated surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s break this down carefully. I''ve moved one meter North,
+      so my position has shifted northward. Now, looking at the updated surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s analyze this situation again. I''ve moved one meter
+      South, so my current position is south of the previous point. Now, looking at
+      the updated surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s break this down carefully. I''ve moved one meter North,
+      so my position has shifted northward. Now, looking at the updated surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s analyze this situation again. I''ve moved one meter
+      South, so my current position is south of the previous point. Now, looking at
+      the updated surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a pattern, but without more context, the North direction
+      seems more reliable based on the previous steps. I should avoid oscillating
+      between directions and instead commit to a path that shows consistent progress.
+
+
+      Therefore, the best move is to head North again, as it provides the most direct
+      path and potential for lateral exploration.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s break this down carefully. I''ve moved one meter North,
+      so my position has shifted northward. Now, looking at the updated surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, the best move is to head South, as it provides a longer corridor
+      with potential lateral connections, which might lead me closer to the exit.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: "Alright, let's reassess the current situation. I've moved one meter\
+      \ South, so my position is now south of the previous point. Here's the breakdown\
+      \ of the surroundings:\n\n- **North:** There's a corridor that extends for one\
+      \ meter before hitting a wall, with lateral openings. This indicates it's not\
+      \ a dead end and could lead to further exploration or the exit.\n- **East:**\
+      \ Blocked by a wall. No movement possible.\n- **South:** There's a corridor\
+      \ extending for one meter before hitting a wall, with lateral openings. Again,\
+      \ not a dead end, so there might be connections or paths ahead.\n- **West:**\
+      \ Blocked by a wall. No movement possible.\n\nNow, considering the history:\
+      \ In the last move, I moved South, and now the North corridor is open. Previously,\
+      \ when the North corridor was open, it seemed to be a promising direction. The\
+      \ South corridor is still an option, but I need to avoid oscillating between\
+      \ South and North. \n\nGiven that the North corridor is open and has potential,\
+      \ I should explore that direction to see if it leads to the exit or new opportunities.\
+      \ The South corridor might be part of a loop or a dead end, so prioritizing\
+      \ North could be beneficial.\n\nTherefore, I'll proceed to move North next.\n\
+      So, my next step is:\nN"
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s carefully analyze the current situation. I''ve moved
+      one meter North, so my position has shifted northward. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, I''ll proceed to move South next.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s break this down carefully. I''ve moved one meter South,
+      so my current position is south of the previous point. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+      - **West:** Blocked by a wall. No movement possible here.
+
+
+      Given that the North and South corridors both extend for one meter and have
+      lateral openings, but the North corridor was previously open in the last observation,
+      suggesting it might be leading toward the exit or a more promising area. Moving
+      South now might be part of a loop or a less promising path, so I should prioritize
+      exploring the North direction to see if it leads to new opportunities or the
+      exit.
+
+
+      Therefore, I''ll proceed to move North next.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s carefully analyze the current situation. I''ve moved
+      one meter North, so my position has shifted northward. Now, looking at the updated
+      surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible here.
+
+      - **East:** Blocked by a wall. No movement possible here.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Similar to the South direction, this could be a potential
+      path with opportunities for lateral movement.
+
+
+      Given that the North and East directions are blocked, I must choose between
+      South and West. Previously, when I was in a similar position, I chose South
+      and moved one meter South. Now, both South and West corridors extend for two
+      meters and have lateral openings, but I need to avoid oscillating between directions.
+      Since I previously moved South, and now the South corridor is still open, I
+      should continue in that direction to maintain progress.
+
+
+      Therefore, I''ll proceed to move South next.
+
+
+      So, my next step is:
+
+      S'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Alright, let''s reassess the current situation. I''ve moved one meter
+      South, so my position is now south of the previous point. Here''s the breakdown
+      of the surroundings:
+
+
+      - **North:** There''s a corridor that extends for one meter before hitting a
+      wall, with lateral openings. This indicates it''s not a dead end and could lead
+      to further exploration or the exit.
+
+      - **East:** Blocked by a wall. No movement possible.
+
+      - **South:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be connections
+      or paths ahead.
+
+      - **West:** Blocked by a wall. No movement possible.
+
+
+      Now, considering the history: In the last move, I moved South, and now the North
+      corridor is open. Previously, when the North corridor was open, it seemed to
+      be a promising direction. The South corridor might be part of a loop or a dead
+      end, so prioritizing North could be beneficial.
+
+
+      Therefore, I''ll proceed to move North next.
+
+
+      So, my next step is:
+
+      N'
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Alright, let''s break this down. I''ve moved one meter North, so my
+      current position is north of the previous point. Now, looking at the surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible.
+
+      - **East:** Blocked by a wall. No movement possible.
+
+      - **South:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **West:** There''s a corridor extending for two meters before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+
+      Given that the North and East directions are blocked, I have to choose between
+      South and West. Previously, I moved South, so to avoid oscillating and to explore
+      new areas, I''ll choose the West direction this time.
+
+
+      Therefore, I''ll proceed to move West next.
+
+
+      So, my next step is:
+
+      W'
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'I''ve moved one meter West, so my position is now west of the previous
+      point. Let''s analyze the surroundings:
+
+
+      - **North:** Blocked by a wall. No movement possible.
+
+      - **East:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. This suggests it''s not a dead end and could lead to
+      more space or connections.
+
+      - **South:** Blocked by a wall. No movement possible.
+
+      - **West:** There''s a corridor extending for one meter before hitting a wall,
+      with lateral openings. Again, not a dead end, so there might be opportunities
+      for lateral movement.
+
+
+      Given that the North and South directions are blocked, I have to choose between
+      East and West. Previously, I moved West, so to avoid oscillating and to explore
+      new areas, I''ll choose the East direction this time.
+
+
+      Therefore, I''ll proceed to move East next.
+
+
+      So, my next step is:
+
+      E'
+illegal_directions: 0
+illegal_responses: 0
+execution_time: 1065.4346179962158

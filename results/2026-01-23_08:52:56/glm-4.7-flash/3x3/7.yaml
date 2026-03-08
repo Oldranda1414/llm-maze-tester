@@ -1,0 +1,285 @@
+git_hash: 8a380e6f003a55ef3f57de9ca31d6ee4b54f42c1
+maze:
+  horizontal:
+  - - true
+    - true
+    - false
+  - - true
+    - false
+    - false
+  - - true
+    - true
+    - false
+  vertical:
+  - - true
+    - false
+    - true
+  - - false
+    - false
+    - true
+  - - false
+    - false
+    - false
+  start:
+  - 1
+  - 1
+  target:
+  - 2
+  - 2
+  path:
+  - - 1
+    - 1
+  - - 1
+    - 0
+  - - 0
+    - 0
+  - - 0
+    - 1
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 2
+    - 2
+  decisions:
+  - W
+  - N
+  - E
+  - E
+  - S
+  - S
+  - S
+  colored_cells: []
+  sight_depth: 2
+  size: 3
+  solved: true
+chat_history:
+  system_prompt: '
+
+    You are a maze solving model. You are an expert in solving classic lattice mazes.
+
+
+    The user will provide you with descriptions of what you can perceive from inside
+    the maze.
+
+    The information provided considers you to have a sight depth of two meters. Anything
+    that is further away from you than two meters is not mentioned in the user prompt.
+
+    Just like a classic lattice maze the exit is on the border. The starting position
+    could be anywhere in the maze.
+
+    Your goal is to find the maze exit. Once you reach it you must step out of the
+    maze with one last move.
+
+    The maze is always solvable and the user is always honest on the information that
+    he provides you.
+
+
+    After the user provides you with informations regarding you current surroundings,
+    you will provide the direction to step towards next.
+
+    The possible directions are north, east, south, west.
+
+
+    The maze is a 3 x 3 grid, with every square in the grid being one square meter
+    big.
+
+    Use brief, step-indexed reasoning. Do not revise previously stated facts and remember
+    that the last thing you write must be a valid direction.
+
+
+
+    You are allowed to output the direction with any casing you want, as long as it
+    is the last thing in your answer.
+
+    Here are some examples of valid end of response, in case you decide to move due
+    north:
+
+
+    - Let''s go North
+
+    - I want to step N!
+
+    - My next move will be north.
+
+
+    '
+  chat:
+  - prompt: "Due North there is a wall. You can't step in that direction.\nDue East\
+      \ there is a wall. You can't step in that direction.\nDue South there is a wall.\
+      \ You can't step in that direction.\nDue West there is a corridor that goes\
+      \ on for one meter before encountering a wall. You are able to see that the\
+      \ corridor has some lateral paths:\n   - After one meter there is a lateral\
+      \ path due North."
+    response: '1. I start in the center of a 3x3 maze.
+
+      2. The prompt indicates that the three immediate cardinal directions (North,
+      East, South) are blocked by walls.
+
+      3. The West direction leads to a corridor extending 1 meter.
+
+      4. At the end of this corridor (1 meter West), there is a path that leads North.
+
+      5. To exit the maze, I need to reach the border.
+
+      6. Moving North from the end of the corridor will place me on the North edge
+      of the maze.
+
+      7. Therefore, I need to proceed West first, and then North.
+
+      8. My next immediate step is West.
+
+
+      West'
+  - prompt: "You move one meter West\nDue North there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ East.\nDue East there is a corridor that goes on for one meter before encountering\
+      \ a wall. The corridor ends without any lateral paths.\nDue South there is a\
+      \ wall. You can't step in that direction.\nDue West there is a wall. You can't\
+      \ step in that direction."
+    response: '1. I am currently standing one meter West of the center of the maze.
+
+      2. The directions East and South are blocked by walls.
+
+      3. The West direction is blocked by a wall.
+
+      4. To exit, I must reach a border. The only exit condition left is the North
+      border.
+
+      5. The corridor due North leads to a wall, but I can see a lateral path due
+      East from there.
+
+      6. This lateral path is one meter East, which places me on the North edge of
+      the maze.
+
+      7. Therefore, my path is: Move North, then turn East.
+
+      8. My next immediate move is North.
+
+
+      North'
+  - prompt: "You move one meter North\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for two meters\
+      \ before encountering a wall. You are able to see that the corridor has some\
+      \ lateral paths:\n   - After two meters there is a lateral path due South.\n\
+      Due South there is a corridor that goes on for one meter before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After one meter there is a lateral path due East.\nDue West there is a wall.\
+      \ You can't step in that direction."
+    response: '1. I am currently standing on the North border of the maze.
+
+      2. The North direction is blocked by a wall.
+
+      3. The West direction is blocked by a wall.
+
+      4. I need to move along the border to find an opening.
+
+      5. The South corridor leads back into the interior, so I must step East along
+      the North edge.
+
+      6. The East corridor runs for two meters. The lateral path due South at the
+      end of this corridor leads directly back to the center, which does not help
+      me exit.
+
+      7. However, I am walking on the North border. Stepping East along this corridor
+      places me on the North edge, satisfying the exit condition.
+
+      8. My next move is East.
+
+
+      East'
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for one meter before\
+      \ encountering a wall. You are able to see that the corridor has some lateral\
+      \ paths:\n   - After one meter there is a lateral path due South.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for one meter before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due South."
+    response: '1. I am now located on the North edge, one meter East of the center.
+
+      2. Moving North or South puts me back inside the grid (blocked).
+
+      3. Moving West along the North edge is not an option as there is a wall blocking
+      that path in the previous step''s description ("Due West there is a corridor").
+
+      4. Moving East along the North edge places me on the East border.
+
+      5. The corridor to the East extends 1 meter. The lateral path is to the South,
+      which leads back to the center.
+
+      6. However, since I am walking along the North border, stepping East leads directly
+      to the maze exit (the East border).
+
+      7. My next move is East.
+
+
+      East'
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a wall. You can't step in that direction.\n\
+      Due South there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due West.\nDue West there is a\
+      \ corridor that goes on for two meters before encountering a wall. You are able\
+      \ to see that the corridor has some lateral paths:\n   - After two meters there\
+      \ is a lateral path due South."
+    response: '1. I am located on the North edge, two meters East of the center.
+
+      2. North, East, and West are blocked by walls.
+
+      3. I need to exit via the East border. To do this, I must reach the East border
+      while on the North edge.
+
+      4. The corridor to the South runs for two meters. The lateral path to the West
+      at the end of this corridor points directly back to the center of the maze.
+
+      5. Therefore, I must simply move South to re-enter the grid.
+
+      6. My next move is South.
+
+
+      South'
+  - prompt: "You move one meter South\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ West.\nDue East there is a wall. You can't step in that direction.\nDue South\
+      \ you can see a natural light shining in that direction, it is probably the\
+      \ direction of the exit!\nDue West there is a wall. You can't step in that direction."
+    response: '1. I am currently standing on the North border, two meters East of
+      the center.
+
+      2. North is blocked by a wall.
+
+      3. East is blocked by a wall.
+
+      4. West is blocked by a wall.
+
+      5. The prompt explicitly states that moving South reveals natural light, indicating
+      the exit is South.
+
+      6. Therefore, I need to move South to exit the maze.
+
+
+      South'
+  - prompt: "You move one meter South\nDue North there is a corridor that goes on\
+      \ for two meters before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After two meters there is a lateral path due\
+      \ West.\nDue East there is a wall. You can't step in that direction.\nDue South\
+      \ you can see the exit in that direction! One last step and you are out of the\
+      \ maze!\nDue West there is a corridor that goes on for two meters before encountering\
+      \ a wall. The corridor ends without any lateral paths."
+    response: '1. I have moved South from the North border and am now in the center
+      of the 3x3 maze.
+
+      2. The prompt confirms that the South direction contains the exit.
+
+      3. I am two meters away from the South border.
+
+      4. I need to step one more meter South to reach the exit.
+
+
+      South'
+illegal_directions: 0
+illegal_responses: 0
+execution_time: 60.59858465194702

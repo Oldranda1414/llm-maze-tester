@@ -1,0 +1,213 @@
+git_hash: fb3cfc377fa8d03577237d0cabbc6cbf67e37bdc
+maze:
+  horizontal:
+  - - false
+    - true
+    - false
+  - - false
+    - false
+    - false
+  - - true
+    - true
+    - false
+  vertical:
+  - - true
+    - true
+    - true
+  - - true
+    - false
+    - true
+  - - false
+    - false
+    - false
+  start:
+  - 0
+  - 0
+  target:
+  - 2
+  - 1
+  path:
+  - - 0
+    - 0
+  - - 1
+    - 0
+  - - 2
+    - 0
+  - - 2
+    - 1
+  decisions:
+  - S
+  - S
+  - E
+  - S
+  sight_depth: 2
+  size: 3
+  solved: true
+chat_history:
+  system_prompt: '
+
+    You are a maze solving model. You are an expert in solving classic lattice mazes.
+
+
+    The user will provide you with descriptions of what you can perceive from inside
+    the maze.
+
+    Just like a classic maze the exit is on the border. The starting position could
+    be anywhere in the maze.
+
+    Your goal is to find the maze exit. Once you reach it you must step out of the
+    maze with one last move.
+
+
+    After the user provides you with informations regarding you current surroundings,
+    you will provide the direction to step towards next.
+
+    The possible directions are north, east, south, west.
+
+
+    The maze is a 3 x 3 grid, with every square in the grid being one square meter
+    big.
+
+    You are advised to think out loud about what your next move should be, but remember
+    that the last thing you write must be a valid direction.
+
+
+    You are allowed to output the direction with any casing you want, as long as it
+    is the last thing in your answer.
+
+    Here are some examples of valid end of response, in case you decide to move due
+    north:
+
+
+    - Let''s go North
+
+    - I want to step N!
+
+    - My next move will be north.
+
+
+    Try to formulate a plan and keep track of what what tiles you have already visited
+    to ensure you are making progress in exploring the maze.
+
+    '
+  chat:
+  - prompt: 'Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: "Based on my current surroundings:\n\n- North: Wall\n- East: Wall\n\
+      - South (first meter): Corridor leading further south for two meters before\
+      \ encountering another wall, with lateral paths possible which may not be walls\
+      \ initially.\n\nI need to take advantage of the corridor heading towards an\
+      \ open path and progress in that direction. \n\nMy next move will go south for\
+      \ one meter along this accessible part of a tunnelled pathway."
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Having moved southward by another metric:
+
+
+      - North: Corridor leading further north for one more meter before hitting an
+      obstruction which I can safely ignore as it''s already been checked and found
+      to be non-passable.
+
+
+      Based on the updated situation, it appears I''ve reached what might seem like
+      a dead end due east since there''s no wall there. The path initially presented
+      itself invitingly but was ultimately proven misleading upon further exploration
+      of adjacent corridors or routes; hence now presenting an open pathway moving
+      toward southward direction has been deemed most viable given my circumstances.
+
+
+      My next move will go East for one meter along this accessible part of the corridor
+      which hasn''t yet encountered any impediment.'
+  - prompt: '
+
+      You try to walk East.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Acknowledging my misjudgment and taking into account your observations
+      on available pathways:
+
+
+      - North: Corridor extending further north for one additional meter before encountering
+      an obstruction, which has been previously noted as non-passable.
+
+
+      Based upon the current situation wherein moving directly east led to immediate
+      collision with a wall due to inadequate attention towards path directions at
+      hand; it seems prudent that exploring southwards along this corridor presents
+      itself more favorably given its unencumbered nature relative to other directional
+      choices available:
+
+
+      My next move will go South for one meter, maintaining awareness of all surrounding
+      conditions and potential pathways.'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. It is a dead end.
+
+      Due East you can see a natural light shining in that direction, it is probably
+      the direction of the exit!
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: "Having advanced southward:\n\n- North: Corridor extending further north\
+      \ for two additional meters before encountering an obstruction.\n\nWith newfound\
+      \ awareness regarding my position and available pathways, I have recognized\
+      \ the eastwards light as potentially indicative of exit proximity\u2014suggesting\
+      \ it may lead to escape from maze constraints encountered thus far; despite\
+      \ this realization being somewhat serendipitous in nature:\n\nMy next move will\
+      \ go East for one meter toward that promising illumination."
+  - prompt: 'You move one meter East
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South you can see the exit in that direction! One last step and you are
+      out of the maze!
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: "Upon moving eastwardly:\n\n- North: Corridor extending further north\
+      \ for an additional measurement leading to obstruction.\n  \nGiven my current\
+      \ location's newfound proximity toward exit identification via southwards directionality\
+      \ and bearing in mind this as being indicative towards escape from maze entrapments\
+      \ encountered thus far, albeit somewhat fortuitously; it suggests that pursuing\
+      \ such avenue may indeed present viable pathway to completion:\n\nMy next move\
+      \ will go South for one meter."
+illegal_directions: 1
+illegal_responses: 0
+execution_time: 12.13755989074707

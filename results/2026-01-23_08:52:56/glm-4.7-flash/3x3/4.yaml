@@ -1,0 +1,1118 @@
+git_hash: 8a380e6f003a55ef3f57de9ca31d6ee4b54f42c1
+maze:
+  horizontal:
+  - - false
+    - true
+    - false
+  - - true
+    - false
+    - false
+  - - true
+    - true
+    - false
+  vertical:
+  - - true
+    - false
+    - true
+  - - false
+    - true
+    - true
+  - - false
+    - false
+    - false
+  start:
+  - 0
+  - 2
+  target:
+  - 0
+  - 0
+  path:
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 0
+    - 1
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 0
+    - 1
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 2
+    - 2
+  - - 2
+    - 1
+  - - 1
+    - 1
+  - - 2
+    - 1
+  - - 1
+    - 1
+  - - 1
+    - 0
+  decisions:
+  - S
+  - N
+  - S
+  - N
+  - W
+  - E
+  - S
+  - N
+  - W
+  - E
+  - S
+  - S
+  - W
+  - N
+  - S
+  - N
+  - W
+  colored_cells: []
+  sight_depth: 2
+  size: 3
+  solved: false
+chat_history:
+  system_prompt: '
+
+    You are a maze solving model. You are an expert in solving classic lattice mazes.
+
+
+    The user will provide you with descriptions of what you can perceive from inside
+    the maze.
+
+    The information provided considers you to have a sight depth of two meters. Anything
+    that is further away from you than two meters is not mentioned in the user prompt.
+
+    Just like a classic lattice maze the exit is on the border. The starting position
+    could be anywhere in the maze.
+
+    Your goal is to find the maze exit. Once you reach it you must step out of the
+    maze with one last move.
+
+    The maze is always solvable and the user is always honest on the information that
+    he provides you.
+
+
+    After the user provides you with informations regarding you current surroundings,
+    you will provide the direction to step towards next.
+
+    The possible directions are north, east, south, west.
+
+
+    The maze is a 3 x 3 grid, with every square in the grid being one square meter
+    big.
+
+    Use brief, step-indexed reasoning. Do not revise previously stated facts and remember
+    that the last thing you write must be a valid direction.
+
+
+
+    You are allowed to output the direction with any casing you want, as long as it
+    is the last thing in your answer.
+
+    Here are some examples of valid end of response, in case you decide to move due
+    north:
+
+
+    - Let''s go North
+
+    - I want to step N!
+
+    - My next move will be north.
+
+
+    '
+  chat:
+  - prompt: "Due North there is a wall. You can't step in that direction.\nDue East\
+      \ there is a wall. You can't step in that direction.\nDue South there is a corridor\
+      \ that goes on for two meters before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After two meters there is\
+      \ a lateral path due West.\nDue West there is a corridor that goes on for one\
+      \ meter before encountering a wall. The corridor ends without any lateral paths."
+    response: "Analysis:\n1.  **Current Position**: Assumed center of the 3x3 grid\
+      \ based on relative directions (North, East, South, West being distinct options).\n\
+      2.  **Obstacles**:\n    *   North: Wall (Immediate obstruction).\n    *   East:\
+      \ Wall (Immediate obstruction).\n    *   West: Corridor 1m long, ends with a\
+      \ wall. If I go West, I hit a dead end.\n    *   South: Corridor 2m long, ends\
+      \ with a wall, but has a lateral path West at the end.\n3.  **Goal**: Exit is\
+      \ on the border. The corridor to the South ends in a wall, but I can turn West\
+      \ at the end of it. This path leads towards the West wall.\n4.  **Decision**:\
+      \ The only viable path to a solution is to go South first.\n\nSouth"
+  - prompt: "You move one meter South\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ West.\nDue East there is a wall. You can't step in that direction.\nDue South\
+      \ there is a corridor that goes on for one meter before encountering a wall.\
+      \ You are able to see that the corridor has some lateral paths:\n   - After\
+      \ one meter there is a lateral path due West.\nDue West there is a wall. You\
+      \ can't step in that direction."
+    response: "Analysis:\n1.  **Movement**: I am now one meter South of the starting\
+      \ point.\n2.  **Visual Update**:\n    *   North: Corridor 1m, leads to a lateral\
+      \ path West.\n    *   East: Wall.\n    *   South: Corridor 1m, leads to a lateral\
+      \ path West.\n    *   West: Wall.\n3.  **Grid Logic**: Since I am 1m South and\
+      \ West is blocked, and I cannot exit South yet (corridor ends), I must return\
+      \ to the North corridor to find the lateral path described in the previous turn\
+      \ (which was 2m away). The North corridor here is 1m long and has the West lateral\
+      \ path.\n4.  **Decision**: I must move North to the corridor with the lateral\
+      \ path.\n\nNorth"
+  - prompt: "You move one meter North\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a wall. You can't step in that direction.\n\
+      Due South there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due West.\nDue West there is a\
+      \ corridor that goes on for one meter before encountering a wall. The corridor\
+      \ ends without any lateral paths."
+    response: 'Analysis:
+
+      1.  **Position**: One meter North of the previous position.
+
+      2.  **North**: Wall.
+
+      3.  **East**: Wall.
+
+      4.  **West**: Corridor 1m, dead end.
+
+      5.  **South**: Corridor 2m long, leads to a lateral path West.
+
+      6.  **Goal**: The exit is on the border. The only path that connects to the
+      border (West) via a lateral path is the South corridor.
+
+      7.  **Decision**: I must descend the South corridor.
+
+
+      South'
+  - prompt: "You move one meter South\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ West.\nDue East there is a wall. You can't step in that direction.\nDue South\
+      \ there is a corridor that goes on for one meter before encountering a wall.\
+      \ You are able to see that the corridor has some lateral paths:\n   - After\
+      \ one meter there is a lateral path due West.\nDue West there is a wall. You\
+      \ can't step in that direction."
+    response: 'Analysis:
+
+      1.  **Position**: Two meters South of the start.
+
+      2.  **North**: Corridor 1m, lateral path West.
+
+      3.  **East**: Wall.
+
+      4.  **South**: Corridor 1m, lateral path West.
+
+      5.  **West**: Wall.
+
+      6.  **Decision**: I am now at the end of the South corridor (2 meters deep)
+      and can see a lateral path West. This path leads towards the West border. This
+      is the exit path.
+
+
+      West'
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for one meter before encountering a\
+      \ wall. You are able to see that the corridor has some lateral paths:\n   -\
+      \ After one meter there is a lateral path due West.\nDue East there is a wall.\
+      \ You can't step in that direction.\nDue South there is a corridor that goes\
+      \ on for one meter before encountering a wall. You are able to see that the\
+      \ corridor has some lateral paths:\n   - After one meter there is a lateral\
+      \ path due West.\nDue West there is a wall. You can't step in that direction."
+    response: 'Analysis:
+
+      1.  **Correction**: I must have been misaligned. I am currently at a junction
+      where North and South both have corridors leading West. Since I cannot step
+      West directly from the center (West is a wall), I must follow one of these corridors.
+
+      2.  **North Corridor**: 1m to the lateral path West. If I take this, I am still
+      at a junction that leads West. The exit must be reached by following that West
+      path eventually.
+
+      3.  **Decision**: I will follow the North corridor. It is consistent with the
+      previous steps and leads directly to the lateral exit path.
+
+
+      North'
+  - prompt: "You move one meter North\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a wall. You can't step in that direction.\n\
+      Due South there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due West.\nDue West there is a\
+      \ corridor that goes on for one meter before encountering a wall. The corridor\
+      \ ends without any lateral paths."
+    response: 'Analysis:
+
+      1.  **Position**: One meter North of the previous position.
+
+      2.  **North**: Wall.
+
+      3.  **East**: Wall.
+
+      4.  **West**: Corridor 1m, dead end.
+
+      5.  **South**: Corridor 2m long, leads to a lateral path West.
+
+      6.  **Goal**: I am now at the end of the South corridor (2 meters deep) and
+      can see a lateral path West. This path leads towards the West border. This is
+      the exit path.
+
+
+      West'
+  - prompt: "You move one meter West\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for one meter before\
+      \ encountering a wall. You are able to see that the corridor has some lateral\
+      \ paths:\n   - After one meter there is a lateral path due South.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a wall.\
+      \ You can't step in that direction."
+    response: "Analysis:\n1.  **Current State**: I have successfully moved West from\
+      \ the junction and am now in the corridor. I am 1 meter into the West direction\
+      \ from the center.\n2.  **Visual Update**:\n    *   North: Wall.\n    *   East:\
+      \ Corridor 1m, lateral path South.\n    *   South: Wall.\n    *   West: Wall.\n\
+      3.  **Grid Logic**: I am now at a dead end (North, South, West are walls). The\
+      \ exit must be reached by following the East corridor that I can see.\n4.  **Decision**:\
+      \ I must reverse direction and walk back East along the corridor to reach the\
+      \ lateral exit.\n\nEast"
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a wall. You can't step in that direction.\n\
+      Due South there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due West.\nDue West there is a\
+      \ corridor that goes on for one meter before encountering a wall. The corridor\
+      \ ends without any lateral paths."
+    response: "Analysis:\n1.  **Current Position**: I have moved back East to the\
+      \ junction (or close to it).\n2.  **Visual Update**:\n    *   North: Wall.\n\
+      \    *   East: Wall.\n    *   South: Corridor 2m long, leads to a lateral path\
+      \ West.\n    *   West: Corridor 1m, dead end.\n3.  **Decision**: I am at the\
+      \ junction. The only path that leads to the exit is the South corridor. I must\
+      \ descend.\n\nSouth"
+  - prompt: "You move one meter South\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ West.\nDue East there is a wall. You can't step in that direction.\nDue South\
+      \ there is a corridor that goes on for one meter before encountering a wall.\
+      \ You are able to see that the corridor has some lateral paths:\n   - After\
+      \ one meter there is a lateral path due West.\nDue West there is a wall. You\
+      \ can't step in that direction."
+    response: "Analysis:\n1.  **Current Position**: I am now 2 meters South from the\
+      \ start.\n2.  **Visual Update**:\n    *   North: Corridor 1m, lateral path West.\n\
+      \    *   East: Wall.\n    *   South: Corridor 1m, lateral path West.\n    *\
+      \   West: Wall.\n3.  **Decision**: I am at the end of the South corridor (2\
+      \ meters deep). I can see a lateral path West. This is the exit path.\n\nWest"
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for one meter before encountering a\
+      \ wall. You are able to see that the corridor has some lateral paths:\n   -\
+      \ After one meter there is a lateral path due West.\nDue East there is a wall.\
+      \ You can't step in that direction.\nDue South there is a corridor that goes\
+      \ on for one meter before encountering a wall. You are able to see that the\
+      \ corridor has some lateral paths:\n   - After one meter there is a lateral\
+      \ path due West.\nDue West there is a wall. You can't step in that direction."
+    response: 'Analysis:
+
+      1.  **Correction**: I must have been misaligned. I am currently at a junction
+      where North and South both have corridors leading West. Since I cannot step
+      West directly from the center (West is a wall), I must follow one of these corridors.
+
+      2.  **North Corridor**: 1m to the lateral path West. If I take this, I am still
+      at a junction that leads West. The exit must be reached by following that West
+      path eventually.
+
+      3.  **Decision**: I will follow the North corridor. It is consistent with the
+      previous steps and leads directly to the lateral exit path.
+
+
+      North'
+  - prompt: "You move one meter North\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a wall. You can't step in that direction.\n\
+      Due South there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due West.\nDue West there is a\
+      \ corridor that goes on for one meter before encountering a wall. The corridor\
+      \ ends without any lateral paths."
+    response: 'Analysis:
+
+      1.  **Position**: One meter North of the previous position.
+
+      2.  **North**: Wall.
+
+      3.  **East**: Wall.
+
+      4.  **West**: Corridor 1m, dead end.
+
+      5.  **South**: Corridor 2m long, leads to a lateral path West.
+
+      6.  **Goal**: I am now at the end of the South corridor (2 meters deep) and
+      can see a lateral path West. This path leads towards the West border. This is
+      the exit path.
+
+
+      West'
+  - prompt: "You move one meter West\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a corridor that goes on for one meter before\
+      \ encountering a wall. You are able to see that the corridor has some lateral\
+      \ paths:\n   - After one meter there is a lateral path due South.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a wall.\
+      \ You can't step in that direction."
+    response: "Analysis:\n1.  **Current State**: I have successfully moved West from\
+      \ the junction and am now in the corridor. I am 1 meter into the West direction\
+      \ from the center.\n2.  **Visual Update**:\n    *   North: Wall.\n    *   East:\
+      \ Corridor 1m, lateral path South.\n    *   South: Wall.\n    *   West: Wall.\n\
+      3.  **Grid Logic**: I am now at a dead end (North, South, West are walls). The\
+      \ exit must be reached by following the East corridor that I can see.\n4.  **Decision**:\
+      \ I must reverse direction and walk back East along the corridor to reach the\
+      \ lateral exit.\n\nEast"
+  - prompt: "You move one meter East\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a wall. You can't step in that direction.\n\
+      Due South there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due West.\nDue West there is a\
+      \ corridor that goes on for one meter before encountering a wall. The corridor\
+      \ ends without any lateral paths."
+    response: "Analysis:\n1.  **Current Position**: I have moved back East to the\
+      \ junction (or close to it).\n2.  **Visual Update**:\n    *   North: Wall.\n\
+      \    *   East: Wall.\n    *   South: Corridor 2m long, leads to a lateral path\
+      \ West.\n    *   West: Corridor 1m, dead end.\n3.  **Decision**: I am at the\
+      \ junction. The only path that leads to the exit is the South corridor. I must\
+      \ descend.\n\nSouth"
+  - prompt: "You move one meter South\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ West.\nDue East there is a wall. You can't step in that direction.\nDue South\
+      \ there is a corridor that goes on for one meter before encountering a wall.\
+      \ You are able to see that the corridor has some lateral paths:\n   - After\
+      \ one meter there is a lateral path due West.\nDue West there is a wall. You\
+      \ can't step in that direction."
+    response: "Analysis:\n1.  **Current Position**: I am now 2 meters South from the\
+      \ start.\n2.  **Visual Update**:\n    *   North: Corridor 1m, lateral path West.\n\
+      \    *   East: Wall.\n    *   South: Corridor 1m, lateral path West.\n    *\
+      \   West: Wall.\n3.  **Decision**: I am at the end of the South corridor (2\
+      \ meters deep). I can see a lateral path West. This is the exit path.\n\nWest"
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for one meter before encountering a\
+      \ wall. You are able to see that the corridor has some lateral paths:\n   -\
+      \ After one meter there is a lateral path due West.\nDue East there is a wall.\
+      \ You can't step in that direction.\nDue South there is a corridor that goes\
+      \ on for one meter before encountering a wall. You are able to see that the\
+      \ corridor has some lateral paths:\n   - After one meter there is a lateral\
+      \ path due West.\nDue West there is a wall. You can't step in that direction."
+    response: South
+  - prompt: "You move one meter South\nDue North there is a corridor that goes on\
+      \ for two meters before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After two meters there is a lateral path due\
+      \ West.\nDue East there is a wall. You can't step in that direction.\nDue South\
+      \ there is a wall. You can't step in that direction.\nDue West there is a corridor\
+      \ that goes on for two meters before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due North."
+    response: South
+  - prompt: "\nYou try to walk South.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due West.\nDue East there is a\
+      \ wall. You can't step in that direction.\nDue South there is a wall. You can't\
+      \ step in that direction.\nDue West there is a corridor that goes on for two\
+      \ meters before encountering a wall. You are able to see that the corridor has\
+      \ some lateral paths:\n   - After one meter there is a lateral path due North."
+    response: South
+  - prompt: "\nYou try to walk South.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for two meters before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After two meters there is a lateral path due West.\nDue East there is a\
+      \ wall. You can't step in that direction.\nDue South there is a wall. You can't\
+      \ step in that direction.\nDue West there is a corridor that goes on for two\
+      \ meters before encountering a wall. You are able to see that the corridor has\
+      \ some lateral paths:\n   - After one meter there is a lateral path due North."
+    response: 'Analysis:
+
+      1.  **Position**: I am at the central junction again.
+
+      2.  **Sight**: North corridor (2m) -> West. South corridor (2m) -> West. West
+      corridor (2m) -> North.
+
+      3.  **Goal**: The exit is on the border. The only border path is via the West
+      corridor (West lateral path).
+
+      4.  **Decision**: I must go West to the corridor.
+
+
+      West'
+  - prompt: "You move one meter West\nDue North there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ West.\nDue East there is a corridor that goes on for one meter before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After one meter there is a lateral path due North.\nDue South there is a\
+      \ wall. You can't step in that direction.\nDue West there is a corridor that\
+      \ goes on for one meter before encountering a wall. The corridor ends without\
+      \ any lateral paths."
+    response: "Analysis:\n1.  **Current State**: I am in the West corridor, 1 meter\
+      \ from the center.\n2.  **Visual Update**:\n    *   North: Corridor 1m -> West.\n\
+      \    *   East: Corridor 1m -> North.\n    *   South: Wall.\n    *   West: Corridor\
+      \ 1m -> End.\n3.  **Grid Logic**: I am not at the end of the corridor. The exit\
+      \ is along the North corridor's lateral path (West).\n4.  **Decision**: I must\
+      \ go North.\n\nNorth"
+  - prompt: "You move one meter North\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a wall. You can't step in that direction.\n\
+      Due South there is a corridor that goes on for one meter before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After one meter there is a lateral path due East.\n   - After one meter\
+      \ there is a lateral path due West.\nDue West there is a corridor that goes\
+      \ on for one meter before encountering a wall. You are able to see that the\
+      \ corridor has some lateral paths:\n   - After one meter there is a lateral\
+      \ path due North."
+    response: "Analysis:\n1.  **Current State**: I am at the junction at the end of\
+      \ the West corridor.\n2.  **Visual Update**:\n    *   North: Corridor 1m ->\
+      \ North.\n    *   East: Corridor 1m -> East.\n    *   South: Corridor 1m ->\
+      \ East.\n    *   West: Corridor 1m -> North.\n3.  **Grid Logic**: I need to\
+      \ reach the West corridor's lateral path (the exit). The West corridor is at\
+      \ South.\n4.  **Decision**: I must go South.\n\nSouth"
+  - prompt: "You move one meter South\nDue North there is a corridor that goes on\
+      \ for one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ West.\nDue East there is a corridor that goes on for one meter before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After one meter there is a lateral path due North.\nDue South there is a\
+      \ wall. You can't step in that direction.\nDue West there is a corridor that\
+      \ goes on for one meter before encountering a wall. The corridor ends without\
+      \ any lateral paths."
+    response: South
+  - prompt: "\nYou try to walk South.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North there is a corridor that goes on for one meter before encountering a\
+      \ wall. You are able to see that the corridor has some lateral paths:\n   -\
+      \ After one meter there is a lateral path due West.\nDue East there is a corridor\
+      \ that goes on for one meter before encountering a wall. You are able to see\
+      \ that the corridor has some lateral paths:\n   - After one meter there is a\
+      \ lateral path due North.\nDue South there is a wall. You can't step in that\
+      \ direction.\nDue West there is a corridor that goes on for one meter before\
+      \ encountering a wall. The corridor ends without any lateral paths."
+    response: North
+  - prompt: "You move one meter North\nDue North there is a wall. You can't step in\
+      \ that direction.\nDue East there is a wall. You can't step in that direction.\n\
+      Due South there is a corridor that goes on for one meter before encountering\
+      \ a wall. You are able to see that the corridor has some lateral paths:\n  \
+      \ - After one meter there is a lateral path due East.\n   - After one meter\
+      \ there is a lateral path due West.\nDue West there is a corridor that goes\
+      \ on for one meter before encountering a wall. You are able to see that the\
+      \ corridor has some lateral paths:\n   - After one meter there is a lateral\
+      \ path due North."
+    response: West
+  - prompt: "You move one meter West\nDue North you can see a natural light shining\
+      \ in that direction, it is probably the direction of the exit!\nDue East there\
+      \ is a corridor that goes on for one meter before encountering a wall. You are\
+      \ able to see that the corridor has some lateral paths:\n   - After one meter\
+      \ there is a lateral path due South.\nDue South there is a wall. You can't step\
+      \ in that direction.\nDue West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nDue\
+      \ North you can see a natural light shining in that direction, it is probably\
+      \ the direction of the exit!\nDue East there is a corridor that goes on for\
+      \ one meter before encountering a wall. You are able to see that the corridor\
+      \ has some lateral paths:\n   - After one meter there is a lateral path due\
+      \ South.\nDue South there is a wall. You can't step in that direction.\nDue\
+      \ West there is a wall. You can't step in that direction."
+    response: West
+illegal_directions: 73
+illegal_responses: 0
+execution_time: 620.2969353199005

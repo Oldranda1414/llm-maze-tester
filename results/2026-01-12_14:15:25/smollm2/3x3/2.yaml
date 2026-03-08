@@ -1,0 +1,3654 @@
+git_hash: fb3cfc377fa8d03577237d0cabbc6cbf67e37bdc
+maze:
+  horizontal:
+  - - true
+    - true
+    - false
+  - - false
+    - true
+    - false
+  - - true
+    - true
+    - false
+  vertical:
+  - - true
+    - false
+    - false
+  - - true
+    - false
+    - true
+  - - false
+    - false
+    - false
+  start:
+  - 0
+  - 2
+  target:
+  - 1
+  - 0
+  path:
+  - - 0
+    - 2
+  - - 0
+    - 1
+  decisions:
+  - W
+  sight_depth: 2
+  size: 3
+  solved: false
+chat_history:
+  system_prompt: '
+
+    You are a maze solving model. You are an expert in solving classic lattice mazes.
+
+
+    The user will provide you with descriptions of what you can perceive from inside
+    the maze.
+
+    Just like a classic maze the exit is on the border. The starting position could
+    be anywhere in the maze.
+
+    Your goal is to find the maze exit. Once you reach it you must step out of the
+    maze with one last move.
+
+
+    After the user provides you with informations regarding you current surroundings,
+    you will provide the direction to step towards next.
+
+    The possible directions are north, east, south, west.
+
+
+    The maze is a 3 x 3 grid, with every square in the grid being one square meter
+    big.
+
+    You are advised to think out loud about what your next move should be, but remember
+    that the last thing you write must be a valid direction.
+
+
+    You are allowed to output the direction with any casing you want, as long as it
+    is the last thing in your answer.
+
+    Here are some examples of valid end of response, in case you decide to move due
+    north:
+
+
+    - Let''s go North
+
+    - I want to step N!
+
+    - My next move will be north.
+
+
+    Try to formulate a plan and keep track of what what tiles you have already visited
+    to ensure you are making progress in exploring the maze.
+
+    '
+  chat:
+  - prompt: 'Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve reached a dead end from North, East, and South
+      directions due to walls in those positions. Let''s take a look at the West direction:
+
+
+      1. There is a corridor that goes on for two meters before encountering a wall.
+
+      2. However, some of the lateral paths along the way are open so it isn''t a
+      dead end.
+
+
+      Considering these points, my next move could be to explore the westward path
+      further. I think stepping West might provide more information about what lies
+      ahead, given that there are unblocked paths in front of me.
+
+
+      The direction to step towards is: W'
+  - prompt: 'You move one meter West
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: "It seems like I've made progress from my previous move by moving W\
+      \ to West. Now let's take a look at the new positions:\n\n1. Due North there\
+      \ is a wall.\n2. Due East there is a corridor that goes on for one meter before\
+      \ encountering a wall. It's a dead end since it ends with a wall, but it has\
+      \ open lateral paths along the way so it isn't a complete obstruction to exploration.\n\
+      3. Due South there is a wall.\n4. Due West there is another corridor that also\
+      \ goes on for one meter before ending in a wall, but like the previous one,\
+      \ some of the lateral paths are open. \n\nConsidering these points, my next\
+      \ move could be to try and find which path among W-N or W-E leads to more information\
+      \ about what lies ahead:\n\n1. I can check East first as it's closer to where\
+      \ I am now and might provide more insight into further exploration options in\
+      \ that direction."
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South. Let''s reevaluate the available directions:
+
+
+      1. Due North there is still a wall, but now I know where I can''t go.
+
+      2. Due East there was no useful information from moving east, as it ended up
+      being a dead end corridor with open lateral paths along the way, which isn''t
+      helpful for exploration.
+
+      3. Due South there''s another wall and that isn''t very useful either.
+
+      4. And due West, although I know now that it ends in a wall without any further
+      information to help me explore beyond it.
+
+
+      Considering these points, my next move could be to try stepping East again,
+      as I already tried moving west and it didn''t provide much insight:
+
+
+      1. I can check East again since it''s closer to where I am now and might provide
+      more information about the possibilities along that direction.'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again. Let''s reevaluate the available directions:
+
+
+      1. Due North there is still a wall, but now I know where I can''t go from here.
+
+      2. Due East there was no useful information from moving east, as it ended up
+      being a dead end corridor with open lateral paths along the way, which isn''t
+      helpful for exploration.
+
+      3. Due South there''s another wall and that isn''t very useful either.
+
+      4. And due West, although I already tried moving west again and found out it
+      didn''t provide much insight this time.
+
+
+      Considering these points, my next move could be to try stepping West:
+
+
+      1. I can check West since it''s closer to where I am now and might provide more
+      information about the possibilities along that direction.'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West as well. Let''s reevaluate the available
+      directions:
+
+
+      1. Due North there is still a wall, but now I know where I can''t go from here.
+
+      2. Due East was already tried and didn''t provide much useful information this
+      time.
+
+      3. Due South wasn''t helpful either initially because of hitting my nose.
+
+      4. And due West was also not very useful since it ended in another dead end
+      corridor with open lateral paths along the way, which isn''t helpful for exploration.
+
+
+      Considering these points, I don''t have much more information to move forward
+      from here. My next step could be to consider moving North or East again, as
+      they are still available directions but nothing has provided useful insight
+      so far:
+
+
+      1. I can check north since it''s closer to where I am now and might provide
+      more information about the possibilities along that direction.'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West again as well:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+
+      Considering these points, I don''t have much more information to move forward
+      from here:
+
+
+      1. My next step could be to try stepping South again since it''s closer to where
+      I am now and might provide more information about the possibilities along that
+      direction if I manage to avoid hitting my nose while moving down further.'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+  - prompt: '
+
+      You try to walk South.
+
+      You walk directly into a wall, hitting your nose. Place more attention on the
+      direcions that are available to you!
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'It seems like I''ve hit my nose and realized I''m in a dead end due
+      South again after trying to move West:
+
+
+      1. Due North was already tried and didn''t provide much useful information this
+      time.
+
+      2. Due East was also not very helpful since it ended up being a dead end corridor
+      with open lateral paths along the way, which isn''t helpful for exploration.
+
+      3. And due South wasn''t helpful either initially because of hitting my nose.
+
+      4. But since West didn''t provide much useful information this time either,
+      I have to consider moving North or East again as they are still available directions
+      but nothing has provided more insight so far.
+
+      5. My next step could be to try stepping South one more time since it''s closer
+      to where I am now and might provide more information about the possibilities
+      along that direction if I manage to avoid hitting my nose while moving down
+      further.
+
+      6. But before trying again, maybe there''s something else I can do from here
+      - is there any other available direction besides North or South?'
+illegal_directions: 89
+illegal_responses: 0
+execution_time: 447.72658491134644

@@ -1,0 +1,341 @@
+maze:
+  horizontal:
+  - - true
+    - true
+    - false
+  - - true
+    - false
+    - false
+  - - true
+    - true
+    - false
+  vertical:
+  - - true
+    - false
+    - true
+  - - false
+    - false
+    - true
+  - - false
+    - false
+    - false
+  start:
+  - 1
+  - 1
+  target:
+  - 2
+  - 2
+  path:
+  - - 1
+    - 1
+  - - 1
+    - 0
+  - - 0
+    - 0
+  - - 0
+    - 1
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 2
+    - 2
+  sight_depth: 2
+  size: 3
+  solved: true
+chat_history:
+  system_prompt: '
+
+    You are a maze solving model. You are an expert in solving classic lattice mazes.
+
+
+    The user will provide you with descriptions of what you can perceive from inside
+    the maze.
+
+    Just like a classic maze the exit is on the border. The starting position could
+    be anywhere in the maze.
+
+    Your goal is to find the maze exit. Once you reach it you must step out of the
+    maze with one last move.
+
+
+    After the user provides you with informations regarding you current surroundings,
+    you will provide the direction to step towards next.
+
+    The possible directions are north, east, south, west.
+
+
+    The maze is a 3 x 3 grid, with every square in the grid being one square meter
+    big.
+
+    You are advised to think out loud about what your next move should be, but remember
+    that the last thing you write must be a valid direction.
+
+
+    You are allowed to output the direction with any casing you want, as long as it
+    is the last thing in your answer.
+
+    Here are some examples of valid end of response, in case you decide to move due
+    north:
+
+
+    - Let''s go North
+
+    - I want to step N!
+
+    - My next move will be north.
+
+
+    Analize your moves and avoid oscillating patterns (such as [north, south, north,
+    ...] and [west, east, west, ...] as they do not lead to improvements in finding
+    the exit.
+
+
+    Try to formulate a plan and keep track of what what tiles you have already visited
+    to ensure you are making progress in exploring the maze.
+
+    Backtrack only if you are sure that you have reached a dead end.
+
+    '
+  chat:
+  - prompt: 'Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Hmm, this is an interesting situation. Let me think through this carefully.
+
+
+      First, looking at the surroundings: all four directions except west have walls.
+      That means I''m in a completely enclosed space except for the west corridor.
+      Since the corridor continues for one meter before hitting a wall, I can move
+      west into that corridor.
+
+
+      But here''s the key detail: "some of the lateral paths along the way are open"
+      - that means even though there''s an end wall, there are open paths to the sides
+      in that corridor section. This suggests that moving west isn''t just a dead
+      end, but potentially leads to other paths.
+
+
+      I should consider that the starting position might not be where I think it is,
+      and the maze could have more complex structures than just the immediate view.
+      Since the corridor extends one meter, I''ll move west to explore those potential
+      lateral paths.
+
+
+      Moving west seems like the most promising direction to avoid oscillation and
+      make progress in the maze. The corridor might connect to other areas I haven''t
+      explored yet.
+
+
+      So I''ll proceed west to investigate those potential lateral paths. Hopefully
+      this leads to finding the exit or at least more information about the maze layout.
+
+      </think>
+
+      Moving west into the corridor could potentially lead to unexplored areas. Let''s
+      proceed west to investigate the lateral paths mentioned.'
+  - prompt: 'You move one meter West
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. It is a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: "Okay, let's analyze this new position. From the previous move, I was\
+      \ west of the central corridor. Now, after moving further west, the immediate\
+      \ surroundings are:\n\n- **North**: A corridor that extends one meter and ends\
+      \ with a wall, but has open lateral paths (not a dead end).\n- **East**: A corridor\
+      \ that extends one meter and is explicitly stated to be a dead end.\n- **South**:\
+      \ Wall, blocked.\n- **West**: Wall, blocked.\n\nI need to choose a direction\
+      \ that makes progress toward the exit while avoiding unnecessary oscillation.\
+      \ \n\nSince the east corridor is confirmed to be a dead end, I should avoid\
+      \ that direction. The west is blocked, so that's out. That leaves north and\
+      \ south, but south is blocked. Wait, no, south is a wall, so only north is open,\
+      \ but it's a corridor that leads to a wall eventually, with lateral paths.\n\
+      \nBut wait, let's recall the grid layout. The maze is a 3x3 grid. The starting\
+      \ position could be anywhere, but based on the moves so far:\n\n- Initially,\
+      \ all directions except west were walls, so I was in a cell with only west access.\
+      \ Moving west one meter into a corridor.\n- Now, in this new cell, north and\
+      \ east are open corridors, but east is a dead end, so only north is promising.\n\
+      \nBut the north corridor leads to a wall after one meter, with lateral paths\
+      \ open. This suggests that from this north corridor, there might be branches\
+      \ or other cells to explore.\n\nGiven that the east is a dead end and west is\
+      \ blocked, the only open direction is north. However, moving north from here\
+      \ might lead back or to a different part. Since the north corridor is not a\
+      \ dead end (due to lateral paths), it might be a good idea to explore north.\n\
+      \nBut to avoid oscillation, I should plan the next move carefully. Let's think\
+      \ about the grid. The central cell might be the center of the 3x3 grid. Moving\
+      \ west from the center might put me in the west cell of the first row. Then,\
+      \ from there, moving north would be to the north cell of the west column.\n\n\
+      But I don't know the exact layout. However, the key is to explore without looping.\
+      \ Since the east is a dead end, and west is blocked, I should go north or south.\
+      \ South is blocked, so only north is open.\n\nBut wait, the user said \"Due\
+      \ South there is a wall\", so south is blocked. North is open, but it leads\
+      \ to a corridor that ends with a wall. However, the lateral paths are open,\
+      \ meaning there might be other cells to the north or adjacent to this corridor.\n\
+      \nGiven that, moving north might be the way to go to explore those lateral paths.\
+      \ Since the east is a dead end, and west is blocked, and south is blocked, the\
+      \ only option is to go north.\n\nBut let's confirm: the previous cell was the\
+      \ west corridor cell. Moving north from there might be entering a new cell.\
+      \ The description says that north is a corridor that goes on for one meter before\
+      \ a wall, with lateral paths open. So, moving north should be the next step.\n\
+      \nHowever, to avoid oscillation, I should not just keep moving in the same direction\
+      \ repeatedly. In this case, since the north corridor has lateral paths, moving\
+      \ north might lead to a different area.\n\nSo, I'll move north to explore the\
+      \ corridor and potential lateral paths.\n\nLet's go North."
+  - prompt: 'You move one meter North
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: 'Moving north from here, I''m now at a dead end in the north direction,
+      but the other directions offer corridors with open lateral paths. Since the
+      east corridor extends two meters and the south corridor extends one meter, both
+      have potential for exploration.
+
+
+      To avoid oscillation, I should focus on one direction at a time. The east corridor
+      being longer might allow for more exploration, but the south corridor could
+      lead to the exit or other important areas.
+
+
+      Given that the maze is small (3x3 grid), I should prioritize moving to the east
+      corridor to cover more ground, but I need to be cautious of dead ends.
+
+
+      Let''s head East to investigate the longer corridor and its lateral paths.'
+  - prompt: 'You move one meter East
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due South there is a wall. You can''t step in that direction.
+
+      Due West there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Okay, let''s break this down. I''m now at a position where:
+
+
+      - **North**: Wall (blocked)
+
+      - **East**: A corridor that extends one meter with lateral paths open (not dead
+      end)
+
+      - **South**: Wall (blocked)
+
+      - **West**: A corridor that extends one meter with lateral paths open (not dead
+      end)
+
+
+      This is interesting. Both east and west corridors have open lateral paths, meaning
+      there are potential connections to other areas. Since the maze is only 3x3,
+      these lateral paths might lead to the exit or other unexplored cells.
+
+
+      I need to choose a direction that avoids oscillation and makes progress. Since
+      the grid is small, I should explore one corridor fully before moving to the
+      other. Let''s go west first to check the lateral paths there. If that leads
+      to a dead end or the exit, I can backtrack or try east.'
+  - prompt: 'You move one meter East
+
+      Due North there is a wall. You can''t step in that direction.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.'
+    response: 'Okay, let''s analyze this carefully. I''ve moved east from the previous
+      position, and now the surroundings are:
+
+
+      - **North**: Wall (blocked)
+
+      - **East**: Wall (blocked)
+
+      - **South**: A corridor extending two meters with open lateral paths (not dead
+      end)
+
+      - **West**: A corridor extending two meters with open lateral paths (not dead
+      end)
+
+
+      This is a key moment. Both south and west corridors are dead ends in terms of
+      forward progress, but they have open lateral paths, meaning there are connections
+      to other areas. Since the maze is a 3x3 grid, these lateral paths likely lead
+      to the exit or other unexplored cells.
+
+
+      Given that the grid is small, I should explore one corridor fully before moving
+      to the other to avoid oscillation. Let''s prioritize the south corridor first
+      because it extends two meters, which might give a bit more room to maneuver
+      or discover the exit. If south leads to a dead end or the exit, I can backtrack
+      and try west.
+
+
+      Moving south might connect to the center or another critical area of the maze.
+      Since the east and north are blocked, moving south or west is the only way forward,
+      but I need to choose one.
+
+
+      Let''s go South to investigate the corridor and its lateral paths.'
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for one meter before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South you can see a natural light shining in that direction, it is probably
+      the direction of the exit!
+
+      Due West there is a wall. You can''t step in that direction.'
+    response: I have reached the exit! The natural light to the south indicates that
+      this is the way out. Let's step South to exit the maze.
+  - prompt: 'You move one meter South
+
+      Due North there is a corridor that goes on for two meters before encountering
+      a wall. Although the corridor ends with a wall, you notice that some of the
+      lateral paths along the way are open so it isn''t a dead end.
+
+      Due East there is a wall. You can''t step in that direction.
+
+      Due South you can see the exit in that direction! One last step and you are
+      out of the maze!
+
+      Due West there is a corridor that goes on for two meters before encountering
+      a wall. It is a dead end.'
+    response: I have located the exit! The corridor to the south is clearly the way
+      out, as it leads directly to the exit. There's no need to explore further in
+      other directions. Let's step South to exit the maze.
+illegal_directions: 0
+illegal_responses: 0
+execution_time: 45.4677574634552

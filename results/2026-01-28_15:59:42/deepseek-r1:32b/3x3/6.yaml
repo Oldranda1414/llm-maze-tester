@@ -1,0 +1,739 @@
+git_hash: 3c9ede2540d7f0cf0a278bfa35e040b0e862ed30
+maze:
+  horizontal:
+  - - false
+    - true
+    - false
+  - - true
+    - true
+    - false
+  - - true
+    - true
+    - false
+  vertical:
+  - - true
+    - false
+    - true
+  - - false
+    - false
+    - true
+  - - false
+    - false
+    - false
+  start:
+  - 1
+  - 0
+  target:
+  - 2
+  - 1
+  path:
+  - - 1
+    - 0
+  - - 1
+    - 1
+  - - 1
+    - 2
+  - - 1
+    - 1
+  - - 1
+    - 0
+  - - 0
+    - 0
+  - - 1
+    - 0
+  - - 1
+    - 1
+  - - 1
+    - 2
+  - - 1
+    - 1
+  - - 1
+    - 0
+  - - 0
+    - 0
+  - - 1
+    - 0
+  - - 1
+    - 1
+  - - 1
+    - 0
+  - - 1
+    - 1
+  - - 1
+    - 2
+  - - 1
+    - 1
+  - - 1
+    - 0
+  - - 1
+    - 1
+  - - 1
+    - 0
+  - - 1
+    - 1
+  - - 1
+    - 0
+  - - 1
+    - 1
+  - - 1
+    - 0
+  - - 1
+    - 1
+  - - 1
+    - 2
+  - - 1
+    - 1
+  - - 1
+    - 2
+  - - 0
+    - 2
+  - - 1
+    - 2
+  - - 1
+    - 1
+  - - 1
+    - 2
+  - - 2
+    - 2
+  - - 2
+    - 1
+  decisions:
+  - E
+  - E
+  - W
+  - W
+  - N
+  - S
+  - E
+  - E
+  - W
+  - W
+  - N
+  - S
+  - E
+  - W
+  - E
+  - E
+  - W
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - W
+  - E
+  - E
+  - W
+  - E
+  - N
+  - S
+  - W
+  - E
+  - S
+  - W
+  - S
+  colored_cells:
+  - coordinate:
+    - 0
+    - 2
+    color: GRAY
+  - coordinate:
+    - 1
+    - 2
+    color: GREEN
+  - coordinate:
+    - 2
+    - 0
+    color: RED
+  - coordinate:
+    - 2
+    - 2
+    color: ORANGE
+  sight_depth: 2
+  size: 3
+  solved: true
+chat_history:
+  system_prompt: '
+
+    You are a maze solving model. You are an expert in solving classic lattice mazes.
+
+
+    The user will provide you with descriptions of what you can perceive from inside
+    the maze.
+
+    The information provided considers you to have a sight depth of two meters. Anything
+    that is further away from you than two meters is not mentioned in the user prompt.
+
+    Just like a classic lattice maze the exit is on the border. The starting position
+    could be anywhere in the maze.
+
+    Your goal is to find the maze exit. Once you reach it you must step out of the
+    maze with one last move.
+
+    The maze is always solvable and the user is always honest on the information that
+    he provides you.
+
+
+    After the user provides you with informations regarding you current surroundings,
+    you will provide the direction to step towards next.
+
+    The possible directions are north, east, south, west.
+
+
+    The maze is a 3 x 3 grid, with every square in the grid being one square meter
+    big.
+
+    Use brief, step-indexed reasoning. Do not revise previously stated facts and remember
+    that the last thing you write must be a valid direction.
+
+
+
+    You are allowed to output the direction with any casing you want, as long as it
+    is the last thing in your answer.
+
+    Here are some examples of valid end of response, in case you decide to move due
+    north:
+
+
+    - Let''s go North
+
+    - I want to step N!
+
+    - My next move will be north.
+
+
+    Do not go back on you steps unless there is a clear reason to. Prioritize exploring
+    the maze in new directions.
+
+    Some of the cells of the maze have a colored floor tiles. Every color appears
+    only once. Keep track of the ones you find, as they can help you navigate the
+    maze.
+
+    '
+  chat:
+  - prompt: "The floor you are currently standing on has no distinctive color.\nDue\
+      \ North there is a corridor that goes on for one meter before encountering a\
+      \ wall. The corridor ends without any lateral paths.\nDue East there is a corridor\
+      \ that goes on for two meters before encountering a wall. Also in this direction:\n\
+      \   - After two meters there is a lateral path due North.\n   - After two meters\
+      \ there is a lateral path due South.\n   - After two meters there is a floor\
+      \ tile colored green.\nDue South there is a wall. You can't step in that direction.\n\
+      Due West there is a wall. You can't step in that direction."
+    response: "To solve this maze, I need to explore the available paths systematically\
+      \ while avoiding backtracking unless necessary. The goal is to reach the exit\
+      \ on the border of the 3x3 grid.\n\n**Step-by-Step Reasoning:**\n\n1. **Current\
+      \ Position:** I'm at a position with no colored floor tile.\n2. **North Direction:**\
+      \ There's a corridor leading north for one meter, ending in a wall with no lateral\
+      \ paths. This means going north is a dead end after one step.\n3. **East Direction:**\
+      \ The corridor extends two meters east before hitting a wall. At the end of\
+      \ this corridor:\n   - A lateral path goes north.\n   - Another lateral path\
+      \ goes south.\n   - There's a green-colored floor tile at this end point.\n\
+      4. **South and West Directions:** Both are blocked by walls, so I cannot move\
+      \ in those directions.\n\n**Decision:**\nSince moving north from my current\
+      \ position is a dead end after one step, the most promising direction is east.\
+      \ Moving east will allow me to explore further paths and potentially find the\
+      \ exit.\n\n**Next Move: East**\n\nLet's go East"
+  - prompt: "You move one meter East\nThe floor you are currently standing on has\
+      \ no distinctive color.\nDue North there is a wall. You can't step in that direction.\n\
+      Due East there is a corridor that goes on for one meter before encountering\
+      \ a wall. Also in this direction:\n   - After one meter there is a lateral path\
+      \ due North.\n   - After one meter there is a lateral path due South.\n   -\
+      \ After one meter there is a floor tile colored green.\nDue South there is a\
+      \ wall. You can't step in that direction.\nDue West there is a corridor that\
+      \ goes on for one meter before encountering a wall. Also in this direction:\n\
+      \   - After one meter there is a lateral path due North.\nThe moves you have\
+      \ made till now are: East"
+    response: "**Step-by-Step Reasoning:**\n\n1. **Current Position:** I'm standing\
+      \ on a floor with no distinctive color after moving east from my starting position.\n\
+      2. **North Direction:** There's a wall, so I can't move north.\n3. **East Direction:**\
+      \ The corridor extends one meter before hitting a wall. At the end:\n   - A\
+      \ lateral path goes north.\n   - Another lateral path goes south.\n   - There's\
+      \ a green-colored floor tile at this endpoint.\n4. **South Direction:** Blocked\
+      \ by a wall, so I can't move south.\n5. **West Direction:** The corridor extends\
+      \ one meter west before encountering a wall. At the end:\n   - A lateral path\
+      \ goes north.\n\n**Decision:**\nSince moving west leads to a potential new area\
+      \ with a lateral north path and moving east continues towards the green tile,\
+      \ it's best to continue exploring eastward to reach the green tile and potentially\
+      \ find the exit.\n\n**Next Move: East**\n\nLet's go East"
+  - prompt: "You move one meter East\n\nThe floor you are currently standing on is\
+      \ colored green.\n\nDue North there is a corridor that goes on for one meter\
+      \ before encountering a wall. Also in this direction:\n   - After one meter\
+      \ there is a lateral path due West.\n   - After one meter there is a floor tile\
+      \ colored gray.\nDue East there is a wall. You can't step in that direction.\n\
+      Due South there is a corridor that goes on for one meter before encountering\
+      \ a wall. Also in this direction:\n   - After one meter there is a lateral path\
+      \ due West.\n   - After one meter there is a floor tile colored orange.\nDue\
+      \ West there is a corridor that goes on for two meters before encountering a\
+      \ wall. Also in this direction:\n   - After two meters there is a lateral path\
+      \ due North.\nThe moves you have made till now are: East, East"
+    response: "**Step-by-Step Reasoning:**\n\n1. **Current Position:** I'm standing\
+      \ on the green-colored floor tile after moving east twice from my starting position.\n\
+      2. **North Direction:** The corridor extends one meter north before hitting\
+      \ a wall. At the end:\n   - A lateral path goes west.\n   - There's a gray-colored\
+      \ floor tile at this endpoint.\n3. **East Direction:** Blocked by a wall, so\
+      \ I can't move east further.\n4. **South Direction:** The corridor extends one\
+      \ meter south before hitting a wall. At the end:\n   - A lateral path goes west.\n\
+      \   - There's an orange-colored floor tile at this endpoint.\n5. **West Direction:**\
+      \ The corridor extends two meters west before encountering a wall. At the end:\n\
+      \   - A lateral path goes north.\n\n**Decision:**\nTo explore new areas and\
+      \ potential exits, moving west seems promising as it leads to more paths and\
+      \ colored tiles. This could help in mapping out the maze better and finding\
+      \ the exit.\n\n**Next Move: West**\n\nLet's go West"
+  - prompt: "You move one meter West\nThe floor you are currently standing on has\
+      \ no distinctive color.\nDue North there is a wall. You can't step in that direction.\n\
+      Due East there is a corridor that goes on for one meter before encountering\
+      \ a wall. Also in this direction:\n   - After one meter there is a lateral path\
+      \ due North.\n   - After one meter there is a lateral path due South.\n   -\
+      \ After one meter there is a floor tile colored green.\nDue South there is a\
+      \ wall. You can't step in that direction.\nDue West there is a corridor that\
+      \ goes on for one meter before encountering a wall. Also in this direction:\n\
+      \   - After one meter there is a lateral path due North.\nThe moves you have\
+      \ made till now are: East, East, West"
+    response: Let's go West
+  - prompt: "You move one meter West\nThe floor you are currently standing on has\
+      \ no distinctive color.\nDue North there is a corridor that goes on for one\
+      \ meter before encountering a wall. The corridor ends without any lateral paths.\n\
+      Due East there is a corridor that goes on for two meters before encountering\
+      \ a wall. Also in this direction:\n   - After two meters there is a lateral\
+      \ path due North.\n   - After two meters there is a lateral path due South.\n\
+      \   - After two meters there is a floor tile colored green.\nDue South there\
+      \ is a wall. You can't step in that direction.\nDue West there is a wall. You\
+      \ can't step in that direction.\nThe moves you have made till now are: East,\
+      \ East, West, West"
+    response: Let's go North
+  - prompt: "You move one meter North\nThe floor you are currently standing on has\
+      \ no distinctive color.\nDue North there is a wall. You can't step in that direction.\n\
+      Due East there is a wall. You can't step in that direction.\nDue South there\
+      \ is a corridor that goes on for one meter before encountering a wall. Also\
+      \ in this direction:\n   - After one meter there is a lateral path due East.\n\
+      Due West there is a wall. You can't step in that direction.\nThe moves you have\
+      \ made till now are: East, East, West, West, North"
+    response: Let's go South
+  - prompt: "You move one meter South\nThe floor you are currently standing on has\
+      \ no distinctive color.\nDue North there is a corridor that goes on for one\
+      \ meter before encountering a wall. The corridor ends without any lateral paths.\n\
+      Due East there is a corridor that goes on for two meters before encountering\
+      \ a wall. Also in this direction:\n   - After two meters there is a lateral\
+      \ path due North.\n   - After two meters there is a lateral path due South.\n\
+      \   - After two meters there is a floor tile colored green.\nDue South there\
+      \ is a wall. You can't step in that direction.\nDue West there is a wall. You\
+      \ can't step in that direction.\nThe moves you have made till now are: East,\
+      \ East, West, West, North, South"
+    response: Let's go East
+  - prompt: "You move one meter East\nThe floor you are currently standing on has\
+      \ no distinctive color.\nDue North there is a wall. You can't step in that direction.\n\
+      Due East there is a corridor that goes on for one meter before encountering\
+      \ a wall. Also in this direction:\n   - After one meter there is a lateral path\
+      \ due North.\n   - After one meter there is a lateral path due South.\n   -\
+      \ After one meter there is a floor tile colored green.\nDue South there is a\
+      \ wall. You can't step in that direction.\nDue West there is a corridor that\
+      \ goes on for one meter before encountering a wall. Also in this direction:\n\
+      \   - After one meter there is a lateral path due North.\nThe moves you have\
+      \ made till now are: East, East, West, West, North, South, East"
+    response: Let's go East
+  - prompt: "You move one meter East\n\nThe floor you are currently standing on is\
+      \ colored green.\n\nDue North there is a corridor that goes on for one meter\
+      \ before encountering a wall. Also in this direction:\n   - After one meter\
+      \ there is a lateral path due West.\n   - After one meter there is a floor tile\
+      \ colored gray.\nDue East there is a wall. You can't step in that direction.\n\
+      Due South there is a corridor that goes on for one meter before encountering\
+      \ a wall. Also in this direction:\n   - After one meter there is a lateral path\
+      \ due West.\n   - After one meter there is a floor tile colored orange.\nDue\
+      \ West there is a corridor that goes on for two meters before encountering a\
+      \ wall. Also in this direction:\n   - After two meters there is a lateral path\
+      \ due North.\nThe moves you have made till now are: East, East, West, West,\
+      \ North, South, East, East"
+    response: Let's go West
+  - prompt: "You move one meter West\nThe floor you are currently standing on has\
+      \ no distinctive color.\nDue North there is a wall. You can't step in that direction.\n\
+      Due East there is a corridor that goes on for one meter before encountering\
+      \ a wall. Also in this direction:\n   - After one meter there is a lateral path\
+      \ due North.\n   - After one meter there is a lateral path due South.\n   -\
+      \ After one meter there is a floor tile colored green.\nDue South there is a\
+      \ wall. You can't step in that direction.\nDue West there is a corridor that\
+      \ goes on for one meter before encountering a wall. Also in this direction:\n\
+      \   - After one meter there is a lateral path due North.\nThe moves you have\
+      \ made till now are: East, East, West, West, North, South, East, East, West"
+    response: Let's go West
+  - prompt: "You move one meter West\nThe floor you are currently standing on has\
+      \ no distinctive color.\nDue North there is a corridor that goes on for one\
+      \ meter before encountering a wall. The corridor ends without any lateral paths.\n\
+      Due East there is a corridor that goes on for two meters before encountering\
+      \ a wall. Also in this direction:\n   - After two meters there is a lateral\
+      \ path due North.\n   - After two meters there is a lateral path due South.\n\
+      \   - After two meters there is a floor tile colored green.\nDue South there\
+      \ is a wall. You can't step in that direction.\nDue West there is a wall. You\
+      \ can't step in that direction.\nThe moves you have made till now are: East,\
+      \ East, West, West, North, South, East, East, West, West"
+    response: Let's go North
+  - prompt: "You move one meter North\nThe floor you are currently standing on has\
+      \ no distinctive color.\nDue North there is a wall. You can't step in that direction.\n\
+      Due East there is a wall. You can't step in that direction.\nDue South there\
+      \ is a corridor that goes on for one meter before encountering a wall. Also\
+      \ in this direction:\n   - After one meter there is a lateral path due East.\n\
+      Due West there is a wall. You can't step in that direction.\nThe moves you have\
+      \ made till now are: East, East, West, West, North, South, East, East, West,\
+      \ West, North"
+    response: Let's go South
+  - prompt: "You move one meter South\nThe floor you are currently standing on has\
+      \ no distinctive color.\nDue North there is a corridor that goes on for one\
+      \ meter before encountering a wall. The corridor ends without any lateral paths.\n\
+      Due East there is a corridor that goes on for two meters before encountering\
+      \ a wall. Also in this direction:\n   - After two meters there is a lateral\
+      \ path due North.\n   - After two meters there is a lateral path due South.\n\
+      \   - After two meters there is a floor tile colored green.\nDue South there\
+      \ is a wall. You can't step in that direction.\nDue West there is a wall. You\
+      \ can't step in that direction.\nThe moves you have made till now are: East,\
+      \ East, West, West, North, South, East, East, West, West, North, South"
+    response: Let's go East
+  - prompt: "You move one meter East\nThe floor you are currently standing on has\
+      \ no distinctive color.\nDue North there is a wall. You can't step in that direction.\n\
+      Due East there is a corridor that goes on for one meter before encountering\
+      \ a wall. Also in this direction:\n   - After one meter there is a lateral path\
+      \ due North.\n   - After one meter there is a lateral path due South.\n   -\
+      \ After one meter there is a floor tile colored green.\nDue South there is a\
+      \ wall. You can't step in that direction.\nDue West there is a corridor that\
+      \ goes on for one meter before encountering a wall. Also in this direction:\n\
+      \   - After one meter there is a lateral path due North.\nThe moves you have\
+      \ made till now are: East, East, West, West, North, South, East, East, West,\
+      \ West, North, South, East"
+    response: Let's go North
+  - prompt: "\nYou try to walk North.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nThe\
+      \ floor you are currently standing on has no distinctive color.\nDue North there\
+      \ is a wall. You can't step in that direction.\nDue East there is a corridor\
+      \ that goes on for one meter before encountering a wall. Also in this direction:\n\
+      \   - After one meter there is a lateral path due North.\n   - After one meter\
+      \ there is a lateral path due South.\n   - After one meter there is a floor\
+      \ tile colored green.\nDue South there is a wall. You can't step in that direction.\n\
+      Due West there is a corridor that goes on for one meter before encountering\
+      \ a wall. Also in this direction:\n   - After one meter there is a lateral path\
+      \ due North.\nThe moves you have made till now are: East, East, West, West,\
+      \ North, South, East, East, West, West, North, South, East"
+    response: Let's go West
+  - prompt: "You move one meter West\nThe floor you are currently standing on has\
+      \ no distinctive color.\nDue North there is a corridor that goes on for one\
+      \ meter before encountering a wall. The corridor ends without any lateral paths.\n\
+      Due East there is a corridor that goes on for two meters before encountering\
+      \ a wall. Also in this direction:\n   - After two meters there is a lateral\
+      \ path due North.\n   - After two meters there is a lateral path due South.\n\
+      \   - After two meters there is a floor tile colored green.\nDue South there\
+      \ is a wall. You can't step in that direction.\nDue West there is a wall. You\
+      \ can't step in that direction.\nThe moves you have made till now are: East,\
+      \ East, West, West, North, South, East, East, West, West, North, South, East,\
+      \ West"
+    response: Let's go East
+  - prompt: "You move one meter East\nThe floor you are currently standing on has\
+      \ no distinctive color.\nDue North there is a wall. You can't step in that direction.\n\
+      Due East there is a corridor that goes on for one meter before encountering\
+      \ a wall. Also in this direction:\n   - After one meter there is a lateral path\
+      \ due North.\n   - After one meter there is a lateral path due South.\n   -\
+      \ After one meter there is a floor tile colored green.\nDue South there is a\
+      \ wall. You can't step in that direction.\nDue West there is a corridor that\
+      \ goes on for one meter before encountering a wall. Also in this direction:\n\
+      \   - After one meter there is a lateral path due North.\nThe moves you have\
+      \ made till now are: East, East, West, West, North, South, East, East, West,\
+      \ West, North, South, East, West, East"
+    response: "I'm currently standing on a floor with no distinctive color. Let me\
+      \ analyze the available directions based on the latest information:\n\n1. **North**:\
+      \ Blocked by a wall.\n2. **East**: A corridor extends one meter before encountering\
+      \ a wall. At this endpoint:\n   - A lateral path goes North.\n   - Another lateral\
+      \ path goes South.\n   - There's a green-colored floor tile at this point.\n\
+      3. **South**: Blocked by a wall.\n4. **West**: A corridor extends one meter\
+      \ before encountering a wall. At this endpoint:\n   - A lateral path goes North.\n\
+      \nGiven the previous moves and the current position, moving East seems promising\
+      \ as it leads towards the green-colored floor tile and further paths, which\
+      \ could help in finding the exit.\n\n**Next Move: East**\n\nLet's go East"
+  - prompt: "You move one meter East\n\nThe floor you are currently standing on is\
+      \ colored green.\n\nDue North there is a corridor that goes on for one meter\
+      \ before encountering a wall. Also in this direction:\n   - After one meter\
+      \ there is a lateral path due West.\n   - After one meter there is a floor tile\
+      \ colored gray.\nDue East there is a wall. You can't step in that direction.\n\
+      Due South there is a corridor that goes on for one meter before encountering\
+      \ a wall. Also in this direction:\n   - After one meter there is a lateral path\
+      \ due West.\n   - After one meter there is a floor tile colored orange.\nDue\
+      \ West there is a corridor that goes on for two meters before encountering a\
+      \ wall. Also in this direction:\n   - After two meters there is a lateral path\
+      \ due North.\nThe moves you have made till now are: East, East, West, West,\
+      \ North, South, East, East, West, West, North, South, East, West, East, East"
+    response: Let's go West
+  - prompt: "You move one meter West\nThe floor you are currently standing on has\
+      \ no distinctive color.\nDue North there is a wall. You can't step in that direction.\n\
+      Due East there is a corridor that goes on for one meter before encountering\
+      \ a wall. Also in this direction:\n   - After one meter there is a lateral path\
+      \ due North.\n   - After one meter there is a lateral path due South.\n   -\
+      \ After one meter there is a floor tile colored green.\nDue South there is a\
+      \ wall. You can't step in that direction.\nDue West there is a corridor that\
+      \ goes on for one meter before encountering a wall. Also in this direction:\n\
+      \   - After one meter there is a lateral path due North.\nThe moves you have\
+      \ made till now are: East, East, West, West, North, South, East, East, West,\
+      \ West, North, South, East, West, East, East, West"
+    response: Let's go West
+  - prompt: "You move one meter West\nThe floor you are currently standing on has\
+      \ no distinctive color.\nDue North there is a corridor that goes on for one\
+      \ meter before encountering a wall. The corridor ends without any lateral paths.\n\
+      Due East there is a corridor that goes on for two meters before encountering\
+      \ a wall. Also in this direction:\n   - After two meters there is a lateral\
+      \ path due North.\n   - After two meters there is a lateral path due South.\n\
+      \   - After two meters there is a floor tile colored green.\nDue South there\
+      \ is a wall. You can't step in that direction.\nDue West there is a wall. You\
+      \ can't step in that direction.\nThe moves you have made till now are: East,\
+      \ East, West, West, North, South, East, East, West, West, North, South, East,\
+      \ West, East, East, West, West"
+    response: Let's go East
+  - prompt: "You move one meter East\nThe floor you are currently standing on has\
+      \ no distinctive color.\nDue North there is a wall. You can't step in that direction.\n\
+      Due East there is a corridor that goes on for one meter before encountering\
+      \ a wall. Also in this direction:\n   - After one meter there is a lateral path\
+      \ due North.\n   - After one meter there is a lateral path due South.\n   -\
+      \ After one meter there is a floor tile colored green.\nDue South there is a\
+      \ wall. You can't step in that direction.\nDue West there is a corridor that\
+      \ goes on for one meter before encountering a wall. Also in this direction:\n\
+      \   - After one meter there is a lateral path due North.\nThe moves you have\
+      \ made till now are: East, East, West, West, North, South, East, East, West,\
+      \ West, North, South, East, West, East, East, West, West, East"
+    response: Let's go North
+  - prompt: "\nYou try to walk North.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nThe\
+      \ floor you are currently standing on has no distinctive color.\nDue North there\
+      \ is a wall. You can't step in that direction.\nDue East there is a corridor\
+      \ that goes on for one meter before encountering a wall. Also in this direction:\n\
+      \   - After one meter there is a lateral path due North.\n   - After one meter\
+      \ there is a lateral path due South.\n   - After one meter there is a floor\
+      \ tile colored green.\nDue South there is a wall. You can't step in that direction.\n\
+      Due West there is a corridor that goes on for one meter before encountering\
+      \ a wall. Also in this direction:\n   - After one meter there is a lateral path\
+      \ due North.\nThe moves you have made till now are: East, East, West, West,\
+      \ North, South, East, East, West, West, North, South, East, West, East, East,\
+      \ West, West, East"
+    response: Let's go West
+  - prompt: "You move one meter West\nThe floor you are currently standing on has\
+      \ no distinctive color.\nDue North there is a corridor that goes on for one\
+      \ meter before encountering a wall. The corridor ends without any lateral paths.\n\
+      Due East there is a corridor that goes on for two meters before encountering\
+      \ a wall. Also in this direction:\n   - After two meters there is a lateral\
+      \ path due North.\n   - After two meters there is a lateral path due South.\n\
+      \   - After two meters there is a floor tile colored green.\nDue South there\
+      \ is a wall. You can't step in that direction.\nDue West there is a wall. You\
+      \ can't step in that direction.\nThe moves you have made till now are: East,\
+      \ East, West, West, North, South, East, East, West, West, North, South, East,\
+      \ West, East, East, West, West, East, West"
+    response: Let's go East
+  - prompt: "You move one meter East\nThe floor you are currently standing on has\
+      \ no distinctive color.\nDue North there is a wall. You can't step in that direction.\n\
+      Due East there is a corridor that goes on for one meter before encountering\
+      \ a wall. Also in this direction:\n   - After one meter there is a lateral path\
+      \ due North.\n   - After one meter there is a lateral path due South.\n   -\
+      \ After one meter there is a floor tile colored green.\nDue South there is a\
+      \ wall. You can't step in that direction.\nDue West there is a corridor that\
+      \ goes on for one meter before encountering a wall. Also in this direction:\n\
+      \   - After one meter there is a lateral path due North.\nThe moves you have\
+      \ made till now are: East, East, West, West, North, South, East, East, West,\
+      \ West, North, South, East, West, East, East, West, West, East, West, East"
+    response: Let's go North
+  - prompt: "\nYou try to walk North.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nThe\
+      \ floor you are currently standing on has no distinctive color.\nDue North there\
+      \ is a wall. You can't step in that direction.\nDue East there is a corridor\
+      \ that goes on for one meter before encountering a wall. Also in this direction:\n\
+      \   - After one meter there is a lateral path due North.\n   - After one meter\
+      \ there is a lateral path due South.\n   - After one meter there is a floor\
+      \ tile colored green.\nDue South there is a wall. You can't step in that direction.\n\
+      Due West there is a corridor that goes on for one meter before encountering\
+      \ a wall. Also in this direction:\n   - After one meter there is a lateral path\
+      \ due North.\nThe moves you have made till now are: East, East, West, West,\
+      \ North, South, East, East, West, West, North, South, East, West, East, East,\
+      \ West, West, East, West, East"
+    response: Let's go West
+  - prompt: "You move one meter West\nThe floor you are currently standing on has\
+      \ no distinctive color.\nDue North there is a corridor that goes on for one\
+      \ meter before encountering a wall. The corridor ends without any lateral paths.\n\
+      Due East there is a corridor that goes on for two meters before encountering\
+      \ a wall. Also in this direction:\n   - After two meters there is a lateral\
+      \ path due North.\n   - After two meters there is a lateral path due South.\n\
+      \   - After two meters there is a floor tile colored green.\nDue South there\
+      \ is a wall. You can't step in that direction.\nDue West there is a wall. You\
+      \ can't step in that direction.\nThe moves you have made till now are: East,\
+      \ East, West, West, North, South, East, East, West, West, North, South, East,\
+      \ West, East, East, West, West, East, West, East, West"
+    response: Let's go East
+  - prompt: "You move one meter East\nThe floor you are currently standing on has\
+      \ no distinctive color.\nDue North there is a wall. You can't step in that direction.\n\
+      Due East there is a corridor that goes on for one meter before encountering\
+      \ a wall. Also in this direction:\n   - After one meter there is a lateral path\
+      \ due North.\n   - After one meter there is a lateral path due South.\n   -\
+      \ After one meter there is a floor tile colored green.\nDue South there is a\
+      \ wall. You can't step in that direction.\nDue West there is a corridor that\
+      \ goes on for one meter before encountering a wall. Also in this direction:\n\
+      \   - After one meter there is a lateral path due North.\nThe moves you have\
+      \ made till now are: East, East, West, West, North, South, East, East, West,\
+      \ West, North, South, East, West, East, East, West, West, East, West, East,\
+      \ West, East"
+    response: Let's go West
+  - prompt: "You move one meter West\nThe floor you are currently standing on has\
+      \ no distinctive color.\nDue North there is a corridor that goes on for one\
+      \ meter before encountering a wall. The corridor ends without any lateral paths.\n\
+      Due East there is a corridor that goes on for two meters before encountering\
+      \ a wall. Also in this direction:\n   - After two meters there is a lateral\
+      \ path due North.\n   - After two meters there is a lateral path due South.\n\
+      \   - After two meters there is a floor tile colored green.\nDue South there\
+      \ is a wall. You can't step in that direction.\nDue West there is a wall. You\
+      \ can't step in that direction.\nThe moves you have made till now are: East,\
+      \ East, West, West, North, South, East, East, West, West, North, South, East,\
+      \ West, East, East, West, West, East, West, East, West, East, West"
+    response: Let's go West
+  - prompt: "\nYou try to walk West.\nYou walk directly into a wall, hitting your\
+      \ nose. Place more attention on the direcions that are available to you!\nThe\
+      \ floor you are currently standing on has no distinctive color.\nDue North there\
+      \ is a corridor that goes on for one meter before encountering a wall. The corridor\
+      \ ends without any lateral paths.\nDue East there is a corridor that goes on\
+      \ for two meters before encountering a wall. Also in this direction:\n   - After\
+      \ two meters there is a lateral path due North.\n   - After two meters there\
+      \ is a lateral path due South.\n   - After two meters there is a floor tile\
+      \ colored green.\nDue South there is a wall. You can't step in that direction.\n\
+      Due West there is a wall. You can't step in that direction.\nThe moves you have\
+      \ made till now are: East, East, West, West, North, South, East, East, West,\
+      \ West, North, South, East, West, East, East, West, West, East, West, East,\
+      \ West, East, West"
+    response: Let's go East.
+  - prompt: "You move one meter East\nThe floor you are currently standing on has\
+      \ no distinctive color.\nDue North there is a wall. You can't step in that direction.\n\
+      Due East there is a corridor that goes on for one meter before encountering\
+      \ a wall. Also in this direction:\n   - After one meter there is a lateral path\
+      \ due North.\n   - After one meter there is a lateral path due South.\n   -\
+      \ After one meter there is a floor tile colored green.\nDue South there is a\
+      \ wall. You can't step in that direction.\nDue West there is a corridor that\
+      \ goes on for one meter before encountering a wall. Also in this direction:\n\
+      \   - After one meter there is a lateral path due North.\nThe moves you have\
+      \ made till now are: East, East, West, West, North, South, East, East, West,\
+      \ West, North, South, East, West, East, East, West, West, East, West, East,\
+      \ West, East, West, East"
+    response: Let's go East.
+  - prompt: "You move one meter East\n\nThe floor you are currently standing on is\
+      \ colored green.\n\nDue North there is a corridor that goes on for one meter\
+      \ before encountering a wall. Also in this direction:\n   - After one meter\
+      \ there is a lateral path due West.\n   - After one meter there is a floor tile\
+      \ colored gray.\nDue East there is a wall. You can't step in that direction.\n\
+      Due South there is a corridor that goes on for one meter before encountering\
+      \ a wall. Also in this direction:\n   - After one meter there is a lateral path\
+      \ due West.\n   - After one meter there is a floor tile colored orange.\nDue\
+      \ West there is a corridor that goes on for two meters before encountering a\
+      \ wall. Also in this direction:\n   - After two meters there is a lateral path\
+      \ due North.\nThe moves you have made till now are: East, East, West, West,\
+      \ North, South, East, East, West, West, North, South, East, West, East, East,\
+      \ West, West, East, West, East, West, East, West, East, East"
+    response: Let's go West.
+  - prompt: "You move one meter West\nThe floor you are currently standing on has\
+      \ no distinctive color.\nDue North there is a wall. You can't step in that direction.\n\
+      Due East there is a corridor that goes on for one meter before encountering\
+      \ a wall. Also in this direction:\n   - After one meter there is a lateral path\
+      \ due North.\n   - After one meter there is a lateral path due South.\n   -\
+      \ After one meter there is a floor tile colored green.\nDue South there is a\
+      \ wall. You can't step in that direction.\nDue West there is a corridor that\
+      \ goes on for one meter before encountering a wall. Also in this direction:\n\
+      \   - After one meter there is a lateral path due North.\nThe moves you have\
+      \ made till now are: East, East, West, West, North, South, East, East, West,\
+      \ West, North, South, East, West, East, East, West, West, East, West, East,\
+      \ West, East, West, East, East, West"
+    response: Let's go East.
+  - prompt: "You move one meter East\n\nThe floor you are currently standing on is\
+      \ colored green.\n\nDue North there is a corridor that goes on for one meter\
+      \ before encountering a wall. Also in this direction:\n   - After one meter\
+      \ there is a lateral path due West.\n   - After one meter there is a floor tile\
+      \ colored gray.\nDue East there is a wall. You can't step in that direction.\n\
+      Due South there is a corridor that goes on for one meter before encountering\
+      \ a wall. Also in this direction:\n   - After one meter there is a lateral path\
+      \ due West.\n   - After one meter there is a floor tile colored orange.\nDue\
+      \ West there is a corridor that goes on for two meters before encountering a\
+      \ wall. Also in this direction:\n   - After two meters there is a lateral path\
+      \ due North.\nThe moves you have made till now are: East, East, West, West,\
+      \ North, South, East, East, West, West, North, South, East, West, East, East,\
+      \ West, West, East, West, East, West, East, West, East, East, West, East"
+    response: Let's go North.
+  - prompt: "You move one meter North\n\nThe floor you are currently standing on is\
+      \ colored gray.\n\nDue North there is a wall. You can't step in that direction.\n\
+      Due East there is a wall. You can't step in that direction.\nDue South there\
+      \ is a corridor that goes on for two meters before encountering a wall. Also\
+      \ in this direction:\n   - After one meter there is a lateral path due West.\n\
+      \   - After two meters there is a lateral path due West.\n   - After one meter\
+      \ there is a floor tile colored green.\n   - After two meters there is a floor\
+      \ tile colored orange.\nDue West there is a corridor that goes on for one meter\
+      \ before encountering a wall. The corridor ends without any lateral paths.\n\
+      The moves you have made till now are: East, East, West, West, North, South,\
+      \ East, East, West, West, North, South, East, West, East, East, West, West,\
+      \ East, West, East, West, East, West, East, East, West, East, North"
+    response: Let's go South.
+  - prompt: "You move one meter South\n\nThe floor you are currently standing on is\
+      \ colored green.\n\nDue North there is a corridor that goes on for one meter\
+      \ before encountering a wall. Also in this direction:\n   - After one meter\
+      \ there is a lateral path due West.\n   - After one meter there is a floor tile\
+      \ colored gray.\nDue East there is a wall. You can't step in that direction.\n\
+      Due South there is a corridor that goes on for one meter before encountering\
+      \ a wall. Also in this direction:\n   - After one meter there is a lateral path\
+      \ due West.\n   - After one meter there is a floor tile colored orange.\nDue\
+      \ West there is a corridor that goes on for two meters before encountering a\
+      \ wall. Also in this direction:\n   - After two meters there is a lateral path\
+      \ due North.\nThe moves you have made till now are: East, East, West, West,\
+      \ North, South, East, East, West, West, North, South, East, West, East, East,\
+      \ West, West, East, West, East, West, East, West, East, East, West, East, North,\
+      \ South"
+    response: Let's go West.
+  - prompt: "You move one meter West\nThe floor you are currently standing on has\
+      \ no distinctive color.\nDue North there is a wall. You can't step in that direction.\n\
+      Due East there is a corridor that goes on for one meter before encountering\
+      \ a wall. Also in this direction:\n   - After one meter there is a lateral path\
+      \ due North.\n   - After one meter there is a lateral path due South.\n   -\
+      \ After one meter there is a floor tile colored green.\nDue South there is a\
+      \ wall. You can't step in that direction.\nDue West there is a corridor that\
+      \ goes on for one meter before encountering a wall. Also in this direction:\n\
+      \   - After one meter there is a lateral path due North.\nThe moves you have\
+      \ made till now are: East, East, West, West, North, South, East, East, West,\
+      \ West, North, South, East, West, East, East, West, West, East, West, East,\
+      \ West, East, West, East, East, West, East, North, South, West"
+    response: Let's go East.
+  - prompt: "You move one meter East\n\nThe floor you are currently standing on is\
+      \ colored green.\n\nDue North there is a corridor that goes on for one meter\
+      \ before encountering a wall. Also in this direction:\n   - After one meter\
+      \ there is a lateral path due West.\n   - After one meter there is a floor tile\
+      \ colored gray.\nDue East there is a wall. You can't step in that direction.\n\
+      Due South there is a corridor that goes on for one meter before encountering\
+      \ a wall. Also in this direction:\n   - After one meter there is a lateral path\
+      \ due West.\n   - After one meter there is a floor tile colored orange.\nDue\
+      \ West there is a corridor that goes on for two meters before encountering a\
+      \ wall. Also in this direction:\n   - After two meters there is a lateral path\
+      \ due North.\nThe moves you have made till now are: East, East, West, West,\
+      \ North, South, East, East, West, West, North, South, East, West, East, East,\
+      \ West, West, East, West, East, West, East, West, East, East, West, East, North,\
+      \ South, West, East"
+    response: Let's go South.
+  - prompt: "You move one meter South\n\nThe floor you are currently standing on is\
+      \ colored orange.\n\nDue North there is a corridor that goes on for two meters\
+      \ before encountering a wall. Also in this direction:\n   - After one meter\
+      \ there is a lateral path due West.\n   - After two meters there is a lateral\
+      \ path due West.\n   - After one meter there is a floor tile colored green.\n\
+      \   - After two meters there is a floor tile colored gray.\nDue East there is\
+      \ a wall. You can't step in that direction.\nDue South there is a wall. You\
+      \ can't step in that direction.\nDue West you can see a natural light shining\
+      \ in that direction, it is probably the direction of the exit!\nThe moves you\
+      \ have made till now are: East, East, West, West, North, South, East, East,\
+      \ West, West, North, South, East, West, East, East, West, West, East, West,\
+      \ East, West, East, West, East, East, West, East, North, South, West, East,\
+      \ South"
+    response: Let's go West.
+  - prompt: "You move one meter West\nThe floor you are currently standing on has\
+      \ no distinctive color.\nDue North there is a wall. You can't step in that direction.\n\
+      Due East there is a corridor that goes on for one meter before encountering\
+      \ a wall. Also in this direction:\n   - After one meter there is a lateral path\
+      \ due North.\n   - After one meter there is a floor tile colored orange.\nDue\
+      \ South you can see the exit in that direction! One last step and you are out\
+      \ of the maze!\nDue West there is a corridor that goes on for one meter before\
+      \ encountering a wall. The corridor ends without any lateral paths.\nThe moves\
+      \ you have made till now are: East, East, West, West, North, South, East, East,\
+      \ West, West, North, South, East, West, East, East, West, West, East, West,\
+      \ East, West, East, West, East, East, West, East, North, South, West, East,\
+      \ South, West"
+    response: Let's go South.
+illegal_directions: 4
+illegal_responses: 0
+execution_time: 582.5554962158203
