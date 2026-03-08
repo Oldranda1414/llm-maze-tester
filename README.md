@@ -91,7 +91,7 @@ The source (`src` directory) is organized as follows:
 
 The `./run.sh` script is to easily run the experiment on systems (such as the uni server) where the just tool is not installed. The script needs only UV to be installed on the system to run the experiment given the configuration defined in `./maze_solver/src/experiemnt/config.py`
 
-### experiments nots
+### experiments notes
 
 The `experiments.md` file contains notes on the reasoning and results of the main experiments executed during the work on the thesis. It is rather discursive in nature, and meant more as my own personal use notes rather than a well documented log on the experiments.
 
@@ -203,7 +203,7 @@ The `just add [library]` command allows to add python library dependencies to th
 
 ### remove
 
-The `just remove [library]` command allows to remove python library dependencies to the project using uv, where \[library\] is the name of the python package, as one would pass it to the `pip -u` or `uv remove` commands.
+The `just remove [library]` command allows to remove python library dependencies to the project using uv, where \[library\] is the name of the python package, as one would pass it to the `uv remove` command.
 
 ## Workflow
 
@@ -216,4 +216,4 @@ The intended workflow, as of the current project structure is as follows:
 - It's single runs are observed using `just visualize` command.
 - Interesting runs are rendered using `just render [path_to_run]` command.
 - Quick prompt engineering tests are carried using the interactive chat provided by the `just chat` command.
-- python dependencies are managed using the `just add [library]` and `just remove [library]`
+- python dependencies are managed using the `just add [library]` and `just remove [library]` commands
