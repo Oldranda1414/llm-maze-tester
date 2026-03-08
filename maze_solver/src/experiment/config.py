@@ -64,7 +64,7 @@ def load_config() -> ExperimentConfig:
     )
     prompt_style = NarrativeStyle()
     preamble_location = PreambleLocation.SYSTEM
-    maze_sizes = [3, 4]
+    maze_sizes = [5, 6]
     iterations = 10
     provide_history = True
     quiet = True
