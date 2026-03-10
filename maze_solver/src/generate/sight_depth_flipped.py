@@ -12,13 +12,26 @@ def sight_depth_flipped(path: str):
     maze_starts = [(2, 2), (0, 2), (4, 4)]
 
     mazes = generate_mazes(maze_sizes, maze_starts)
+    titles = [
+        "3x3 con d=1",
+        "3x3 con d=5",
+        "4x4 con d=1",
+        "4x4 con d=5",
+        "5x5 con d=1",
+        "5x5 con d=5",
+    ]
+    mazes = zip(mazes, titles)
     _, axes = plt.subplots(2, 3, figsize=(12, 8))
 
-    for idx, maze in enumerate(mazes):
+    for idx, (maze, title) in enumerate(mazes):
         row = idx % 2
         col = idx // 2
         draw_maze(
-            maze, ax=axes[row][col], draw_character=True, highlight_seen_tiles=True
+            maze,
+            ax=axes[row][col],
+            draw_character=True,
+            highlight_seen_tiles=True,
+            title=title,
         )
 
     plt.tight_layout()

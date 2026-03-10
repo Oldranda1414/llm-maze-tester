@@ -20,9 +20,13 @@ def save_maze(
     save_path: str,
     draw_character: bool = True,
     highlight_seen_tiles: bool = True,
+    title: str = "",
 ):
     fig, _ = draw_maze(
-        maze, draw_character=draw_character, highlight_seen_tiles=highlight_seen_tiles
+        maze,
+        draw_character=draw_character,
+        highlight_seen_tiles=highlight_seen_tiles,
+        title=title,
     )
     fig.savefig(save_path, dpi=300, bbox_inches="tight")
 
@@ -33,6 +37,7 @@ def draw_maze(
     show_path: bool = True,
     draw_character: bool = True,
     highlight_seen_tiles: bool = True,
+    title: str | None = None,
 ) -> tuple[Figure, Axes]:
     if ax is None:
         plt.close("all")
@@ -40,6 +45,10 @@ def draw_maze(
     else:
         fig = ax.figure
         assert isinstance(fig, Figure)
+
+    grid_size = maze.size
+    if title is None:
+        title = f"Maze {grid_size}x{grid_size}"
 
     ax.set_facecolor("white")
 
@@ -50,12 +59,11 @@ def draw_maze(
         if show_path:
             _draw_path(ax, maze)
 
-    grid_size = maze.size
     ax.set_xlim(-0.1, grid_size + 0.1)
     ax.set_ylim(-0.1, grid_size + 0.1)
     ax.set_aspect("equal")
     ax.axis("off")
-    ax.set_title(f"Maze {grid_size}x{grid_size}")
+    ax.set_title(title)
 
     return fig, ax
 

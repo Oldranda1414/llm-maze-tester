@@ -10,8 +10,8 @@ from prompt.config import PromptConfig
 from prompt.style.narrative import NarrativeStyle
 
 
-def prompt_step_example_flipped(path: str) -> None:
-    mazes: list[tuple[Maze, str]] = []
+def prompt_step_example_plus(path: str) -> None:
+    mazes: list[tuple[Maze, str, str]] = []
     prompt_generator = PromptGenerator(
         NarrativeStyle(),
         PromptConfig(False, False, False, False, False, 0, False, False),
@@ -20,7 +20,6 @@ def prompt_step_example_flipped(path: str) -> None:
     maze_size = 3
     start = (2, 2)
     steps = [Direction.NORTH, Direction.WEST]
-
     for i in range(len(steps)):
         m = create_maze(size=maze_size, start=start, sight_depth=sight_depth)
         prompt = ""
@@ -28,18 +27,18 @@ def prompt_step_example_flipped(path: str) -> None:
             m.move(steps[step_count])
         prompt += prompt_generator.last_move_info(m)
         prompt += prompt_generator.step_prompt(m)
-        mazes.append((m, prompt))
+        title = f"passo {i + 1}"
+        mazes.append((m, prompt, title))
 
-    _, axes = plt.subplots(2, len(mazes), figsize=(len(mazes) * 4, 8))
-
+    _, axes = plt.subplots(len(mazes), 2, figsize=(8, len(mazes) * 4))
     if len(mazes) == 1:
-        axes = [[axes[0]], [axes[1]]]
+        axes = [axes]
 
-    for i, (maze, text) in enumerate(mazes):
-        draw_maze(maze, ax=axes[0][i])
+    for i, (maze, text, title) in enumerate(mazes):
+        draw_maze(maze, ax=axes[i][0], title=title)
 
-        axes[1][i].text(0.0, 1.0, text, fontsize=12, va="top", wrap=True)
-        axes[1][i].axis("off")
+        axes[i][1].text(0.0, 0.5, text, fontsize=12, va="center", wrap=True)
+        axes[i][1].axis("off")
 
     plt.tight_layout()
-    plt.savefig(f"{path}/prompt_step_example_flipped.png", bbox_inches="tight", dpi=150)
+    plt.savefig(f"{path}/prompt_step_example_plus.png", bbox_inches="tight", dpi=150)

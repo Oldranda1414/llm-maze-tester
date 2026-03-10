@@ -12,13 +12,26 @@ def selection_example_flipped(path: str):
     maze_starts = [((1, 0), (0, 0)), ((2, 2), (3, 0)), ((0, 0), (1, 2))]
 
     mazes = generate_mazes(maze_sizes, maze_starts)
+    titles = [
+        "3x3 Scartato",
+        "3x3 Valido",
+        "4x4 Scartato",
+        "4x4 Valido",
+        "5x5 Scartato",
+        "5x5 Valido",
+    ]
+    mazes = zip(mazes, titles)
     _, axes = plt.subplots(2, 3, figsize=(12, 8))
 
-    for idx, maze in enumerate(mazes):
+    for idx, (maze, title) in enumerate(mazes):
         row = idx % 2
         col = idx // 2
         draw_maze(
-            maze, ax=axes[row][col], draw_character=True, highlight_seen_tiles=False
+            maze,
+            ax=axes[row][col],
+            draw_character=True,
+            highlight_seen_tiles=False,
+            title=title,
         )
 
     plt.tight_layout()

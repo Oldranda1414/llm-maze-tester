@@ -14,10 +14,22 @@ def maze_exp_example_plus(path: str):
     ]
 
     mazes = get_mazes(maze_config)
+    titles = [
+        "labirinto non risolto",
+        "labirinto risolto con percorso non minimo",
+        "labirinto risolto con percorso minimo",
+    ]
+    mazes = zip(mazes, titles)
     _, axes = plt.subplots(1, 3, figsize=(12, 6))
 
-    for idx, maze in enumerate(mazes):
-        draw_maze(maze, ax=axes[idx], draw_character=True, highlight_seen_tiles=False)
+    for idx, (maze, title) in enumerate(mazes):
+        draw_maze(
+            maze,
+            ax=axes[idx],
+            draw_character=True,
+            highlight_seen_tiles=False,
+            title=title,
+        )
 
     plt.tight_layout()
     plt.savefig(f"{path}/maze_exp_example_plus.png", bbox_inches="tight", dpi=150)
